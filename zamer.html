@@ -1,0 +1,1927 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulačka českého realitního trhu</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f9fafb;
+            color: #374151;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .currency-toggle {
+            background: #e5e7eb;
+            color: #374151;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .currency-toggle.active {
+            background: #2563eb;
+            color: white;
+        }
+
+        .exchange-rate {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-panel {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 16px;
+            margin-bottom: 24px;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .info-panel h3 {
+            color: #1e40af;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-panel p {
+            color: #1e40af;
+            font-size: 0.875rem;
+            margin-bottom: 4px;
+        }
+
+        .grid {
+            display: grid;
+            gap: 32px;
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .section {
+            padding: 16px;
+            border-radius: 6px;
+        }
+
+        .section-blue { background: #eff6ff; }
+        .section-red { background: #fef2f2; }
+        .section-green { background: #f0fdf4; }
+        .section-yellow { background: #fffbeb; }
+        .section-purple { background: #faf5ff; }
+        .section-gray { background: #f9fafb; }
+
+        .section h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-blue h2 { color: #1e40af; }
+        .section-red h2 { color: #991b1b; }
+        .section-green h2 { color: #166534; }
+        .section-yellow h2 { color: #92400e; }
+        .section-purple h2 { color: #7c2d12; }
+        .section-gray h2 { color: #374151; }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 4px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            transition: border-color 0.2s;
+            background: white;
+            color: #374151;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-help {
+            font-size: 0.75rem;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .result-row:last-child {
+            border-bottom: none;
+        }
+
+        .result-highlight {
+            background: rgba(34, 197, 94, 0.1);
+            padding: 12px;
+            border-radius: 6px;
+            border-top: 2px solid #22c55e;
+            margin: 8px 0;
+        }
+
+        .result-value {
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .text-green { color: #059669; }
+        .text-red { color: #dc2626; }
+        .text-blue { color: #2563eb; }
+        .text-yellow { color: #d97706; }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip-icon {
+            cursor: pointer;
+            color: #9ca3af;
+            margin-left: 4px;
+        }
+
+        .tooltip-icon:hover {
+            color: #6b7280;
+        }
+
+        .tooltip {
+            display: none;
+            position: absolute;
+            background: #f3f4f6;
+            color: #374151;
+            border: 1px solid #d1d5db;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            width: 200px;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            margin-top: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .tooltip.show {
+            display: block;
+        }
+
+        .benchmark-card {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+        }
+
+        .benchmark-title {
+            font-weight: 500;
+            color: #92400e;
+            margin-bottom: 4px;
+        }
+
+        .benchmark-content {
+            font-size: 0.875rem;
+            color: #d97706;
+        }
+
+        .warning {
+            color: #dc2626;
+            font-size: 0.75rem;
+            margin-top: 4px;
+        }
+
+        .success {
+            color: #059669;
+            font-size: 0.75rem;
+            margin-top: 4px;
+        }
+
+        .scenario-card {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 4px solid #8b5cf6;
+            margin-bottom: 12px;
+        }
+
+        .scenario-title {
+            font-weight: 500;
+            color: #7c2d12;
+            margin-bottom: 8px;
+        }
+
+        .factors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .factor-card {
+            padding: 16px;
+            border-radius: 6px;
+            border-left: 4px solid;
+        }
+
+        .factor-positive {
+            background: #f0fdf4;
+            border-color: #22c55e;
+        }
+
+        .factor-negative {
+            background: #fef2f2;
+            border-color: #ef4444;
+        }
+
+        .factor-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .factor-positive .factor-title { color: #166534; }
+        .factor-negative .factor-title { color: #991b1b; }
+
+        .factor-list {
+            list-style: none;
+            font-size: 0.875rem;
+        }
+
+        .factor-positive .factor-list { color: #166534; }
+        .factor-negative .factor-list { color: #991b1b; }
+
+        .factor-list li {
+            margin-bottom: 4px;
+        }
+
+        .notes {
+            background: #fffbeb;
+            padding: 16px;
+            border-radius: 6px;
+            margin-top: 24px;
+        }
+
+        .notes h3 {
+            color: #92400e;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .notes ul {
+            list-style: none;
+            font-size: 0.875rem;
+            color: #d97706;
+        }
+
+        .notes li {
+            margin-bottom: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 16px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .title {
+                font-size: 1.5rem;
+            }
+
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .metric-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <h1 class="title">
+                    Kalkulačka realitního trhu
+                </h1>
+                <div class="controls">
+                    <div class="exchange-rate">
+                        <span>Kurz CZK/USD:</span>
+                        <input type="number" id="exchangeRate" value="23.5" step="0.1" style="width: 80px; padding: 4px; border: 1px solid #d1d5db; border-radius: 4px;">
+                        <button id="marketToggle" class="currency-toggle active">CZ</button>
+                    </div>
+                    <button id="currencyToggle" class="currency-toggle">CZK</button>
+                    <button id="saveButton" class="currency-toggle" style="background: #16a34a; color: white;">Uložit</button>
+                    <button id="loadButton" class="currency-toggle" style="background: #2563eb; color: white;">Načíst</button>
+                    <button id="exportPdfButton" class="currency-toggle" style="background: #dc2626; color: white;">PDF Export</button>
+                    <button onclick="window.location.href='index.html'" class="currency-toggle" style="background: #7c3aed; color: white;">Kompletní kalkulačka</button>
+                </div>
+                <input type="file" id="fileInput" accept=".json" style="display: none;">
+            </div>
+
+            <div class="info-panel" id="infoPanel">
+                <h3 id="infoPanelTitle">Jak funguje český realitní trh</h3>
+                <div id="infoPanelContent">
+                    <p><strong>Provizní model:</strong> Celková provize (typicky 3-5%) často platí pouze prodávající. Makléř pracuje buď jako OSVČ nebo zaměstnanec RK.</p>
+                    <p><strong>Podíl kanceláře:</strong> RK si ponechává 20-40% z provize za poskytované služby, marketing, kancelář a administrativu.</p>
+                    <p><strong>Náklady:</strong> Nižší než v USA, ale zahrnují povinné pojištění, licence RK a vyšší daňové zatížení. Makléři často jako zaměstnanci.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-3">
+                <!-- Základní parametry -->
+                <div class="section section-blue">
+                    <h2>Základní parametry</h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Počet aktivních makléřů</label>
+                        <input type="number" id="agentCount" value="20" class="form-input">
+                        <div class="form-help">Pouze makléři, kteří aktivně prodávají</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Průměrná prodejní cena ($)</label>
+                        <input type="number" id="avgSalePrice" value="400000" class="form-input">
+                        <div class="form-help">Závisí na lokalitě a typu nemovitosti</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            Celková provize (%)
+                            <span class="tooltip-container">
+                            <span class="tooltip-icon" onclick="toggleTooltip('totalCommission')">?</span>
+                                <div id="tooltip-totalCommission" class="tooltip">
+                                    Celková provize se obvykle dělí 50/50 mezi listing agenta a buyer's agenta. V USA je běžné 5-6%.
+                                </div>
+                            </span>
+                        </label>
+                        <input type="number" id="totalCommissionRate" value="6" step="0.1" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            Transakcí na makléře ročně
+                            <span class="tooltip-container">
+                                <span class="tooltip-icon" onclick="toggleTooltip('transactionsPerAgent')">?</span>
+                                <div id="tooltip-transactionsPerAgent" class="tooltip">
+                                    Průměrný aktivní makléř v USA uzavře 15-40 transakcí ročně. Top makléři mohou mít 50+ transakcí.
+                                </div>
+                            </span>
+                        </label>
+                        <input type="number" id="transactionsPerAgent" value="24" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">
+                            Podíl kanceláře (%)
+                            <span class="tooltip-container">
+                                <span class="tooltip-icon" onclick="toggleTooltip('brokerageSplit')">?</span>
+                                <div id="tooltip-brokerageSplit" class="tooltip">
+                                    Procento z provize, které si ponechává kancelář. Nováčci často mají 50/50, zkušení makléři až 90/10 ve svůj prospěch.
+                                </div>
+                            </span>
+                        </label>
+                        <input type="number" id="brokerageSplit" value="30" class="form-input">
+                        <div class="form-help">Makléř dostává <span id="agentSplit">70</span>%</div>
+                    </div>
+                </div>
+
+                <!-- Náklady -->
+                <div class="section section-red">
+                    <h2>Náklady kanceláře</h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Měsíční nájem ($)</label>
+                        <input type="number" id="monthlyRent" value="8000" class="form-input">
+                        <div class="form-help">Náklady na kancelář podle lokality</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Roční mzdy administrativy ($)</label>
+                        <input type="number" id="adminSalaries" value="120000" class="form-input">
+                        <div class="form-help">Recepce, koordinátoři, účetní</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Technologie na makléře měsíčně ($)</label>
+                        <input type="number" id="technologyCosts" value="300" class="form-input">
+                        <div class="form-help">CRM, MLS, marketing tools, web</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Marketing (% z příjmů kanceláře)</label>
+                        <input type="number" id="marketingPercent" value="3" step="0.1" class="form-input">
+                        <div class="form-help">Reklama, lead generation, branding</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Roční pojištění ($)</label>
+                        <input type="number" id="insuranceAnnual" value="15000" class="form-input">
+                        <div class="form-help">E&O, general liability</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Ostatní roční náklady ($)</label>
+                        <input type="number" id="otherExpenses" value="50000" class="form-input">
+                        <div class="form-help">Licence, vzdělání, právní služby</div>
+                    </div>
+                </div>
+
+                <!-- Výsledky -->
+                <div class="section section-green">
+                    <h2>Výsledky kanceláře</h2>
+                    
+                    <div id="results">
+                        <div class="result-row">
+                            <span>Celkový počet transakcí:</span>
+                            <span class="result-value" id="totalTransactions">480</span>
+                        </div>
+
+                        <div class="result-row">
+                            <span>Celkové provize na trhu:</span>
+                            <div class="result-value text-blue">
+                                <div id="grossCommissionIncome">$1,152,000</div>
+                                <div id="grossCommissionIncomeCZK" class="form-help" style="display: none;">27,072,000 Kč</div>
+                            </div>
+                        </div>
+
+                        <div class="result-row">
+                            <span>Příjmy kanceláře:</span>
+                            <div class="result-value text-green">
+                                <div id="brokerageRevenue">$345,600</div>
+                                <div id="brokerageRevenueCZK" class="form-help" style="display: none;">8,121,600 Kč</div>
+                            </div>
+                        </div>
+
+                        <div class="result-row">
+                            <span>Celkové náklady:</span>
+                            <div class="result-value text-red">
+                                <div id="totalExpenses">$282,368</div>
+                                <div id="totalExpensesCZK" class="form-help" style="display: none;">6,635,648 Kč</div>
+                            </div>
+                        </div>
+
+                        <div class="result-highlight">
+                            <div class="result-row" style="border: none;">
+                                <span style="font-weight: 700; font-size: 1.125rem;">Čistý zisk:</span>
+                                <div class="result-value text-green" style="font-size: 1.25rem;">
+                                    <div id="netProfit">$63,232</div>
+                                    <div id="netProfitCZK" class="form-help" style="display: none;">1,485,952 Kč</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="metric-grid">
+                            <div class="metric-card">
+                                <div class="form-label">
+                                    Zisková marže
+                                    <span class="tooltip-container">
+                                        <span class="tooltip-icon" onclick="toggleTooltip('profitMargin')">?</span>
+                                        <div id="tooltip-profitMargin" class="tooltip">
+                                            Zdravá realitní kancelář by měla mít ziskovou marži 15-25%. Pod 10% je problematické.
+                                        </div>
+                                    </span>
+                                </div>
+                                <div class="result-value text-green" id="profitMargin">18.3%</div>
+                            </div>
+                            
+                            <div class="metric-card">
+                                <div class="form-label">
+                                    ROI
+                                    <span class="tooltip-container">
+                                        <span class="tooltip-icon" onclick="toggleTooltip('roi')">?</span>
+                                        <div id="tooltip-roi" class="tooltip">
+                                            Návratnost investice. V realitním businessu je typické ROI 20-40% pro dobře vedenou kancelář.
+                                        </div>
+                                    </span>
+                                </div>
+                                <div class="result-value text-green" id="roi">22.4%</div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 16px;">
+                            <div class="result-row">
+                                <span>Příjem na makléře:</span>
+                                <div class="result-value">
+                                    <div id="revenuePerAgent">$17,280</div>
+                                    <div id="revenuePerAgentCZK" class="form-help" style="display: none;">406,080 Kč</div>
+                                </div>
+                            </div>
+                            <div class="result-row">
+                                <span>Náklady na makléře:</span>
+                                <div class="result-value">
+                                    <div id="expensesPerAgent">$14,118</div>
+                                    <div id="expensesPerAgentCZK" class="form-help" style="display: none;">331,774 Kč</div>
+                                </div>
+                            </div>
+                            <div class="result-row">
+                                <span style="font-weight: 500;">Zisk na makléře:</span>
+                                <div class="result-value text-green" style="font-weight: 500;">
+                                    <div id="profitPerAgent">$3,162</div>
+                                    <div id="profitPerAgentCZK" class="form-help" style="display: none;">74,307 Kč</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rozklad nákladů -->
+            <div class="grid grid-2" style="margin-top: 32px;">
+                <div class="section section-gray">
+                    <h2>Rozklad nákladů</h2>
+                    <div id="expenseBreakdown">
+                        <div class="result-row">
+                            <span>Nájem:</span>
+                            <div class="result-value">
+                                <div id="annualRent">$96,000</div>
+                                <div id="annualRentCZK" class="form-help" style="display: none;">2,256,000 Kč</div>
+                            </div>
+                        </div>
+                        <div class="result-row">
+                            <span>Mzdy:</span>
+                            <div class="result-value">
+                                <div id="adminSalariesDisplay">$120,000</div>
+                                <div id="adminSalariesDisplayCZK" class="form-help" style="display: none;">2,820,000 Kč</div>
+                            </div>
+                        </div>
+                        <div class="result-row">
+                            <span>Technologie:</span>
+                            <div class="result-value">
+                                <div id="annualTechnology">$72,000</div>
+                                <div id="annualTechnologyCZK" class="form-help" style="display: none;">1,692,000 Kč</div>
+                            </div>
+                        </div>
+                        <div class="result-row">
+                            <span>Marketing:</span>
+                            <div class="result-value">
+                                <div id="marketingCosts">$10,368</div>
+                                <div id="marketingCostsCZK" class="form-help" style="display: none;">243,648 Kč</div>
+                            </div>
+                        </div>
+                        <div class="result-row">
+                            <span>Pojištění:</span>
+                            <div class="result-value">
+                                <div id="insuranceDisplay">$15,000</div>
+                                <div id="insuranceDisplayCZK" class="form-help" style="display: none;">352,500 Kč</div>
+                            </div>
+                        </div>
+                        <div class="result-row">
+                            <span>Ostatní:</span>
+                            <div class="result-value">
+                                <div id="otherExpensesDisplay">$50,000</div>
+                                <div id="otherExpensesDisplayCZK" class="form-help" style="display: none;">1,175,000 Kč</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analýza makléřů -->
+                <div class="section section-blue">
+                    <h2>Analýza příjmů makléřů</h2>
+                    
+                    <div class="result-row">
+                        <span>Průměrná provize na transakci:</span>
+                        <div class="result-value">
+                            <div id="avgCommissionPerTransaction">$24,000</div>
+                            <div id="avgCommissionPerTransactionCZK" class="form-help" style="display: none;">564,000 Kč</div>
+                        </div>
+                    </div>
+
+                    <div class="result-row">
+                        <span>Hrubý příjem makléře ročně:</span>
+                        <div class="result-value text-blue">
+                            <div id="agentGrossIncome">$576,000</div>
+                            <div id="agentGrossIncomeCZK" class="form-help" style="display: none;">13,536,000 Kč</div>
+                        </div>
+                    </div>
+
+                    <div class="result-highlight">
+                        <div class="result-row" style="border: none;">
+                            <span style="font-weight: 700; font-size: 1.125rem;">Čistý příjem makléře:</span>
+                            <div class="result-value text-blue" style="font-size: 1.25rem;">
+                                <div id="agentNetIncome">$403,200</div>
+                                <div id="agentNetIncomeCZK" class="form-help" style="display: none;">9,475,200 Kč</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metric-grid">
+                        <div class="metric-card">
+                            <div class="form-label">Podíl makléře:</div>
+                            <div class="result-value text-blue" id="agentSplitDisplay">70%</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="form-label">Podíl kanceláře:</div>
+                            <div class="result-value text-red" id="brokerageSplitDisplay">30%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Benchmarky -->
+            <div class="section section-yellow" style="margin-top: 32px;">
+                <h2>Benchmarky a doporučení</h2>
+                
+                <div id="benchmarks">
+                    <div class="benchmark-card">
+                        <div class="benchmark-title">Produktivita makléřů</div>
+                        <div class="benchmark-content">
+                            <span style="font-weight: 600;">Aktuálně:</span> <span id="benchmarkTransactions">24</span> transakcí/rok<br>
+                            <span style="font-weight: 600;">Benchmark:</span> 15-40 transakcí/rok (průměr: 24)
+                        </div>
+                        <div id="productivityAlert"></div>
+                    </div>
+
+                    <div class="benchmark-card">
+                        <div class="benchmark-title">Zisková marže</div>
+                        <div class="benchmark-content">
+                            <span style="font-weight: 600;">Aktuálně:</span> <span id="benchmarkMargin">18.3%</span><br>
+                            <span style="font-weight: 600;">Zdravý rozsah:</span> 15-25%
+                        </div>
+                        <div id="marginAlert"></div>
+                    </div>
+
+                    <div class="benchmark-card">
+                        <div class="benchmark-title">Split ratio</div>
+                        <div class="benchmark-content">
+                            <span style="font-weight: 600;">Aktuálně:</span> <span id="benchmarkSplit">30%</span> pro kancelář<br>
+                            <span style="font-weight: 600;">Typické:</span> 20-50% podle zkušeností
+                        </div>
+                        <div id="splitAlert"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scénáře růstu -->
+            <div class="section section-purple" style="margin-top: 32px;">
+                <h2>Scénáře růstu</h2>
+                
+                <div id="scenarios">
+                    <div class="scenario-card">
+                        <div class="scenario-title">Scénář A: +5 makléřů</div>
+                        <div style="font-size: 0.875rem; color: #7c2d12;">
+                            Nový zisk: <span id="scenarioA">$145,840</span><br>
+                            ROI: <span id="scenarioA_ROI">46.8%</span>
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">Scénář B: +20% produktivita</div>
+                        <div style="font-size: 0.875rem; color: #7c2d12;">
+                            Nový zisk: <span id="scenarioB">$132,352</span><br>
+                            ROI: <span id="scenarioB_ROI">46.9%</span>
+                        </div>
+                    </div>
+
+                    <div class="scenario-card">
+                        <div class="scenario-title">Scénář C: -10% náklady</div>
+                        <div style="font-size: 0.875rem; color: #7c2d12;">
+                            Nový zisk: <span id="scenarioC">$91,469</span><br>
+                            ROI: <span id="scenarioC_ROI">35.9%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Faktory úspěchu a rizika -->
+            <div class="factors-grid">
+                <div class="factor-card factor-positive">
+                    <div class="factor-title">Klíčové pozitivní faktory</div>
+                    <ul class="factor-list">
+                        <li>• Vysoká průměrná cena nemovitostí zvyšuje provize</li>
+                        <li>• Produktivní makléři (25+ transakcí ročně)</li>
+                        <li>• Efektivní nákladová struktura</li>
+                        <li>• Silný lokální trh s nízkou konkurencí</li>
+                        <li>• Technologie zvyšující efektivitu</li>
+                    </ul>
+                </div>
+
+                <div class="factor-card factor-negative">
+                    <div class="factor-title">Rizikové faktory</div>
+                    <ul class="factor-list">
+                        <li>• Vysoká fluktuace makléřů (typicky 20-30% ročně)</li>
+                        <li>• Závislost na cyklech trhu</li>
+                        <li>• Rostoucí konkurence a tlak na split ratio</li>
+                        <li>• Regulatorní změny a compliance náklady</li>
+                        <li>• Technologická disrupce (iBuying, AI)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Analýza reálného trhu lokality -->
+            <div class="card">
+                <h2 style="color: #7c2d12; margin-bottom: 24px;">Analýza reálného trhu lokality</h2>
+                
+                <div class="grid grid-3">
+                    <!-- Základní data lokality -->
+                    <div class="section section-yellow">
+                        <h2>Základní data lokality</h2>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Název lokality/regionu</label>
+                            <input type="text" id="localityName" value="Praha 2" class="form-input">
+                            <div class="form-help">Město, okres nebo region</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Počet obyvatel</label>
+                            <input type="number" id="population" value="50000" class="form-input">
+                            <div class="form-help">Celkový počet obyvatel v regionu</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Aktivní nabídky - prodej</label>
+                            <input type="number" id="activeListingsSale" value="120" class="form-input">
+                            <div class="form-help">Aktuální počet nemovitostí na prodej</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Aktivní nabídky - pronájem</label>
+                            <input type="number" id="activeListingsRent" value="80" class="form-input">
+                            <div class="form-help">Aktuální počet nemovitostí k pronájmu</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tržní hodnoty -->
+                    <div class="section section-blue">
+                        <h2>Tržní hodnoty</h2>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Průměrná cena prodeje (CZK)</label>
+                            <input type="number" id="marketAvgSalePrice" value="8500000" class="form-input">
+                            <div class="form-help">Průměrná prodejní cena v lokalitě</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Průměrný nájem (CZK/měsíc)</label>
+                            <input type="number" id="avgRentPrice" value="35000" class="form-input">
+                            <div class="form-help">Průměrný měsíční nájem v lokalitě</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Roční obrat prodejů (mil. CZK)</label>
+                            <input type="number" id="annualSaleVolume" value="850" class="form-input">
+                            <div class="form-help">Celkový objem prodejů za rok</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Roční obrat pronájmů (mil. CZK)</label>
+                            <input type="number" id="annualRentVolume" value="420" class="form-input">
+                            <div class="form-help">Celkový objem pronájmů za rok</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Analýza konkurence -->
+                    <div class="section section-red">
+                        <h2>Analýza konkurence</h2>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Počet RK v regionu</label>
+                            <input type="number" id="competitorCount" value="15" class="form-input">
+                            <div class="form-help">Celkový počet realitních kanceláří</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Průměrný počet makléřů/RK</label>
+                            <input type="number" id="avgAgentsPerCompetitor" value="8" class="form-input">
+                            <div class="form-help">Průměrná velikost konkurenčních RK</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Odhad transakcí/RK/rok</label>
+                            <input type="number" id="avgTransactionsPerCompetitor" value="45" class="form-input">
+                            <div class="form-help">Průměrný počet uzavřených obchodů</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Tržní podíl top 3 RK (%)</label>
+                            <input type="number" id="topThreeMarketShare" value="35" class="form-input">
+                            <div class="form-help">Podíl největších hráčů na trhu</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Výsledky analýzy potenciálu -->
+                <div class="grid grid-2" style="margin-top: 32px;">
+                    <div class="section section-green">
+                        <h2>Výsledky analýzy potenciálu</h2>
+                        
+                        <div class="metric-grid">
+                            <div class="metric-card">
+                                <div class="metric-label">Celkový tržní potenciál</div>
+                                <div class="metric-value" id="totalMarketPotential">1.27 mld CZK</div>
+                            </div>
+                            
+                            <div class="metric-card">
+                                <div class="metric-label">Potenciální provize</div>
+                                <div class="metric-value" id="potentialCommission">51 mil CZK</div>
+                            </div>
+                            
+                            <div class="metric-card">
+                                <div class="metric-label">Celkový počet transakcí</div>
+                                <div class="metric-value" id="totalTransactionsMarket">675</div>
+                            </div>
+                            
+                            <div class="metric-card">
+                                <div class="metric-label">Saturace trhu</div>
+                                <div class="metric-value" id="marketSaturation">78%</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Porovnání s plánem -->
+                    <div class="section section-purple">
+                        <h2>Porovnání s vaším plánem</h2>
+                        
+                        <div class="result-row">
+                            <span>Váš plánovaný tržní podíl:</span>
+                            <div class="result-value" id="plannedMarketShare">5.8%</div>
+                        </div>
+                        
+                        <div class="result-row">
+                            <span>Realistický tržní podíl:</span>
+                            <div class="result-value" id="realisticMarketShare">3.2%</div>
+                        </div>
+                        
+                        <div class="result-row">
+                            <span>Doporučený počet agentů:</span>
+                            <div class="result-value" id="recommendedAgents">12</div>
+                        </div>
+                        
+                        <div class="result-row">
+                            <span>Očekávaný roční příjem:</span>
+                            <div class="result-value" id="expectedRevenue">1.6 mil CZK</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Analýza příležitostí a rizik -->
+                <div class="grid grid-3" style="margin-top: 24px;">
+                    <div class="factor-positive">
+                        <h3>Příležitosti</h3>
+                        <ul class="factor-list" id="opportunities">
+                            <li>Nízká saturace trhu (pod 80%)</li>
+                            <li>Vysoký průměrný obchod</li>
+                            <li>Rostoucí popoptávka</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="factor-negative">
+                        <h3>Rizika</h3>
+                        <ul class="factor-list" id="risks">
+                            <li>Vysoká konkurence</li>
+                            <li>Dominance top 3 RK</li>
+                            <li>Potřeba diferenciace</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="factor-neutral">
+                        <h3>Doporučení</h3>
+                        <ul class="factor-list" id="recommendations">
+                            <li>Cílit na 5-8% tržní podíl</li>
+                            <li>Optimální tým: 12-15 makléřů</li>
+                            <li>Očekávaný příjem: 2.5 mil CZK</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="notes">
+                <h3>Poznámky k výpočtům a modelování:</h3>
+                <ul>
+                    <li>• Model předpokládá, že makléř zastupuje pouze jednu stranu transakce (typické)</li>
+                    <li>• Celková provize se obvykle dělí 50/50 mezi listing a buyer's agenta</li>
+                    <li>• Kurz CZK/USD je orientační - skutečné kurzy se mění denně</li>
+                    <li>• Nezahrnuje mimořádné příjmy (referrals, ancillary services, franchise fees)</li>
+                    <li>• Makléři jsou typicky "independent contractors", ne zaměstnanci</li>
+                    <li>• Náklady se mohou významně lišit podle lokality (Manhattan vs. suburb)</li>
+                    <li>• Model neřeší daňové dopady a různé státní regulace</li>
+                    <li>• Analýza trhu je založena na odhadech a může se lišit od reality</li>
+                    <li>• Doporučení jsou orientační a závisí na konkrétní strategii a zkušenostech</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let showCZK = true;
+        let currentMarket = 'CZ'; // 'USA' nebo 'CZ' - výchozí český trh
+
+        // Default hodnoty pro různé trhy
+        const marketDefaults = {
+            USA: {
+                agentCount: 20,
+                avgSalePrice: 400000,
+                totalCommissionRate: 6,
+                transactionsPerAgent: 24,
+                brokerageSplit: 30,
+                monthlyRent: 8000,
+                adminSalaries: 120000,
+                technologyCosts: 300,
+                marketingPercent: 3,
+                insuranceAnnual: 15000,
+                otherExpenses: 50000,
+                currency: 'USD'
+            },
+            CZ: {
+                agentCount: 15,
+                avgSalePrice: 8000000,
+                totalCommissionRate: 4,
+                transactionsPerAgent: 18,
+                brokerageSplit: 25,
+                monthlyRent: 80000,
+                adminSalaries: 1200000,
+                technologyCosts: 3000,
+                marketingPercent: 2,
+                insuranceAnnual: 150000,
+                otherExpenses: 300000,
+                currency: 'CZK'
+            }
+        };
+
+        const marketInfo = {
+            USA: {
+                title: "Jak funguje americký realitní trh",
+                content: `
+                    <p><strong>Provizní model:</strong> Celková provize (typicky 5-6%) se dělí mezi listing agenta a buyer's agenta. Každý makléř pak sdílí svou část s kanceláří podle smlouvy.</p>
+                    <p><strong>Split ratio:</strong> Kancelář si ponechává 10-50% z provize makléře za poskytované služby (kancelář, marketing, podpora, training).</p>
+                    <p><strong>Náklady:</strong> Kancelář hradí fixní náklady (nájem, mzdy, technologie) a část marketingu. Makléři jsou obvykle "independent contractors".</p>
+                `
+            },
+            CZ: {
+                title: "Jak funguje český realitní trh",
+                content: `
+                    <p><strong>Provizní model:</strong> Celková provize (typicky 3-5%) často platí pouze prodávající. Makléř pracuje buď jako OSVČ nebo zaměstnanec RK.</p>
+                    <p><strong>Podíl kanceláře:</strong> RK si ponechává 20-40% z provize za poskytované služby, marketing, kancelář a administrativu.</p>
+                    <p><strong>Náklady:</strong> Nižší než v USA, ale zahrnují povinné pojištění, licence RK a vyšší daňové zatížení. Makléři často jako zaměstnanci.</p>
+                `
+            }
+        };
+
+        const tooltipsContent = {
+            USA: {
+                totalCommission: "Celková provize se obvykle dělí 50/50 mezi listing agenta a buyer's agenta. V USA je běžné 5-6%.",
+                brokerageSplit: "Procento z provize, které si ponechává kancelář. Nováčci často mají 50/50, zkušení makléři až 90/10 ve svůj prospěch.",
+                transactionsPerAgent: "Průměrný aktivní makléř v USA uzavře 15-40 transakcí ročně. Top makléři mohou mít 50+ transakcí.",
+                profitMargin: "Zdravá realitní kancelář by měla mít ziskovou marži 15-25%. Pod 10% je problematické.",
+                roi: "Návratnost investice. V realitním businessu je typické ROI 20-40% pro dobře vedenou kancelář."
+            },
+            CZ: {
+                totalCommission: "V ČR je běžná provize 3-5%, často platí pouze prodávající. Někdy se přidává provize od kupujícího 1-2%.",
+                brokerageSplit: "Procento z provize pro kancelář. V ČR obvykle 20-40%, závisí na zkušenostech a typu smlouvy (zaměstnanec vs. OSVČ).",
+                transactionsPerAgent: "Průměrný aktivní makléř v ČR uzavře 12-30 transakcí ročně. Závisí na regionu a specializaci.",
+                profitMargin: "Zdravá česká RK by měla mít ziskovou marži 10-20%. Trh je konkurenčnější než v USA.",
+                roi: "V českém prostředí je typické ROI 15-30% pro dobře vedenou kancelář."
+            }
+        };
+
+        // Funkce pro analýzu reálného trhu
+        function calculateMarketAnalysis() {
+            // Získání hodnot z formuláře
+            const population = parseFloat(document.getElementById('population').value) || 0;
+            const activeListingsSale = parseFloat(document.getElementById('activeListingsSale').value) || 0;
+            const activeListingsRent = parseFloat(document.getElementById('activeListingsRent').value) || 0;
+            const avgSalePriceMarket = parseFloat(document.getElementById('marketAvgSalePrice').value) || 0;
+            const avgRentPrice = parseFloat(document.getElementById('avgRentPrice').value) || 0;
+            const annualSaleVolume = parseFloat(document.getElementById('annualSaleVolume').value) || 0;
+            const annualRentVolume = parseFloat(document.getElementById('annualRentVolume').value) || 0;
+            const competitorCount = parseFloat(document.getElementById('competitorCount').value) || 0;
+            const avgAgentsPerCompetitor = parseFloat(document.getElementById('avgAgentsPerCompetitor').value) || 0;
+            const avgTransactionsPerCompetitor = parseFloat(document.getElementById('avgTransactionsPerCompetitor').value) || 0;
+            const topThreeMarketShare = parseFloat(document.getElementById('topThreeMarketShare').value) || 0;
+            
+            // Získání hodnot z hlavního kalkulátoru pro porovnání
+            const plannedAgents = parseFloat(document.getElementById('agentCount').value) || 0;
+            const plannedTransactionsPerAgent = parseFloat(document.getElementById('transactionsPerAgent').value) || 0;
+            const commissionRate = parseFloat(document.getElementById('totalCommissionRate').value) || 4;
+            
+            // Výpočet celkového tržního potenciálu
+            const totalMarketPotential = annualSaleVolume + annualRentVolume;
+            
+            // Výpočet potenciální provize (průměrně 4% pro český trh)
+            const potentialCommission = totalMarketPotential * (commissionRate / 100);
+            
+            // Odhad celkového počtu transakcí
+            const avgTransactionValue = (annualSaleVolume * 1000000) / (activeListingsSale * 10); // Odhad ročního obratu
+            const totalTransactionsMarket = Math.round((totalMarketPotential * 1000000) / avgTransactionValue);
+            
+            // Výpočet saturace trhu (na základě počtu agentů vs. populace)
+            const totalAgentsInMarket = competitorCount * avgAgentsPerCompetitor;
+            const agentsPerCapita = totalAgentsInMarket / population * 1000; // Agenti na 1000 obyvatel
+            const marketSaturation = Math.min(agentsPerCapita * 25, 100); // Saturace v %
+            
+            // Porovnání s plánem
+            const plannedTotalTransactions = plannedAgents * plannedTransactionsPerAgent;
+            const plannedMarketShare = (plannedTotalTransactions / totalTransactionsMarket) * 100;
+            
+            // Realistický tržní podíl (na základě konkurence)
+            const availableMarketShare = 100 - topThreeMarketShare;
+            const remainingCompetitors = Math.max(competitorCount - 3, 1);
+            const avgMarketSharePerCompetitor = availableMarketShare / remainingCompetitors;
+            const realisticMarketShare = Math.min(plannedMarketShare, avgMarketSharePerCompetitor * 1.5);
+            
+            // Doporučený počet agentů
+            const optimalTransactionsPerMarket = totalTransactionsMarket * (realisticMarketShare / 100);
+            const recommendedAgents = Math.round(optimalTransactionsPerMarket / 18); // 18 transakcí/agent/rok průměr
+            
+            // Očekávaný roční příjem
+            const expectedTransactions = recommendedAgents * 18;
+            const expectedCommissionRevenue = expectedTransactions * (avgTransactionValue * commissionRate / 100);
+            const expectedRevenue = expectedCommissionRevenue / 1000000; // V milionech
+            
+            // Aktualizace zobrazení
+            document.getElementById('totalMarketPotential').textContent = formatNumber(totalMarketPotential / 1000, 2) + ' mld CZK';
+            document.getElementById('potentialCommission').textContent = formatNumber(potentialCommission, 0) + ' mil CZK';
+            document.getElementById('totalTransactionsMarket').textContent = totalTransactionsMarket.toLocaleString();
+            document.getElementById('marketSaturation').textContent = formatNumber(marketSaturation, 0) + '%';
+            
+            document.getElementById('plannedMarketShare').textContent = formatNumber(plannedMarketShare, 1) + '%';
+            document.getElementById('realisticMarketShare').textContent = formatNumber(realisticMarketShare, 1) + '%';
+            document.getElementById('recommendedAgents').textContent = recommendedAgents.toString();
+            document.getElementById('expectedRevenue').textContent = formatNumber(expectedRevenue, 1) + ' mil CZK';
+            
+            // Analýza příležitostí a rizik
+            updateMarketInsights(marketSaturation, topThreeMarketShare, competitorCount, plannedMarketShare, realisticMarketShare, recommendedAgents);
+        }
+        
+        function updateMarketInsights(saturation, topThreeShare, competitors, plannedShare, realisticShare, recommendedAgents) {
+            const opportunitiesEl = document.getElementById('opportunities');
+            const risksEl = document.getElementById('risks');
+            const recommendationsEl = document.getElementById('recommendations');
+            
+            // Příležitosti
+            let opportunities = [];
+            if (saturation < 80) opportunities.push('Nízká saturace trhu (pod 80%)');
+            if (topThreeShare < 40) opportunities.push('Fragmentovaný trh bez dominantních hráčů');
+            if (competitors < 20) opportunities.push('Omezená konkurence');
+            if (plannedShare > realisticShare * 0.8) opportunities.push('Realistické cíle tržního podílu');
+            
+            if (opportunities.length === 0) {
+                opportunities.push('Rostoucí popoptávka v regionu');
+                opportunities.push('Možnost specializace na konkrétní segment');
+            }
+            
+            // Rizika
+            let risks = [];
+            if (saturation > 90) risks.push('Přesycený trh (nad 90%)');
+            if (topThreeShare > 50) risks.push('Dominance top 3 RK (nad 50%)');
+            if (competitors > 25) risks.push('Vysoká konkurence');
+            if (plannedShare > realisticShare * 1.5) risks.push('Příliš optimistické cíle');
+            
+            if (risks.length === 0) {
+                risks.push('Závislost na ekonomických cyklech');
+                risks.push('Potřeba diferenciace služeb');
+            }
+            
+            // Doporučení
+            let recommendations = [];
+            const targetShare = Math.min(realisticShare * 1.2, 8);
+            recommendations.push(`Cílit na ${formatNumber(targetShare, 1)}% tržní podíl`);
+            recommendations.push(`Optimální tým: ${recommendedAgents}-${recommendedAgents + 3} makléřů`);
+            
+            const expectedRevenue = (targetShare / 100) * parseFloat(document.getElementById('potentialCommission').textContent.replace(/[^0-9]/g, ''));
+            recommendations.push(`Očekávaný příjem: ${formatNumber(expectedRevenue * 0.25, 1)} mil CZK`);
+            
+            // Aktualizace DOM
+            opportunitiesEl.innerHTML = opportunities.map(o => `<li>${o}</li>`).join('');
+            risksEl.innerHTML = risks.map(r => `<li>${r}</li>`).join('');
+            recommendationsEl.innerHTML = recommendations.map(r => `<li>${r}</li>`).join('');
+        }
+        
+        function formatNumber(num, decimals = 2) {
+            return new Intl.NumberFormat('cs-CZ', {
+                minimumFractionDigits: decimals,
+                maximumFractionDigits: decimals
+            }).format(num);
+        }
+        
+        // Funkce pro uložení dat
+        function saveData() {
+            const data = {
+                timestamp: new Date().toISOString(),
+                market: currentMarket,
+                currency: showCZK ? 'CZK' : 'USD',
+                
+                // Základní parametry
+                agentCount: document.getElementById('agentCount').value,
+                avgSalePrice: document.getElementById('avgSalePrice').value,
+                totalCommissionRate: document.getElementById('totalCommissionRate').value,
+                transactionsPerAgent: document.getElementById('transactionsPerAgent').value,
+                brokerageSplit: document.getElementById('brokerageSplit').value,
+                
+                // Náklady
+                monthlyRent: document.getElementById('monthlyRent').value,
+                adminSalaries: document.getElementById('adminSalaries').value,
+                technologyCosts: document.getElementById('technologyCosts').value,
+                marketingPercent: document.getElementById('marketingPercent').value,
+                insuranceAnnual: document.getElementById('insuranceAnnual').value,
+                otherExpenses: document.getElementById('otherExpenses').value,
+                exchangeRate: document.getElementById('exchangeRate').value,
+                
+                // Analýza trhu
+                localityName: document.getElementById('localityName').value,
+                population: document.getElementById('population').value,
+                activeListingsSale: document.getElementById('activeListingsSale').value,
+                activeListingsRent: document.getElementById('activeListingsRent').value,
+                marketAvgSalePrice: document.getElementById('marketAvgSalePrice').value,
+                avgRentPrice: document.getElementById('avgRentPrice').value,
+                annualSaleVolume: document.getElementById('annualSaleVolume').value,
+                annualRentVolume: document.getElementById('annualRentVolume').value,
+                competitorCount: document.getElementById('competitorCount').value,
+                avgAgentsPerCompetitor: document.getElementById('avgAgentsPerCompetitor').value,
+                avgTransactionsPerCompetitor: document.getElementById('avgTransactionsPerCompetitor').value,
+                topThreeMarketShare: document.getElementById('topThreeMarketShare').value
+            };
+            
+            const localityName = data.localityName || 'Kalkulace';
+            const date = new Date();
+            const dateStr = date.toISOString().split('T')[0];
+            const timeStr = date.toTimeString().split(' ')[0].replace(/:/g, '-');
+            const filename = `${localityName}_${dateStr}_${timeStr}.json`;
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert(`Data byla uložena jako: ${filename}`);
+        }
+        
+        // Funkce pro načtení dat
+        function loadData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    // Obnovení základních parametrů
+                    if (data.agentCount) document.getElementById('agentCount').value = data.agentCount;
+                    if (data.avgSalePrice) document.getElementById('avgSalePrice').value = data.avgSalePrice;
+                    if (data.totalCommissionRate) document.getElementById('totalCommissionRate').value = data.totalCommissionRate;
+                    if (data.transactionsPerAgent) document.getElementById('transactionsPerAgent').value = data.transactionsPerAgent;
+                    if (data.brokerageSplit) document.getElementById('brokerageSplit').value = data.brokerageSplit;
+                    
+                    // Obnovení nákladů
+                    if (data.monthlyRent) document.getElementById('monthlyRent').value = data.monthlyRent;
+                    if (data.adminSalaries) document.getElementById('adminSalaries').value = data.adminSalaries;
+                    if (data.technologyCosts) document.getElementById('technologyCosts').value = data.technologyCosts;
+                    if (data.marketingPercent) document.getElementById('marketingPercent').value = data.marketingPercent;
+                    if (data.insuranceAnnual) document.getElementById('insuranceAnnual').value = data.insuranceAnnual;
+                    if (data.otherExpenses) document.getElementById('otherExpenses').value = data.otherExpenses;
+                    if (data.exchangeRate) document.getElementById('exchangeRate').value = data.exchangeRate;
+                    
+                    // Obnovení analýzy trhu
+                    if (data.localityName) document.getElementById('localityName').value = data.localityName;
+                    if (data.population) document.getElementById('population').value = data.population;
+                    if (data.activeListingsSale) document.getElementById('activeListingsSale').value = data.activeListingsSale;
+                    if (data.activeListingsRent) document.getElementById('activeListingsRent').value = data.activeListingsRent;
+                    if (data.marketAvgSalePrice) document.getElementById('marketAvgSalePrice').value = data.marketAvgSalePrice;
+                    if (data.avgRentPrice) document.getElementById('avgRentPrice').value = data.avgRentPrice;
+                    if (data.annualSaleVolume) document.getElementById('annualSaleVolume').value = data.annualSaleVolume;
+                    if (data.annualRentVolume) document.getElementById('annualRentVolume').value = data.annualRentVolume;
+                    if (data.competitorCount) document.getElementById('competitorCount').value = data.competitorCount;
+                    if (data.avgAgentsPerCompetitor) document.getElementById('avgAgentsPerCompetitor').value = data.avgAgentsPerCompetitor;
+                    if (data.avgTransactionsPerCompetitor) document.getElementById('avgTransactionsPerCompetitor').value = data.avgTransactionsPerCompetitor;
+                    if (data.topThreeMarketShare) document.getElementById('topThreeMarketShare').value = data.topThreeMarketShare;
+                    
+                    // Obnovení nastavení trhu a měny
+                    if (data.market && data.market !== currentMarket) {
+                        toggleMarket();
+                    }
+                    if (data.currency) {
+                        const shouldShowCZK = data.currency === 'CZK';
+                        if (shouldShowCZK !== showCZK) {
+                            toggleCurrency();
+                        }
+                    }
+                    
+                    // Přepočítání výsledků
+                    calculateResults();
+                    calculateMarketAnalysis();
+                    
+                    const localityName = data.localityName || 'Neznámá lokalita';
+                    const timestamp = data.timestamp ? new Date(data.timestamp).toLocaleString('cs-CZ') : 'Neznámé datum';
+                    alert(`Data byla úspěšně načtena!\nLokalita: ${localityName}\nUloženo: ${timestamp}`);
+                    
+                } catch (error) {
+                    alert('Chyba při načítání souboru. Ujistěte se, že jde o platný JSON soubor z kalkulačky.');
+                    console.error('Load error:', error);
+                }
+            };
+            
+            reader.readAsText(file);
+            // Vyčištění inputu pro opakované použití
+            event.target.value = '';
+        }
+        
+        // Funkce pro export do PDF
+        function exportToPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Získání dat pro PDF
+            const localityName = document.getElementById('localityName').value || 'Neznámá lokalita';
+            const date = new Date().toLocaleDateString('cs-CZ');
+            const time = new Date().toLocaleTimeString('cs-CZ');
+            
+            // Nastavení fontů a stylů
+            let yPos = 20;
+            const lineHeight = 7;
+            const sectionSpacing = 15;
+            
+            // Hlavička
+            doc.setFontSize(18);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Analýza realitního trhu', 20, yPos);
+            yPos += 10;
+            
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'normal');
+            doc.text(`Lokalita: ${localityName}`, 20, yPos);
+            yPos += lineHeight;
+            doc.text(`Datum: ${date} ${time}`, 20, yPos);
+            yPos += sectionSpacing;
+            
+            // Základní parametry
+            doc.setFontSize(14);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Základní parametry', 20, yPos);
+            yPos += 10;
+            
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'normal');
+            doc.text(`Počet agentů: ${document.getElementById('agentCount').value}`, 20, yPos);
+            yPos += lineHeight;
+            doc.text(`Průměrná cena prodeje: ${formatNumber(parseFloat(document.getElementById('avgSalePrice').value))} CZK`, 20, yPos);
+            yPos += lineHeight;
+            doc.text(`Provizní sazba: ${document.getElementById('totalCommissionRate').value}%`, 20, yPos);
+            yPos += lineHeight;
+            doc.text(`Transakce na agenta/rok: ${document.getElementById('transactionsPerAgent').value}`, 20, yPos);
+            yPos += lineHeight;
+            doc.text(`Podíl kanceláře: ${document.getElementById('brokerageSplit').value}%`, 20, yPos);
+            yPos += sectionSpacing;
+            
+            // Finanční výsledky
+            doc.setFontSize(14);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Finanční výsledky', 20, yPos);
+            yPos += 10;
+            
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'normal');
+            const grossRevenue = document.getElementById('brokerageRevenue').textContent;
+            const totalExpenses = document.getElementById('totalExpenses').textContent;
+            const netProfit = document.getElementById('netProfit').textContent;
+            const profitMargin = document.getElementById('profitMargin').textContent;
+            const roi = document.getElementById('roi').textContent;
+            
+            doc.text(`Hrubé příjmy: ${grossRevenue}`, 20, yPos);
+            yPos += lineHeight;
+            doc.text(`Celkové náklady: ${totalExpenses}`, 20, yPos);
+            yPos += lineHeight;
+            doc.text(`Čistý zisk: ${netProfit}`, 20, yPos);
+            yPos += lineHeight;
+            doc.text(`Zisková marže: ${profitMargin}`, 20, yPos);
+            yPos += lineHeight;
+            doc.text(`ROI: ${roi}`, 20, yPos);
+            yPos += sectionSpacing;
+            
+            // Analýza lokálního trhu
+            doc.setFontSize(14);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Analýza lokálního trhu', 20, yPos);
+            yPos += 10;
+            
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'normal');
+            doc.text(`Počet obyvatel: ${formatNumber(parseFloat(document.getElementById('population').value))}`, 20, yPos);
+            yPos += lineHeight;
+            doc.text(`Aktivní nabídky prodej: ${document.getElementById('activeListingsSale').value}`, 20, yPos);
+            yPos += lineHeight;
+            doc.text(`Aktivní nabídky pronájem: ${document.getElementById('activeListingsRent').value}`, 20, yPos);
+            yPos += lineHeight;
+            doc.text(`Roční obrat prodejů: ${document.getElementById('annualSaleVolume').value} mil. CZK`, 20, yPos);
+            yPos += lineHeight;
+            doc.text(`Roční obrat pronájmů: ${document.getElementById('annualRentVolume').value} mil. CZK`, 20, yPos);
+            yPos += lineHeight;
+            doc.text(`Počet RK v regionu: ${document.getElementById('competitorCount').value}`, 20, yPos);
+            yPos += lineHeight;
+            doc.text(`Průměrný počet agentů/RK: ${document.getElementById('avgAgentsPerCompetitor').value}`, 20, yPos);
+            yPos += sectionSpacing;
+            
+            // Výsledky analýzy potenciálu
+            doc.setFontSize(14);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Výsledky analýzy potenciálu', 20, yPos);
+            yPos += 10;
+            
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'normal');
+            const totalMarketPotential = document.getElementById('totalMarketPotential').textContent;
+            const potentialCommission = document.getElementById('potentialCommission').textContent;
+            const totalTransactionsMarket = document.getElementById('totalTransactionsMarket').textContent;
+            const marketSaturation = document.getElementById('marketSaturation').textContent;
+            
+            doc.text(`Celkový tržní potenciál: ${totalMarketPotential}`, 20, yPos);
+            yPos += lineHeight;
+            doc.text(`Potenciální provize: ${potentialCommission}`, 20, yPos);
+            yPos += lineHeight;
+            doc.text(`Celkový počet transakcí: ${totalTransactionsMarket}`, 20, yPos);
+            yPos += lineHeight;
+            doc.text(`Saturace trhu: ${marketSaturation}`, 20, yPos);
+            yPos += sectionSpacing;
+            
+            // Porovnání s plánem
+            doc.setFontSize(14);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Porovnání s plánem', 20, yPos);
+            yPos += 10;
+            
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'normal');
+            const plannedMarketShare = document.getElementById('plannedMarketShare').textContent;
+            const realisticMarketShare = document.getElementById('realisticMarketShare').textContent;
+            const recommendedAgents = document.getElementById('recommendedAgents').textContent;
+            const expectedRevenue = document.getElementById('expectedRevenue').textContent;
+            
+            doc.text(`Plánovaný tržní podíl: ${plannedMarketShare}`, 20, yPos);
+            yPos += lineHeight;
+            doc.text(`Realistický tržní podíl: ${realisticMarketShare}`, 20, yPos);
+            yPos += lineHeight;
+            doc.text(`Doporučený počet agentů: ${recommendedAgents}`, 20, yPos);
+            yPos += lineHeight;
+            doc.text(`Očekávaný roční příjem: ${expectedRevenue}`, 20, yPos);
+            yPos += sectionSpacing;
+            
+            // Nová stránka pro doporučení a poznámky
+            if (yPos > 250) {
+                doc.addPage();
+                yPos = 20;
+            }
+            
+            // Příležitosti
+            doc.setFontSize(14);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Příležitosti', 20, yPos);
+            yPos += 10;
+            
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'normal');
+            const opportunities = document.getElementById('opportunities').children;
+            for (let i = 0; i < opportunities.length; i++) {
+                doc.text(`• ${opportunities[i].textContent}`, 25, yPos);
+                yPos += lineHeight;
+            }
+            yPos += 5;
+            
+            // Rizika
+            doc.setFontSize(14);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Rizika', 20, yPos);
+            yPos += 10;
+            
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'normal');
+            const risks = document.getElementById('risks').children;
+            for (let i = 0; i < risks.length; i++) {
+                doc.text(`• ${risks[i].textContent}`, 25, yPos);
+                yPos += lineHeight;
+            }
+            yPos += 5;
+            
+            // Doporučení
+            doc.setFontSize(14);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Doporučení', 20, yPos);
+            yPos += 10;
+            
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'normal');
+            const recommendations = document.getElementById('recommendations').children;
+            for (let i = 0; i < recommendations.length; i++) {
+                doc.text(`• ${recommendations[i].textContent}`, 25, yPos);
+                yPos += lineHeight;
+            }
+            yPos += sectionSpacing;
+            
+            // Poznámky
+            if (yPos > 240) {
+                doc.addPage();
+                yPos = 20;
+            }
+            
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Důležité poznámky:', 20, yPos);
+            yPos += 10;
+            
+            doc.setFontSize(9);
+            doc.setFont('helvetica', 'normal');
+            doc.text('• Všechny výpočty jsou založeny na zadaných parametrech a mohou se lišit od reality', 20, yPos);
+            yPos += lineHeight;
+            doc.text('• Analýza trhu je orientační a závisí na kvalitě vstupních dat', 20, yPos);
+            yPos += lineHeight;
+            doc.text('• Doporučení jsou obecná a měla by být přizpůsobena konkrétní strategii', 20, yPos);
+            yPos += lineHeight;
+            doc.text('• Pro přesné výsledky doporučujeme konzultaci s odborníky na realitní trh', 20, yPos);
+            
+            // Patička
+            doc.setFontSize(8);
+            doc.setFont('helvetica', 'italic');
+            doc.text('Vygenerováno kalkulačkou realitního trhu', 20, 280);
+            
+            // Uložení PDF
+            const filename = `Analyza_${localityName}_${date.replace(/\./g, '-')}_${time.replace(/:/g, '-')}.pdf`;
+            doc.save(filename);
+            
+            alert(`PDF report byl úspěšně vygenerován: ${filename}`);
+        }
+
+        // Event listeners pro všechny inputy
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = ['agentCount', 'avgSalePrice', 'totalCommissionRate', 'transactionsPerAgent', 
+                           'brokerageSplit', 'monthlyRent', 'adminSalaries', 'technologyCosts', 
+                           'marketingPercent', 'insuranceAnnual', 'otherExpenses', 'exchangeRate'];
+            
+            // Přidání inputů pro analýzu trhu
+            const marketInputs = ['population', 'activeListingsSale', 'activeListingsRent', 'marketAvgSalePrice', 
+                                 'avgRentPrice', 'annualSaleVolume', 'annualRentVolume', 'competitorCount', 
+                                 'avgAgentsPerCompetitor', 'avgTransactionsPerCompetitor', 'topThreeMarketShare'];
+            
+            const allInputs = [...inputs, ...marketInputs];
+            
+            inputs.forEach(id => {
+                document.getElementById(id).addEventListener('input', calculateResults);
+            });
+            
+            // Event listeners pro analýzu trhu
+            marketInputs.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.addEventListener('input', function() {
+                        calculateResults();
+                        calculateMarketAnalysis();
+                    });
+                }
+            });
+            
+            // Spustit počáteční výpočty
+            calculateResults();
+            calculateMarketAnalysis();
+
+            document.getElementById('currencyToggle').addEventListener('click', toggleCurrency);
+            document.getElementById('marketToggle').addEventListener('click', toggleMarket);
+            
+            // Event listeners pro save/load/PDF export
+            document.getElementById('saveButton').addEventListener('click', saveData);
+            document.getElementById('loadButton').addEventListener('click', function() {
+                document.getElementById('fileInput').click();
+            });
+            document.getElementById('fileInput').addEventListener('change', loadData);
+            document.getElementById('exportPdfButton').addEventListener('click', exportToPDF);
+            document.getElementById('brokerageSplit').addEventListener('input', updateAgentSplit);
+            
+            // Načíst výchozí české hodnoty
+            loadMarketDefaults('CZ');
+            calculateResults();
+        });
+
+        function calculateResults() {
+            // Získání hodnot
+            const agentCount = parseFloat(document.getElementById('agentCount').value) || 0;
+            const avgSalePrice = parseFloat(document.getElementById('avgSalePrice').value) || 0;
+            const totalCommissionRate = parseFloat(document.getElementById('totalCommissionRate').value) || 0;
+            const transactionsPerAgent = parseFloat(document.getElementById('transactionsPerAgent').value) || 0;
+            const brokerageSplit = parseFloat(document.getElementById('brokerageSplit').value) || 0;
+            const monthlyRent = parseFloat(document.getElementById('monthlyRent').value) || 0;
+            const adminSalaries = parseFloat(document.getElementById('adminSalaries').value) || 0;
+            const technologyCosts = parseFloat(document.getElementById('technologyCosts').value) || 0;
+            const marketingPercent = parseFloat(document.getElementById('marketingPercent').value) || 0;
+            const insuranceAnnual = parseFloat(document.getElementById('insuranceAnnual').value) || 0;
+            const otherExpenses = parseFloat(document.getElementById('otherExpenses').value) || 0;
+
+            // Výpočty - upravené pro český trh
+            const totalTransactions = agentCount * transactionsPerAgent;
+            let grossCommissionIncome, brokerageRevenue;
+
+            if (currentMarket === 'CZ') {
+                // V ČR často platí provizi pouze prodávající
+                grossCommissionIncome = totalTransactions * avgSalePrice * (totalCommissionRate / 100);
+                brokerageRevenue = grossCommissionIncome * (brokerageSplit / 100);
+            } else {
+                // USA model - provize od obou stran
+                grossCommissionIncome = totalTransactions * avgSalePrice * (totalCommissionRate / 100);
+                brokerageRevenue = grossCommissionIncome * (brokerageSplit / 100);
+            }
+            
+            const annualRent = monthlyRent * 12;
+            const annualTechnology = technologyCosts * agentCount * 12;
+            const marketingCosts = brokerageRevenue * (marketingPercent / 100);
+            const totalExpenses = annualRent + adminSalaries + annualTechnology + marketingCosts + insuranceAnnual + otherExpenses;
+            
+            const netProfit = brokerageRevenue - totalExpenses;
+            const profitMargin = brokerageRevenue > 0 ? (netProfit / brokerageRevenue) * 100 : 0;
+            const profitPerAgent = agentCount > 0 ? netProfit / agentCount : 0;
+            
+            const avgCommissionPerTransaction = avgSalePrice * (totalCommissionRate / 100);
+            const agentGrossIncome = transactionsPerAgent * avgCommissionPerTransaction;
+            const agentNetIncome = agentGrossIncome * ((100 - brokerageSplit) / 100);
+            
+            const totalInvestment = annualRent + adminSalaries + insuranceAnnual + otherExpenses;
+            const roi = totalInvestment > 0 ? (netProfit / totalInvestment) * 100 : 0;
+            const revenuePerAgent = agentCount > 0 ? brokerageRevenue / agentCount : 0;
+            const expensesPerAgent = agentCount > 0 ? totalExpenses / agentCount : 0;
+
+            // Aktualizace UI
+            updateResults({
+                totalTransactions,
+                grossCommissionIncome,
+                brokerageRevenue,
+                totalExpenses,
+                netProfit,
+                profitMargin,
+                profitPerAgent,
+                avgCommissionPerTransaction,
+                agentGrossIncome,
+                agentNetIncome,
+                annualRent,
+                annualTechnology,
+                marketingCosts,
+                roi,
+                revenuePerAgent,
+                expensesPerAgent,
+                adminSalaries,
+                insuranceAnnual,
+                otherExpenses
+            });
+
+            updateBenchmarks(transactionsPerAgent, profitMargin, brokerageSplit);
+            updateScenarios(brokerageRevenue, totalExpenses, totalInvestment);
+        }
+
+        function updateResults(results) {
+            // Základní výsledky
+            document.getElementById('totalTransactions').textContent = results.totalTransactions.toLocaleString();
+            
+            updateCurrencyDisplay('grossCommissionIncome', results.grossCommissionIncome);
+            updateCurrencyDisplay('brokerageRevenue', results.brokerageRevenue);
+            updateCurrencyDisplay('totalExpenses', results.totalExpenses);
+            updateCurrencyDisplay('netProfit', results.netProfit);
+            
+            document.getElementById('profitMargin').textContent = formatPercent(results.profitMargin);
+            document.getElementById('roi').textContent = formatPercent(results.roi);
+            
+            updateCurrencyDisplay('revenuePerAgent', results.revenuePerAgent);
+            updateCurrencyDisplay('expensesPerAgent', results.expensesPerAgent);
+            updateCurrencyDisplay('profitPerAgent', results.profitPerAgent);
+            
+            // Rozklad nákladů
+            updateCurrencyDisplay('annualRent', results.annualRent);
+            updateCurrencyDisplay('adminSalariesDisplay', results.adminSalaries);
+            updateCurrencyDisplay('annualTechnology', results.annualTechnology);
+            updateCurrencyDisplay('marketingCosts', results.marketingCosts);
+            updateCurrencyDisplay('insuranceDisplay', results.insuranceAnnual);
+            updateCurrencyDisplay('otherExpensesDisplay', results.otherExpenses);
+            
+            // Analýza makléřů
+            updateCurrencyDisplay('avgCommissionPerTransaction', results.avgCommissionPerTransaction);
+            updateCurrencyDisplay('agentGrossIncome', results.agentGrossIncome);
+            updateCurrencyDisplay('agentNetIncome', results.agentNetIncome);
+            
+            const brokerageSplit = parseFloat(document.getElementById('brokerageSplit').value) || 0;
+            document.getElementById('agentSplitDisplay').textContent = (100 - brokerageSplit) + '%';
+            document.getElementById('brokerageSplitDisplay').textContent = brokerageSplit + '%';
+
+            // Barevné kódování pro zisk
+            const profitElements = ['netProfit', 'profitPerAgent'];
+            profitElements.forEach(id => {
+                const element = document.getElementById(id);
+                const parent = element.closest('.result-value');
+                if (results.netProfit >= 0) {
+                    parent.className = 'result-value text-green';
+                } else {
+                    parent.className = 'result-value text-red';
+                }
+            });
+        }
+
+        function updateCurrencyDisplay(elementId, value) {
+            const exchangeRate = parseFloat(document.getElementById('exchangeRate').value) || 23.5;
+            
+            const mainElement = document.getElementById(elementId);
+            const altElement = document.getElementById(elementId + (currentMarket === 'CZ' ? 'USD' : 'CZK'));
+            
+            if (mainElement) {
+                if (currentMarket === 'CZ') {
+                    mainElement.textContent = formatCurrency(value, 'CZK');
+                } else {
+                    mainElement.textContent = formatCurrency(value, 'USD');
+                }
+            }
+            
+            if (altElement) {
+                if (currentMarket === 'CZ') {
+                    altElement.textContent = formatCurrency(value / exchangeRate, 'USD');
+                    altElement.style.display = showCZK ? 'none' : 'block';
+                } else {
+                    altElement.textContent = formatCurrency(value * exchangeRate, 'CZK');
+                    altElement.style.display = showCZK ? 'block' : 'none';
+                }
+            }
+        }
+
+        function formatCurrency(amount, currency) {
+            if (currency === 'CZK') {
+                return new Intl.NumberFormat('cs-CZ', {
+                    style: 'currency',
+                    currency: 'CZK',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                }).format(amount);
+            } else {
+                return new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                }).format(amount);
+            }
+        }
+
+        function formatPercent(value) {
+            return value.toFixed(1) + '%';
+        }
+
+        function toggleCurrency() {
+            showCZK = !showCZK;
+            const button = document.getElementById('currencyToggle');
+            if (currentMarket === 'CZ') {
+                button.textContent = showCZK ? 'CZK' : 'USD';
+            } else {
+                button.textContent = showCZK ? 'CZK' : 'USD';
+            }
+            button.className = (currentMarket === 'CZ' && showCZK) || (currentMarket === 'USA' && !showCZK) ? 'currency-toggle active' : 'currency-toggle';
+            
+            // Přepočítání všech hodnot
+            calculateResults();
+        }
+
+        function toggleMarket() {
+            currentMarket = currentMarket === 'USA' ? 'CZ' : 'USA';
+            const button = document.getElementById('marketToggle');
+            button.textContent = currentMarket;
+            button.className = 'currency-toggle active';
+            
+            // Načíst výchozí hodnoty pro nový trh
+            loadMarketDefaults(currentMarket);
+            
+            // Aktualizovat info panel
+            updateInfoPanel();
+            
+            // Nastavit správnou měnu
+            if (currentMarket === 'CZ') {
+                showCZK = true;
+                document.getElementById('currencyToggle').textContent = 'CZK';
+            } else {
+                showCZK = false;
+                document.getElementById('currencyToggle').textContent = 'USD';
+            }
+            
+            calculateResults();
+        }
+
+        function loadMarketDefaults(market) {
+            const defaults = marketDefaults[market];
+            Object.keys(defaults).forEach(key => {
+                if (key !== 'currency') {
+                    const element = document.getElementById(key);
+                    if (element) {
+                        element.value = defaults[key];
+                    }
+                }
+            });
+            updateAgentSplit();
+        }
+
+        function updateInfoPanel() {
+            const info = marketInfo[currentMarket];
+            document.getElementById('infoPanelTitle').textContent = info.title;
+            document.getElementById('infoPanelContent').innerHTML = info.content;
+        }
+
+        function updateAgentSplit() {
+            const brokerageSplit = parseFloat(document.getElementById('brokerageSplit').value) || 0;
+            document.getElementById('agentSplit').textContent = (100 - brokerageSplit);
+        }
+
+        function toggleTooltip(tooltipId) {
+            const tooltip = document.getElementById('tooltip-' + tooltipId);
+            const isVisible = tooltip.classList.contains('show');
+            
+            // Skrýt všechny ostatní tooltips
+            document.querySelectorAll('.tooltip').forEach(t => t.classList.remove('show'));
+            
+            // Aktualizovat obsah tooltipu podle aktuálního trhu
+            const content = tooltipsContent[currentMarket][tooltipId];
+            if (content) {
+                tooltip.textContent = content;
+            }
+            
+            // Zobrazit/skrýt aktuální tooltip
+            if (!isVisible) {
+                tooltip.classList.add('show');
+            }
+        }
+
+        function updateBenchmarks(transactions, margin, split) {
+            document.getElementById('benchmarkTransactions').textContent = transactions;
+            document.getElementById('benchmarkMargin').textContent = formatPercent(margin);
+            document.getElementById('benchmarkSplit').textContent = split + '%';
+            
+            // Benchmarky podle trhu
+            let minTransactions, maxTransactions, minMargin, maxMargin, maxSplit;
+            
+            if (currentMarket === 'CZ') {
+                minTransactions = 12;
+                maxTransactions = 30;
+                minMargin = 10;
+                maxMargin = 20;
+                maxSplit = 40;
+            } else {
+                minTransactions = 15;
+                maxTransactions = 40;
+                minMargin = 15;
+                maxMargin = 25;
+                maxSplit = 50;
+            }
+            
+            // Produktivita
+            const productivityAlert = document.getElementById('productivityAlert');
+            if (transactions < minTransactions) {
+                productivityAlert.innerHTML = '<div class="warning">⚠️ Pod průměrem - zvažte training nebo lead generation</div>';
+            } else if (transactions > maxTransactions) {
+                productivityAlert.innerHTML = '<div class="success">✅ Výborná produktivita</div>';
+            } else {
+                productivityAlert.innerHTML = '';
+            }
+            
+            // Marže
+            const marginAlert = document.getElementById('marginAlert');
+            if (margin < minMargin) {
+                marginAlert.innerHTML = '<div class="warning">⚠️ Nízká marže - zkontrolujte náklady</div>';
+            } else if (margin > maxMargin) {
+                marginAlert.innerHTML = '<div class="success">✅ Vynikající marže</div>';
+            } else {
+                marginAlert.innerHTML = '';
+            }
+            
+            // Split
+            const splitAlert = document.getElementById('splitAlert');
+            if (split > maxSplit) {
+                splitAlert.innerHTML = '<div class="warning">⚠️ Vysoký split - makléři mohou odejít</div>';
+            } else {
+                splitAlert.innerHTML = '';
+            }
+        }
+
+        function updateScenarios(revenue, expenses, investment) {
+            // Scénář A: +5 makléřů (25% více příjmů, 10% více nákladů)
+            const scenarioA_profit = revenue * 1.25 - expenses * 1.1;
+            const scenarioA_roi = ((scenarioA_profit / (expenses * 1.1)) * 100);
+            document.getElementById('scenarioA').textContent = formatCurrency(scenarioA_profit, 'USD');
+            document.getElementById('scenarioA_ROI').textContent = formatPercent(scenarioA_roi);
+            
+            // Scénář B: +20% produktivita
+            const scenarioB_profit = revenue * 1.2 - expenses;
+            const scenarioB_roi = ((scenarioB_profit / expenses) * 100);
+            document.getElementById('scenarioB').textContent = formatCurrency(scenarioB_profit, 'USD');
+            document.getElementById('scenarioB_ROI').textContent = formatPercent(scenarioB_roi);
+            
+            // Scénář C: -10% náklady
+            const scenarioC_profit = revenue - expenses * 0.9;
+            const scenarioC_roi = ((scenarioC_profit / (expenses * 0.9)) * 100);
+            document.getElementById('scenarioC').textContent = formatCurrency(scenarioC_profit, 'USD');
+            document.getElementById('scenarioC_ROI').textContent = formatPercent(scenarioC_roi);
+        }
+
+        // Skrýt tooltips při kliknutí mimo
+        document.addEventListener('click', function(event) {
+            if (!event.target.classList.contains('tooltip-icon')) {
+                document.querySelectorAll('.tooltip').forEach(t => t.classList.remove('show'));
+            }
+        });
+    </script>
+    
+    <!-- jsPDF library pro PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</body>
+</html>
