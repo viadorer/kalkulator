@@ -1,0 +1,1763 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kompletní kalkulačka realitní kanceláře</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: #f5f5f7;
+            color: #1d1d1f;
+            line-height: 1.47059;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1d1d1f, #424245);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            border-radius: 18px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            font-size: 1.125rem;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: white;
+            border-radius: 12px;
+            padding: 6px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 16px 20px;
+            text-align: center;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #86868b;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-tab.active {
+            background: #007aff;
+            color: white;
+            box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .input-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .input-group {
+            background: #f5f5f7;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #e5e5e7;
+        }
+
+        .input-group h3 {
+            color: #1d1d1f;
+            margin-bottom: 20px;
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .input-field {
+            margin-bottom: 16px;
+        }
+
+        .input-field:last-child {
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #1d1d1f;
+            font-size: 0.875rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d2d2d7;
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+            color: #1d1d1f;
+            transition: all 0.2s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #007aff;
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+        }
+
+        .costs-section {
+            background: white;
+            border: 1px solid #e5e5e7;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+
+        .costs-section h3 {
+            color: #1d1d1f;
+            margin-bottom: 20px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            text-align: center;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e5e5e7;
+        }
+
+        .costs-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e5e5e7;
+        }
+
+        .costs-table th {
+            background: #f5f5f7;
+            color: #1d1d1f;
+            padding: 16px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.875rem;
+            border-bottom: 1px solid #e5e5e7;
+        }
+
+        .costs-table td {
+            padding: 12px;
+            border-bottom: 1px solid #f5f5f7;
+            font-size: 0.875rem;
+            color: #1d1d1f;
+        }
+
+        .costs-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .costs-table tr:hover {
+            background: #fbfbfc;
+        }
+
+        .cost-input {
+            width: 80px;
+            padding: 6px 8px;
+            border: 1px solid #d2d2d7;
+            border-radius: 6px;
+            text-align: right;
+            font-size: 0.875rem;
+            color: #1d1d1f;
+            background: white;
+        }
+
+        .cost-input:focus {
+            border-color: #007aff;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.1);
+        }
+
+        .checkbox-cell {
+            text-align: center;
+        }
+
+        .checkbox-cell input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #007aff;
+        }
+
+        .breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .breakdown-item {
+            background: #f5f5f7;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .breakdown-item h5 {
+            font-size: 0.75rem;
+            margin-bottom: 8px;
+            color: #86868b;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .breakdown-item .value {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e5e5e7;
+            margin-top: 20px;
+        }
+
+        .summary-table th {
+            background: #f5f5f7;
+            color: #1d1d1f;
+            padding: 16px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+            border-bottom: 1px solid #e5e5e7;
+        }
+
+        .summary-table td {
+            padding: 16px;
+            text-align: center;
+            border-bottom: 1px solid #f5f5f7;
+            font-weight: 500;
+            color: #1d1d1f;
+        }
+
+        .summary-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .summary-table tr:nth-child(even) {
+            background: #fbfbfc;
+        }
+
+        .totals-row {
+            background: #f5f5f7;
+            font-weight: 600;
+        }
+
+        .totals-row td {
+            background: #f5f5f7 !important;
+            color: #1d1d1f;
+            font-weight: 600;
+        }
+
+        .positive {
+            color: #34c759;
+        }
+
+        .negative {
+            color: #ff3b30;
+        }
+
+        .neutral {
+            color: #1d1d1f;
+        }
+
+        .monthly-costs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .cost-category {
+            background: #f5f5f7;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e5e5e7;
+        }
+
+        .cost-category h4 {
+            color: #1d1d1f;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #d2d2d7;
+            padding-bottom: 8px;
+        }
+
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e5e5e7;
+            gap: 10px;
+        }
+
+        .cost-item:last-child {
+            border-bottom: none;
+        }
+
+        .cost-item-name {
+            flex: 1;
+            font-size: 0.875rem;
+            color: #1d1d1f;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 6px 8px;
+            background: white;
+            transition: border-color 0.2s ease;
+        }
+
+        .cost-item-name:focus {
+            outline: none;
+            border-color: #007aff;
+            box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.1);
+        }
+
+        .cost-item-value {
+            font-weight: 600;
+            color: #1d1d1f;
+            font-size: 0.875rem;
+            width: 100px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 6px 8px;
+            background: white;
+            text-align: right;
+            transition: border-color 0.2s ease;
+        }
+
+        .cost-item-value:focus {
+            outline: none;
+            border-color: #007aff;
+            box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.1);
+        }
+
+        .cost-item button {
+            border: 2px solid #dc2626;
+            border-radius: 50%;
+            background: transparent;
+            color: #dc2626;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            opacity: 0.7;
+        }
+
+        .cost-item button:hover {
+            opacity: 1;
+            background: #dc2626;
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+        }
+
+        .cost-category h4 button {
+            border: 2px solid #16a34a;
+            border-radius: 20px;
+            background: transparent;
+            color: #16a34a;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            opacity: 0.8;
+            margin-left: 10px;
+        }
+
+        .cost-category h4 button:hover {
+            opacity: 1;
+            background: #16a34a;
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(22, 163, 74, 0.3);
+        }
+
+        .costs-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .costs-controls button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .costs-controls button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .alert-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 20px 0;
+            color: #856404;
+        }
+
+        .alert-box.success {
+            background: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+
+        .alert-box.danger {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+            
+            .content {
+                padding: 24px 20px;
+            }
+            
+            .input-section {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .costs-table {
+                font-size: 0.75rem;
+            }
+            
+            .cost-input {
+                width: 60px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .breakdown {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-tabs {
+                flex-direction: column;
+            }
+
+            .nav-tab {
+                margin-bottom: 4px;
+            }
+
+            .monthly-costs {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script src="auto-load-costs.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Kompletní kalkulačka RK</h1>
+            <p>Prodej, pronájem a ekonomická rozvaha</p>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('prodej')">Prodej</button>
+            <button class="nav-tab" onclick="showTab('pronajem')">Pronájem</button>
+            <button class="nav-tab" onclick="showTab('rozvaha')">Ekonomická rozvaha</button>
+            <button class="nav-tab" onclick="showTab('naklady')">Měsíční náklady</button>
+        </div>
+
+        <!-- TAB PRODEJ -->
+        <div id="prodej" class="tab-content active">
+            <div class="content">
+                <div class="input-section">
+                    <div class="input-group">
+                        <h3>Základní údaje</h3>
+                        <div class="input-field">
+                            <label for="salePrice">Kupní cena (Kč):</label>
+                            <input type="number" id="salePrice" value="3000000" min="0" step="1000">
+                        </div>
+                        <div class="input-field">
+                            <label for="commissionRate">Výše provize (%):</label>
+                            <input type="number" id="commissionRate" value="3" min="0" max="10" step="0.1">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <h3>Dělení provize</h3>
+                        <div class="input-field">
+                            <label for="rkShare">Podíl RK (%):</label>
+                            <input type="number" id="rkShare" value="50" min="0" max="100" step="1">
+                        </div>
+                        <div class="input-field">
+                            <label for="brokerShare">Podíl makléře (%):</label>
+                            <input type="number" id="brokerShare" value="50" min="0" max="100" step="1" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="costs-section">
+                    <h3>Náklady na transakci</h3>
+                    <table class="costs-table">
+                        <thead>
+                            <tr>
+                                <th>Úkony</th>
+                                <th>Aktuálně</th>
+                                <th>Možnost hradí klient</th>
+                                <th>Nutné náklady</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Náklady na získání zakázky</td>
+                                <td><input type="number" class="cost-input" data-type="current" data-item="acquisition" value="10000"> Kč</td>
+                                <td class="checkbox-cell"><input type="checkbox" data-type="client" data-item="acquisition"></td>
+                                <td><input type="number" class="cost-input" data-type="necessary" data-item="acquisition" value="0"> Kč</td>
+                            </tr>
+                            <tr>
+                                <td>Kupní smlouva úschova</td>
+                                <td><input type="number" class="cost-input" data-type="current" data-item="contract" value="7000"> Kč</td>
+                                <td class="checkbox-cell"><input type="checkbox" data-type="client" data-item="contract" checked></td>
+                                <td><input type="number" class="cost-input" data-type="necessary" data-item="contract" value="0"> Kč</td>
+                            </tr>
+                            <tr>
+                                <td>Reklama</td>
+                                <td><input type="number" class="cost-input" data-type="current" data-item="advertising" value="2000"> Kč</td>
+                                <td class="checkbox-cell"><input type="checkbox" data-type="client" data-item="advertising"></td>
+                                <td><input type="number" class="cost-input" data-type="necessary" data-item="advertising" value="2000"> Kč</td>
+                            </tr>
+                            <tr>
+                                <td>Návrh na vklad</td>
+                                <td><input type="number" class="cost-input" data-type="current" data-item="proposal" value="2000"> Kč</td>
+                                <td class="checkbox-cell"><input type="checkbox" data-type="client" data-item="proposal" checked></td>
+                                <td><input type="number" class="cost-input" data-type="necessary" data-item="proposal" value="0"> Kč</td>
+                            </tr>
+                            <tr>
+                                <td>Benzin</td>
+                                <td><input type="number" class="cost-input" data-type="current" data-item="fuel" value="2000"> Kč</td>
+                                <td class="checkbox-cell"><input type="checkbox" data-type="client" data-item="fuel"></td>
+                                <td><input type="number" class="cost-input" data-type="necessary" data-item="fuel" value="2000"> Kč</td>
+                            </tr>
+                            <tr>
+                                <td>Auto</td>
+                                <td><input type="number" class="cost-input" data-type="current" data-item="car" value="2000"> Kč</td>
+                                <td class="checkbox-cell"><input type="checkbox" data-type="client" data-item="car"></td>
+                                <td><input type="number" class="cost-input" data-type="necessary" data-item="car" value="2000"> Kč</td>
+                            </tr>
+                            <tr>
+                                <td>Kancelář</td>
+                                <td><input type="number" class="cost-input" data-type="current" data-item="office" value="4000"> Kč</td>
+                                <td class="checkbox-cell"><input type="checkbox" data-type="client" data-item="office"></td>
+                                <td><input type="number" class="cost-input" data-type="necessary" data-item="office" value="4000"> Kč</td>
+                            </tr>
+                            <tr>
+                                <td>Fotograf</td>
+                                <td><input type="number" class="cost-input" data-type="current" data-item="photographer" value="4000"> Kč</td>
+                                <td class="checkbox-cell"><input type="checkbox" data-type="client" data-item="photographer"></td>
+                                <td><input type="number" class="cost-input" data-type="necessary" data-item="photographer" value="4000"> Kč</td>
+                            </tr>
+                            <tr>
+                                <td>Energetický štítek</td>
+                                <td><input type="number" class="cost-input" data-type="current" data-item="energy" value="3500"> Kč</td>
+                                <td class="checkbox-cell"><input type="checkbox" data-type="client" data-item="energy" checked></td>
+                                <td><input type="number" class="cost-input" data-type="necessary" data-item="energy" value="0"> Kč</td>
+                            </tr>
+                            <tr>
+                                <td>Výpisy</td>
+                                <td><input type="number" class="cost-input" data-type="current" data-item="excerpts" value="500"> Kč</td>
+                                <td class="checkbox-cell"><input type="checkbox" data-type="client" data-item="excerpts" checked></td>
+                                <td><input type="number" class="cost-input" data-type="necessary" data-item="excerpts" value="0"> Kč</td>
+                            </tr>
+                            <tr>
+                                <td>Software</td>
+                                <td><input type="number" class="cost-input" data-type="current" data-item="software" value="500"> Kč</td>
+                                <td class="checkbox-cell"><input type="checkbox" data-type="client" data-item="software"></td>
+                                <td><input type="number" class="cost-input" data-type="necessary" data-item="software" value="500"> Kč</td>
+                            </tr>
+                            <tr>
+                                <td>PTF reality</td>
+                                <td><input type="number" class="cost-input" data-type="current" data-item="ptf" value="0"> Kč</td>
+                                <td class="checkbox-cell"><input type="checkbox" data-type="client" data-item="ptf"></td>
+                                <td><input type="number" class="cost-input" data-type="necessary" data-item="ptf" value="0"> Kč</td>
+                            </tr>
+                            <tr>
+                                <td>David Choc</td>
+                                <td><input type="number" class="cost-input" data-type="current" data-item="david" value="0"> Kč</td>
+                                <td class="checkbox-cell"><input type="checkbox" data-type="client" data-item="david"></td>
+                                <td><input type="number" class="cost-input" data-type="necessary" data-item="david" value="0"> Kč</td>
+                            </tr>
+                            <tr>
+                                <td>Matterport</td>
+                                <td><input type="number" class="cost-input" data-type="current" data-item="matterport" value="2000"> Kč</td>
+                                <td class="checkbox-cell"><input type="checkbox" data-type="client" data-item="matterport"></td>
+                                <td><input type="number" class="cost-input" data-type="necessary" data-item="matterport" value="2000"> Kč</td>
+                            </tr>
+                            <tr>
+                                <td>Telefon</td>
+                                <td><input type="number" class="cost-input" data-type="current" data-item="phone" value="500"> Kč</td>
+                                <td class="checkbox-cell"><input type="checkbox" data-type="client" data-item="phone"></td>
+                                <td><input type="number" class="cost-input" data-type="necessary" data-item="phone" value="500"> Kč</td>
+                            </tr>
+                            <tr class="totals-row">
+                                <td><strong>Celkem</strong></td>
+                                <td><strong id="totalCurrent">40 000 Kč</strong></td>
+                                <td><strong id="totalClientPaid">13 000 Kč</strong></td>
+                                <td><strong id="totalNecessary">17 000 Kč</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="breakdown">
+                    <div class="breakdown-item">
+                        <h5>Hrubá provize</h5>
+                        <div class="value" id="grossCommission">90 000 Kč</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <h5>Skutečné náklady RK</h5>
+                        <div class="value" id="actualCosts">27 000 Kč</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <h5>Čistá provize</h5>
+                        <div class="value" id="netCommission">63 000 Kč</div>
+                    </div>
+                </div>
+
+                <table class="summary-table">
+                    <thead>
+                        <tr>
+                            <th>Subjekt</th>
+                            <th>Podíl (%)</th>
+                            <th>Z hrubé provize</th>
+                            <th>Náklady</th>
+                            <th>Čistý výnos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Realitní kancelář</strong></td>
+                            <td id="rkPercentage">50%</td>
+                            <td id="rkGross">45 000 Kč</td>
+                            <td id="rkCosts">27 000 Kč</td>
+                            <td id="rkNet">18 000 Kč</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Makléř</strong></td>
+                            <td id="brokerPercentage">50%</td>
+                            <td id="brokerGross">45 000 Kč</td>
+                            <td>0 Kč</td>
+                            <td id="brokerNet">45 000 Kč</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB PRONÁJEM -->
+        <div id="pronajem" class="tab-content">
+            <div class="content">
+                <div class="input-section">
+                    <div class="input-group">
+                        <h3>Základní údaje pronájmu</h3>
+                        <div class="input-field">
+                            <label for="rentPrice">Měsíční nájem (Kč):</label>
+                            <input type="number" id="rentPrice" value="25000" min="0" step="500">
+                        </div>
+                        <div class="input-field">
+                            <label for="rentCommissionRate">Výše provize (měsíční nájmy):</label>
+                            <input type="number" id="rentCommissionRate" value="1" min="0" max="3" step="0.1">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <h3>Dělení provize</h3>
+                        <div class="input-field">
+                            <label for="rentRkShare">Podíl RK (%):</label>
+                            <input type="number" id="rentRkShare" value="50" min="0" max="100" step="1">
+                        </div>
+                        <div class="input-field">
+                            <label for="rentBrokerShare">Podíl makléře (%):</label>
+                            <input type="number" id="rentBrokerShare" value="50" min="0" max="100" step="1" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="costs-section">
+                    <h3>Náklady na zprostředkování pronájmu</h3>
+                    <table class="costs-table">
+                        <thead>
+                            <tr>
+                                <th>Úkony</th>
+                                <th>Náklady (Kč)</th>
+                                <th>Hradí klient</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Fotograf</td>
+                                <td><input type="number" class="cost-input" data-type="rent-cost" data-item="photographer" value="2000"> Kč</td>
+                                <td class="checkbox-cell"><input type="checkbox" data-type="rent-client" data-item="photographer"></td>
+                            </tr>
+                            <tr>
+                                <td>Reklama</td>
+                                <td><input type="number" class="cost-input" data-type="rent-cost" data-item="advertising" value="1000"> Kč</td>
+                                <td class="checkbox-cell"><input type="checkbox" data-type="rent-client" data-item="advertising"></td>
+                            </tr>
+                            <tr>
+                                <td>Prohlídky (benzin)</td>
+                                <td><input type="number" class="cost-input" data-type="rent-cost" data-item="fuel" value="500"> Kč</td>
+                                <td class="checkbox-cell"><input type="checkbox" data-type="rent-client" data-item="fuel"></td>
+                            </tr>
+                            <tr>
+                                <td>Smlouva o pronájmu</td>
+                                <td><input type="number" class="cost-input" data-type="rent-cost" data-item="contract" value="1000"> Kč</td>
+                                <td class="checkbox-cell"><input type="checkbox" data-type="rent-client" data-item="contract" checked></td>
+                            </tr>
+                            <tr>
+                                <td>Matterport</td>
+                                <td><input type="number" class="cost-input" data-type="rent-cost" data-item="matterport" value="2000"> Kč</td>
+                                <td class="checkbox-cell"><input type="checkbox" data-type="rent-client" data-item="matterport"></td>
+                            </tr>
+                            <tr>
+                                <td>Software</td>
+                                <td><input type="number" class="cost-input" data-type="rent-cost" data-item="software" value="200"> Kč</td>
+                                <td class="checkbox-cell"><input type="checkbox" data-type="rent-client" data-item="software"></td>
+                            </tr>
+                            <tr class="totals-row">
+                                <td><strong>Celkem</strong></td>
+                                <td><strong id="rentTotalCosts">6 700 Kč</strong></td>
+                                <td><strong id="rentClientPaid">1 000 Kč</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="breakdown">
+                    <div class="breakdown-item">
+                        <h5>Hrubá provize</h5>
+                        <div class="value" id="rentGrossCommission">25 000 Kč</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <h5>Skutečné náklady RK</h5>
+                        <div class="value" id="rentActualCosts">5 700 Kč</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <h5>Čistá provize</h5>
+                        <div class="value" id="rentNetCommission">19 300 Kč</div>
+                    </div>
+                </div>
+
+                <table class="summary-table">
+                    <thead>
+                        <tr>
+                            <th>Subjekt</th>
+                            <th>Podíl (%)</th>
+                            <th>Z hrubé provize</th>
+                            <th>Náklady</th>
+                            <th>Čistý výnos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Realitní kancelář</strong></td>
+                            <td id="rentRkPercentage">50%</td>
+                            <td id="rentRkGross">12 500 Kč</td>
+                            <td id="rentRkCosts">5 700 Kč</td>
+                            <td id="rentRkNet">6 800 Kč</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Makléř</strong></td>
+                            <td id="rentBrokerPercentage">50%</td>
+                            <td id="rentBrokerGross">12 500 Kč</td>
+                            <td>0 Kč</td>
+                            <td id="rentBrokerNet">12 500 Kč</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TAB EKONOMICKÁ ROZVAHA -->
+        <div id="rozvaha" class="tab-content">
+            <div class="content">
+                <div class="input-section">
+                    <div class="input-group">
+                        <h3>Cílové zisky</h3>
+                        <div class="input-field">
+                            <label for="targetProfit">Cílový měsíční zisk RK (Kč):</label>
+                            <input type="number" id="targetProfit" value="200000" min="0" step="10000">
+                        </div>
+                        <div class="input-field">
+                            <label for="avgSaleCommission">Průměrná provize z prodeje (Kč):</label>
+                            <input type="number" id="avgSaleCommission" value="45000" min="0" step="1000">
+                        </div>
+                        <div class="input-field">
+                            <label for="avgRentCommission">Průměrná provize z pronájmu (Kč):</label>
+                            <input type="number" id="avgRentCommission" value="12500" min="0" step="500">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <h3>Průměrné náklady na transakci</h3>
+                        <div class="input-field">
+                            <label for="avgSaleCosts">Průměrné náklady prodej (Kč):</label>
+                            <input type="number" id="avgSaleCosts" value="27000" min="0" step="1000">
+                        </div>
+                        <div class="input-field">
+                            <label for="avgRentCosts">Průměrné náklady pronájem (Kč):</label>
+                            <input type="number" id="avgRentCosts" value="5700" min="0" step="100">
+                        </div>
+                        <div class="input-field">
+                            <label for="successRate">Úspěšnost uzavření (%):</label>
+                            <input type="number" id="successRate" value="30" min="0" max="100" step="1">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="breakdown">
+                    <div class="breakdown-item">
+                        <h5>Měsíční fixní náklady</h5>
+                        <div class="value" id="monthlyFixedCosts">173 492 Kč</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <h5>Potřebný obrat</h5>
+                        <div class="value" id="requiredTurnover">373 492 Kč</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <h5>Čistý zisk z prodeje</h5>
+                        <div class="value" id="netSaleProfit">18 000 Kč</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <h5>Čistý zisk z pronájmu</h5>
+                        <div class="value" id="netRentProfit">6 800 Kč</div>
+                    </div>
+                </div>
+
+                <div class="alert-box" id="profitabilityAlert">
+                    <strong>Analýza:</strong> <span id="profitabilityText"></span>
+                </div>
+
+                <table class="summary-table">
+                    <thead>
+                        <tr>
+                            <th>Scénář</th>
+                            <th>Prodeje/měsíc</th>
+                            <th>Pronájmy/měsíc</th>
+                            <th>Hrubé provize</th>
+                            <th>Transakční náklady</th>
+                            <th>Čistý zisk</th>
+                            <th>Stav</th>
+                        </tr>
+                    </thead>
+                    <tbody id="scenarioTable">
+                        <!-- Dynamicky generované scénáře -->
+                    </tbody>
+                </table>
+
+                <div class="costs-section">
+                    <h3>Doporučení pro dosažení cíle</h3>
+                    <div id="recommendations"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB MĚSÍČNÍ NÁKLADY -->
+        <div id="naklady" class="tab-content">
+            <div class="content">
+                <div class="costs-controls" style="margin-bottom: 20px; text-align: center;">
+                    <button onclick="saveMonthlyCosts()" style="background: #16a34a; color: white; padding: 10px 20px; border: none; border-radius: 5px; margin: 0 5px; cursor: pointer;">Uložit náklady</button>
+                    <button onclick="loadMonthlyCosts()" style="background: #2563eb; color: white; padding: 10px 20px; border: none; border-radius: 5px; margin: 0 5px; cursor: pointer;">Načíst náklady</button>
+                    <input type="file" id="costsFileInput" accept=".json" style="display: none;">
+                </div>
+                <div class="monthly-costs">
+                    <div class="cost-category" data-category="automobily">
+                        <h4>Automobily <button onclick="addCostItem('automobily')" style="background: #16a34a; color: white; border: none; border-radius: 3px; padding: 5px 10px; margin-left: 10px; cursor: pointer;">+ Přidat</button></h4>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Autoleasing Opel Astra" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="4037" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Autoleasing Cayman" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="11234" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Autoleasing Clubman" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="6967" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Auto opravy" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="2000" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Benzin nafta" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="8000" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                    </div>
+
+                    <div class="cost-category" data-category="sluzby">
+                        <h4>Služby a technologie <button onclick="addCostItem('sluzby')" style="background: #16a34a; color: white; border: none; border-radius: 3px; padding: 5px 10px; margin-left: 10px; cursor: pointer;">+ Přidat</button></h4>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Povinné ručení + havarijko" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="4500" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Dálniční známka" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="500" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Telefon" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="5000" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Hosting" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="2000" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Matterport" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="2000" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                    </div>
+
+                    <div class="cost-category" data-category="kancelar">
+                        <h4>Kancelář a provoz <button onclick="addCostItem('kancelar')" style="background: #16a34a; color: white; border: none; border-radius: 3px; padding: 5px 10px; margin-left: 10px; cursor: pointer;">+ Přidat</button></h4>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Nájemné kancelář" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="23000" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Elektřina" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="4500" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Plyn" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="5920" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Úklid" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="0" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                    </div>
+
+                    <div class="cost-category" data-category="finance">
+                        <h4>Finance a účetnictví <button onclick="addCostItem('finance')" style="background: #16a34a; color: white; border: none; border-radius: 3px; padding: 5px 10px; margin-left: 10px; cursor: pointer;">+ Přidat</button></h4>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Kreditka" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="6000" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Zdravotní" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="3000" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Sociální" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="3900" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Konverzky" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="997" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Úschovy" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="15000" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                    </div>
+
+                    <div class="cost-category" data-category="marketing">
+                        <h4>Marketing a reklama <button onclick="addCostItem('marketing')" style="background: #16a34a; color: white; border: none; border-radius: 3px; padding: 5px 10px; margin-left: 10px; cursor: pointer;">+ Přidat</button></h4>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Reklama Sreality" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="8000" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Reklama RealHit" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="300" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Reklama reality idnes" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="1500" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Reklama české reality" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="0" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Sociální sítě" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="0" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                    </div>
+
+                    <div class="cost-category" data-category="ostatni">
+                        <h4>Ostatní služby <button onclick="addCostItem('ostatni')" style="background: #16a34a; color: white; border: none; border-radius: 3px; padding: 5px 10px; margin-left: 10px; cursor: pointer;">+ Přidat</button></h4>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Realman" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="3500" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Reas" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="17000" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Katastr výpisy" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="4000" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Katastr podání" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="4000" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Ecomail" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="1400" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="HLS" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="745" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Revolgy gmail" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="1292" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Fočení" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="8000" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Digisign" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="400" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Káva" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="1500" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                    </div>
+
+                    <div class="cost-category" data-category="parkovani">
+                        <h4>Parkování <button onclick="addCostItem('parkovani')" style="background: #16a34a; color: white; border: none; border-radius: 3px; padding: 5px 10px; margin-left: 10px; cursor: pointer;">+ Přidat</button></h4>
+                        <div class="cost-item">
+                            <input type="text" class="cost-item-name" value="Parkovací místa (3x)" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <input type="number" class="cost-item-value" value="8300" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                            <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="breakdown">
+                    <div class="breakdown-item">
+                        <h5>Automobily celkem</h5>
+                        <div class="value">32 238 Kč</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <h5>Kancelář a provoz</h5>
+                        <div class="value">33 420 Kč</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <h5>Marketing</h5>
+                        <div class="value">9 800 Kč</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <h5>Ostatní služby</h5>
+                        <div class="value">89 734 Kč</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <h5>CELKOVÉ MĚSÍČNÍ NÁKLADY</h5>
+                        <div class="value" style="color: #ff3b30; font-size: 1.5rem;">173 492 Kč</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('cs-CZ', {
+                style: 'decimal',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(amount) + ' Kč';
+        }
+
+        function showTab(tabName) {
+            // Skrýt všechny taby
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Zobrazit vybraný tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+
+            // Spustit příslušné výpočty
+            if (tabName === 'prodej') {
+                calculateSaleCommission();
+            } else if (tabName === 'pronajem') {
+                calculateRentCommission();
+            } else if (tabName === 'rozvaha') {
+                calculateEconomicAnalysis();
+            }
+        }
+
+        // PRODEJ KALKULACE
+        document.getElementById('rkShare').addEventListener('input', function() {
+            const rkShare = parseFloat(this.value) || 0;
+            const brokerShare = Math.max(0, 100 - rkShare);
+            document.getElementById('brokerShare').value = brokerShare;
+            calculateSaleCommission();
+        });
+
+        document.getElementById('salePrice').addEventListener('input', calculateSaleCommission);
+        document.getElementById('commissionRate').addEventListener('input', calculateSaleCommission);
+        document.getElementById('rkShare').addEventListener('input', calculateSaleCommission);
+
+        document.querySelectorAll('.cost-input, input[type="checkbox"]').forEach(input => {
+            input.addEventListener('input', calculateSaleCommission);
+            input.addEventListener('change', calculateSaleCommission);
+        });
+
+        function calculateSaleCommission() {
+            const salePrice = parseFloat(document.getElementById('salePrice').value) || 0;
+            const commissionRate = parseFloat(document.getElementById('commissionRate').value) || 0;
+            const rkShare = parseFloat(document.getElementById('rkShare').value) || 0;
+            const brokerShare = parseFloat(document.getElementById('brokerShare').value) || 0;
+
+            const grossCommission = salePrice * (commissionRate / 100);
+
+            let totalCurrentCosts = 0;
+            let totalClientPaid = 0;
+            let totalNecessaryCosts = 0;
+
+            const costItems = ['acquisition', 'contract', 'advertising', 'proposal', 'fuel', 'car', 'office', 'photographer', 'energy', 'excerpts', 'software', 'ptf', 'david', 'matterport', 'phone'];
+
+            costItems.forEach(item => {
+                const currentCost = parseFloat(document.querySelector(`[data-type="current"][data-item="${item}"]`).value) || 0;
+                const clientPays = document.querySelector(`[data-type="client"][data-item="${item}"]`).checked;
+                const necessaryCost = parseFloat(document.querySelector(`[data-type="necessary"][data-item="${item}"]`).value) || 0;
+
+                totalCurrentCosts += currentCost;
+                if (clientPays) {
+                    totalClientPaid += currentCost;
+                }
+                totalNecessaryCosts += necessaryCost;
+            });
+
+            const actualCosts = totalCurrentCosts - totalClientPaid;
+            const netCommission = grossCommission - actualCosts;
+
+            const rkGrossShare = grossCommission * (rkShare / 100);
+            const brokerGrossShare = grossCommission * (brokerShare / 100);
+            
+            const rkCostShare = actualCosts;
+            const brokerCostShare = 0;
+            
+            const rkNetShare = rkGrossShare - rkCostShare;
+            const brokerNetShare = brokerGrossShare - brokerCostShare;
+
+            // Aktualizace zobrazení
+            document.getElementById('totalCurrent').textContent = formatCurrency(totalCurrentCosts);
+            document.getElementById('totalClientPaid').textContent = formatCurrency(totalClientPaid);
+            document.getElementById('totalNecessary').textContent = formatCurrency(totalNecessaryCosts);
+
+            document.getElementById('grossCommission').textContent = formatCurrency(grossCommission);
+            document.getElementById('actualCosts').textContent = formatCurrency(actualCosts);
+            document.getElementById('netCommission').textContent = formatCurrency(netCommission);
+
+            document.getElementById('rkPercentage').textContent = rkShare + '%';
+            document.getElementById('brokerPercentage').textContent = brokerShare + '%';
+
+            document.getElementById('rkGross').textContent = formatCurrency(rkGrossShare);
+            document.getElementById('brokerGross').textContent = formatCurrency(brokerGrossShare);
+
+            document.getElementById('rkCosts').textContent = formatCurrency(rkCostShare);
+
+            const rkNetElement = document.getElementById('rkNet');
+            const brokerNetElement = document.getElementById('brokerNet');
+            
+            rkNetElement.textContent = formatCurrency(rkNetShare);
+            brokerNetElement.textContent = formatCurrency(brokerNetShare);
+
+            rkNetElement.className = rkNetShare > 0 ? 'positive' : (rkNetShare < 0 ? 'negative' : 'neutral');
+            brokerNetElement.className = brokerNetShare > 0 ? 'positive' : (brokerNetShare < 0 ? 'negative' : 'neutral');
+        }
+
+        // PRONÁJEM KALKULACE
+        document.getElementById('rentRkShare').addEventListener('input', function() {
+            const rkShare = parseFloat(this.value) || 0;
+            const brokerShare = Math.max(0, 100 - rkShare);
+            document.getElementById('rentBrokerShare').value = brokerShare;
+            calculateRentCommission();
+        });
+
+        document.getElementById('rentPrice').addEventListener('input', calculateRentCommission);
+        document.getElementById('rentCommissionRate').addEventListener('input', calculateRentCommission);
+        document.getElementById('rentRkShare').addEventListener('input', calculateRentCommission);
+
+        document.querySelectorAll('[data-type="rent-cost"], [data-type="rent-client"]').forEach(input => {
+            input.addEventListener('input', calculateRentCommission);
+            input.addEventListener('change', calculateRentCommission);
+        });
+
+        function calculateRentCommission() {
+            const rentPrice = parseFloat(document.getElementById('rentPrice').value) || 0;
+            const commissionRate = parseFloat(document.getElementById('rentCommissionRate').value) || 0;
+            const rkShare = parseFloat(document.getElementById('rentRkShare').value) || 0;
+            const brokerShare = parseFloat(document.getElementById('rentBrokerShare').value) || 0;
+
+            const grossCommission = rentPrice * commissionRate;
+
+            let totalCosts = 0;
+            let clientPaid = 0;
+
+            const rentCostItems = ['photographer', 'advertising', 'fuel', 'contract', 'matterport', 'software'];
+
+            rentCostItems.forEach(item => {
+                const cost = parseFloat(document.querySelector(`[data-type="rent-cost"][data-item="${item}"]`).value) || 0;
+                const clientPays = document.querySelector(`[data-type="rent-client"][data-item="${item}"]`).checked;
+
+                totalCosts += cost;
+                if (clientPays) {
+                    clientPaid += cost;
+                }
+            });
+
+            const actualCosts = totalCosts - clientPaid;
+            const netCommission = grossCommission - actualCosts;
+
+            const rkGrossShare = grossCommission * (rkShare / 100);
+            const brokerGrossShare = grossCommission * (brokerShare / 100);
+            
+            const rkNetShare = rkGrossShare - actualCosts;
+            const brokerNetShare = brokerGrossShare;
+
+            // Aktualizace zobrazení
+            document.getElementById('rentTotalCosts').textContent = formatCurrency(totalCosts);
+            document.getElementById('rentClientPaid').textContent = formatCurrency(clientPaid);
+
+            document.getElementById('rentGrossCommission').textContent = formatCurrency(grossCommission);
+            document.getElementById('rentActualCosts').textContent = formatCurrency(actualCosts);
+            document.getElementById('rentNetCommission').textContent = formatCurrency(netCommission);
+
+            document.getElementById('rentRkPercentage').textContent = rkShare + '%';
+            document.getElementById('rentBrokerPercentage').textContent = brokerShare + '%';
+
+            document.getElementById('rentRkGross').textContent = formatCurrency(rkGrossShare);
+            document.getElementById('rentBrokerGross').textContent = formatCurrency(brokerGrossShare);
+
+            document.getElementById('rentRkCosts').textContent = formatCurrency(actualCosts);
+
+            const rkNetElement = document.getElementById('rentRkNet');
+            const brokerNetElement = document.getElementById('rentBrokerNet');
+            
+            rkNetElement.textContent = formatCurrency(rkNetShare);
+            brokerNetElement.textContent = formatCurrency(brokerNetShare);
+
+            rkNetElement.className = rkNetShare > 0 ? 'positive' : (rkNetShare < 0 ? 'negative' : 'neutral');
+            brokerNetElement.className = brokerNetShare > 0 ? 'positive' : (brokerNetShare < 0 ? 'negative' : 'neutral');
+        }
+
+        // EKONOMICKÁ ROZVAHA
+        document.getElementById('targetProfit').addEventListener('input', calculateEconomicAnalysis);
+        document.getElementById('avgSaleCommission').addEventListener('input', calculateEconomicAnalysis);
+        document.getElementById('avgRentCommission').addEventListener('input', calculateEconomicAnalysis);
+        document.getElementById('avgSaleCosts').addEventListener('input', calculateEconomicAnalysis);
+        document.getElementById('avgRentCosts').addEventListener('input', calculateEconomicAnalysis);
+        document.getElementById('successRate').addEventListener('input', calculateEconomicAnalysis);
+
+        function calculateEconomicAnalysis() {
+            const targetProfit = parseFloat(document.getElementById('targetProfit').value) || 0;
+            const avgSaleCommission = parseFloat(document.getElementById('avgSaleCommission').value) || 0;
+            const avgRentCommission = parseFloat(document.getElementById('avgRentCommission').value) || 0;
+            const avgSaleCosts = parseFloat(document.getElementById('avgSaleCosts').value) || 0;
+            const avgRentCosts = parseFloat(document.getElementById('avgRentCosts').value) || 0;
+            const successRate = parseFloat(document.getElementById('successRate').value) || 30;
+
+            const monthlyFixedCosts = 173492;
+            const requiredTurnover = monthlyFixedCosts + targetProfit;
+
+            const netSaleProfit = avgSaleCommission - avgSaleCosts;
+            const netRentProfit = avgRentCommission - avgRentCosts;
+
+            // Aktualizace základních hodnot
+            document.getElementById('monthlyFixedCosts').textContent = formatCurrency(monthlyFixedCosts);
+            document.getElementById('requiredTurnover').textContent = formatCurrency(requiredTurnover);
+            document.getElementById('netSaleProfit').textContent = formatCurrency(netSaleProfit);
+            document.getElementById('netRentProfit').textContent = formatCurrency(netRentProfit);
+
+            // Generování scénářů
+            const scenarios = [
+                { sales: 5, rents: 0 },
+                { sales: 4, rents: 5 },
+                { sales: 3, rents: 10 },
+                { sales: 2, rents: 15 },
+                { sales: 1, rents: 20 },
+                { sales: 0, rents: 25 },
+                { sales: 8, rents: 0 },
+                { sales: 10, rents: 0 },
+                { sales: 6, rents: 8 },
+                { sales: 7, rents: 5 }
+            ];
+
+            let tableHTML = '';
+            let bestScenario = null;
+            let minDifference = Infinity;
+
+            scenarios.forEach(scenario => {
+                const grossProvisions = (scenario.sales * avgSaleCommission) + (scenario.rents * avgRentCommission);
+                const transactionCosts = (scenario.sales * avgSaleCosts) + (scenario.rents * avgRentCosts);
+                const netProfit = grossProvisions - transactionCosts - monthlyFixedCosts;
+                
+                const difference = Math.abs(netProfit - targetProfit);
+                if (difference < minDifference && netProfit >= targetProfit) {
+                    minDifference = difference;
+                    bestScenario = scenario;
+                }
+
+                let status = '';
+                let statusClass = '';
+                if (netProfit >= targetProfit) {
+                    status = 'ZISK ✓';
+                    statusClass = 'positive';
+                } else if (netProfit >= 0) {
+                    status = 'BREAK-EVEN';
+                    statusClass = 'neutral';
+                } else {
+                    status = 'ZTRÁTA ✗';
+                    statusClass = 'negative';
+                }
+
+                tableHTML += `
+                    <tr>
+                        <td>Scénář ${scenarios.indexOf(scenario) + 1}</td>
+                        <td>${scenario.sales}</td>
+                        <td>${scenario.rents}</td>
+                        <td>${formatCurrency(grossProvisions)}</td>
+                        <td>${formatCurrency(transactionCosts)}</td>
+                        <td class="${statusClass}">${formatCurrency(netProfit)}</td>
+                        <td class="${statusClass}"><strong>${status}</strong></td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('scenarioTable').innerHTML = tableHTML;
+
+            // Analýza a doporučení
+            let alertClass = 'danger';
+            let alertText = '';
+            let recommendations = '';
+
+            if (bestScenario) {
+                alertClass = 'success';
+                alertText = `Optimální scénář: ${bestScenario.sales} prodejů + ${bestScenario.rents} pronájmů měsíčně pro dosažení cílového zisku.`;
+                
+                recommendations = `
+                    <div class="breakdown">
+                        <div class="breakdown-item">
+                            <h5>Doporučený počet prodejů</h5>
+                            <div class="value positive">${bestScenario.sales}/měsíc</div>
+                        </div>
+                        <div class="breakdown-item">
+                            <h5>Doporučený počet pronájmů</h5>
+                            <div class="value positive">${bestScenario.rents}/měsíc</div>
+                        </div>
+                        <div class="breakdown-item">
+                            <h5>Potřebné kontakty s ${successRate}% úspěšností</h5>
+                            <div class="value">${Math.ceil((bestScenario.sales + bestScenario.rents) * 100 / successRate)}/měsíc</div>
+                        </div>
+                        <div class="breakdown-item">
+                            <h5>Kontakty denně</h5>
+                            <div class="value">${Math.ceil((bestScenario.sales + bestScenario.rents) * 100 / successRate / 22)} kontaktů</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px; padding: 20px; background: #f5f5f7; border-radius: 8px;">
+                        <h5 style="margin-bottom: 12px; color: #1d1d1f;">Strategická doporučení:</h5>
+                        <ul style="margin: 0; padding-left: 20px; color: #1d1d1f;">
+                            <li style="margin-bottom: 8px;">Zaměřte se na kombinaci prodejů a pronájmů pro optimální cash flow</li>
+                            <li style="margin-bottom: 8px;">Pronájmy poskytují rychlejší obrat s nižšími náklady</li>
+                            <li style="margin-bottom: 8px;">Prodeje mají vyšší marži, ale delší realizační čas</li>
+                            <li style="margin-bottom: 8px;">Sledujte konverzní poměr a optimalizujte marketingové aktivity</li>
+                            <li>Pravidelně analyzujte rentabilitu jednotlivých typů nemovitostí</li>
+                        </ul>
+                    </div>
+                `;
+            } else {
+                // Pokud žádný scénář nedosahuje cíle
+                const minSalesNeeded = Math.ceil(requiredTurnover / netSaleProfit);
+                const minRentsNeeded = Math.ceil(requiredTurnover / netRentProfit);
+                
+                alertText = `Pro dosažení cílového zisku ${formatCurrency(targetProfit)} potřebujete minimálně ${minSalesNeeded} prodejů NEBO ${minRentsNeeded} pronájmů měsíčně.`;
+                
+                recommendations = `
+                    <div class="breakdown">
+                        <div class="breakdown-item">
+                            <h5>Min. prodeje pro cíl</h5>
+                            <div class="value neutral">${minSalesNeeded}/měsíc</div>
+                        </div>
+                        <div class="breakdown-item">
+                            <h5>Min. pronájmy pro cíl</h5>
+                            <div class="value neutral">${minRentsNeeded}/měsíc</div>
+                        </div>
+                        <div class="breakdown-item">
+                            <h5>Nebo snižte cílový zisk na</h5>
+                            <div class="value">${formatCurrency(Math.max(...scenarios.map(s => (s.sales * netSaleProfit) + (s.rents * netRentProfit) - monthlyFixedCosts)))}</div>
+                        </div>
+                        <div class="breakdown-item">
+                            <h5>Nebo snižte náklady o</h5>
+                            <div class="value negative">${formatCurrency(monthlyFixedCosts - (Math.max(...scenarios.map(s => (s.sales * avgSaleCommission) + (s.rents * avgRentCommission) - (s.sales * avgSaleCosts) - (s.rents * avgRentCosts))) - targetProfit))}</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px; padding: 20px; background: #fff3cd; border-radius: 8px; border: 1px solid #ffeaa7;">
+                        <h5 style="margin-bottom: 12px; color: #856404;">Akční plán pro zlepšení:</h5>
+                        <ul style="margin: 0; padding-left: 20px; color: #856404;">
+                            <li style="margin-bottom: 8px;">Zvyšte konverzní poměr zlepšením prodejních dovedností</li>
+                            <li style="margin-bottom: 8px;">Optimalizujte náklady na marketing a provoz</li>
+                            <li style="margin-bottom: 8px;">Zvažte zvýšení provizních sazeb u konkurenceschopných služeb</li>
+                            <li style="margin-bottom: 8px;">Diverzifikujte služby (správa nemovitostí, oceňování)</li>
+                            <li>Analyzujte možnosti snížení fixních nákladů</li>
+                        </ul>
+                    </div>
+                `;
+            }
+
+            document.getElementById('profitabilityAlert').className = `alert-box ${alertClass}`;
+            document.getElementById('profitabilityText').textContent = alertText;
+            document.getElementById('recommendations').innerHTML = recommendations;
+        }
+
+        // Počáteční výpočty
+        calculateSaleCommission();
+        calculateRentCommission();
+        calculateEconomicAnalysis();
+
+        // FUNKCE PRO EDITOVATELNÉ MĚSÍČNÍ NÁKLADY
+        
+        // Přidání nové položky nákladů
+        function addCostItem(category) {
+            const categoryDiv = document.querySelector(`[data-category="${category}"]`);
+            const newItem = document.createElement('div');
+            newItem.className = 'cost-item';
+            newItem.innerHTML = `
+                <input type="text" class="cost-item-name" value="Nová položka" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                <input type="number" class="cost-item-value" value="0" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+            `;
+            categoryDiv.appendChild(newItem);
+            
+            // Přidání event listenerů pro automatické přepočítání
+            const nameInput = newItem.querySelector('.cost-item-name');
+            const valueInput = newItem.querySelector('.cost-item-value');
+            nameInput.addEventListener('input', updateMonthlyCostsTotals);
+            valueInput.addEventListener('input', updateMonthlyCostsTotals);
+            
+            updateMonthlyCostsTotals();
+        }
+        
+        // Odebrání položky nákladů
+        function removeCostItem(button) {
+            if (confirm('Opravdu chcete odstranit tuto položku?')) {
+                button.parentElement.remove();
+                updateMonthlyCostsTotals();
+            }
+        }
+        
+        // Aktualizace celkových součtů
+        function updateMonthlyCostsTotals() {
+            // Mapování kategorií na názvy v breakdown sekci (přesně podle HTML)
+            const categoryMappings = {
+                automobily: 'Automobily celkem',
+                sluzby: 'Služby a technologie', // Tato kategorie není v breakdown - přidáme ji do kancelar
+                kancelar: 'Kancelář a provoz',
+                finance: 'Finance a účetnictví', // Tato kategorie není v breakdown - přidáme ji do ostatni
+                marketing: 'Marketing',
+                ostatni: 'Ostatní služby',
+                parkovani: 'Parkování' // Tato kategorie není v breakdown - přidáme ji do ostatni
+            };
+            
+            // Spočítáme celkové součty pro každou kategorii
+            let categoryTotals = {
+                automobily: 0,
+                kancelarProvoz: 0, // sluzby + kancelar
+                marketing: 0,
+                ostatni: 0 // finance + ostatni + parkovani
+            };
+            
+            let grandTotal = 0;
+            
+            // Spočítáme součty pro každou kategorii
+            ['automobily', 'sluzby', 'kancelar', 'finance', 'marketing', 'ostatni', 'parkovani'].forEach(category => {
+                const categoryDiv = document.querySelector(`[data-category="${category}"]`);
+                if (categoryDiv) {
+                    const valueInputs = categoryDiv.querySelectorAll('.cost-item-value');
+                    let categoryTotal = 0;
+                    
+                    valueInputs.forEach(input => {
+                        categoryTotal += parseFloat(input.value) || 0;
+                    });
+                    
+                    grandTotal += categoryTotal;
+                    
+                    // Přiřadíme do správných breakdown kategorií
+                    if (category === 'automobily') {
+                        categoryTotals.automobily = categoryTotal;
+                    } else if (category === 'sluzby' || category === 'kancelar') {
+                        categoryTotals.kancelarProvoz += categoryTotal;
+                    } else if (category === 'marketing') {
+                        categoryTotals.marketing = categoryTotal;
+                    } else if (category === 'finance' || category === 'ostatni' || category === 'parkovani') {
+                        categoryTotals.ostatni += categoryTotal;
+                    }
+                }
+            });
+            
+            // Aktualizace breakdown sekce
+            const breakdownItems = document.querySelectorAll('.breakdown-item');
+            breakdownItems.forEach(item => {
+                const h5 = item.querySelector('h5');
+                const valueDiv = item.querySelector('.value');
+                
+                if (h5 && valueDiv) {
+                    const title = h5.textContent.trim();
+                    
+                    if (title === 'Automobily celkem') {
+                        valueDiv.textContent = formatCurrency(categoryTotals.automobily);
+                    } else if (title === 'Kancelář a provoz') {
+                        valueDiv.textContent = formatCurrency(categoryTotals.kancelarProvoz);
+                    } else if (title === 'Marketing') {
+                        valueDiv.textContent = formatCurrency(categoryTotals.marketing);
+                    } else if (title === 'Ostatní služby') {
+                        valueDiv.textContent = formatCurrency(categoryTotals.ostatni);
+                    } else if (title === 'CELKOVÉ MĚSÍČNÍ NÁKLADY') {
+                        valueDiv.textContent = formatCurrency(grandTotal);
+                    }
+                }
+            });
+        }
+        
+        // Uložení měsíčních nákladů
+        function saveMonthlyCosts() {
+            const data = {
+                timestamp: new Date().toISOString(),
+                categories: {}
+            };
+            
+            const categories = ['automobily', 'sluzby', 'kancelar', 'finance', 'marketing', 'ostatni', 'parkovani'];
+            
+            categories.forEach(category => {
+                const categoryDiv = document.querySelector(`[data-category="${category}"]`);
+                if (categoryDiv) {
+                    const items = [];
+                    const costItems = categoryDiv.querySelectorAll('.cost-item');
+                    
+                    costItems.forEach(item => {
+                        const name = item.querySelector('.cost-item-name').value;
+                        const value = parseFloat(item.querySelector('.cost-item-value').value) || 0;
+                        items.push({ name, value });
+                    });
+                    
+                    data.categories[category] = items;
+                }
+            });
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('cs-CZ').replace(/\./g, '-');
+            const timeStr = now.toLocaleTimeString('cs-CZ', { hour: '2-digit', minute: '2-digit' }).replace(':', '-');
+            const filename = `mesicni-naklady_${dateStr}_${timeStr}.json`;
+            
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert(`Měsíční náklady byly uloženy jako: ${filename}`);
+        }
+        
+        // Načtení měsíčních nákladů
+        function loadMonthlyCosts() {
+            document.getElementById('costsFileInput').click();
+        }
+        
+        // Event listener pro načtení souboru
+        document.getElementById('costsFileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    // Vymazání stávajících položek
+                    const categories = ['automobily', 'sluzby', 'kancelar', 'finance', 'marketing', 'ostatni', 'parkovani'];
+                    categories.forEach(category => {
+                        const categoryDiv = document.querySelector(`[data-category="${category}"]`);
+                        if (categoryDiv) {
+                            const costItems = categoryDiv.querySelectorAll('.cost-item');
+                            costItems.forEach(item => item.remove());
+                        }
+                    });
+                    
+                    // Načtení nových položek
+                    Object.keys(data.categories).forEach(category => {
+                        const categoryDiv = document.querySelector(`[data-category="${category}"]`);
+                        if (categoryDiv && data.categories[category]) {
+                            data.categories[category].forEach(item => {
+                                const newItemDiv = document.createElement('div');
+                                newItemDiv.className = 'cost-item';
+                                newItemDiv.innerHTML = `
+                                    <input type="text" class="cost-item-name" value="${item.name}" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                                    <input type="number" class="cost-item-value" value="${item.value}" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
+                                    <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
+                                `;
+                                categoryDiv.appendChild(newItemDiv);
+                                
+                                // Přidání event listenerů
+                                const nameInput = newItemDiv.querySelector('.cost-item-name');
+                                const valueInput = newItemDiv.querySelector('.cost-item-value');
+                                nameInput.addEventListener('input', updateMonthlyCostsTotals);
+                                valueInput.addEventListener('input', updateMonthlyCostsTotals);
+                            });
+                        }
+                    });
+                    
+                    updateMonthlyCostsTotals();
+                    
+                    const timestamp = new Date(data.timestamp).toLocaleString('cs-CZ');
+                    alert(`Měsíční náklady byly úspěšně načteny (uloženo: ${timestamp})`);
+                    
+                } catch (error) {
+                    alert('Chyba při načítání souboru. Ujistěte se, že jde o platný JSON soubor.');
+                    console.error('Chyba při načítání:', error);
+                }
+            };
+            reader.readAsText(file);
+            
+            // Vymazání input pro opakované použití
+            event.target.value = '';
+        });
+        
+        // Přidání event listenerů pro existující položky
+        document.addEventListener('DOMContentLoaded', function() {
+            const allCostInputs = document.querySelectorAll('.cost-item-name, .cost-item-value');
+            allCostInputs.forEach(input => {
+                input.addEventListener('input', updateMonthlyCostsTotals);
+            });
+        });
+        
+        // Inicializace event listenerů pro existující položky
+        const allCostInputs = document.querySelectorAll('.cost-item-name, .cost-item-value');
+        allCostInputs.forEach(input => {
+            input.addEventListener('input', updateMonthlyCostsTotals);
+        });
+    </script>
+</body>
+</html>
