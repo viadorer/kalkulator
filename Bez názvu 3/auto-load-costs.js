@@ -202,7 +202,7 @@ class CostsAutoLoader {
 
         try {
             // Vymazání stávajících položek
-            const categories = ['zamestnanci', 'fixni', 'variabilni', 'prodej', 'pronajem', 'externi', 'investicni'];
+            const categories = ['automobily', 'sluzby', 'kancelar', 'finance', 'marketing', 'ostatni', 'parkovani'];
             categories.forEach(category => {
                 const categoryDiv = document.querySelector(`[data-category="${category}"]`);
                 if (categoryDiv) {
@@ -235,54 +235,6 @@ class CostsAutoLoader {
                     });
                 }
             });
-
-            // Načtení příjmů majitele
-            if (data.ownerRevenue) {
-                if (data.ownerRevenue.commissionSale !== undefined) {
-                    const element = document.getElementById('ownerCommissionSale');
-                    if (element) element.value = data.ownerRevenue.commissionSale;
-                }
-                if (data.ownerRevenue.commissionRent !== undefined) {
-                    const element = document.getElementById('ownerCommissionRent');
-                    if (element) element.value = data.ownerRevenue.commissionRent;
-                }
-                if (data.ownerRevenue.transactionsSale !== undefined) {
-                    const element = document.getElementById('ownerTransactionsSale');
-                    if (element) element.value = data.ownerRevenue.transactionsSale;
-                }
-                if (data.ownerRevenue.transactionsRent !== undefined) {
-                    const element = document.getElementById('ownerTransactionsRent');
-                    if (element) element.value = data.ownerRevenue.transactionsRent;
-                }
-            }
-
-            // Načtení provizí a transakcí makléřů
-            if (data.brokerCommissions) {
-                if (data.brokerCommissions.avgCommissionSale !== undefined) {
-                    const element = document.getElementById('avgCommissionSale');
-                    if (element) element.value = data.brokerCommissions.avgCommissionSale;
-                }
-                if (data.brokerCommissions.avgCommissionRent !== undefined) {
-                    const element = document.getElementById('avgCommissionRent');
-                    if (element) element.value = data.brokerCommissions.avgCommissionRent;
-                }
-                if (data.brokerCommissions.transactionsSale !== undefined) {
-                    const element = document.getElementById('transactionsSale');
-                    if (element) element.value = data.brokerCommissions.transactionsSale;
-                }
-                if (data.brokerCommissions.transactionsRent !== undefined) {
-                    const element = document.getElementById('transactionsRent');
-                    if (element) element.value = data.brokerCommissions.transactionsRent;
-                }
-                if (data.brokerCommissions.commissionSplitSale !== undefined) {
-                    const element = document.getElementById('commissionSplitSale');
-                    if (element) element.value = data.brokerCommissions.commissionSplitSale;
-                }
-                if (data.brokerCommissions.commissionSplitRent !== undefined) {
-                    const element = document.getElementById('commissionSplitRent');
-                    if (element) element.value = data.brokerCommissions.commissionSplitRent;
-                }
-            }
 
             // Aktualizace celkových součtů
             if (typeof updateMonthlyCostsTotals === 'function') {

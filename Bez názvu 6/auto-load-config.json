@@ -1,0 +1,52 @@
+{
+  "autoLoader": {
+    "enabled": true,
+    "watchInterval": 30000,
+    "downloadsPath": {
+      "mac": "/Users/{username}/Downloads",
+      "windows": "C:\\Users\\{username}\\Downloads",
+      "linux": "/home/{username}/Downloads"
+    },
+    "filePattern": "^mesicni-naklady_.*\\.json$",
+    "autoApply": true,
+    "notifications": {
+      "enabled": true,
+      "showSuccess": true,
+      "showErrors": true
+    },
+    "backup": {
+      "enabled": true,
+      "maxBackups": 5,
+      "backupPath": "./backups"
+    }
+  },
+  "defaultUser": {
+    "username": "david",
+    "preferredLanguage": "cs-CZ",
+    "timezone": "Europe/Prague"
+  },
+  "fileHandling": {
+    "maxFileSize": 10485760,
+    "allowedExtensions": [".json"],
+    "encoding": "utf-8"
+  },
+  "ui": {
+    "showAutoLoadButton": true,
+    "buttonText": "Auto-načíst z Downloads",
+    "buttonStyle": {
+      "background": "#7c3aed",
+      "color": "white",
+      "padding": "10px 20px",
+      "border": "none",
+      "borderRadius": "8px",
+      "margin": "0 5px",
+      "cursor": "pointer"
+    }
+  },
+  "logging": {
+    "enabled": true,
+    "level": "info",
+    "logToConsole": true,
+    "logToFile": false
+  }
+}

@@ -48,45 +48,6 @@
             opacity: 0.8;
         }
 
-
-        /* Navigační lišta kalkulaček */
-        .calculator-nav {
-            display: flex;
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border: 1px solid #e9ecef;
-        }
-
-        .calc-nav-item {
-            flex: 1;
-            padding: 12px 20px;
-            text-align: center;
-            background: transparent;
-            border: none;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: #6c757d;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .calc-nav-item:hover {
-            background: #e9ecef;
-            color: #495057;
-        }
-
-        .calc-nav-item.active {
-            background: #495057;
-            color: white;
-            box-shadow: 0 2px 6px rgba(73, 80, 87, 0.3);
-        }
-
-        /* Navigační lišta tabů hlavní kalkulačky */
         .nav-tabs {
             display: flex;
             background: white;
@@ -124,12 +85,10 @@
 
         .tab-content {
             display: none;
-            padding: 20px;
             background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-top: 20px;
-            min-height: 500px;
+            border-radius: 18px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
         }
 
         .tab-content.active {
@@ -472,24 +431,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 8px 0;
-            border-bottom: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e5e7;
             gap: 10px;
-        }
-
-        .cost-item-checkbox {
-            width: 16px;
-            height: 16px;
-            margin-right: 8px;
-            cursor: pointer;
-        }
-
-        .cost-item-checkbox:checked + .cost-item-name {
-            color: #059669;
-            font-weight: 500;
-        }
-
-        .cost-item.reducible {
-            background-color: #f0fdf4;
         }
 
         .cost-item:last-child {
@@ -653,11 +596,11 @@
                 grid-template-columns: 1fr;
             }
 
-            .tab-nav {
+            .nav-tabs {
                 flex-direction: column;
             }
 
-            .tab-nav-item {
+            .nav-tab {
                 margin-bottom: 4px;
             }
 
@@ -1127,34 +1070,20 @@
         <div class="header">
             <h1>Kompletní kalkulačka RK</h1>
             <p>Prodej, pronájem a ekonomická rozvaha</p>
-            <div style="margin-top: 20px; display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
+            <div style="margin-top: 20px;">
                 <a href="zamer.html" style="display: inline-block; background: rgba(255,255,255,0.2); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 500; transition: all 0.3s ease; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3);" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
                     Komplexní kalkulačka záměru
                 </a>
-                <button onclick="showTab('garantovany')" style="background: rgba(255,255,255,0.2); color: white; padding: 12px 24px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); font-weight: 500; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(10px);" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
-                    Garantovaný nájem
-                </button>
-                <button onclick="showTab('leadgen')" style="background: rgba(255,255,255,0.2); color: white; padding: 12px 24px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); font-weight: 500; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(10px);" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
-                    Online Lead Generation
-                </button>
             </div>
         </div>
 
-        <!-- NAVIGAČNÍ LIŠTA KALKULAČEK -->
-        <div class="calculator-nav">
-            <a href="index.html" class="calc-nav-item active">Hlavní kalkulačka</a>
-            <a href="developer_calculator.html" class="calc-nav-item">Developer kalkulačka</a>
-            <a href="zamer.html" class="calc-nav-item">Záměr kalkulačka</a>
-        </div>
-
-        <!-- NAVIGAČNÍ LIŠTA TABŮ HLAVNÍ KALKULAČKY -->
         <div class="nav-tabs">
             <button class="nav-tab active" onclick="showTab('prodej')">Prodej</button>
             <button class="nav-tab" onclick="showTab('pronajem')">Pronájem</button>
             <button class="nav-tab" onclick="showTab('rozvaha')">Ekonomická rozvaha</button>
             <button class="nav-tab" onclick="showTab('naklady')">Měsíční náklady</button>
-            <button class="nav-tab" onclick="window.open('index 2.html#garantovany', '_blank')">Garantovaný nájem</button>
-            <button class="nav-tab" onclick="window.open('index 2.html#leadgen', '_blank')">Lead Generation</button>
+            <button class="nav-tab" onclick="showTab('garantovany')">Garantovaný nájem</button>
+            <button class="nav-tab" onclick="showTab('leadgen')">Online Lead Generation</button>
         </div>
 
         <!-- TAB PRODEJ -->
@@ -1598,15 +1527,7 @@
                         <p style="margin: 0 0 15px 0; color: #6b7280; font-size: 0.9rem;">Náklady, které máte každý měsíc bez ohledu na počet zakázek</p>
                         
                         <div class="cost-category" data-category="fixni">
-                            <h4 style="color: #374151; margin-bottom: 15px;">Nájem, energie, pojištění <button onclick="addCostItem('fixni')" style="background: #4b5563; color: white; border: none; border-radius: 4px; padding: 6px 12px; margin-left: 10px; cursor: pointer; font-size: 0.9rem;">+ Přidat položku</button></h4>
-                        </div>
-                        
-                        <!-- Součet fixních nákladů -->
-                        <div style="padding: 12px; background: #f9fafb; border: 1px solid #d1d5db; border-radius: 6px; margin-top: 15px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span style="color: #374151; font-weight: 600;">Celkem fixní náklady:</span>
-                                <span id="fixni-category-total" style="color: #111827; font-weight: 700; font-size: 1.1rem;">0 Kč</span>
-                            </div>
+                            <h4 style="color: #374151; margin-bottom: 15px;">Nájem, pojištění, licence, služby <button onclick="addCostItem('fixni')" style="background: #4b5563; color: white; border: none; border-radius: 4px; padding: 6px 12px; margin-left: 10px; cursor: pointer; font-size: 0.9rem;">+ Přidat položku</button></h4>
                         </div>
                     </div>
 
@@ -1618,14 +1539,6 @@
                         <div class="cost-category" data-category="variabilni">
                             <h4 style="color: #374151; margin-bottom: 15px;">Palivo, marketing, cestovné <button onclick="addCostItem('variabilni')" style="background: #4b5563; color: white; border: none; border-radius: 4px; padding: 6px 12px; margin-left: 10px; cursor: pointer; font-size: 0.9rem;">+ Přidat položku</button></h4>
                         </div>
-                        
-                        <!-- Součet variabilních nákladů -->
-                        <div style="padding: 12px; background: #f9fafb; border: 1px solid #d1d5db; border-radius: 6px; margin-top: 15px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span style="color: #374151; font-weight: 600;">Celkem variabilní náklady:</span>
-                                <span id="variabilni-category-total" style="color: #111827; font-weight: 700; font-size: 1.1rem;">0 Kč</span>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- NÁKLADY NA PRODEJ -->
@@ -1636,14 +1549,6 @@
                         <div class="cost-category" data-category="prodej">
                             <h4 style="color: #374151; margin-bottom: 15px;">Fotografie, právník, inzerce <button onclick="addCostItem('prodej')" style="background: #4b5563; color: white; border: none; border-radius: 4px; padding: 6px 12px; margin-left: 10px; cursor: pointer; font-size: 0.9rem;">+ Přidat položku</button></h4>
                         </div>
-                        
-                        <!-- Součet nákladů na prodej -->
-                        <div style="padding: 12px; background: #f9fafb; border: 1px solid #d1d5db; border-radius: 6px; margin-top: 15px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span style="color: #374151; font-weight: 600;">Celkem náklady na prodej (za jednotku):</span>
-                                <span id="prodej-category-total" style="color: #111827; font-weight: 700; font-size: 1.1rem;">0 Kč</span>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- NÁKLADY NA PRONÁJEM -->
@@ -1653,14 +1558,6 @@
                         
                         <div class="cost-category" data-category="pronajem">
                             <h4 style="color: #374151; margin-bottom: 15px;">Fotografie, právník, inzerce <button onclick="addCostItem('pronajem')" style="background: #4b5563; color: white; border: none; border-radius: 4px; padding: 6px 12px; margin-left: 10px; cursor: pointer; font-size: 0.9rem;">+ Přidat položku</button></h4>
-                        </div>
-                        
-                        <!-- Součet nákladů na pronájem -->
-                        <div style="padding: 12px; background: #f9fafb; border: 1px solid #d1d5db; border-radius: 6px; margin-top: 15px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span style="color: #374151; font-weight: 600;">Celkem náklady na pronájem (za jednotku):</span>
-                                <span id="pronajem-category-total" style="color: #111827; font-weight: 700; font-size: 1.1rem;">0 Kč</span>
-                            </div>
                         </div>
                     </div>
 
@@ -1746,82 +1643,6 @@
                         <div class="cost-category" data-category="externi" style="margin-top: 20px;">
                             <h4 style="color: #374151; margin-bottom: 15px;">Další externí náklady <button onclick="addCostItem('externi')" style="background: #4b5563; color: white; border: none; border-radius: 4px; padding: 6px 12px; margin-left: 10px; cursor: pointer; font-size: 0.9rem;">+ Přidat položku</button></h4>
                         </div>
-                        
-                        <!-- Součet externích nákladů -->
-                        <div style="padding: 12px; background: #f9fafb; border: 1px solid #d1d5db; border-radius: 6px; margin-top: 15px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span style="color: #374151; font-weight: 600;">Celkem externí náklady:</span>
-                                <span id="externi-category-total" style="color: #111827; font-weight: 700; font-size: 1.1rem;">0 Kč</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PŘÍJMY MAJITELE -->
-                    <div class="cost-section" style="margin-bottom: 20px; background: #ffffff; border-radius: 6px; padding: 20px; border: 1px solid #10b981;">
-                        <h3 style="margin: 0 0 15px 0; color: #047857; font-size: 1.2rem; font-weight: 600; border-bottom: 1px solid #10b981; padding-bottom: 8px;">Příjmy majitele (bez provizních nákladů)</h3>
-                        <p style="margin: 0 0 15px 0; color: #6b7280; font-size: 0.9rem;">Transakce realizované přímo majitelem bez nákladů na externí makléře</p>
-                        
-                        <!-- Základní parametry -->
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 25px;">
-                            <div>
-                                <label style="display: block; margin-bottom: 6px; color: #047857; font-weight: 500;">Průměrná provize - Prodej (Kč)</label>
-                                <input type="number" id="ownerCommissionSale" min="0" value="0" style="width: 100%; padding: 8px; border: 1px solid #10b981; border-radius: 4px; font-size: 0.95rem;" oninput="updateMonthlyCostsTotals()">
-                            </div>
-                            <div>
-                                <label style="display: block; margin-bottom: 6px; color: #047857; font-weight: 500;">Průměrná provize - Pronájem (Kč)</label>
-                                <input type="number" id="ownerCommissionRent" min="0" value="0" style="width: 100%; padding: 8px; border: 1px solid #10b981; border-radius: 4px; font-size: 0.95rem;" oninput="updateMonthlyCostsTotals()">
-                            </div>
-                            <div>
-                                <label style="display: block; margin-bottom: 6px; color: #047857; font-weight: 500;">Počet prodejů měsíčně</label>
-                                <input type="number" id="ownerTransactionsSale" min="0" value="0" style="width: 100%; padding: 8px; border: 1px solid #10b981; border-radius: 4px; font-size: 0.95rem;" oninput="updateMonthlyCostsTotals()">
-                            </div>
-                            <div>
-                                <label style="display: block; margin-bottom: 6px; color: #047857; font-weight: 500;">Počet pronájmů měsíčně</label>
-                                <input type="number" id="ownerTransactionsRent" min="0" value="0" style="width: 100%; padding: 8px; border: 1px solid #10b981; border-radius: 4px; font-size: 0.95rem;" oninput="updateMonthlyCostsTotals()">
-                            </div>
-                        </div>
-
-                        <!-- Automatické výpočty -->
-                        <div style="padding: 15px; background: #ecfdf5; border: 1px solid #10b981; border-radius: 6px;">
-                            <h5 style="color: #047857; margin: 0 0 12px 0; font-size: 1rem; font-weight: 600;">Automatické výpočty příjmů majitele</h5>
-                            
-                            <div style="display: grid; gap: 8px; font-size: 0.9rem;">
-                                <div style="display: flex; justify-content: space-between; padding: 4px 0;">
-                                    <span style="color: #374151;">Prodeje: <span id="owner-sales-formula" style="color: #6b7280; font-size: 0.8rem;">0 × 0 Kč</span></span>
-                                    <span id="owner-sales-total" style="color: #047857; font-weight: 600;">0 Kč</span>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; padding: 4px 0;">
-                                    <span style="color: #374151;">Pronájmy: <span id="owner-rents-formula" style="color: #6b7280; font-size: 0.8rem;">0 × 0 Kč</span></span>
-                                    <span id="owner-rents-total" style="color: #047857; font-weight: 600;">0 Kč</span>
-                                </div>
-                                <div style="display: flex; justify-content: space-between; padding: 8px 0; border-top: 2px solid #047857; margin-top: 8px; font-weight: 700;">
-                                    <span style="color: #047857;">Celkové příjmy majitele</span>
-                                    <span id="total-owner-revenue" style="color: #047857;">0 Kč</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- INVESTIČNÍ NÁKLADY -->
-                    <div class="cost-section" style="margin-bottom: 20px; background: #ffffff; border-radius: 6px; padding: 20px; border: 1px solid #f59e0b;">
-                        <h3 style="margin: 0 0 15px 0; color: #d97706; font-size: 1.2rem; font-weight: 600; border-bottom: 1px solid #f59e0b; padding-bottom: 8px;">Investiční náklady (roční)</h3>
-                        <p style="margin: 0 0 15px 0; color: #6b7280; font-size: 0.9rem;">Náklady placené jednou ročně, rozpuštěné do měsíčních výpočtů (1/12)</p>
-                        
-                        <div class="cost-category" data-category="investicni">
-                            <h4 style="color: #d97706; margin-bottom: 15px;">Roční investice <button onclick="addCostItem('investicni')" style="background: #f59e0b; color: white; border: none; border-radius: 4px; padding: 6px 12px; margin-left: 10px; cursor: pointer; font-size: 0.9rem;">+ Přidat položku</button></h4>
-                        </div>
-
-                        <!-- Souhrn investičních nákladů -->
-                        <div style="padding: 15px; background: #fef3c7; border: 1px solid #f59e0b; border-radius: 6px; margin-top: 20px;">
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                                <span style="color: #d97706; font-weight: 600;">Celkem ročně:</span>
-                                <span id="total-investment-yearly" style="color: #d97706; font-weight: 700;">0 Kč</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-top: 2px solid #d97706; font-weight: 700;">
-                                <span style="color: #d97706;">Měsíční rozpuštění (1/12):</span>
-                                <span id="total-investment-monthly" style="color: #d97706;">0 Kč</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -1853,10 +1674,6 @@
                     <div class="breakdown-item" style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 6px; padding: 15px; text-align: center;">
                         <h5 style="color: #6b7280; margin: 0 0 8px 0; font-size: 0.8rem; font-weight: 500; text-transform: uppercase;">Externí makléři</h5>
                         <div class="value" id="externi-total" style="color: #111827; font-weight: 700; font-size: 1.3rem;">0 Kč</div>
-                    </div>
-                    <div class="breakdown-item" style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 6px; padding: 15px; text-align: center;">
-                        <h5 style="color: #6b7280; margin: 0 0 8px 0; font-size: 0.8rem; font-weight: 500; text-transform: uppercase;">Investiční náklady</h5>
-                        <div class="value" id="investicni-total" style="color: #111827; font-weight: 700; font-size: 1.3rem;">0 Kč</div>
                     </div>
                     <div class="breakdown-item" style="background: #f3f4f6; border: 2px solid #9ca3af; border-radius: 6px; padding: 15px; text-align: center; grid-column: span 2;">
                         <h5 style="color: #374151; margin: 0 0 8px 0; font-size: 0.9rem; font-weight: 600; text-transform: uppercase;">Celkové měsíční náklady</h5>
@@ -2012,6 +1829,13 @@
                     <div style="margin-bottom: 40px;">
                         <h4 style="margin: 0 0 20px 0; font-size: 1.2rem; font-weight: 600; color: #374151; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px;">Pokročilá finanční analýza</h4>
                         
+                        <!-- BREAKDOWN NÁKLADŮ -->
+                        <div style="margin-bottom: 20px; background: #ffffff; border-radius: 6px; padding: 20px; border: 1px solid #d1d5db;">
+                            <h5 style="margin: 0 0 15px 0; color: #374151; font-size: 1.1rem; font-weight: 600; border-bottom: 1px solid #d1d5db; padding-bottom: 8px;">Detailní breakdown nákladů</h5>
+                            <div id="costBreakdown" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
+                                <!-- Bude naplněno JavaScriptem -->
+                            </div>
+                        </div>
 
                         <!-- KPI METRIKY -->
                         <div style="margin-bottom: 20px; background: #ffffff; border-radius: 6px; padding: 20px; border: 1px solid #d1d5db;">
@@ -2127,291 +1951,14 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Analýza významných nákladových položek -->
-                        <div style="margin: 30px 0; background: #ffffff; border-radius: 12px; padding: 30px; border: 1px solid #d1d5db; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-                            <h4 style="margin: 0 0 25px 0; font-size: 1.3rem; font-weight: 700; color: #374151; border-bottom: 3px solid #e5e7eb; padding-bottom: 12px;">Analýza významných nákladových položek</h4>
-                            
-                            <!-- Top 5 největších položek -->
-                            <div style="margin-bottom: 35px;">
-                                <h5 style="margin: 0 0 20px 0; color: #374151; font-size: 1.15rem; font-weight: 600;">Top 5 největších nákladových položek</h5>
-                                <div id="topCostItems" style="display: grid; gap: 15px;">
-                                    <!-- Bude naplněno JavaScriptem -->
-                                </div>
-                                
-                                <!-- Přehled optimalizovatelných nákladů -->
-                                <div style="margin-top: 25px; padding: 20px; background: #f0fdf4; border-radius: 8px; border: 1px solid #bbf7d0;">
-                                    <h6 style="margin: 0 0 15px 0; color: #059669; font-weight: 600; font-size: 1rem;">Optimalizovatelné náklady</h6>
-                                    <div id="reducibleCostItems" style="display: grid; gap: 10px;">
-                                        <!-- Bude naplněno JavaScriptem -->
-                                    </div>
-                                    <div id="reducibleCostSummary" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #bbf7d0;">
-                                        <!-- Bude naplněno JavaScriptem -->
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Analýza prodeje vs. pronájmu -->
-                            <div style="margin-bottom: 35px;">
-                                <h5 style="margin: 0 0 20px 0; color: #374151; font-size: 1.15rem; font-weight: 600;">Analýza rentability prodeje vs. pronájmu</h5>
-                                
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px;">
-                                    <!-- Prodej nemovitostí -->
-                                    <div style="background: #f8fafc; border-radius: 10px; padding: 25px; border: 2px solid #3b82f6;">
-                                        <h6 style="margin: 0 0 20px 0; color: #1e40af; font-weight: 700; font-size: 1.1rem;">
-                                            PRODEJ NEMOVITOSTÍ
-                                        </h6>
-                                        
-                                        <div style="display: grid; gap: 12px; margin-bottom: 20px;">
-                                            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
-                                                <span style="color: #6b7280; font-weight: 500;">Průměrná provize:</span>
-                                                <span style="font-weight: 700; color: #1e40af; font-size: 1.05rem;">120 000 Kč</span>
-                                            </div>
-                                            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
-                                                <span style="color: #6b7280; font-weight: 500;">Náklady na transakci:</span>
-                                                <span id="saleCostPerTransaction" style="font-weight: 700; color: #374151; font-size: 1.05rem;">0 Kč</span>
-                                            </div>
-                                            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
-                                                <span style="color: #6b7280; font-weight: 500;">Čistý zisk:</span>
-                                                <span id="saleNetProfit" style="font-weight: 700; color: #059669; font-size: 1.05rem;">0 Kč</span>
-                                            </div>
-                                            <div style="display: flex; justify-content: space-between; padding: 8px 0;">
-                                                <span style="color: #6b7280; font-weight: 500;">Marže:</span>
-                                                <span id="saleMargin" style="font-weight: 700; color: #1e40af; font-size: 1.05rem;">0%</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <div style="background: #ffffff; border-radius: 8px; padding: 15px; border: 1px solid #e5e7eb;">
-                                            <div style="font-size: 0.9rem; color: #6b7280; margin-bottom: 6px; font-weight: 500;">Potřebné transakce/měsíc pro break-even</div>
-                                            <div id="saleBreakevenTransactions" style="font-size: 1.4rem; font-weight: 800; color: #1e40af;">0</div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Pronájem nemovitostí -->
-                                    <div style="background: #f0fdf4; border-radius: 10px; padding: 25px; border: 2px solid #10b981;">
-                                        <h6 style="margin: 0 0 20px 0; color: #047857; font-weight: 700; font-size: 1.1rem;">
-                                            PRONÁJEM NEMOVITOSTÍ
-                                        </h6>
-                                        
-                                        <div style="display: grid; gap: 12px; margin-bottom: 20px;">
-                                            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
-                                                <span style="color: #6b7280; font-weight: 500;">Průměrná provize:</span>
-                                                <span style="font-weight: 700; color: #047857; font-size: 1.05rem;">15 000 Kč</span>
-                                            </div>
-                                            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
-                                                <span style="color: #6b7280; font-weight: 500;">Náklady na transakci:</span>
-                                                <span id="rentCostPerTransaction" style="font-weight: 700; color: #374151; font-size: 1.05rem;">0 Kč</span>
-                                            </div>
-                                            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
-                                                <span style="color: #6b7280; font-weight: 500;">Čistý zisk:</span>
-                                                <span id="rentNetProfit" style="font-weight: 700; color: #059669; font-size: 1.05rem;">0 Kč</span>
-                                            </div>
-                                            <div style="display: flex; justify-content: space-between; padding: 8px 0;">
-                                                <span style="color: #6b7280; font-weight: 500;">Marže:</span>
-                                                <span id="rentMargin" style="font-weight: 700; color: #047857; font-size: 1.05rem;">0%</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <div style="background: #ffffff; border-radius: 8px; padding: 15px; border: 1px solid #e5e7eb;">
-                                            <div style="font-size: 0.9rem; color: #6b7280; margin-bottom: 6px; font-weight: 500;">Potřebné transakce/měsíc pro break-even</div>
-                                            <div id="rentBreakevenTransactions" style="font-size: 1.4rem; font-weight: 800; color: #047857;">0</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Srovnávací tabulka -->
-                                <div style="background: #ffffff; border-radius: 10px; padding: 25px; border: 1px solid #d1d5db; margin-top: 25px;">
-                                    <h6 style="margin: 0 0 20px 0; color: #374151; font-weight: 700; font-size: 1.1rem;">Srovnání rentability</h6>
-                                    <div style="overflow-x: auto;">
-                                        <table style="width: 100%; border-collapse: collapse; font-size: 1rem;">
-                                            <thead>
-                                                <tr style="background: #f8fafc;">
-                                                    <th style="padding: 16px 12px; text-align: left; border-bottom: 2px solid #d1d5db; color: #374151; font-weight: 700; font-size: 1rem;">Metrika</th>
-                                                    <th style="padding: 16px 12px; text-align: center; border-bottom: 2px solid #d1d5db; color: #1e40af; font-weight: 700; font-size: 1rem;">Prodej</th>
-                                                    <th style="padding: 16px 12px; text-align: center; border-bottom: 2px solid #d1d5db; color: #047857; font-weight: 700; font-size: 1rem;">Pronájem</th>
-                                                    <th style="padding: 16px 12px; text-align: center; border-bottom: 2px solid #d1d5db; color: #6b7280; font-weight: 700; font-size: 1rem;">Poměr</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr style="border-bottom: 1px solid #f3f4f6;">
-                                                    <td style="padding: 14px 12px; color: #374151; font-weight: 600;">Průměrná provize</td>
-                                                    <td style="padding: 14px 12px; text-align: center; color: #1e40af; font-weight: 700;">120 000 Kč</td>
-                                                    <td style="padding: 14px 12px; text-align: center; color: #047857; font-weight: 700;">15 000 Kč</td>
-                                                    <td style="padding: 14px 12px; text-align: center; color: #6b7280; font-weight: 700;">8:1</td>
-                                                </tr>
-                                                <tr style="border-bottom: 1px solid #f3f4f6;">
-                                                    <td style="padding: 14px 12px; color: #374151; font-weight: 600;">Čistý zisk</td>
-                                                    <td id="saleNetProfitTable" style="padding: 14px 12px; text-align: center; color: #1e40af; font-weight: 700;">0 Kč</td>
-                                                    <td id="rentNetProfitTable" style="padding: 14px 12px; text-align: center; color: #047857; font-weight: 700;">0 Kč</td>
-                                                    <td id="profitRatio" style="padding: 14px 12px; text-align: center; color: #6b7280; font-weight: 700;">-</td>
-                                                </tr>
-                                                <tr style="border-bottom: 1px solid #f3f4f6;">
-                                                    <td style="padding: 14px 12px; color: #374151; font-weight: 600;">ROI na transakci</td>
-                                                    <td id="saleROI" style="padding: 14px 12px; text-align: center; color: #1e40af; font-weight: 700;">0%</td>
-                                                    <td id="rentROI" style="padding: 14px 12px; text-align: center; color: #047857; font-weight: 700;">0%</td>
-                                                    <td id="roiComparison" style="padding: 14px 12px; text-align: center; color: #6b7280; font-weight: 700;">-</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="padding: 14px 12px; color: #374151; font-weight: 600;">Doporučený mix</td>
-                                                    <td id="recommendedSaleMix" style="padding: 14px 12px; text-align: center; color: #1e40af; font-weight: 700;">70%</td>
-                                                    <td id="recommendedRentMix" style="padding: 14px 12px; text-align: center; color: #047857; font-weight: 700;">30%</td>
-                                                    <td style="padding: 14px 12px; text-align: center; color: #6b7280; font-weight: 700;">Optimální</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Roční analýza příjmů a výdajů -->
-                        <div style="margin: 30px 0; background: #ffffff; border-radius: 12px; padding: 30px; border: 1px solid #d1d5db; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
-                            <h4 style="margin: 0 0 25px 0; font-size: 1.3rem; font-weight: 700; color: #374151; border-bottom: 3px solid #e5e7eb; padding-bottom: 12px;">Roční analýza příjmů a výdajů</h4>
-                            
-                            <!-- Roční přehled -->
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px;">
-                                <!-- Roční náklady -->
-                                <div style="background: #f8fafc; border-radius: 10px; padding: 25px; border: 2px solid #ef4444;">
-                                    <h6 style="margin: 0 0 20px 0; color: #dc2626; font-weight: 700; font-size: 1.1rem;">
-                                        ROČNÍ NÁKLADY
-                                    </h6>
-                                    <div style="font-size: 2rem; font-weight: 800; color: #dc2626; margin-bottom: 10px;" id="annualCosts">0 Kč</div>
-                                    <div style="font-size: 0.9rem; color: #6b7280; font-weight: 500;">Celkové provozní náklady za rok</div>
-                                </div>
-                                
-                                <!-- Roční příjmy a zisk -->
-                                <div style="background: #f0fdf4; border-radius: 10px; padding: 25px; border: 2px solid #10b981;">
-                                    <h6 style="margin: 0 0 20px 0; color: #047857; font-weight: 700; font-size: 1.1rem;">
-                                        ROČNÍ PŘÍJMY A ZISK
-                                    </h6>
-                                    <div style="display: grid; gap: 15px;">
-                                        <div>
-                                            <div style="font-size: 0.95rem; color: #6b7280; margin-bottom: 6px; font-weight: 500;">Příjmy:</div>
-                                            <div style="font-size: 1.8rem; font-weight: 800; color: #047857;" id="annualRevenue">0 Kč</div>
-                                        </div>
-                                        <div>
-                                            <div style="font-size: 0.95rem; color: #6b7280; margin-bottom: 6px; font-weight: 500;">Čistý zisk:</div>
-                                            <div style="font-size: 1.8rem; font-weight: 800;" id="annualProfit">0 Kč</div>
-                                        </div>
-                                    </div>
-                                    <div style="font-size: 0.9rem; color: #6b7280; margin-top: 15px; font-weight: 500;">Odhad na základě transakcí</div>
-                                </div>
-                            </div>
-                            
-                            <!-- Detailní roční analýza -->
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px;">
-                                <!-- Struktura ročních nákladů -->
-                                <div style="background: #ffffff; border-radius: 10px; padding: 25px; border: 1px solid #d1d5db;">
-                                    <h6 style="margin: 0 0 20px 0; color: #374151; font-weight: 700; font-size: 1.1rem;">Struktura ročních nákladů</h6>
-                                    <div id="annualCostBreakdown" style="display: grid; gap: 10px;">
-                                        <!-- Bude naplněno JavaScriptem -->
-                                    </div>
-                                </div>
-                                
-                                <!-- Roční výkonnostní metriky -->
-                                <div style="background: #ffffff; border-radius: 10px; padding: 25px; border: 1px solid #d1d5db;">
-                                    <h6 style="margin: 0 0 20px 0; color: #374151; font-weight: 700; font-size: 1.1rem;">Roční výkonnostní metriky</h6>
-                                    <div style="display: grid; gap: 15px;">
-                                        <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
-                                            <span style="color: #6b7280; font-weight: 500;">ROI za rok:</span>
-                                            <span id="annualROI" style="font-weight: 700; color: #374151; font-size: 1.05rem;">0%</span>
-                                        </div>
-                                        <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
-                                            <span style="color: #6b7280; font-weight: 500;">Potřebné transakce:</span>
-                                            <span id="annualBreakevenTransactions" style="font-weight: 700; color: #374151; font-size: 1.05rem;">0</span>
-                                        </div>
-                                        <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
-                                            <span style="color: #6b7280; font-weight: 500;">Průměr/transakci:</span>
-                                            <span id="averageRevenuePerTransaction" style="font-weight: 700; color: #374151; font-size: 1.05rem;">0 Kč</span>
-                                        </div>
-                                        <div style="display: flex; justify-content: space-between; padding: 8px 0;">
-                                            <span style="color: #6b7280; font-weight: 500;">Marže:</span>
-                                            <span id="annualMargin" style="font-weight: 700; color: #374151; font-size: 1.05rem;">0%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Scénáře ročního vývoje -->
-                            <div style="background: #f0f9ff; border-radius: 10px; padding: 25px; border: 1px solid #0ea5e9;">
-                                <h6 style="margin: 0 0 20px 0; color: #0369a1; font-weight: 700; font-size: 1.1rem;">Scénáře ročního vývoje</h6>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
-                                    <div style="background: white; border-radius: 8px; padding: 20px; text-align: center; border: 1px solid #e5e7eb;">
-                                        <div style="font-size: 0.85rem; color: #6b7280; margin-bottom: 6px; font-weight: 600;">KONZERVATIVNÍ</div>
-                                        <div style="font-size: 1.4rem; font-weight: 800; color: #dc2626;" id="conservativeAnnualProfit">0 Kč</div>
-                                        <div style="font-size: 0.8rem; color: #6b7280; margin-top: 4px;">24 transakcí/rok</div>
-                                    </div>
-                                    <div style="background: white; border-radius: 8px; padding: 20px; text-align: center; border: 1px solid #e5e7eb;">
-                                        <div style="font-size: 0.85rem; color: #6b7280; margin-bottom: 6px; font-weight: 600;">REALISTICKÝ</div>
-                                        <div style="font-size: 1.4rem; font-weight: 800; color: #f59e0b;" id="realisticAnnualProfit">0 Kč</div>
-                                        <div style="font-size: 0.8rem; color: #6b7280; margin-top: 4px;">36 transakcí/rok</div>
-                                    </div>
-                                    <div style="background: white; border-radius: 8px; padding: 20px; text-align: center; border: 1px solid #e5e7eb;">
-                                        <div style="font-size: 0.85rem; color: #6b7280; margin-bottom: 6px; font-weight: 600;">OPTIMISTICKÝ</div>
-                                        <div style="font-size: 1.4rem; font-weight: 800; color: #10b981;" id="optimisticAnnualProfit">0 Kč</div>
-                                        <div style="font-size: 0.8rem; color: #6b7280; margin-top: 4px;">48 transakcí/rok</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Strategická doporučení -->
+                    <!-- Strategická doporučení -->
                     <div>
                         <h4 style="margin: 0 0 20px 0; font-size: 1.2rem; font-weight: 600; color: #374151; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px;">Strategická doporučení pro optimalizaci nákladů</h4>
                         
-                        <!-- Ovládací panel pro filtrování doporučení -->
-                        <div style="background: #f8fafc; border-radius: 8px; padding: 15px; margin-bottom: 20px; border: 1px solid #e2e8f0;">
-                            <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
-                                <span style="font-weight: 600; color: #374151; margin-right: 10px;">Filtrovat podle:</span>
-                                <button onclick="filterRecommendations('all')" id="filter-all" class="filter-btn active" style="padding: 6px 12px; border: 1px solid #d1d5db; border-radius: 4px; background: #3b82f6; color: white; cursor: pointer; font-size: 0.85rem;">Vše</button>
-                                <button onclick="filterRecommendations('critical')" id="filter-critical" class="filter-btn" style="padding: 6px 12px; border: 1px solid #d1d5db; border-radius: 4px; background: white; color: #374151; cursor: pointer; font-size: 0.85rem;">Kritické</button>
-                                <button onclick="filterRecommendations('quick-wins')" id="filter-quick-wins" class="filter-btn" style="padding: 6px 12px; border: 1px solid #d1d5db; border-radius: 4px; background: white; color: #374151; cursor: pointer; font-size: 0.85rem;">Rychlé výsledky</button>
-                                <button onclick="filterRecommendations('long-term')" id="filter-long-term" class="filter-btn" style="padding: 6px 12px; border: 1px solid #d1d5db; border-radius: 4px; background: white; color: #374151; cursor: pointer; font-size: 0.85rem;">Dlouhodobé</button>
-                                <button onclick="toggleImplementationView()" id="toggle-implementation" style="padding: 6px 12px; border: 1px solid #10b981; border-radius: 4px; background: #10b981; color: white; cursor: pointer; font-size: 0.85rem; margin-left: auto;">Akční plány</button>
-                            </div>
-                        </div>
-                        
                         <div id="costOptimizationRecommendations" style="display: grid; gap: 20px;">
                             <!-- Bude naplněno JavaScriptem -->
-                        </div>
-                        
-                        <!-- Implementační plány -->
-                        <div id="implementationPlans" style="display: none; margin-top: 30px;">
-                            <h5 style="margin: 0 0 20px 0; color: #374151; font-size: 1.1rem; font-weight: 600; border-bottom: 1px solid #d1d5db; padding-bottom: 8px;">Implementační plány a časové harmonogramy</h5>
-                            <div id="implementationContent">
-                                <!-- Bude naplněno JavaScriptem -->
-                            </div>
-                        </div>
-                        
-                        <!-- Nová sekce pro detailní lead generation analýzu -->
-                        <div style="margin-top: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 25px; color: white;">
-                            <h5 style="margin: 0 0 20px 0; color: white; font-size: 1.2rem; font-weight: 600;">Lead Generation & ROI Kalkulátor</h5>
-                            
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 20px;">
-                                <div style="background: rgba(255,255,255,0.1); border-radius: 8px; padding: 15px; backdrop-filter: blur(10px);">
-                                    <h6 style="margin: 0 0 10px 0; color: #e0e7ff; font-size: 0.9rem;">Náklady na marketing</h6>
-                                    <div id="marketingCostDisplay" style="font-size: 1.4rem; font-weight: 700; color: white;">0 Kč</div>
-                                </div>
-                                <div style="background: rgba(255,255,255,0.1); border-radius: 8px; padding: 15px; backdrop-filter: blur(10px);">
-                                    <h6 style="margin: 0 0 10px 0; color: #e0e7ff; font-size: 0.9rem;">Náklady na lead</h6>
-                                    <div id="costPerLeadDisplay" style="font-size: 1.4rem; font-weight: 700; color: white;">0 Kč</div>
-                                </div>
-                                <div style="background: rgba(255,255,255,0.1); border-radius: 8px; padding: 15px; backdrop-filter: blur(10px);">
-                                    <h6 style="margin: 0 0 10px 0; color: #e0e7ff; font-size: 0.9rem;">Odhadované leady/měsíc</h6>
-                                    <div id="estimatedLeadsDisplay" style="font-size: 1.4rem; font-weight: 700; color: white;">0</div>
-                                </div>
-                                <div style="background: rgba(255,255,255,0.1); border-radius: 8px; padding: 15px; backdrop-filter: blur(10px);">
-                                    <h6 style="margin: 0 0 10px 0; color: #e0e7ff; font-size: 0.9rem;">Konverze na transakce</h6>
-                                    <div id="conversionTransactionsDisplay" style="font-size: 1.4rem; font-weight: 700; color: white;">0</div>
-                                </div>
-                            </div>
-                            
-                            <div style="background: rgba(255,255,255,0.1); border-radius: 8px; padding: 20px; backdrop-filter: blur(10px);">
-                                <h6 style="margin: 0 0 15px 0; color: #e0e7ff; font-size: 1rem;">Optimalizační doporučení</h6>
-                                <div id="leadOptimizationTips" style="color: white; line-height: 1.6;">
-                                    <!-- Bude naplněno JavaScriptem -->
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -2419,8 +1966,8 @@
         </div>
 
         <!-- TAB GARANTOVANÝ NÁJEM -->
-        <div id="garantovany" class="tab-content" style="display: none;">
-            <div class="content" style="display: block; visibility: visible; opacity: 1;">
+        <div id="garantovany" class="tab-content">
+            <div class="content">
                 <!-- Header s přehledem -->
                 <div class="guaranteed-rent-header">
                     <div class="header-content">
@@ -2750,8 +2297,8 @@
         </div>
 
         <!-- TAB ONLINE LEAD GENERATION -->
-        <div id="leadgen" class="tab-content" style="display: none;">
-            <div class="content" style="display: block; visibility: visible; opacity: 1;">
+        <div id="leadgen" class="tab-content">
+            <div class="content">
                 <div class="input-section">
                     <!-- Tlačítka pro uložení/načtení/PDF -->
                     <div style="margin-bottom: 20px; padding: 15px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;">
@@ -4030,11 +3577,6 @@
     </div>
 
     <script>
-        // Initialize first tab on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            showTab('prodej');
-        });
-
         function formatCurrency(amount) {
             return new Intl.NumberFormat('cs-CZ', {
                 style: 'decimal',
@@ -4055,27 +3597,17 @@
             // Zobrazit vybraný tab
             document.getElementById(tabName).classList.add('active');
             event.target.classList.add('active');
-            
-            // Run calculations based on tab
-            setTimeout(() => {
-                if (tabName === 'prodej') {
-                    calculateSaleCommission();
-                } else if (tabName === 'pronajem') {
-                    calculateRentCommission();
-                } else if (tabName === 'rozvaha') {
-                    calculateEconomicAnalysis();
-                } else if (tabName === 'naklady') {
-                    performCostAnalysis();
-                } else if (tabName === 'leadgen') {
-                    if (typeof calculateLeadGeneration === 'function') {
-                        calculateLeadGeneration();
-                    }
-                } else if (tabName === 'garantovany') {
-                    if (typeof calculateGuaranteedRent === 'function') {
-                        calculateGuaranteedRent();
-                    }
-                }
-            }, 100);
+
+            // Spustit příslušné výpočty
+            if (tabName === 'prodej') {
+                calculateSaleCommission();
+            } else if (tabName === 'pronajem') {
+                calculateRentCommission();
+            } else if (tabName === 'rozvaha') {
+                calculateEconomicAnalysis();
+            } else if (tabName === 'leadgen') {
+                calculateLeadGeneration();
+            }
         }
 
         // PRODEJ KALKULACE
@@ -4239,24 +3771,19 @@
         function calculateRealMonthlyCosts() {
             let totalMonthlyCosts = 0;
             
-            try {
-                // Spočítat všechny nákladové položky ze všech kategorií
-                const categories = ['automobily', 'sluzby-technologie', 'kancelar-provoz', 'finance-ucetnictvi', 'marketing-reklama', 'ostatni-sluzby', 'parkovani'];
-                
-                categories.forEach(category => {
-                    const categoryContainer = document.getElementById(category);
-                    if (categoryContainer) {
-                        const valueInputs = categoryContainer.querySelectorAll('.cost-item-value');
-                        valueInputs.forEach(input => {
-                            const value = parseFloat(input.value) || 0;
-                            totalMonthlyCosts += value;
-                        });
-                    }
-                });
-            } catch (error) {
-                console.error('Error in calculateRealMonthlyCosts:', error);
-                return 0;
-            }
+            // Spočítat všechny nákladové položky ze všech kategorií
+            const categories = ['automobily', 'sluzby-technologie', 'kancelar-provoz', 'finance-ucetnictvi', 'marketing-reklama', 'ostatni-sluzby', 'parkovani'];
+            
+            categories.forEach(category => {
+                const categoryContainer = document.getElementById(category);
+                if (categoryContainer) {
+                    const valueInputs = categoryContainer.querySelectorAll('.cost-item-value');
+                    valueInputs.forEach(input => {
+                        const value = parseFloat(input.value) || 0;
+                        totalMonthlyCosts += value;
+                    });
+                }
+            });
             
             return totalMonthlyCosts;
         }
@@ -4270,17 +3797,16 @@
         document.getElementById('successRate').addEventListener('input', calculateEconomicAnalysis);
 
         function calculateEconomicAnalysis() {
-            try {
-                const targetProfit = parseFloat(document.getElementById('targetProfit').value) || 0;
-                const avgSaleCommission = parseFloat(document.getElementById('avgSaleCommission').value) || 0;
-                const avgRentCommission = parseFloat(document.getElementById('avgRentCommission').value) || 0;
-                const avgSaleCosts = parseFloat(document.getElementById('avgSaleCosts').value) || 0;
-                const avgRentCosts = parseFloat(document.getElementById('avgRentCosts').value) || 0;
-                const successRate = parseFloat(document.getElementById('successRate').value) || 30;
+            const targetProfit = parseFloat(document.getElementById('targetProfit').value) || 0;
+            const avgSaleCommission = parseFloat(document.getElementById('avgSaleCommission').value) || 0;
+            const avgRentCommission = parseFloat(document.getElementById('avgRentCommission').value) || 0;
+            const avgSaleCosts = parseFloat(document.getElementById('avgSaleCosts').value) || 0;
+            const avgRentCosts = parseFloat(document.getElementById('avgRentCosts').value) || 0;
+            const successRate = parseFloat(document.getElementById('successRate').value) || 30;
 
-                // Dynamický výpočet skutečných měsíčních nákladů z rozpočtu
-                const monthlyFixedCosts = calculateRealMonthlyCosts();
-                const requiredTurnover = monthlyFixedCosts + targetProfit;
+            // Dynamický výpočet skutečných měsíčních nákladů z rozpočtu
+            const monthlyFixedCosts = calculateRealMonthlyCosts();
+            const requiredTurnover = monthlyFixedCosts + targetProfit;
 
             const netSaleProfit = avgSaleCommission - avgSaleCosts;
             const netRentProfit = avgRentCommission - avgRentCosts;
@@ -4431,27 +3957,12 @@
             document.getElementById('profitabilityAlert').className = `alert-box ${alertClass}`;
             document.getElementById('profitabilityText').textContent = alertText;
             document.getElementById('recommendations').innerHTML = recommendations;
-            
-            } catch (error) {
-                console.error('Error in calculateEconomicAnalysis:', error);
-            }
         }
 
-        // Počáteční výpočty - zabalené v try-catch
-        try {
-            calculateSaleCommission();
-        } catch (e) { console.error('Error in calculateSaleCommission:', e); }
-        
-        try {
-            calculateRentCommission();
-        } catch (e) { console.error('Error in calculateRentCommission:', e); }
-        
-        try {
-            calculateEconomicAnalysis();
-        } catch (e) { console.error('Error in calculateEconomicAnalysis:', e); }
-        
-        // Inicializace garantovaného nájmu
-        initializeGuaranteedRent();
+        // Počáteční výpočty
+        calculateSaleCommission();
+        calculateRentCommission();
+        calculateEconomicAnalysis();
 
         // FUNKCE PRO EDITOVATELNÉ MĚSÍČNÍ NÁKLADY
         
@@ -4461,7 +3972,6 @@
             const newItem = document.createElement('div');
             newItem.className = 'cost-item';
             newItem.innerHTML = `
-                <input type="checkbox" class="cost-item-checkbox" title="Zaškrtněte pokud lze náklad snížit/optimalizovat">
                 <input type="text" class="cost-item-name" value="" placeholder="Název položky" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
                 <input type="number" class="cost-item-value" value="0" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
                 <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
@@ -4469,18 +3979,8 @@
             categoryDiv.appendChild(newItem);
             
             // Přidání event listenerů pro automatické přepočítání
-            const checkbox = newItem.querySelector('.cost-item-checkbox');
             const nameInput = newItem.querySelector('.cost-item-name');
             const valueInput = newItem.querySelector('.cost-item-value');
-            
-            checkbox.addEventListener('change', function() {
-                if (this.checked) {
-                    newItem.classList.add('reducible');
-                } else {
-                    newItem.classList.remove('reducible');
-                }
-            });
-            
             nameInput.addEventListener('input', updateMonthlyCostsTotals);
             valueInput.addEventListener('input', updateMonthlyCostsTotals);
             // Přidat také přepočet ekonomické rozvahy při změně nákladů
@@ -4519,8 +4019,7 @@
                 variabilni: 0,
                 prodej: 0,
                 pronajem: 0,
-                externi: 0,
-                investicni: 0
+                externi: 0
             };
             
             let grandTotal = 0;
@@ -4599,45 +4098,27 @@
             
             categoryTotals.externi = totalBrokerCosts + manualExterniCosts;
             
-            // Výpočet investičních nákladů (roční rozpuštěné na měsíční)
-            const investicniCategoryDiv = document.querySelector(`[data-category="investicni"]`);
-            let yearlyInvestmentCosts = 0;
-            if (investicniCategoryDiv) {
-                const valueInputs = investicniCategoryDiv.querySelectorAll('.cost-item-value');
-                valueInputs.forEach(input => {
-                    yearlyInvestmentCosts += parseFloat(input.value) || 0;
-                });
-            }
-            const monthlyInvestmentCosts = yearlyInvestmentCosts / 12;
-            categoryTotals.investicni = monthlyInvestmentCosts;
-            
-            // Aktualizace zobrazení investičních nákladů
-            document.getElementById('total-investment-yearly').textContent = formatCurrency(yearlyInvestmentCosts);
-            document.getElementById('total-investment-monthly').textContent = formatCurrency(monthlyInvestmentCosts);
-            
-            // Výpočet příjmů majitele (bez nákladů na provizi)
-            const ownerCommissionSale = parseFloat(document.getElementById('ownerCommissionSale').value) || 0;
-            const ownerCommissionRent = parseFloat(document.getElementById('ownerCommissionRent').value) || 0;
-            const ownerTransactionsSale = parseFloat(document.getElementById('ownerTransactionsSale').value) || 0;
-            const ownerTransactionsRent = parseFloat(document.getElementById('ownerTransactionsRent').value) || 0;
-            
-            const ownerRevenueSale = ownerCommissionSale * ownerTransactionsSale;
-            const ownerRevenueRent = ownerCommissionRent * ownerTransactionsRent;
-            const totalOwnerRevenue = ownerRevenueSale + ownerRevenueRent;
-            
-            // Aktualizace zobrazení příjmů majitele
-            document.getElementById('owner-sales-formula').textContent = `${ownerTransactionsSale} × ${formatCurrency(ownerCommissionSale).replace(' Kč', '')} Kč`;
-            document.getElementById('owner-rents-formula').textContent = `${ownerTransactionsRent} × ${formatCurrency(ownerCommissionRent).replace(' Kč', '')} Kč`;
-            document.getElementById('owner-sales-total').textContent = formatCurrency(ownerRevenueSale);
-            document.getElementById('owner-rents-total').textContent = formatCurrency(ownerRevenueRent);
-            document.getElementById('total-owner-revenue').textContent = formatCurrency(totalOwnerRevenue);
-            
             // Aktualizace zobrazení nákladů na makléře
             document.getElementById('sales-count-display').textContent = transactionsSaleCount;
             document.getElementById('rent-count-display').textContent = transactionsRentCount;
             document.getElementById('broker-sale-rate-display').textContent = brokerPercentageSale + '%';
             document.getElementById('broker-rent-rate-display').textContent = brokerPercentageRent + '%';
-            document.getElementById('externi-category-total').textContent = formatCurrency(categoryTotals.externi);
+            document.getElementById('avg-commission-sale-display').textContent = formatCurrency(avgSaleCommission).replace(' Kč', '');
+            document.getElementById('avg-commission-rent-display').textContent = formatCurrency(avgRentCommission).replace(' Kč', '');
+            document.getElementById('broker-costs-sales').textContent = formatCurrency(brokerCostsSales);
+            document.getElementById('broker-costs-rents').textContent = formatCurrency(brokerCostsRents);
+            document.getElementById('total-broker-costs').textContent = formatCurrency(totalBrokerCosts);
+            
+            grandTotal = Object.values(categoryTotals).reduce((sum, val) => sum + val, 0);
+            
+            // Aktualizace přehledu nákladů
+            document.getElementById('zamestnanci-total').textContent = formatCurrency(categoryTotals.zamestnanci);
+            document.getElementById('fixni-total').textContent = formatCurrency(categoryTotals.fixni);
+            document.getElementById('variabilni-total').textContent = formatCurrency(categoryTotals.variabilni);
+            document.getElementById('prodej-total').textContent = formatCurrency(categoryTotals.prodej);
+            document.getElementById('pronajem-total').textContent = formatCurrency(categoryTotals.pronajem);
+            document.getElementById('externi-total').textContent = formatCurrency(categoryTotals.externi);
+            document.getElementById('total-monthly-costs').textContent = formatCurrency(grandTotal);
             
             // Výpočet tržeb a zisku
             const avgCommissionSale = parseFloat(document.getElementById('avgCommissionSale').value) || 120000;
@@ -4647,20 +4128,18 @@
             const commissionSplitSale = parseFloat(document.getElementById('commissionSplitSale').value) || 50;
             const commissionSplitRent = parseFloat(document.getElementById('commissionSplitRent').value) || 50;
             
-            // Celkové tržby (plné provize bez dělení + příjmy majitele)
+            // Celkové tržby (plné provize bez dělení)
             const totalRevenueSale = (avgCommissionSale * transactionsSale);
             const totalRevenueRent = (avgCommissionRent * transactionsRent);
-            const totalRevenue = totalRevenueSale + totalRevenueRent + totalOwnerRevenue;
+            const totalRevenue = totalRevenueSale + totalRevenueRent;
             
-            // Náklady na jednotku (prodej a pronájem se násobí počtem transakcí makléř + majitel)
-            const totalSaleTransactions = transactionsSale + ownerTransactionsSale;
-            const totalRentTransactions = transactionsRent + ownerTransactionsRent;
-            const unitCostsSale = categoryTotals.prodej * totalSaleTransactions;
-            const unitCostsRent = categoryTotals.pronajem * totalRentTransactions;
+            // Náklady na jednotku (prodej a pronájem se násobí počtem transakcí)
+            const unitCostsSale = categoryTotals.prodej * transactionsSale;
+            const unitCostsRent = categoryTotals.pronajem * transactionsRent;
             
-            // Celkové náklady včetně jednotkových a investičních
+            // Celkové náklady včetně jednotkových
             const totalCosts = categoryTotals.zamestnanci + categoryTotals.fixni + categoryTotals.variabilni + 
-                              categoryTotals.externi + categoryTotals.investicni + unitCostsSale + unitCostsRent;
+                              categoryTotals.externi + unitCostsSale + unitCostsRent;
             
             // Hrubý zisk (před daněmi)
             const grossProfit = totalRevenue - totalCosts;
@@ -4730,29 +4209,20 @@
         
         // Uložení měsíčních nákladů
         function saveMonthlyCosts() {
-            try {
-                console.log('Spouštím uložení nákladů...');
             const data = {
                 timestamp: new Date().toISOString(),
-                version: '1.0',
                 categories: {},
-                brokerCommissions: {
-                    avgCommissionSale: document.getElementById('avgCommissionSale')?.value || '0',
-                    avgCommissionRent: document.getElementById('avgCommissionRent')?.value || '0',
-                    transactionsSale: document.getElementById('transactionsSale')?.value || '0',
-                    transactionsRent: document.getElementById('transactionsRent')?.value || '0',
-                    commissionSplitSale: document.getElementById('commissionSplitSale')?.value || '50',
-                    commissionSplitRent: document.getElementById('commissionSplitRent')?.value || '50'
-                },
-                ownerRevenue: {
-                    commissionSale: document.getElementById('ownerCommissionSale')?.value || '0',
-                    commissionRent: document.getElementById('ownerCommissionRent')?.value || '0',
-                    transactionsSale: document.getElementById('ownerTransactionsSale')?.value || '0',
-                    transactionsRent: document.getElementById('ownerTransactionsRent')?.value || '0'
+                settings: {
+                    avgCommissionSale: document.getElementById('avgCommissionSale').value,
+                    avgCommissionRent: document.getElementById('avgCommissionRent').value,
+                    transactionsSale: document.getElementById('transactionsSale').value,
+                    transactionsRent: document.getElementById('transactionsRent').value,
+                    commissionSplitSale: document.getElementById('commissionSplitSale').value,
+                    commissionSplitRent: document.getElementById('commissionSplitRent').value
                 }
             };
             
-            const categories = ['zamestnanci', 'fixni', 'variabilni', 'prodej', 'pronajem', 'externi', 'investicni'];
+            const categories = ['zamestnanci', 'fixni', 'variabilni', 'prodej', 'pronajem', 'externi'];
             
             categories.forEach(category => {
                 const categoryDiv = document.querySelector(`[data-category="${category}"]`);
@@ -4763,9 +4233,7 @@
                     costItems.forEach(item => {
                         const name = item.querySelector('.cost-item-name').value;
                         const value = parseFloat(item.querySelector('.cost-item-value').value) || 0;
-                        const checkbox = item.querySelector('.cost-item-checkbox');
-                        const reducible = checkbox ? checkbox.checked : false;
-                        items.push({ name, value, reducible });
+                        items.push({ name, value });
                     });
                     
                     data.categories[category] = items;
@@ -4789,10 +4257,6 @@
             URL.revokeObjectURL(url);
             
             alert(`Měsíční náklady byly uloženy jako: ${filename}`);
-            } catch (error) {
-                console.error('Chyba při ukládání nákladů:', error);
-                alert('Chyba při ukládání nákladů: ' + error.message);
-            }
         }
         
         // Načtení měsíčních nákladů
@@ -4827,54 +4291,32 @@
                             data.categories[category].forEach(item => {
                                 const newItemDiv = document.createElement('div');
                                 newItemDiv.className = 'cost-item';
-                                const isReducible = item.reducible || false;
                                 newItemDiv.innerHTML = `
-                                    <input type="checkbox" class="cost-item-checkbox" title="Zaškrtněte pokud lze náklad snížit/optimalizovat" ${isReducible ? 'checked' : ''}>
                                     <input type="text" class="cost-item-name" value="${item.name}" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
                                     <input type="number" class="cost-item-value" value="${item.value}" style="width: 100px; padding: 5px; border: 1px solid #ddd; border-radius: 3px; margin-right: 10px;">
                                     <button onclick="removeCostItem(this)" style="background: #dc2626; color: white; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer;">×</button>
                                 `;
-                                if (isReducible) {
-                                    newItemDiv.classList.add('reducible');
-                                }
                                 categoryDiv.appendChild(newItemDiv);
                                 
                                 // Přidání event listenerů
-                                const checkbox = newItemDiv.querySelector('.cost-item-checkbox');
                                 const nameInput = newItemDiv.querySelector('.cost-item-name');
                                 const valueInput = newItemDiv.querySelector('.cost-item-value');
-                                
-                                checkbox.addEventListener('change', function() {
-                                    if (this.checked) {
-                                        newItemDiv.classList.add('reducible');
-                                    } else {
-                                        newItemDiv.classList.remove('reducible');
-                                    }
-                                });
-                                
                                 nameInput.addEventListener('input', updateMonthlyCostsTotals);
                                 valueInput.addEventListener('input', updateMonthlyCostsTotals);
+                                // Přidat také přepočet ekonomické rozvahy při změně nákladů
                                 valueInput.addEventListener('input', calculateEconomicAnalysis);
                             });
                         }
                     });
                     
-                    // Obnovení nastavení makléřských provizí
-                    if (data.brokerCommissions) {
-                        document.getElementById('avgCommissionSale').value = data.brokerCommissions.avgCommissionSale || 120000;
-                        document.getElementById('avgCommissionRent').value = data.brokerCommissions.avgCommissionRent || 15000;
-                        document.getElementById('transactionsSale').value = data.brokerCommissions.transactionsSale || 2;
-                        document.getElementById('transactionsRent').value = data.brokerCommissions.transactionsRent || 3;
-                        document.getElementById('commissionSplitSale').value = data.brokerCommissions.commissionSplitSale || 50;
-                        document.getElementById('commissionSplitRent').value = data.brokerCommissions.commissionSplitRent || 50;
-                    }
-                    
-                    // Obnovení příjmů majitele
-                    if (data.ownerRevenue) {
-                        document.getElementById('ownerCommissionSale').value = data.ownerRevenue.commissionSale || 0;
-                        document.getElementById('ownerCommissionRent').value = data.ownerRevenue.commissionRent || 0;
-                        document.getElementById('ownerTransactionsSale').value = data.ownerRevenue.transactionsSale || 0;
-                        document.getElementById('ownerTransactionsRent').value = data.ownerRevenue.transactionsRent || 0;
+                    // Obnovení nastavení
+                    if (data.settings) {
+                        document.getElementById('avgCommissionSale').value = data.settings.avgCommissionSale || 120000;
+                        document.getElementById('avgCommissionRent').value = data.settings.avgCommissionRent || 15000;
+                        document.getElementById('transactionsSale').value = data.settings.transactionsSale || 2;
+                        document.getElementById('transactionsRent').value = data.settings.transactionsRent || 3;
+                        document.getElementById('commissionSplitSale').value = data.settings.commissionSplitSale || 50;
+                        document.getElementById('commissionSplitRent').value = data.settings.commissionSplitRent || 50;
                     }
                     
                     updateMonthlyCostsTotals();
@@ -4927,208 +4369,100 @@
         
         // Pokročilá finanční analýza s moderními KPI metrikami
         function performCostAnalysis() {
-            try {
-                const categoryTotals = getNewCategoryTotals();
-                
-                // Pevné hodnoty pro výpočet transakcí - bez čtení z jiných tabů
-                const brokerTransactionsSale = 2;
-                const brokerTransactionsRent = 3;
-                const ownerSaleTransactions = 1;
-                const ownerRentTransactions = 2;
-            
-            // Náklady na jednotku se násobí celkovým počtem transakcí (makléř + majitel)
-            const totalSaleTransactions = brokerTransactionsSale + ownerSaleTransactions;
-            const totalRentTransactions = brokerTransactionsRent + ownerRentTransactions;
-            const unitCostsSale = categoryTotals.prodej * totalSaleTransactions;
-            const unitCostsRent = categoryTotals.pronajem * totalRentTransactions;
-            
-            const totalCosts = categoryTotals.zamestnanci + categoryTotals.fixni + categoryTotals.variabilni + 
-                              categoryTotals.externi + categoryTotals.investicni + unitCostsSale + unitCostsRent;
+            const categoryTotals = getNewCategoryTotals();
+            const totalCosts = categoryTotals.zamestnanci + categoryTotals.fixni + categoryTotals.variabilni + categoryTotals.prodej + categoryTotals.pronajem + categoryTotals.externi;
             
             if (totalCosts === 0) return;
             
-            // Použití inteligentní kategorizace nákladů
-            const intelligentTotals = getCategoryTotals();
-            
+            // Nová struktura podle redesignu
             const fixedCosts = {
-                office: intelligentTotals.intelligentFixed * 0.6, // Kancelář a provoz
-                services: intelligentTotals.intelligentFixed * 0.4, // Služby a technologie
-                salaries: categoryTotals.zamestnanci || 0
+                office: categoryTotals.fixni * 0.6,
+                services: categoryTotals.fixni * 0.4,
+                salaries: categoryTotals.zamestnanci
             };
             
             const variableCosts = {
-                marketing: intelligentTotals.intelligentVariable * 0.7, // Marketing a reklama
-                operational: intelligentTotals.intelligentVariable * 0.3, // Ostatní variabilní
-                commissions: 0 // Externí makléři se počítají zvlášť
+                marketing: categoryTotals.variabilni * 0.7,
+                operational: categoryTotals.variabilni * 0.3,
+                commissions: categoryTotals.prodej + categoryTotals.pronajem + categoryTotals.externi
             };
             
             const investmentCosts = {
-                technology: intelligentTotals.intelligentInvestment * 0.7, // Technologie a CRM
-                education: intelligentTotals.intelligentInvestment * 0.1, // Vzdělávání
-                branding: intelligentTotals.intelligentInvestment * 0.2 // Brand building
+                technology: categoryTotals.fixni * 0.2,
+                education: categoryTotals.zamestnanci * 0.05,
+                branding: categoryTotals.variabilni * 0.1
             };
             
             const totalFixed = Object.values(fixedCosts).reduce((sum, val) => sum + val, 0);
             const totalVariable = Object.values(variableCosts).reduce((sum, val) => sum + val, 0);
             const totalInvestment = Object.values(investmentCosts).reduce((sum, val) => sum + val, 0);
             
-            // Přepočet celkových nákladů pro správné procenta
-            const recalculatedTotalCosts = totalFixed + totalVariable + totalInvestment + (categoryTotals.externi || 0) + unitCostsSale + unitCostsRent;
+            // Výpočet tržeb pro KPI metriky - stejný jako v updateMonthlyCostsTotals()
+            const avgSaleCommission = parseFloat(document.getElementById('avgCommissionSale')?.value) || 120000;
+            const avgRentCommission = parseFloat(document.getElementById('avgCommissionRent')?.value) || 15000;
+            const transactionsSale = parseFloat(document.getElementById('transactionsSale')?.value) || 2;
+            const transactionsRent = parseFloat(document.getElementById('transactionsRent')?.value) || 3;
+            const commissionSplitSale = parseFloat(document.getElementById('commissionSplitSale')?.value) || 50;
+            const commissionSplitRent = parseFloat(document.getElementById('commissionSplitRent')?.value) || 50;
             
-            // Výpočet tržeb pro KPI metriky - pouze z tabu náklady, bez křížových odkazů
-            const avgSaleCommission = 120000; // Pevná hodnota místo čtení z jiných tabů
-            const avgRentCommission = 15000;  // Pevná hodnota místo čtení z jiných tabů
-            const transactionsSale = 2;       // Pevná hodnota místo čtení z jiných tabů
-            const transactionsRent = 3;       // Pevná hodnota místo čtení z jiných tabů
-            const commissionSplitSale = 50;   // Pevná hodnota místo čtení z jiných tabů
-            const commissionSplitRent = 50;   // Pevná hodnota místo čtení z jiných tabů
+            // Celkové tržby (plné provize bez dělení)
+            const totalRevenueSale = (avgSaleCommission * transactionsSale);
+            const totalRevenueRent = (avgRentCommission * transactionsRent);
+            const totalRevenue = totalRevenueSale + totalRevenueRent;
             
-            // Příjmy majitele - pevné hodnoty místo čtení z jiných tabů
-            const ownerCommissionSale = 0;
-            const ownerCommissionRent = 0;
-            
-            // Celkové tržby (provize makléřů + příjmy majitele)
-            const totalRevenueSale = (avgSaleCommission * brokerTransactionsSale * commissionSplitSale / 100);
-            const totalRevenueRent = (avgRentCommission * brokerTransactionsRent * commissionSplitRent / 100);
-            const ownerRevenueSale = ownerCommissionSale * ownerSaleTransactions;
-            const ownerRevenueRent = ownerCommissionRent * ownerRentTransactions;
-            const totalRevenue = totalRevenueSale + totalRevenueRent + ownerRevenueSale + ownerRevenueRent;
-            
-            // Aktualizace všech analýz s přepočítanými náklady
-            updateCostBreakdown(fixedCosts, variableCosts, investmentCosts, totalFixed, totalVariable, totalInvestment, recalculatedTotalCosts);
-            updateKPIMetrics(recalculatedTotalCosts, totalRevenue, totalFixed, totalVariable);
-            performRiskAnalysis(totalFixed, totalVariable, recalculatedTotalCosts);
-            calculateEfficiencyMetrics(recalculatedTotalCosts, totalFixed, totalVariable);
-            calculatePredictiveScenarios(recalculatedTotalCosts, totalRevenue, totalFixed, totalVariable);
-            generateCostRecommendations(totalFixed, totalVariable, recalculatedTotalCosts);
-            
-            } catch (error) {
-                console.error('Error in performCostAnalysis:', error);
-            }
+            // Aktualizace všech analýz
+            updateCostBreakdown(fixedCosts, variableCosts, investmentCosts, totalFixed, totalVariable, totalInvestment, totalCosts);
+            updateKPIMetrics(totalCosts, totalRevenue, totalFixed, totalVariable);
+            performRiskAnalysis(totalFixed, totalVariable, totalCosts);
+            calculateEfficiencyMetrics(totalCosts, totalFixed, totalVariable);
+            generateStrategicRecommendations(totalCosts, totalFixed, totalVariable, totalInvestment, totalRevenue);
+            generatePredictiveAnalysis(totalCosts, totalRevenue, totalFixed, totalVariable);
         }
         
         // Funkce pro aktualizaci detailního breakdown nákladů
         function updateCostBreakdown(fixedCosts, variableCosts, investmentCosts, totalFixed, totalVariable, totalInvestment, totalCosts) {
-            try {
-                // Aktualizace fixních nákladů - s bezpečným přístupem k elementům
-                const fixedOfficeEl = document.getElementById('fixedOffice');
-                const fixedServicesEl = document.getElementById('fixedServices');
-                const fixedSalariesEl = document.getElementById('fixedSalaries');
-                const totalFixedCostsEl = document.getElementById('totalFixedCosts');
-                const fixedCostsPercentageEl = document.getElementById('fixedCostsPercentage');
-                
-                if (fixedOfficeEl) fixedOfficeEl.textContent = formatCurrency(fixedCosts.office || 0);
-                if (fixedServicesEl) fixedServicesEl.textContent = formatCurrency(fixedCosts.services || 0);
-                if (fixedSalariesEl) fixedSalariesEl.textContent = formatCurrency(fixedCosts.salaries || 0);
-                if (totalFixedCostsEl) totalFixedCostsEl.textContent = formatCurrency(totalFixed);
-                if (fixedCostsPercentageEl) fixedCostsPercentageEl.textContent = totalCosts > 0 ? Math.round((totalFixed / totalCosts) * 100) + '%' : '0%';
-                
-                // Aktualizace variabilních nákladů - s bezpečným přístupem
-                const variableMarketingEl = document.getElementById('variableMarketing');
-                const variableOperationalEl = document.getElementById('variableOperational');
-                const variableCommissionsEl = document.getElementById('variableCommissions');
-                const totalVariableCostsEl = document.getElementById('totalVariableCosts');
-                const variableCostsPercentageEl = document.getElementById('variableCostsPercentage');
-                
-                if (variableMarketingEl) variableMarketingEl.textContent = formatCurrency(variableCosts.marketing || 0);
-                if (variableOperationalEl) variableOperationalEl.textContent = formatCurrency(variableCosts.operational || 0);
-                if (variableCommissionsEl) variableCommissionsEl.textContent = formatCurrency(variableCosts.commissions || 0);
-                if (totalVariableCostsEl) totalVariableCostsEl.textContent = formatCurrency(totalVariable);
-                if (variableCostsPercentageEl) variableCostsPercentageEl.textContent = totalCosts > 0 ? Math.round((totalVariable / totalCosts) * 100) + '%' : '0%';
-                
-                // Aktualizace investičních nákladů - s bezpečným přístupem
-                const investmentTechEl = document.getElementById('investmentTech');
-                const investmentEducationEl = document.getElementById('investmentEducation');
-                const investmentBrandEl = document.getElementById('investmentBrand');
-                const totalInvestmentCostsEl = document.getElementById('totalInvestmentCosts');
-                const investmentCostsPercentageEl = document.getElementById('investmentCostsPercentage');
-                
-                if (investmentTechEl) investmentTechEl.textContent = formatCurrency(investmentCosts.technology || 0);
-                if (investmentEducationEl) investmentEducationEl.textContent = formatCurrency(investmentCosts.education || 0);
-                if (investmentBrandEl) investmentBrandEl.textContent = formatCurrency(investmentCosts.branding || 0);
-                if (totalInvestmentCostsEl) totalInvestmentCostsEl.textContent = formatCurrency(totalInvestment);
-                if (investmentCostsPercentageEl) investmentCostsPercentageEl.textContent = totalCosts > 0 ? Math.round((totalInvestment / totalCosts) * 100) + '%' : '0%';
-                
-            } catch (error) {
-                console.error('Error in updateCostBreakdown:', error);
-            }
+            // Aktualizace fixních nákladů
+            document.getElementById('fixedOffice').textContent = formatCurrency(fixedCosts.office);
+            document.getElementById('fixedServices').textContent = formatCurrency(fixedCosts.services);
+            document.getElementById('fixedSalaries').textContent = formatCurrency(fixedCosts.salaries);
+            document.getElementById('totalFixedCosts').textContent = formatCurrency(totalFixed);
+            document.getElementById('fixedCostsPercentage').textContent = totalCosts > 0 ? Math.round((totalFixed / totalCosts) * 100) + '%' : '0%';
+            
+            // Aktualizace variabilních nákladů
+            document.getElementById('variableAutos').textContent = formatCurrency(variableCosts.autos);
+            document.getElementById('variableMarketing').textContent = formatCurrency(variableCosts.marketing);
+            document.getElementById('variableOther').textContent = formatCurrency(variableCosts.other);
+            document.getElementById('totalVariableCosts').textContent = formatCurrency(totalVariable);
+            document.getElementById('variableCostsPercentage').textContent = totalCosts > 0 ? Math.round((totalVariable / totalCosts) * 100) + '%' : '0%';
+            
+            // Aktualizace investičních nákladů
+            document.getElementById('investmentTech').textContent = formatCurrency(investmentCosts.tech);
+            document.getElementById('investmentEducation').textContent = formatCurrency(investmentCosts.education);
+            document.getElementById('investmentBrand').textContent = formatCurrency(investmentCosts.brand);
+            document.getElementById('totalInvestmentCosts').textContent = formatCurrency(totalInvestment);
+            document.getElementById('investmentCostsPercentage').textContent = totalCosts > 0 ? Math.round((totalInvestment / totalCosts) * 100) + '%' : '0%';
         }
         
         // Aktualizace KPI metrik
         function updateKPIMetrics(totalCosts, totalRevenue, totalFixed, totalVariable) {
-            try {
-                // EBITDA Margin
-                const ebitda = totalRevenue - totalVariable; // EBITDA = Revenue - Variable Costs
-                const ebitdaMargin = totalRevenue > 0 ? ((ebitda / totalRevenue) * 100) : 0;
-                const ebitdaEl = document.getElementById('ebitdaMargin');
-                if (ebitdaEl) ebitdaEl.textContent = Math.round(ebitdaMargin) + '%';
-                
-                // ROI
-                const netProfit = totalRevenue - totalCosts;
-                const roi = totalCosts > 0 ? ((netProfit / totalCosts) * 100) : 0;
-                const roiEl = document.getElementById('roiMetric');
-                if (roiEl) roiEl.textContent = Math.round(roi) + '%';
-                
-                // Break-even Point - opravený výpočet
-                const avgSaleCommission = 120000; // Pevná hodnota
-                const avgRentCommission = 15000;  // Pevná hodnota
-                const avgTransactionRevenue = (avgSaleCommission + avgRentCommission) / 2; // Průměrná provize
-                const breakEvenTransactions = totalCosts > 0 && avgTransactionRevenue > 0 ? Math.ceil(totalCosts / avgTransactionRevenue) : 0;
-                const breakEvenEl = document.getElementById('breakEvenPoint');
-                if (breakEvenEl) breakEvenEl.textContent = isNaN(breakEvenTransactions) ? '0' : breakEvenTransactions;
-                
-                // Cash Flow - s kontrolou NaN
-                const cashFlow = totalRevenue - totalCosts;
-                const cashFlowEl = document.getElementById('cashFlowMetric');
-                if (cashFlowEl) cashFlowEl.textContent = isNaN(cashFlow) ? '0 Kč' : formatCurrency(cashFlow);
-                
-            } catch (error) {
-                console.error('Error in updateKPIMetrics:', error);
-            }
-        }
-                // Prediktivní analýza scénářů
-        function calculatePredictiveScenarios(totalCosts, totalRevenue, totalFixed, totalVariable) {
-            try {
-                const avgSaleCommission = 120000;
-                const avgRentCommission = 15000;
-                const avgCommission = (avgSaleCommission + avgRentCommission) / 2;
-                
-                // Pokud nejsou tržby, použij základní odhad
-                const baseRevenue = totalRevenue > 0 ? totalRevenue : (totalCosts * 1.1); // 10% marže
-                
-                // Optimistický scénář (+30% tržby, stejné náklady)
-                const optimisticRevenue = baseRevenue * 1.3;
-                const optimisticProfit = optimisticRevenue - totalCosts;
-                const optimisticROI = totalCosts > 0 ? ((optimisticProfit / totalCosts) * 100) : 0;
-                const optimisticBreakeven = totalCosts > 0 && avgCommission > 0 ? Math.ceil(totalCosts / (avgCommission * 1.3)) * 30 : 0; // dny
-                
-                document.getElementById('optimisticProfit').textContent = isNaN(optimisticProfit) ? '0 Kč' : formatCurrency(optimisticProfit);
-                document.getElementById('optimisticROI').textContent = isNaN(optimisticROI) ? '0%' : Math.round(optimisticROI) + '%';
-                document.getElementById('optimisticBreakeven').textContent = isNaN(optimisticBreakeven) ? '0 dní' : optimisticBreakeven + ' dní';
-                
-                // Realistický scénář (současné hodnoty)
-                const realisticProfit = baseRevenue - totalCosts;
-                const realisticROI = totalCosts > 0 ? ((realisticProfit / totalCosts) * 100) : 0;
-                const realisticBreakeven = totalCosts > 0 && avgCommission > 0 ? Math.ceil(totalCosts / avgCommission) * 30 : 0; // dny
-                
-                document.getElementById('realisticProfit').textContent = isNaN(realisticProfit) ? '0 Kč' : formatCurrency(realisticProfit);
-                document.getElementById('realisticROI').textContent = isNaN(realisticROI) ? '0%' : Math.round(realisticROI) + '%';
-                document.getElementById('realisticBreakeven').textContent = isNaN(realisticBreakeven) ? '0 dní' : realisticBreakeven + ' dní';
-                
-                // Pesimistický scénář (-20% tržby, +10% náklady)
-                const pessimisticRevenue = baseRevenue * 0.8;
-                const pessimisticCosts = totalCosts * 1.1;
-                const pessimisticProfit = pessimisticRevenue - pessimisticCosts;
-                const pessimisticROI = pessimisticCosts > 0 ? ((pessimisticProfit / pessimisticCosts) * 100) : 0;
-                const pessimisticBreakeven = pessimisticCosts > 0 && avgCommission > 0 ? Math.ceil(pessimisticCosts / (avgCommission * 0.8)) * 30 : 0; // dny
-                
-                document.getElementById('pessimisticProfit').textContent = isNaN(pessimisticProfit) ? '0 Kč' : formatCurrency(pessimisticProfit);
-                document.getElementById('pessimisticROI').textContent = isNaN(pessimisticROI) ? '0%' : Math.round(pessimisticROI) + '%';
-                document.getElementById('pessimisticBreakeven').textContent = isNaN(pessimisticBreakeven) ? '0 dní' : pessimisticBreakeven + ' dní';
-                
-            } catch (error) {
-                console.error('Error in calculatePredictiveScenarios:', error);
-            }
+            // EBITDA Margin
+            const ebitda = totalRevenue - totalVariable; // EBITDA = Revenue - Variable Costs
+            const ebitdaMargin = totalRevenue > 0 ? ((ebitda / totalRevenue) * 100) : 0;
+            document.getElementById('ebitdaMargin').textContent = Math.round(ebitdaMargin) + '%';
+            
+            // ROI
+            const netProfit = totalRevenue - totalCosts;
+            const roi = totalCosts > 0 ? ((netProfit / totalCosts) * 100) : 0;
+            document.getElementById('roiMetric').textContent = Math.round(roi) + '%';
+            
+            // Break-even Point
+            const avgTransactionRevenue = (totalRevenue / 5) || 50000; // Průměr z prodejů a pronájmů
+            const breakEvenTransactions = totalCosts > 0 ? Math.ceil(totalCosts / avgTransactionRevenue) : 0;
+            document.getElementById('breakEvenPoint').textContent = breakEvenTransactions;
+            
+            // Cash Flow
+            const cashFlow = totalRevenue - totalCosts;
+            document.getElementById('cashFlowMetric').textContent = formatCurrency(cashFlow);
         }
         
         // Generování strategických doporučení
@@ -5234,8 +4568,7 @@
                 variabilni: 0,
                 prodej: 0,
                 pronajem: 0,
-                externi: 0,
-                investicni: 0
+                externi: 0
             };
             
             ['zamestnanci', 'fixni', 'variabilni', 'prodej', 'pronajem', 'externi'].forEach(category => {
@@ -5248,17 +4581,6 @@
                 }
             });
             
-            // Speciální zpracování investičních nákladů (roční rozpuštěné na měsíční)
-            const investicniCategoryDiv = document.querySelector(`[data-category="investicni"]`);
-            let yearlyInvestmentCosts = 0;
-            if (investicniCategoryDiv) {
-                const valueInputs = investicniCategoryDiv.querySelectorAll('.cost-item-value');
-                valueInputs.forEach(input => {
-                    yearlyInvestmentCosts += parseFloat(input.value) || 0;
-                });
-            }
-            totals.investicni = yearlyInvestmentCosts / 12; // Převod na měsíční
-            
             return totals;
         }
         
@@ -5269,66 +4591,11 @@
                 return parseFloat(text.replace(/[^\d,.-]/g, '').replace(',', '.')) || 0;
             };
             
-            // Inteligentní kategorizace nákladů podle názvu
-            const categorizeByName = (itemName) => {
-                const name = itemName.toLowerCase();
-                
-                // Fixní náklady - klíčová slova
-                const fixedKeywords = ['nájem', 'energie', 'pojištění', 'internet', 'telefon', 'kancelář', 'provoz', 'účetnictví', 'právník', 'daň', 'poplatek', 'licence', 'software', 'předplatné', 'leasing'];
-                
-                // Variabilní náklady - klíčová slova  
-                const variableKeywords = ['palivo', 'benzín', 'nafta', 'cestovné', 'marketing', 'reklama', 'inzerce', 'facebook', 'google', 'sreality', 'realitymix', 'automobil', 'auto', 'servis', 'oprava', 'mytí'];
-                
-                // Investiční náklady - klíčová slova
-                const investmentKeywords = ['technologie', 'crm', 'vzdělávání', 'kurz', 'školení', 'certifikace', 'brand', 'logo', 'web', 'stránky', 'aplikace', 'vybavení', 'nábytek', 'hardware'];
-                
-                if (fixedKeywords.some(keyword => name.includes(keyword))) return 'fixed';
-                if (variableKeywords.some(keyword => name.includes(keyword))) return 'variable';
-                if (investmentKeywords.some(keyword => name.includes(keyword))) return 'investment';
-                
-                return 'other';
-            };
-            
-            // Sběr všech nákladových položek podle kategorií
-            let fixedCosts = 0;
-            let variableCosts = 0;
-            let investmentCosts = 0;
-            
-            // Procházení všech nákladových položek
-            document.querySelectorAll('.cost-item').forEach(item => {
-                const nameInput = item.querySelector('.cost-item-name');
-                const valueInput = item.querySelector('.cost-item-value');
-                
-                if (nameInput && valueInput) {
-                    const itemName = nameInput.value || '';
-                    const itemValue = parseFloat(valueInput.value) || 0;
-                    const category = categorizeByName(itemName);
-                    
-                    switch(category) {
-                        case 'fixed':
-                            fixedCosts += itemValue;
-                            break;
-                        case 'variable':
-                            variableCosts += itemValue;
-                            break;
-                        case 'investment':
-                            investmentCosts += itemValue;
-                            break;
-                    }
-                }
-            });
-            
             return {
-                // Původní kategorie pro kompatibilitu
                 automobily: parseAmount(document.getElementById('automobily-total')?.textContent),
                 kancelarProvoz: parseAmount(document.getElementById('kancelar-provoz-total')?.textContent),
                 marketing: parseAmount(document.getElementById('marketing-total')?.textContent),
-                ostatni: parseAmount(document.getElementById('ostatni-sluzby-total')?.textContent),
-                
-                // Nové inteligentní kategorie
-                intelligentFixed: fixedCosts,
-                intelligentVariable: variableCosts,
-                intelligentInvestment: investmentCosts
+                ostatni: parseAmount(document.getElementById('ostatni-sluzby-total')?.textContent)
             };
         }
         
@@ -5410,53 +4677,28 @@
         }
         
         function calculateEfficiencyMetrics(totalCosts, totalFixed, totalVariable) {
-            // Detekce zaměstnanců na základě tabulky zaměstnanců
+            // Detekce zaměstnanců na základě mzdových nákladů
             const categoryTotals = getCategoryTotals();
+            const salaryIndicators = ['mzda', 'plat', 'zaměstnanec', 'pracovník', 'asistent'];
             let hasSalaries = false;
             let estimatedSalaryCosts = 0;
-            let estimatedEmployees = 0;
             
-            // Získání nákladů na zaměstnance z tabulky zaměstnanců
-            const totalEmployeeCostsElement = document.getElementById('total-employee-costs');
-            if (totalEmployeeCostsElement) {
-                const totalEmployeeCostsText = totalEmployeeCostsElement.textContent || '0 Kč';
-                estimatedSalaryCosts = parseFloat(totalEmployeeCostsText.replace(/[^\d,.-]/g, '').replace(',', '.')) || 0;
-                
-                if (estimatedSalaryCosts > 0) {
+            // Kontrola všech nákladových položek
+            document.querySelectorAll('.cost-item-name').forEach(input => {
+                const itemName = input.value.toLowerCase();
+                if (salaryIndicators.some(indicator => itemName.includes(indicator))) {
                     hasSalaries = true;
-                    // Odhad počtu zaměstnanců na základě průměrných nákladů (40k hrubá mzda + odvody = cca 50k)
-                    estimatedEmployees = Math.max(1, Math.round(estimatedSalaryCosts / 50000));
+                    const valueInput = input.parentElement.querySelector('.cost-item-value');
+                    estimatedSalaryCosts += parseFloat(valueInput.value) || 0;
                 }
-            }
+            });
             
-            // Fallback - kontrola nákladových položek pokud tabulka zaměstnanců není naplněna
-            if (!hasSalaries) {
-                const salaryIndicators = ['mzda', 'plat', 'zaměstnanec', 'pracovník', 'asistent', 'sekretář', 'sekretářka', 'makléř', 'realitní', 'agent', 'personál', 'hr'];
-                
-                document.querySelectorAll('.cost-item').forEach(item => {
-                    const nameInput = item.querySelector('.cost-item-name');
-                    const valueInput = item.querySelector('.cost-item-value');
-                    
-                    if (nameInput && valueInput && nameInput.value) {
-                        const itemName = nameInput.value.toLowerCase();
-                        const itemValue = parseFloat(valueInput.value) || 0;
-                        
-                        if (salaryIndicators.some(indicator => itemName.includes(indicator)) && itemValue > 0) {
-                            hasSalaries = true;
-                            estimatedSalaryCosts += itemValue;
-                        }
-                    }
-                });
-                
-                if (hasSalaries && estimatedSalaryCosts > 0) {
-                    estimatedEmployees = Math.max(1, Math.round(estimatedSalaryCosts / 45000));
-                }
-            }
-            
-            // Výpočet nákladů na zaměstnance
+            // Výpočet zaměstnanců pouze pokud jsou mzdové náklady
+            let estimatedEmployees = 0;
             let costPerEmployee = 0;
             
-            if (hasSalaries && estimatedSalaryCosts > 0 && estimatedEmployees > 0) {
+            if (hasSalaries && estimatedSalaryCosts > 0) {
+                estimatedEmployees = Math.max(1, Math.round(estimatedSalaryCosts / 45000));
                 costPerEmployee = totalCosts / estimatedEmployees;
             }
             
@@ -5466,47 +4708,32 @@
             // Break-even s realistickými provizemi pro realitní trh
             const avgCommission = 120000; // Reálnější provize pro realitní kancelář
             const breakEvenRevenue = totalCosts;
-            const breakEvenTransactions = totalCosts > 0 && avgCommission > 0 ? Math.ceil(breakEvenRevenue / avgCommission) : 0;
+            const breakEvenTransactions = Math.ceil(breakEvenRevenue / avgCommission);
             
-            // Efektivita nákladů - správná kategorizace pro realitní kancelář
-            // Přímé náklady = variabilní náklady + část fixních nákladů přímo spojených s business
-            const directCosts = totalVariable + (categoryTotals.intelligentFixed * 0.3); // 30% fixních jako přímé (telefon, internet, software)
-            
-            // Režijní náklady = zbývající fixní náklady
+            // Efektivita nákladů - upraveno pro realitní kancelář
+            const directCosts = categoryTotals.automobily + (categoryTotals.marketing * 0.7); // Přímé náklady na business
             const overheadCosts = totalCosts - directCosts;
-            
             const efficiencyRatio = totalCosts > 0 ? (directCosts / totalCosts) * 100 : 0;
             
             // Aktualizace HTML - náklady na zaměstnance
-            if (hasSalaries && estimatedSalaryCosts > 0) {
+            if (hasSalaries) {
                 document.getElementById('costPerEmployee').textContent = formatCurrency(costPerEmployee);
                 document.getElementById('employeeCostAnalysis').innerHTML = `
                     <div style="margin-bottom: 8px;"><strong>Počet zaměstnanců:</strong> ${estimatedEmployees}</div>
                     <div style="margin-bottom: 8px;"><strong>Mzdové náklady:</strong> ${formatCurrency(estimatedSalaryCosts)}</div>
-                    <div style="margin-bottom: 8px;"><strong>Náklady/zaměstnanec:</strong> ${formatCurrency(costPerEmployee)}</div>
-                    <div style="color: ${costPerEmployee > 80000 ? '#dc2626' : costPerEmployee > 60000 ? '#f59e0b' : '#10b981'};">
-                        ${costPerEmployee > 80000 ? 'Vysoké náklady - optimalizujte procesy' : 
-                          costPerEmployee > 60000 ? 'Průměrné náklady - prostor pro zlepšení' : 
+                    <div style="color: ${costPerEmployee > 50000 ? '#dc2626' : costPerEmployee > 40000 ? '#f59e0b' : '#10b981'};">
+                        ${costPerEmployee > 50000 ? 'Vysoké náklady - optimalizujte procesy' : 
+                          costPerEmployee > 40000 ? 'Průměrné náklady - prostor pro zlepšení' : 
                           'Efektivní náklady na zaměstnance'}
                     </div>
                 `;
             } else {
-                // Pokusit se odhadnout na základě celkových nákladů
-                const estimatedEmployeesFromCosts = totalCosts > 100000 ? Math.max(1, Math.round(totalCosts / 80000)) : 1;
-                const estimatedCostPerEmployee = totalCosts / estimatedEmployeesFromCosts;
-                
-                document.getElementById('costPerEmployee').textContent = formatCurrency(estimatedCostPerEmployee);
+                document.getElementById('costPerEmployee').textContent = 'N/A';
                 document.getElementById('employeeCostAnalysis').innerHTML = `
-                    <div style="margin-bottom: 8px;"><strong>Odhad zaměstnanců:</strong> ${estimatedEmployeesFromCosts} (na základě celkových nákladů)</div>
-                    <div style="margin-bottom: 8px;"><strong>Model:</strong> ${totalCosts < 50000 ? 'Samostatný makléř' : 'Malá kancelář'}</div>
-                    <div style="margin-bottom: 8px;"><strong>Náklady/osobu:</strong> ${formatCurrency(estimatedCostPerEmployee)}</div>
-                    <div style="color: ${estimatedCostPerEmployee > 80000 ? '#dc2626' : estimatedCostPerEmployee > 60000 ? '#f59e0b' : '#10b981'};">
-                        ${estimatedCostPerEmployee > 80000 ? 'Vysoké náklady na osobu' : 
-                          estimatedCostPerEmployee > 60000 ? 'Průměrné náklady' : 
-                          'Efektivní struktura nákladů'}
-                    </div>
-                    <div style="margin-top: 8px; font-size: 0.85rem; color: #6b7280;">
-                        💡 Pro přesnější analýzu přidejte položky s názvy obsahujícími "mzda", "plat" nebo "zaměstnanec"
+                    <div style="margin-bottom: 8px;"><strong>Typ provozu:</strong> Bez zaměstnanců</div>
+                    <div style="margin-bottom: 8px;"><strong>Model:</strong> Samostatný makléř / Outsourcing</div>
+                    <div style="color: #10b981;">
+                        Nízké fixní náklady - flexibilní struktura
                     </div>
                 `;
             }
@@ -5521,9 +4748,9 @@
                 </div>
             `;
             
-            document.getElementById('breakEvenRevenue').textContent = isNaN(breakEvenRevenue) ? '0 Kč' : formatCurrency(breakEvenRevenue);
+            document.getElementById('breakEvenRevenue').textContent = formatCurrency(breakEvenRevenue);
             document.getElementById('breakEvenAnalysis').innerHTML = `
-                <div style="margin-bottom: 8px;"><strong>Potřebné transakce:</strong> ${isNaN(breakEvenTransactions) ? '0' : breakEvenTransactions}/měsíc</div>
+                <div style="margin-bottom: 8px;"><strong>Potřebné transakce:</strong> ${breakEvenTransactions}/měsíc</div>
                 <div style="margin-bottom: 8px;"><strong>Průměrná provize:</strong> ${formatCurrency(avgCommission)}</div>
                 <div style="color: ${breakEvenTransactions > 8 ? '#dc2626' : breakEvenTransactions > 4 ? '#f59e0b' : '#10b981'};">
                     ${breakEvenTransactions > 8 ? 'Vysoké požadavky na objem' : 
@@ -5532,10 +4759,10 @@
                 </div>
             `;
             
-            document.getElementById('costEfficiencyRatio').textContent = isNaN(efficiencyRatio) ? '0%' : Math.round(efficiencyRatio) + '%';
+            document.getElementById('costEfficiencyRatio').textContent = Math.round(efficiencyRatio) + '%';
             document.getElementById('efficiencyAnalysis').innerHTML = `
-                <div style="margin-bottom: 8px;"><strong>Přímé náklady:</strong> ${isNaN(directCosts) ? '0 Kč' : formatCurrency(directCosts)}</div>
-                <div style="margin-bottom: 8px;"><strong>Režijní náklady:</strong> ${isNaN(overheadCosts) ? '0 Kč' : formatCurrency(overheadCosts)}</div>
+                <div style="margin-bottom: 8px;"><strong>Přímé náklady:</strong> ${formatCurrency(directCosts)}</div>
+                <div style="margin-bottom: 8px;"><strong>Režijní náklady:</strong> ${formatCurrency(overheadCosts)}</div>
                 <div style="color: ${efficiencyRatio > 40 ? '#10b981' : efficiencyRatio > 25 ? '#f59e0b' : '#dc2626'};">
                     ${efficiencyRatio > 40 ? 'Vysoký podíl přímých nákladů' : 
                       efficiencyRatio > 25 ? 'Vyvážená struktura' : 
@@ -5548,200 +4775,8 @@
             const recommendations = [];
             const fixedRatio = (totalFixed / totalCosts) * 100;
             const variableRatio = (totalVariable / totalCosts) * 100;
-            const categoryTotals = getCategoryTotals();
             
-            // Analýza marketingových nákladů
-            const marketingCosts = categoryTotals.intelligentVariable * 0.7;
-            const marketingRatio = totalCosts > 0 ? (marketingCosts / totalCosts) * 100 : 0;
-            
-            // Odhad lead generation metrik
-            const avgCostPerLead = marketingCosts > 0 ? marketingCosts / 50 : 0; // 50 leadů měsíčně
-            const avgConversionRate = 0.15; // 15% konverzní poměr
-            const avgLeadsToTransaction = avgCostPerLead > 0 ? avgCostPerLead / avgConversionRate : 0;
-            
-            // 1. OPTIMÁLNÍ SKLADBA NÁKLADŮ
-            recommendations.push({
-                type: 'SKLADBA NÁKLADŮ',
-                category: 'critical',
-                priority: 'vysoká',
-                timeframe: '1-3 měsíce',
-                difficulty: 'střední',
-                impact: 'vysoký',
-                color: '#059669',
-                bgColor: '#ecfdf5',
-                title: 'Optimální struktura nákladů pro realitní kancelář',
-                description: `Současná skladba: ${Math.round(fixedRatio)}% fixní, ${Math.round(variableRatio)}% variabilní`,
-                actions: [
-                    `<strong>Ideální poměr:</strong> 40-50% fixní, 30-40% variabilní, 10-20% investiční`,
-                    `<strong>Fixní náklady:</strong> Nájem max 15% z celkových nákladů`,
-                    `<strong>Marketing:</strong> 20-25% z celkových nákladů pro růst`,
-                    `<strong>Rezerva:</strong> 10% pro nečekané výdaje`
-                ],
-                implementationSteps: [
-                    { step: 1, task: 'Audit současných nákladů', duration: '1 týden', responsible: 'Majitel/CFO' },
-                    { step: 2, task: 'Identifikace neefektivních výdajů', duration: '1 týden', responsible: 'Management' },
-                    { step: 3, task: 'Přestrukturalizace rozpočtu', duration: '2-4 týdny', responsible: 'Majitel' },
-                    { step: 4, task: 'Implementace nové struktury', duration: '1 měsíc', responsible: 'Celý tým' }
-                ],
-                expectedSavings: Math.round(totalCosts * 0.15),
-                roi: '150-300%'
-            });
-
-            // 2. ROI A INVESTIČNÍ STRATEGIE
-            const avgROI = totalCosts > 0 ? ((150000 - totalCosts) / totalCosts * 100) : 0; // Odhad tržeb 150k
-            recommendations.push({
-                type: 'ROI OPTIMALIZACE',
-                category: 'long-term',
-                priority: 'vysoká',
-                timeframe: '3-6 měsíců',
-                difficulty: 'vysoká',
-                impact: 'velmi vysoký',
-                color: '#7c3aed',
-                bgColor: '#f3e8ff',
-                title: 'Strategie pro zvýšení ROI',
-                description: `Odhadované ROI: ${Math.round(avgROI)}% měsíčně`,
-                actions: [
-                    `<strong>Technologie:</strong> Investujte 5-8% do CRM a automatizace`,
-                    `<strong>Vzdělávání:</strong> 3-5% do školení makléřů pro vyšší konverze`,
-                    `<strong>Procesy:</strong> Standardizujte workflow pro 30% úsporu času`,
-                    `<strong>Analytics:</strong> Sledujte náklady na transakci (cíl: pod 25k)`
-                ],
-                implementationSteps: [
-                    { step: 1, task: 'Výběr a implementace CRM systému', duration: '4-6 týdnů', responsible: 'IT/Management' },
-                    { step: 2, task: 'Školení týmu na nové technologie', duration: '2-3 týdny', responsible: 'HR/Vedoucí' },
-                    { step: 3, task: 'Standardizace procesů a workflow', duration: '3-4 týdny', responsible: 'Management' },
-                    { step: 4, task: 'Nastavení analytics a KPI sledování', duration: '2 týdny', responsible: 'Analytik/Majitel' }
-                ],
-                expectedSavings: Math.round(totalCosts * 0.25),
-                roi: '200-400%'
-            });
-
-            // 3. MARKETING A LEAD GENERATION
-            recommendations.push({
-                type: 'MARKETING STRATEGIE',
-                category: 'quick-wins',
-                priority: 'vysoká',
-                timeframe: '2-4 týdny',
-                difficulty: 'střední',
-                impact: 'vysoký',
-                color: '#ea580c',
-                bgColor: '#fff7ed',
-                title: 'Optimalizace nákladů na marketing a leady',
-                description: `Marketing: ${Math.round(marketingRatio)}% z nákladů, náklady na lead: ${formatCurrency(avgCostPerLead)}`,
-                actions: [
-                    `<strong>Cílené náklady na lead:</strong> 300-800 Kč/lead (současně: ${formatCurrency(avgCostPerLead)})`,
-                    `<strong>Digitální mix:</strong> 60% online, 40% offline marketing`,
-                    `<strong>SEO/SEM:</strong> 40% rozpočtu na Google Ads a SEO`,
-                    `<strong>Social Media:</strong> 25% na Facebook/Instagram reklamy`,
-                    `<strong>Portály:</strong> 35% na Sreality, RealityMix, Bezrealitky`
-                ],
-                implementationSteps: [
-                    { step: 1, task: 'Audit současných marketingových kanálů', duration: '1 týden', responsible: 'Marketing manager' },
-                    { step: 2, task: 'Přerozdělení rozpočtu podle efektivity', duration: '1 týden', responsible: 'Majitel/Marketing' },
-                    { step: 3, task: 'Spuštění optimalizovaných kampaní', duration: '1-2 týdny', responsible: 'Marketing tým' },
-                    { step: 4, task: 'A/B testování a optimalizace', duration: 'průběžně', responsible: 'Marketing specialist' }
-                ],
-                expectedSavings: Math.round(marketingCosts * 0.3),
-                roi: '180-250%'
-            });
-
-            // 4. LEAD CONVERSION OPTIMALIZACE
-            const estimatedLeads = marketingCosts > 0 ? Math.round(marketingCosts / 500) : 0; // 500 Kč/lead
-            const estimatedTransactions = Math.round(estimatedLeads * avgConversionRate);
-            recommendations.push({
-                type: 'KONVERZNÍ OPTIMALIZACE',
-                category: 'quick-wins',
-                priority: 'kritická',
-                timeframe: '1-2 týdny',
-                difficulty: 'nízká',
-                impact: 'velmi vysoký',
-                color: '#0891b2',
-                bgColor: '#ecfeff',
-                title: 'Zlepšení konverze leadů na transakce',
-                description: `Odhad: ${estimatedLeads} leadů → ${estimatedTransactions} transakcí (${Math.round(avgConversionRate*100)}% konverze)`,
-                actions: [
-                    `<strong>Cílová konverze:</strong> 15-25% (současně: ${Math.round(avgConversionRate*100)}%)`,
-                    `<strong>Rychlost reakce:</strong> Kontakt do 5 minut zvyšuje konverzi o 400%`,
-                    `<strong>Follow-up:</strong> 7 kontaktů během 14 dní pro optimální výsledky`,
-                    `<strong>CRM automatizace:</strong> Automatické nurturing kampaně`,
-                    `<strong>Kvalifikace:</strong> BANT metodika pro efektivní screening`
-                ],
-                implementationSteps: [
-                    { step: 1, task: 'Nastavení alertů pro rychlou reakci na leady', duration: '2 dny', responsible: 'IT/Sales manager' },
-                    { step: 2, task: 'Vytvoření follow-up sekvencí', duration: '3-5 dní', responsible: 'Sales tým' },
-                    { step: 3, task: 'Školení týmu na BANT kvalifikaci', duration: '1 týden', responsible: 'Sales manager' },
-                    { step: 4, task: 'Implementace automatizovaného nurturingu', duration: '1-2 týdny', responsible: 'Marketing/CRM specialist' }
-                ],
-                expectedSavings: Math.round(estimatedLeads * 500 * 0.4), // 40% zlepšení konverze
-                roi: '300-500%'
-            });
-
-            // 5. ŠKÁLOVACÍ STRATEGIE
-            recommendations.push({
-                type: 'RŮSTOVÁ STRATEGIE',
-                category: 'long-term',
-                priority: 'střední',
-                timeframe: '6-18 měsíců',
-                difficulty: 'vysoká',
-                impact: 'velmi vysoký',
-                color: '#059669',
-                bgColor: '#f0fdf4',
-                title: 'Plán škálování a růstu',
-                description: 'Doporučení pro udržitelný růst realitní kanceláře',
-                actions: [
-                    `<strong>Fáze 1 (0-6 měsíců):</strong> Stabilizace procesů, ROI min 15%`,
-                    `<strong>Fáze 2 (6-12 měsíců):</strong> Škálování marketingu, +50% leadů`,
-                    `<strong>Fáze 3 (12+ měsíců):</strong> Rozšíření týmu, nové teritorium`,
-                    `<strong>KPI sledování:</strong> Náklady/transakce, LTV/CAC ratio, churn rate`,
-                    `<strong>Reinvestice:</strong> 60% zisku zpět do růstu prvních 18 měsíců`
-                ],
-                implementationSteps: [
-                    { step: 1, task: 'Stabilizace současných procesů a KPI', duration: '3-6 měsíců', responsible: 'Management tým' },
-                    { step: 2, task: 'Škálování úspěšných marketingových kanálů', duration: '3-6 měsíců', responsible: 'Marketing/Sales' },
-                    { step: 3, task: 'Nábor a školení nových makléřů', duration: '6-12 měsíců', responsible: 'HR/Management' },
-                    { step: 4, task: 'Expanze do nových teritorií', duration: '12+ měsíců', responsible: 'Majitel/Management' }
-                ],
-                expectedSavings: Math.round(totalCosts * 0.5), // Dlouhodobé úspory
-                roi: '400-800%'
-            });
-
-            // 6. BENCHMARKING A METRIKY
-            const industryBenchmarks = {
-                costPerTransaction: 25000,
-                marketingShare: 22,
-                conversionRate: 18,
-                avgDealSize: 120000
-            };
-            
-            recommendations.push({
-                type: 'BENCHMARKING',
-                category: 'critical',
-                priority: 'střední',
-                timeframe: '1-2 týdny',
-                difficulty: 'nízká',
-                impact: 'střední',
-                color: '#7c2d12',
-                bgColor: '#fef7ff',
-                title: 'Srovnání s průměrem trhu',
-                description: 'Vaše výkonnost vs. průměr realitních kanceláří',
-                actions: [
-                    `<strong>Náklady/transakce:</strong> Průměr ${formatCurrency(industryBenchmarks.costPerTransaction)} (optimalizujte pod 20k)`,
-                    `<strong>Marketing podíl:</strong> Průměr ${industryBenchmarks.marketingShare}% (vaše: ${Math.round(marketingRatio)}%)`,
-                    `<strong>Konverze:</strong> Průměr ${industryBenchmarks.conversionRate}% (vaše: ${Math.round(avgConversionRate*100)}%)`,
-                    `<strong>Průměrná provize:</strong> ${formatCurrency(industryBenchmarks.avgDealSize)}`,
-                    `<strong>Top 20% kanceláří:</strong> ROI 25%+, konverze 30%+, náklady/transakce 15k`
-                ],
-                implementationSteps: [
-                    { step: 1, task: 'Sběr a analýza současných KPI', duration: '3-5 dní', responsible: 'Analytik/Majitel' },
-                    { step: 2, task: 'Porovnání s průměrem trhu', duration: '2-3 dny', responsible: 'Management' },
-                    { step: 3, task: 'Identifikace oblastí pro zlepšení', duration: '2-3 dny', responsible: 'Management tým' },
-                    { step: 4, task: 'Nastavení cílů a akčního plánu', duration: '1 týden', responsible: 'Vedení společnosti' }
-                ],
-                expectedSavings: Math.round(totalCosts * 0.1),
-                roi: '120-180%'
-            });
-
-            // Původní doporučení podle struktury nákladů
+            // Doporučení podle struktury nákladů
             if (fixedRatio > 70) {
                 recommendations.push({
                     type: 'KRITICKÉ',
@@ -5794,616 +4829,29 @@
             
             let recommendationsHTML = '';
             recommendations.forEach(rec => {
-                const priorityColor = getPriorityColor(rec.priority);
-                const difficultyIcon = getDifficultyIcon(rec.difficulty);
-                
+                const actionsHTML = rec.actions.map(action => `<li style="margin-bottom: 4px;">${action}</li>`).join('');
                 recommendationsHTML += `
-                    <div class="recommendation-card" data-category="${rec.category || 'all'}" style="background: ${rec.bgColor}; border-radius: 8px; padding: 20px; margin-bottom: 16px; transition: all 0.3s ease; border: 1px solid ${rec.color}20;">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
-                            <div style="flex: 1;">
-                                <div style="display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap;">
-                                    <span style="background: ${rec.color}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 600;">${rec.type}</span>
-                                    <span style="background: ${priorityColor}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 600;">PRIORITA: ${rec.priority?.toUpperCase() || 'STŘEDNÍ'}</span>
-                                    <span style="background: #6b7280; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 600;">${difficultyIcon} ${rec.difficulty?.toUpperCase() || 'STŘEDNÍ'}</span>
-                                </div>
-                                <h6 style="margin: 0; color: #374151; font-size: 1.1rem; font-weight: 600;">${rec.title}</h6>
-                                <p style="margin: 8px 0 0 0; color: #6b7280; font-size: 0.9rem;">${rec.description}</p>
-                            </div>
-                            <div style="text-align: right; min-width: 120px;">
-                                <div style="font-size: 0.8rem; color: #6b7280; margin-bottom: 4px;">Časový rámec</div>
-                                <div style="font-weight: 600; color: #374151; font-size: 0.9rem;">${rec.timeframe || 'Neurčeno'}</div>
-                                ${rec.expectedSavings ? `
-                                    <div style="font-size: 0.8rem; color: #6b7280; margin-top: 8px;">Očekávané úspory</div>
-                                    <div style="font-weight: 700; color: ${rec.color}; font-size: 1rem;">${formatCurrency(rec.expectedSavings)}</div>
-                                ` : ''}
-                            </div>
+                    <div style="background: ${rec.bgColor}; border: 1px solid ${rec.color}; border-radius: 12px; padding: 20px;">
+                        <div style="display: flex; align-items: center; margin-bottom: 16px;">
+                            <span style="background: ${rec.color}; color: white; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; margin-right: 12px;">${rec.type}</span>
+                            <span style="font-weight: 700; color: ${rec.color}; font-size: 1.1rem;">${rec.title}</span>
                         </div>
-                        
+                        <p style="margin: 0 0 16px 0; font-size: 0.9rem; color: #374151; line-height: 1.5;">${rec.description}</p>
                         <div style="margin-bottom: 16px;">
-                            <div style="font-weight: 600; color: #374151; margin-bottom: 8px; font-size: 0.9rem;">Akční kroky:</div>
-                            ${rec.actions.map(action => `<div style="margin-bottom: 6px; color: #374151; font-size: 0.85rem; padding-left: 12px; margin-left: 8px;">• ${action}</div>`).join('')}
+                            <strong style="color: #374151; font-size: 0.9rem;">Konkrétní kroky:</strong>
+                            <ul style="margin: 8px 0 0 0; padding-left: 20px; color: #374151; font-size: 0.85rem; line-height: 1.5;">
+                                ${actionsHTML}
+                            </ul>
                         </div>
-                        
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                            <div style="background: rgba(255,255,255,0.7); border-radius: 6px; padding: 12px;">
-                                <div style="font-size: 0.8rem; color: #6b7280; margin-bottom: 4px;">Dopad na business</div>
-                                <div style="color: #374151; font-size: 0.85rem; font-weight: 600;">${rec.impact || 'Střední'}</div>
-                            </div>
-                            <div style="background: rgba(255,255,255,0.7); border-radius: 6px; padding: 12px;">
-                                <div style="font-size: 0.8rem; color: #6b7280; margin-bottom: 4px;">Očekávané ROI</div>
-                                <div style="color: ${rec.color}; font-size: 0.85rem; font-weight: 700;">${rec.roi || 'Neurčeno'}</div>
-                            </div>
+                        <div style="background: rgba(255,255,255,0.7); border-radius: 6px; padding: 12px;">
+                            <strong style="color: ${rec.color}; font-size: 0.85rem;">Očekávaný dopad:</strong>
+                            <div style="color: #374151; font-size: 0.85rem; margin-top: 4px;">${rec.impact}</div>
                         </div>
-                        
-                        ${rec.implementationSteps ? `
-                            <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(0,0,0,0.1);">
-                                <button onclick="toggleImplementationSteps('${rec.type.replace(/\s+/g, '')}')" style="background: ${rec.color}; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: 600;">
-                                    Zobrazit implementační plán
-                                </button>
-                                <div id="impl-${rec.type.replace(/\s+/g, '')}" style="display: none; margin-top: 12px;">
-                                    <div style="font-weight: 600; color: #374151; margin-bottom: 8px; font-size: 0.9rem;">Implementační kroky:</div>
-                                    ${rec.implementationSteps.map(step => `
-                                        <div style="display: flex; align-items: center; padding: 8px; background: rgba(255,255,255,0.5); border-radius: 4px; margin-bottom: 6px; border: 1px solid ${rec.color}30;">
-                                            <div style="background: ${rec.color}; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 600; margin-right: 12px;">${step.step}</div>
-                                            <div style="flex: 1;">
-                                                <div style="font-weight: 600; color: #374151; font-size: 0.85rem;">${step.task}</div>
-                                                <div style="font-size: 0.75rem; color: #6b7280;">Doba: ${step.duration} | Zodpovědný: ${step.responsible}</div>
-                                            </div>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                            </div>
-                        ` : ''}
                     </div>
                 `;
             });
             
             document.getElementById('costOptimizationRecommendations').innerHTML = recommendationsHTML;
-            
-            // Aktualizace Lead Generation & ROI kalkulátoru
-            updateLeadGenerationMetrics(marketingCosts, avgCostPerLead, estimatedLeads, estimatedTransactions, marketingRatio);
-            
-            // Aktualizace detailní analýzy nákladových položek
-            updateDetailedCostItems();
-            
-            // Aktualizace analýzy top nákladových položek a rentability
-            updateTopCostItemsAnalysis(recalculatedTotalCosts);
-            updateSaleVsRentAnalysis(recalculatedTotalCosts);
-            
-            // Aktualizace roční analýzy
-            updateAnnualAnalysis(recalculatedTotalCosts);
-        }
-        
-        // Funkce pro aktualizaci Lead Generation metrik
-        function updateLeadGenerationMetrics(marketingCosts, costPerLead, estimatedLeads, estimatedTransactions, marketingRatio) {
-            try {
-                // Aktualizace základních metrik
-                document.getElementById('marketingCostDisplay').textContent = isNaN(marketingCosts) ? '0 Kč' : formatCurrency(marketingCosts);
-                document.getElementById('costPerLeadDisplay').textContent = isNaN(costPerLead) ? '0 Kč' : formatCurrency(costPerLead);
-                document.getElementById('estimatedLeadsDisplay').textContent = isNaN(estimatedLeads) ? '0' : estimatedLeads;
-                document.getElementById('conversionTransactionsDisplay').textContent = isNaN(estimatedTransactions) ? '0' : estimatedTransactions;
-                
-                // Generování optimalizačních tipů
-                const tips = [];
-                
-                if (costPerLead > 800) {
-                    tips.push('<strong>Vysoké náklady na lead:</strong> Optimalizujte targeting a kreativy pro snížení CPC');
-                } else if (costPerLead > 500) {
-                    tips.push('<strong>Střední náklady na lead:</strong> Testujte nové kanály a zlepšete landing pages');
-                } else if (costPerLead > 0) {
-                    tips.push('<strong>Dobré náklady na lead:</strong> Škálujte úspěšné kampaně a testujte nové segmenty');
-                }
-                
-                if (marketingRatio < 15) {
-                    tips.push('<strong>Nízký marketing podíl:</strong> Zvyšte investice do marketingu pro rychlejší růst');
-                } else if (marketingRatio > 30) {
-                    tips.push('<strong>Vysoký marketing podíl:</strong> Optimalizujte efektivitu kampaní');
-                }
-                
-                if (estimatedLeads < 30) {
-                    tips.push('<strong>Málo leadů:</strong> Rozšiřte kanály (SEO, social media, referrals)');
-                } else if (estimatedLeads > 100) {
-                    tips.push('<strong>Vysoký objem leadů:</strong> Zaměřte se na kvalitu a konverzi');
-                }
-                
-                const conversionRate = estimatedLeads > 0 ? (estimatedTransactions / estimatedLeads) * 100 : 0;
-                if (conversionRate < 10) {
-                    tips.push('<strong>Nízká konverze:</strong> Zlepšete kvalifikaci leadů a follow-up procesy');
-                } else if (conversionRate > 25) {
-                    tips.push('<strong>Vysoká konverze:</strong> Replikujte úspěšné procesy na více leadů');
-                }
-                
-                // Přidání pokročilých tipů
-                tips.push('<strong>A/B testování:</strong> Testujte různé verze inzerátů pro 20-40% zlepšení');
-                tips.push('<strong>Retargeting:</strong> Oslovte návštěvníky webu s 3-5x vyšší konverzí');
-                tips.push('<strong>Marketing automation:</strong> Automatizujte nurturing pro 25% více transakcí');
-                
-                document.getElementById('leadOptimizationTips').innerHTML = tips.map(tip => 
-                    `<div style="margin-bottom: 8px; padding: 8px; background: rgba(255,255,255,0.1); border-radius: 4px;">${tip}</div>`
-                ).join('');
-                
-            } catch (error) {
-                console.error('Error in updateLeadGenerationMetrics:', error);
-            }
-        }
-        
-        // Funkce pro aktualizaci detailní analýzy nákladových položek
-        function updateDetailedCostItems() {
-            try {
-                const categoryTotals = getCategoryTotals();
-                const costItems = [];
-                
-                // Získání všech nákladových položek z formuláře
-                const costInputs = document.querySelectorAll('#costsForm input[type="number"]');
-                
-                costInputs.forEach(input => {
-                    const value = parseFloat(input.value) || 0;
-                    if (value > 0) {
-                        const label = input.closest('.form-group')?.querySelector('label')?.textContent || input.name;
-                        const category = categorizeCostByName(label);
-                        
-                        costItems.push({
-                            name: label,
-                            value: value,
-                            category: category,
-                            percentage: categoryTotals.total > 0 ? ((value / categoryTotals.total) * 100) : 0
-                        });
-                    }
-                });
-                
-                // Seřazení podle hodnoty (sestupně)
-                costItems.sort((a, b) => b.value - a.value);
-                
-                // Generování HTML pro detailní položky
-                const itemsHTML = costItems.map(item => {
-                    const categoryColor = getCategoryColor(item.category);
-                    const categoryLabel = getCategoryLabel(item.category);
-                    
-                    return `
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: white; border-radius: 6px; border: 1px solid ${categoryColor}30;">
-                            <div style="flex: 1;">
-                                <div style="font-weight: 600; color: #374151; margin-bottom: 2px;">${item.name}</div>
-                                <div style="font-size: 0.8rem; color: #6b7280;">
-                                    <span style="background: ${categoryColor}; color: white; padding: 2px 6px; border-radius: 3px; font-size: 0.7rem; font-weight: 500;">${categoryLabel}</span>
-                                    <span style="margin-left: 8px;">${item.percentage.toFixed(1)}% z celkových nákladů</span>
-                                </div>
-                            </div>
-                            <div style="text-align: right;">
-                                <div style="font-weight: 700; color: #374151; font-size: 1.1rem;">${formatCurrency(item.value)}</div>
-                                <div style="font-size: 0.8rem; color: #6b7280;">${(item.value / 1000).toFixed(0)}k/měsíc</div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-                
-                // Přidání souhrnu
-                const summaryHTML = `
-                    <div style="background: #f3f4f6; border-radius: 6px; padding: 15px; margin-bottom: 15px;">
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; text-align: center;">
-                            <div>
-                                <div style="font-size: 0.8rem; color: #6b7280; margin-bottom: 4px;">CELKOVÉ NÁKLADY</div>
-                                <div style="font-size: 1.3rem; font-weight: 700; color: #374151;">${formatCurrency(categoryTotals.total)}</div>
-                            </div>
-                            <div>
-                                <div style="font-size: 0.8rem; color: #6b7280; margin-bottom: 4px;">POČET POLOŽEK</div>
-                                <div style="font-size: 1.3rem; font-weight: 700; color: #374151;">${costItems.length}</div>
-                            </div>
-                            <div>
-                                <div style="font-size: 0.8rem; color: #6b7280; margin-bottom: 4px;">NEJVĚTŠÍ POLOŽKA</div>
-                                <div style="font-size: 1.3rem; font-weight: 700; color: #374151;">${costItems.length > 0 ? formatCurrency(costItems[0].value) : '0 Kč'}</div>
-                            </div>
-                            <div>
-                                <div style="font-size: 0.8rem; color: #6b7280; margin-bottom: 4px;">PRŮMĚR/POLOŽKA</div>
-                                <div style="font-size: 1.3rem; font-weight: 700; color: #374151;">${costItems.length > 0 ? formatCurrency(categoryTotals.total / costItems.length) : '0 Kč'}</div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                
-                document.getElementById('detailedCostItems').innerHTML = summaryHTML + itemsHTML;
-                
-            } catch (error) {
-                console.error('Error in updateDetailedCostItems:', error);
-            }
-        }
-        
-        // Pomocné funkce pro kategorizaci
-        function getCategoryColor(category) {
-            switch(category) {
-                case 'fixed': return '#6366f1';
-                case 'variable': return '#f59e0b';
-                case 'investment': return '#10b981';
-                default: return '#6b7280';
-            }
-        }
-        
-        function getCategoryLabel(category) {
-            switch(category) {
-                case 'fixed': return 'FIXNÍ';
-                case 'variable': return 'VARIABILNÍ';
-                case 'investment': return 'INVESTIČNÍ';
-                default: return 'OSTATNÍ';
-            }
-        }
-        
-        // Pomocné funkce pro strategická doporučení
-        function getPriorityColor(priority) {
-            switch(priority?.toLowerCase()) {
-                case 'kritická': return '#dc2626';
-                case 'vysoká': return '#ea580c';
-                case 'střední': return '#3b82f6';
-                case 'nízká': return '#10b981';
-                default: return '#6b7280';
-            }
-        }
-        
-        function getDifficultyIcon(difficulty) {
-            switch(difficulty?.toLowerCase()) {
-                case 'nízká': return '●';
-                case 'střední': return '●●';
-                case 'vysoká': return '●●●';
-                default: return '●●';
-            }
-        }
-        
-        // Funkce pro filtrování doporučení
-        function filterRecommendations(category) {
-            const cards = document.querySelectorAll('.recommendation-card');
-            const buttons = document.querySelectorAll('.filter-btn');
-            
-            // Aktualizace tlačítek
-            buttons.forEach(btn => {
-                btn.style.background = 'white';
-                btn.style.color = '#374151';
-            });
-            document.getElementById(`filter-${category}`).style.background = '#3b82f6';
-            document.getElementById(`filter-${category}`).style.color = 'white';
-            
-            // Filtrování karet
-            cards.forEach(card => {
-                if (category === 'all' || card.dataset.category === category) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-        
-        // Funkce pro zobrazení implementačních kroků
-        function toggleImplementationSteps(id) {
-            const element = document.getElementById(`impl-${id}`);
-            if (element) {
-                element.style.display = element.style.display === 'none' ? 'block' : 'none';
-            }
-        }
-        
-        // Funkce pro přepínání zobrazení implementačních plánů
-        function toggleImplementationView() {
-            const plansDiv = document.getElementById('implementationPlans');
-            const button = document.getElementById('toggle-implementation');
-            
-            if (plansDiv.style.display === 'none') {
-                plansDiv.style.display = 'block';
-                button.textContent = 'Skrýt akční plány';
-                generateImplementationPlans();
-            } else {
-                plansDiv.style.display = 'none';
-                button.textContent = 'Akční plány';
-            }
-        }
-        
-        // Funkce pro generování implementačních plánů
-        function generateImplementationPlans() {
-            const implementationHTML = `
-                <div style="background: #f8fafc; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
-                    <h6 style="margin: 0 0 15px 0; color: #374151; font-weight: 600;">30-denní akční plán</h6>
-                    <div style="display: grid; gap: 12px;">
-                        <div style="display: flex; align-items: center; padding: 12px; background: white; border-radius: 6px;">
-                            <div style="background: #0891b2; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; margin-right: 15px;">1</div>
-                            <div>
-                                <div style="font-weight: 600; color: #374151;">Týden 1-2: Rychlé výsledky</div>
-                                <div style="color: #6b7280; font-size: 0.9rem;">Nastavení alertů, follow-up sekvencí, BANT školení</div>
-                            </div>
-                        </div>
-                        <div style="display: flex; align-items: center; padding: 12px; background: white; border-radius: 6px;">
-                            <div style="background: #ea580c; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; margin-right: 15px;">2</div>
-                            <div>
-                                <div style="font-weight: 600; color: #374151;">Týden 3-4: Marketing optimalizace</div>
-                                <div style="color: #6b7280; font-size: 0.9rem;">Audit kanálů, přerozdělení rozpočtu, spuštění kampaní</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div style="background: #f0fdf4; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
-                    <h6 style="margin: 0 0 15px 0; color: #374151; font-weight: 600;">90-denní strategický plán</h6>
-                    <div style="display: grid; gap: 12px;">
-                        <div style="display: flex; align-items: center; padding: 12px; background: white; border-radius: 6px;">
-                            <div style="background: #059669; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; margin-right: 15px;">1</div>
-                            <div>
-                                <div style="font-weight: 600; color: #374151;">Měsíc 1: Stabilizace</div>
-                                <div style="color: #6b7280; font-size: 0.9rem;">Audit nákladů, restrukturalizace rozpočtu</div>
-                            </div>
-                        </div>
-                        <div style="display: flex; align-items: center; padding: 12px; background: white; border-radius: 6px;">
-                            <div style="background: #7c3aed; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; margin-right: 15px;">2</div>
-                            <div>
-                                <div style="font-weight: 600; color: #374151;">Měsíc 2-3: Technologické investice</div>
-                                <div style="color: #6b7280; font-size: 0.9rem;">CRM implementace, školení týmu, automatizace</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div style="background: #fef3c7; border-radius: 8px; padding: 20px;">
-                    <h6 style="margin: 0 0 15px 0; color: #374151; font-weight: 600;">Měření úspěchu</h6>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                        <div style="text-align: center; padding: 15px; background: white; border-radius: 6px;">
-                            <div style="font-size: 0.8rem; color: #6b7280; margin-bottom: 4px;">CÍLE PRO 30 DNÍ</div>
-                            <div style="font-weight: 700; color: #374151;">+40% konverze</div>
-                        </div>
-                        <div style="text-align: center; padding: 15px; background: white; border-radius: 6px;">
-                            <div style="font-size: 0.8rem; color: #6b7280; margin-bottom: 4px;">CÍLE PRO 90 DNÍ</div>
-                            <div style="font-weight: 700; color: #374151;">-25% náklady</div>
-                        </div>
-                        <div style="text-align: center; padding: 15px; background: white; border-radius: 6px;">
-                            <div style="font-size: 0.8rem; color: #6b7280; margin-bottom: 4px;">ROI CÍLE</div>
-                            <div style="font-weight: 700; color: #374151;">200-400%</div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            document.getElementById('implementationContent').innerHTML = implementationHTML;
-        }
-        
-        // Funkce pro analýzu top nákladových položek
-        function updateTopCostItemsAnalysis(totalCosts) {
-            try {
-                const costItems = [];
-                
-                // Získání všech nákladových položek
-                document.querySelectorAll('.cost-item').forEach(item => {
-                    const nameInput = item.querySelector('.cost-item-name');
-                    const valueInput = item.querySelector('.cost-item-value');
-                    
-                    if (nameInput && valueInput && nameInput.value && valueInput.value) {
-                        const name = nameInput.value;
-                        const value = parseFloat(valueInput.value) || 0;
-                        
-                        if (value > 0) {
-                            costItems.push({
-                                name: name,
-                                value: value,
-                                percentage: totalCosts > 0 ? (value / totalCosts) * 100 : 0
-                            });
-                        }
-                    }
-                });
-                
-                // Seřazení podle hodnoty (sestupně) a vzít top 5
-                costItems.sort((a, b) => b.value - a.value);
-                const topItems = costItems.slice(0, 5);
-                
-                // Generování HTML pro top položky
-                const topItemsHTML = topItems.map((item, index) => {
-                    const rankColor = index === 0 ? '#dc2626' : index === 1 ? '#ea580c' : index === 2 ? '#f59e0b' : '#6b7280';
-                    const rankIcon = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}.`;
-                    
-                    return `
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: white; border-radius: 8px; border: 1px solid ${rankColor}30;">
-                            <div style="display: flex; align-items: center; flex: 1;">
-                                <div style="font-size: 1.2rem; margin-right: 12px;">${rankIcon}</div>
-                                <div>
-                                    <div style="font-weight: 600; color: #374151; margin-bottom: 2px;">${item.name}</div>
-                                    <div style="font-size: 0.85rem; color: #6b7280;">${item.percentage.toFixed(1)}% z celkových nákladů</div>
-                                </div>
-                            </div>
-                            <div style="text-align: right;">
-                                <div style="font-weight: 700; color: ${rankColor}; font-size: 1.1rem;">${formatCurrency(item.value)}</div>
-                                <div style="font-size: 0.8rem; color: #6b7280;">${(item.value / 1000).toFixed(0)}k/měsíc</div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-                
-                document.getElementById('topCostItems').innerHTML = topItemsHTML || '<div style="text-align: center; color: #6b7280; padding: 20px;">Žádné nákladové položky k zobrazení</div>';
-                
-            } catch (error) {
-                console.error('Error in updateTopCostItemsAnalysis:', error);
-            }
-        }
-        
-        // Funkce pro analýzu prodeje vs. pronájmu
-        function updateSaleVsRentAnalysis(totalCosts) {
-            try {
-                // Kontrola, zda jsou náklady validní
-                if (!totalCosts || totalCosts <= 0) {
-                    console.log('No valid costs for sale vs rent analysis');
-                    return;
-                }
-                
-                const saleCommission = 120000; // Průměrná provize z prodeje
-                const rentCommission = 15000;  // Průměrná provize z pronájmu
-                
-                // Realistický odhad nákladů na transakci
-                const estimatedMonthlyTransactions = 3;
-                const totalCostPerTransaction = totalCosts / estimatedMonthlyTransactions;
-                
-                // Alokace nákladů podle typu transakce
-                const saleCostPerTransaction = totalCostPerTransaction;
-                const rentCostPerTransaction = totalCostPerTransaction;
-                
-                // Výpočet čistého zisku
-                const saleNetProfit = saleCommission - saleCostPerTransaction;
-                const rentNetProfit = rentCommission - rentCostPerTransaction;
-                
-                // Výpočet marže
-                const saleMargin = saleCommission > 0 ? (saleNetProfit / saleCommission) * 100 : 0;
-                const rentMargin = rentCommission > 0 ? (rentNetProfit / rentCommission) * 100 : 0;
-                
-                // Výpočet ROI
-                const saleROI = saleCostPerTransaction > 0 ? (saleNetProfit / saleCostPerTransaction) * 100 : 0;
-                const rentROI = rentCostPerTransaction > 0 ? (rentNetProfit / rentCostPerTransaction) * 100 : 0;
-                
-                // Break-even transakce
-                const saleBreakevenTransactions = Math.ceil(totalCosts / saleCommission);
-                const rentBreakevenTransactions = Math.ceil(totalCosts / rentCommission);
-                
-                // Aktualizace prodejních metrik
-                const saleCostElement = document.getElementById('saleCostPerTransaction');
-                const saleNetProfitElement = document.getElementById('saleNetProfit');
-                const saleMarginElement = document.getElementById('saleMargin');
-                const saleBreakevenElement = document.getElementById('saleBreakevenTransactions');
-                
-                if (saleCostElement) saleCostElement.textContent = formatCurrency(saleCostPerTransaction);
-                if (saleNetProfitElement) saleNetProfitElement.textContent = formatCurrency(saleNetProfit);
-                if (saleMarginElement) saleMarginElement.textContent = Math.round(saleMargin) + '%';
-                if (saleBreakevenElement) saleBreakevenElement.textContent = saleBreakevenTransactions;
-                
-                // Aktualizace pronájemních metrik
-                const rentCostElement = document.getElementById('rentCostPerTransaction');
-                const rentNetProfitElement = document.getElementById('rentNetProfit');
-                const rentMarginElement = document.getElementById('rentMargin');
-                const rentBreakevenElement = document.getElementById('rentBreakevenTransactions');
-                
-                if (rentCostElement) rentCostElement.textContent = formatCurrency(rentCostPerTransaction);
-                if (rentNetProfitElement) rentNetProfitElement.textContent = formatCurrency(rentNetProfit);
-                if (rentMarginElement) rentMarginElement.textContent = Math.round(rentMargin) + '%';
-                if (rentBreakevenElement) rentBreakevenElement.textContent = rentBreakevenTransactions;
-                
-                // Aktualizace tabulky
-                const saleNetProfitTableElement = document.getElementById('saleNetProfitTable');
-                const rentNetProfitTableElement = document.getElementById('rentNetProfitTable');
-                const saleROIElement = document.getElementById('saleROI');
-                const rentROIElement = document.getElementById('rentROI');
-                
-                if (saleNetProfitTableElement) saleNetProfitTableElement.textContent = formatCurrency(saleNetProfit);
-                if (rentNetProfitTableElement) rentNetProfitTableElement.textContent = formatCurrency(rentNetProfit);
-                if (saleROIElement) saleROIElement.textContent = Math.round(saleROI) + '%';
-                if (rentROIElement) rentROIElement.textContent = Math.round(rentROI) + '%';
-                
-                // Poměr zisků
-                const profitRatio = rentNetProfit > 0 ? (saleNetProfit / rentNetProfit).toFixed(1) + ':1' : '-';
-                const profitRatioElement = document.getElementById('profitRatio');
-                if (profitRatioElement) profitRatioElement.textContent = profitRatio;
-                
-                // ROI srovnání
-                const roiComparison = saleROI > rentROI ? 'Prodej výhodnější' : rentROI > saleROI ? 'Pronájem výhodnější' : 'Vyrovnané';
-                const roiComparisonElement = document.getElementById('roiComparison');
-                if (roiComparisonElement) roiComparisonElement.textContent = roiComparison;
-                
-                // Doporučený mix na základě ziskovosti
-                let recommendedSaleMix, recommendedRentMix;
-                if (saleNetProfit > rentNetProfit * 2) {
-                    recommendedSaleMix = '80%';
-                    recommendedRentMix = '20%';
-                } else if (rentNetProfit > saleNetProfit) {
-                    recommendedSaleMix = '40%';
-                    recommendedRentMix = '60%';
-                } else {
-                    recommendedSaleMix = '70%';
-                    recommendedRentMix = '30%';
-                }
-                
-                const saleMixElement = document.getElementById('recommendedSaleMix');
-                const rentMixElement = document.getElementById('recommendedRentMix');
-                if (saleMixElement) saleMixElement.textContent = recommendedSaleMix;
-                if (rentMixElement) rentMixElement.textContent = recommendedRentMix;
-                
-                console.log('Sale vs Rent analysis updated:', {
-                    totalCosts,
-                    saleCostPerTransaction,
-                    rentCostPerTransaction,
-                    saleNetProfit,
-                    rentNetProfit
-                });
-                
-            } catch (error) {
-                console.error('Error in updateSaleVsRentAnalysis:', error);
-            }
-        }
-        
-        // Funkce pro roční analýzu
-        function updateAnnualAnalysis(monthlyCosts) {
-            try {
-                // Základní roční výpočty
-                const annualCosts = monthlyCosts * 12;
-                
-                // Odhad ročních příjmů na základě různých scénářů
-                const avgSaleCommission = 120000;
-                const avgRentCommission = 15000;
-                const avgMixedCommission = (avgSaleCommission * 0.7) + (avgRentCommission * 0.3); // 70% prodej, 30% pronájem
-                
-                // Konzervativní scénář: 2 transakce/měsíc = 24/rok
-                const conservativeTransactions = 24;
-                const conservativeRevenue = conservativeTransactions * avgMixedCommission;
-                const conservativeProfit = conservativeRevenue - annualCosts;
-                
-                // Realistický scénář: 3 transakce/měsíc = 36/rok
-                const realisticTransactions = 36;
-                const realisticRevenue = realisticTransactions * avgMixedCommission;
-                const realisticProfit = realisticRevenue - annualCosts;
-                
-                // Optimistický scénář: 4 transakce/měsíc = 48/rok
-                const optimisticTransactions = 48;
-                const optimisticRevenue = optimisticTransactions * avgMixedCommission;
-                const optimisticProfit = optimisticRevenue - annualCosts;
-                
-                // Aktualizace základních ročních metrik (použijeme realistický scénář)
-                document.getElementById('annualCosts').textContent = formatCurrency(annualCosts);
-                document.getElementById('annualRevenue').textContent = formatCurrency(realisticRevenue);
-                
-                // Roční zisk s barevným kódováním
-                const annualProfitElement = document.getElementById('annualProfit');
-                annualProfitElement.textContent = formatCurrency(realisticProfit);
-                annualProfitElement.style.color = realisticProfit > 0 ? '#047857' : '#dc2626';
-                
-                // Roční metriky
-                const annualROI = annualCosts > 0 ? (realisticProfit / annualCosts) * 100 : 0;
-                const breakEvenTransactions = Math.ceil(annualCosts / avgMixedCommission);
-                const annualMargin = realisticRevenue > 0 ? (realisticProfit / realisticRevenue) * 100 : 0;
-                
-                document.getElementById('annualROI').textContent = Math.round(annualROI) + '%';
-                document.getElementById('annualBreakevenTransactions').textContent = breakEvenTransactions;
-                document.getElementById('averageRevenuePerTransaction').textContent = formatCurrency(avgMixedCommission);
-                document.getElementById('annualMargin').textContent = Math.round(annualMargin) + '%';
-                
-                // Scénáře ročního vývoje
-                document.getElementById('conservativeAnnualProfit').textContent = formatCurrency(conservativeProfit);
-                document.getElementById('realisticAnnualProfit').textContent = formatCurrency(realisticProfit);
-                document.getElementById('optimisticAnnualProfit').textContent = formatCurrency(optimisticProfit);
-                
-                // Struktura ročních nákladů
-                const categoryTotals = getCategoryTotals();
-                const annualFixedCosts = (categoryTotals.intelligentFixed || 0) * 12;
-                const annualVariableCosts = (categoryTotals.intelligentVariable || 0) * 12;
-                const annualInvestmentCosts = (categoryTotals.intelligentInvestment || 0) * 12;
-                
-                const costBreakdownHTML = `
-                    <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
-                        <span style="color: #6b7280;">Fixní náklady:</span>
-                        <span style="font-weight: 600; color: #dc2626;">${formatCurrency(annualFixedCosts)}</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
-                        <span style="color: #6b7280;">Variabilní náklady:</span>
-                        <span style="font-weight: 600; color: #f59e0b;">${formatCurrency(annualVariableCosts)}</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
-                        <span style="color: #6b7280;">Investiční náklady:</span>
-                        <span style="font-weight: 600; color: #3b82f6;">${formatCurrency(annualInvestmentCosts)}</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; padding: 8px 0; border-top: 2px solid #374151; margin-top: 8px; font-weight: 700;">
-                        <span style="color: #374151;">Celkem za rok:</span>
-                        <span style="color: #dc2626;">${formatCurrency(annualCosts)}</span>
-                    </div>
-                `;
-                
-                document.getElementById('annualCostBreakdown').innerHTML = costBreakdownHTML;
-                
-            } catch (error) {
-                console.error('Error in updateAnnualAnalysis:', error);
-            }
         }
         
         // Uložení původní funkce před přepsáním
@@ -6959,22 +5407,10 @@
 
         // Kalkulace Online Lead Generation
         function calculateLeadGeneration() {
-            try {
-                console.log('calculateLeadGeneration started');
-                
-                // Získání hodnot z formuláře s bezpečnostními kontrolami
-                const targetLeadsEl = document.getElementById('targetLeads');
-                const conversionRateEl = document.getElementById('conversionRate');
-                const avgCommissionEl = document.getElementById('avgCommission');
-                
-                if (!targetLeadsEl || !conversionRateEl || !avgCommissionEl) {
-                    console.log('Missing basic elements for leadgen calculation');
-                    return;
-                }
-                
-                const targetLeads = parseFloat(targetLeadsEl.value) || 0;
-                const conversionRate = parseFloat(conversionRateEl.value) || 0;
-                const avgCommission = parseFloat(avgCommissionEl.value) || 0;
+            // Získání hodnot z formuláře
+            const targetLeads = parseFloat(document.getElementById('targetLeads').value) || 0;
+            const conversionRate = parseFloat(document.getElementById('conversionRate').value) || 0;
+            const avgCommission = parseFloat(document.getElementById('avgCommission').value) || 0;
 
             // Tvorba obsahu
             const contentCreatorSalary = parseFloat(document.getElementById('contentCreatorSalary').value) || 0;
@@ -7425,10 +5861,6 @@
                 conversionRate,
                 adsBudget: adsCosts
             });
-            
-            } catch (error) {
-                console.error('Error in calculateLeadGeneration:', error);
-            }
         }
 
         // Toggle functionality pro kategorie
