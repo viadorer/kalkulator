@@ -1077,25 +1077,6 @@
         <div class="header">
             <h1>Kompletní kalkulačka RK</h1>
             <p>Prodej, pronájem a ekonomická rozvaha</p>
-            
-            <!-- Projekt management -->
-            <div style="margin-top: 30px; display: flex; gap: 15px; align-items: center; justify-content: center; flex-wrap: wrap;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <label style="color: white; font-weight: 500;">Název projektu:</label>
-                    <input type="text" id="projectName" style="padding: 8px 12px; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; background: rgba(255,255,255,0.1); color: white; font-size: 14px; min-width: 200px;" />
-                </div>
-                
-                <button onclick="saveData()" style="background: rgba(52, 199, 89, 0.8); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 500; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(10px);" onmouseover="this.style.background='rgba(52, 199, 89, 1)'" onmouseout="this.style.background='rgba(52, 199, 89, 0.8)'">
-                    Uložit projekt
-                </button>
-                
-                <button onclick="loadData()" style="background: rgba(0, 122, 255, 0.8); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 500; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(10px);" onmouseover="this.style.background='rgba(0, 122, 255, 1)'" onmouseout="this.style.background='rgba(0, 122, 255, 0.8)'">
-                    Nahrát projekt
-                </button>
-                
-                <input type="file" id="fileInput" accept=".json" style="display: none;" onchange="handleFileLoad(event)">
-            </div>
-            
             <div style="margin-top: 20px;">
                 <a href="zamer.html" style="display: inline-block; background: rgba(255,255,255,0.2); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 500; transition: all 0.3s ease; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3);" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
                     Komplexní kalkulačka záměru
@@ -1103,24 +1084,17 @@
             </div>
         </div>
 
-        <!-- NAVIGAČNÍ LIŠTA KALKULAČEK -->
-        <div class="calculator-nav" style="display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; padding: 15px; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
-            <a href="index.html" class="calc-nav-item" style="padding: 12px 24px; background: #f5f5f7; color: #1d1d1f; text-decoration: none; border-radius: 8px; font-weight: 500; transition: all 0.2s ease; border: 1px solid #e5e5e7;" onmouseover="this.style.background='#e5e5e7'" onmouseout="this.style.background='#f5f5f7'">← Hlavní kalkulačka</a>
-            <a href="developer_calculator.html" class="calc-nav-item" style="padding: 12px 24px; background: #f5f5f7; color: #1d1d1f; text-decoration: none; border-radius: 8px; font-weight: 500; transition: all 0.2s ease; border: 1px solid #e5e5e7;" onmouseover="this.style.background='#e5e5e7'" onmouseout="this.style.background='#f5f5f7'">Developer kalkulačka</a>
-            <a href="zamer.html" class="calc-nav-item" style="padding: 12px 24px; background: #f5f5f7; color: #1d1d1f; text-decoration: none; border-radius: 8px; font-weight: 500; transition: all 0.2s ease; border: 1px solid #e5e5e7;" onmouseover="this.style.background='#e5e5e7'" onmouseout="this.style.background='#f5f5f7'">Záměr kalkulačka</a>
-        </div>
-
         <div class="nav-tabs">
-            <button class="nav-tab" onclick="window.location.href='index.html#prodej'">Prodej</button>
-            <button class="nav-tab" onclick="window.location.href='index.html#pronajem'">Pronájem</button>
-            <button class="nav-tab" onclick="window.location.href='index.html#rozvaha'">Ekonomická rozvaha</button>
+            <button class="nav-tab active" onclick="showTab('prodej')">Prodej</button>
+            <button class="nav-tab" onclick="showTab('pronajem')">Pronájem</button>
+            <button class="nav-tab" onclick="showTab('rozvaha')">Ekonomická rozvaha</button>
             <button class="nav-tab" onclick="window.location.href='index.html#naklady'">Měsíční náklady</button>
-            <button class="nav-tab active" onclick="showTab('garantovany')">Garantovaný nájem</button>
+            <button class="nav-tab" onclick="showTab('garantovany')">Garantovaný nájem</button>
             <button class="nav-tab" onclick="showTab('leadgen')">Online Lead Generation</button>
         </div>
 
         <!-- TAB PRODEJ -->
-        <div id="prodej" class="tab-content">
+        <div id="prodej" class="tab-content active">
             <div class="content">
                 <div class="input-section">
                     <div class="input-group">
@@ -1503,84 +1477,26 @@
             </div>
         </div>
 
-        <!-- TAB MĚSÍČNÍ NÁKLADY -->
-        <div id="naklady" class="tab-content">
-            <div class="content">
-                <div class="costs-controls" style="margin-bottom: 20px; text-align: center;">
-                    <button onclick="saveMonthlyCosts()" style="background: #16a34a; color: white; padding: 10px 20px; border: none; border-radius: 5px; margin: 0 5px; cursor: pointer;">Uložit náklady</button>
-                    <button onclick="loadMonthlyCosts()" style="background: #2563eb; color: white; padding: 10px 20px; border: none; border-radius: 5px; margin: 0 5px; cursor: pointer;">Načíst náklady</button>
-                    <input type="file" id="costsFileInput" accept=".json" style="display: none;">
-                </div>
-                <div class="monthly-costs">
-                    <div class="cost-category" data-category="automobily">
-                        <h4>Automobily <button onclick="addCostItem('automobily')" style="background: #16a34a; color: white; border: none; border-radius: 3px; padding: 5px 10px; margin-left: 10px; cursor: pointer;">+ Přidat</button></h4>
-
-                    </div>
-
-                    <div class="cost-category" data-category="sluzby">
-                        <h4>Služby a technologie <button onclick="addCostItem('sluzby')" style="background: #16a34a; color: white; border: none; border-radius: 3px; padding: 5px 10px; margin-left: 10px; cursor: pointer;">+ Přidat</button></h4>
-
-                    </div>
-
-                    <div class="cost-category" data-category="kancelar">
-                        <h4>Kancelář a provoz <button onclick="addCostItem('kancelar')" style="background: #16a34a; color: white; border: none; border-radius: 3px; padding: 5px 10px; margin-left: 10px; cursor: pointer;">+ Přidat</button></h4>
-
-                    </div>
-
-                    <div class="cost-category" data-category="finance">
-                        <h4>Finance a účetnictví <button onclick="addCostItem('finance')" style="background: #16a34a; color: white; border: none; border-radius: 3px; padding: 5px 10px; margin-left: 10px; cursor: pointer;">+ Přidat</button></h4>
-
-                    </div>
-
-                    <div class="cost-category" data-category="marketing">
-                        <h4>Marketing a reklama <button onclick="addCostItem('marketing')" style="background: #16a34a; color: white; border: none; border-radius: 3px; padding: 5px 10px; margin-left: 10px; cursor: pointer;">+ Přidat</button></h4>
-
-                    </div>
-
-                    <div class="cost-category" data-category="ostatni">
-                        <h4>Ostatní služby <button onclick="addCostItem('ostatni')" style="background: #16a34a; color: white; border: none; border-radius: 3px; padding: 5px 10px; margin-left: 10px; cursor: pointer;">+ Přidat</button></h4>
-
-                    </div>
-
-                    <div class="cost-category" data-category="parkovani">
-                        <h4>Parkování <button onclick="addCostItem('parkovani')" style="background: #16a34a; color: white; border: none; border-radius: 3px; padding: 5px 10px; margin-left: 10px; cursor: pointer;">+ Přidat</button></h4>
-
-                    </div>
-                </div>
-
-                <div class="breakdown">
-                    <div class="breakdown-item">
-                        <h5>Automobily celkem</h5>
-                        <div class="value" id="automobily-total">0 Kč</div>
-                    </div>
-                    <div class="breakdown-item">
-                        <h5>Kancelář a provoz</h5>
-                        <div class="value" id="kancelar-provoz-total">0 Kč</div>
-                    </div>
-                    <div class="breakdown-item">
-                        <h5>Marketing</h5>
-                        <div class="value" id="marketing-total">0 Kč</div>
-                    </div>
-                    <div class="breakdown-item">
-                        <h5>Ostatní služby</h5>
-                        <div class="value" id="ostatni-sluzby-total">0 Kč</div>
-                    </div>
-                    <div class="breakdown-item">
-                        <h5>CELKOVÉ MĚSÍČNÍ NÁKLADY</h5>
-                        <div class="value" id="total-monthly-costs" style="color: #ff3b30; font-size: 1.5rem;">0 Kč</div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- TAB GARANTOVANÝ NÁJEM -->
-        <div id="garantovany" class="tab-content active">
+        <div id="garantovany" class="tab-content">
             <div class="content">
                 <!-- Header s přehledem -->
                 <div class="guaranteed-rent-header">
                     <div class="header-content">
                         <h2>Kalkulačka garantovaného nájmu</h2>
                         <p class="header-description">Komplexní analýza ziskovosti služby garantovaného nájmu s break-even analýzou a scénáři</p>
+                        
+                        <!-- Tlačítka pro uložení/načtení -->
+                        <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button onclick="saveGuaranteedRentData()" style="background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.9rem;">
+                                Uložit data
+                            </button>
+                            <button onclick="loadGuaranteedRentData()" style="background: #10b981; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.9rem;">
+                                Načíst data
+                            </button>
+                            <input type="file" id="guaranteedRentFileInput" accept=".json" style="display: none;" onchange="handleGuaranteedRentFileLoad(event)">
+                        </div>
                     </div>
                     <div class="quick-stats">
                         <div class="quick-stat">
@@ -1656,6 +1572,14 @@
                                         <span class="input-unit">dní</span>
                                     </div>
                                     <small class="field-explanation">Průměrný počet dní potřebných k nalezení nového nájemníka. Kratší doba = vyšší obsazenost a příjmy.</small>
+                                </div>
+                                <div class="input-group">
+                                    <label for="rentalCommission">Provize z pronájmu</label>
+                                    <div class="input-wrapper">
+                                        <input type="number" id="rentalCommission" value="15000" oninput="calculateGuaranteedRent()">
+                                        <span class="input-unit">Kč</span>
+                                    </div>
+                                    <small class="field-explanation">Průměrná provize za zprostředkování jednoho pronájmu. Obvykle 1-2 měsíční nájmy. Tato provize se získává při každé změně nájemníka.</small>
                                 </div>
                             </div>
                         </div>
@@ -1774,7 +1698,7 @@
                                 <div class="metric-item">
                                     <div class="metric-value" id="monthlyRevenue">92 000 Kč</div>
                                     <div class="metric-label">Měsíční tržby</div>
-                                    <div class="metric-explanation">Celkové měsíční příjmy z poplatků za garantovaný nájem od všech aktivních nemovitostí.</div>
+                                    <div class="metric-explanation">Celkové měsíční příjmy včetně garantovaného nájmu, provizí za zprostředkování a příjmů z pronájmu nemovitostí.</div>
                                 </div>
                                 <div class="metric-item">
                                     <div class="metric-value" id="totalMonthlyCosts">185 000 Kč</div>
@@ -1785,6 +1709,11 @@
                                     <div class="metric-value" id="profitMargin">-101%</div>
                                     <div class="metric-label">Marže</div>
                                     <div class="metric-explanation">Procento zisku z tržeb. Kladná marže = ziskový business, záporná = ztrátový.</div>
+                                </div>
+                                <div class="metric-item">
+                                    <div class="metric-value" id="rentalCommissionRevenue">0 Kč</div>
+                                    <div class="metric-label">Příjmy z provizí</div>
+                                    <div class="metric-explanation">Měsíční příjmy z provizí za zprostředkování pronájmů a příjmy z pronájmu nemovitostí. Závisí na fluktuaci nájemníků a výši provize.</div>
                                 </div>
                                 <div class="metric-item">
                                     <div class="metric-value" id="costPerProperty">3 700 Kč</div>
@@ -1908,13 +1837,8 @@
         <div id="leadgen" class="tab-content">
             <div class="content">
                 <div class="input-section">
-                    <!-- Název projektu a tlačítka pro uložení/načtení/PDF -->
+                    <!-- Tlačítka pro uložení/načtení/PDF -->
                     <div style="margin-bottom: 20px; padding: 15px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;">
-                        <div style="margin-bottom: 15px;">
-                            <label for="projectName" style="display: block; margin-bottom: 6px; font-weight: 500; color: #374151; font-size: 0.9rem;">Název projektu:</label>
-                            <input type="text" id="projectName" placeholder="Zadejte název vašeho lead generation projektu..." style="width: 100%; max-width: 400px; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 0.9rem; color: #374151;" value="">
-                            <small style="color: #6b7280; font-size: 0.8rem; display: block; margin-top: 4px;">Tento název bude použit při ukládání a exportu dat</small>
-                        </div>
                         <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
                             <button onclick="saveLeadGenData()" style="background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.9rem;">
                                 Uložit data
@@ -3561,6 +3485,7 @@
             const serviceFee = parseFloat(document.getElementById('serviceFee').value) || 0;
             const avgTenancyDuration = parseFloat(document.getElementById('avgTenancyDuration').value) || 0;
             const avgVacancyDays = parseFloat(document.getElementById('avgVacancyDays').value) || 0;
+            const rentalCommission = parseFloat(document.getElementById('rentalCommission').value) || 0;
 
             // Náklady
             const accountingCosts = parseFloat(document.getElementById('accountingCosts').value) || 0;
@@ -3585,9 +3510,28 @@
             const badDebtAmount = monthlyRevenue * (badDebtRate / 100);
             const totalMonthlyCosts = fixedCosts + variableCosts + reserveFundAmount + badDebtAmount;
 
-            const monthlyProfit = monthlyRevenue - totalMonthlyCosts;
+            // Výpočet příjmů z provizí za pronájem
+            // Frekvence změny nájemníků = 12 měsíců / průměrná doba nájmu
+            const tenantTurnoverRate = avgTenancyDuration > 0 ? 12 / avgTenancyDuration : 0;
+            // Počet změn nájemníků za měsíc = počet nemovitostí × frekvence změny / 12
+            const monthlyTenantChanges = (totalProperties * tenantTurnoverRate) / 12;
+            // Měsíční příjmy z provizí = počet změn × provize za pronájem
+            const monthlyCommissionRevenue = monthlyTenantChanges * rentalCommission;
+
+            // Výpočet příjmů z pronájmu nemovitostí
+            // Počet pronajímaných nemovitostí za měsíc = počet změn nájemníků (nové pronájmy)
+            const monthlyRentalCount = monthlyTenantChanges;
+            // Průměrná provize z pronájmu nemovitosti (obvykle 1-2 měsíční nájmy)
+            const rentalFeePerProperty = avgRent * 1.5; // 1.5 měsíčního nájmu jako standardní provize
+            // Měsíční příjmy z pronájmu nemovitostí
+            const monthlyRentalRevenue = monthlyRentalCount * rentalFeePerProperty;
+
+            // Celkové měsíční příjmy = garantovaný nájem + provize za zprostředkování + příjmy z pronájmu
+            const totalMonthlyRevenue = monthlyRevenue + monthlyCommissionRevenue + monthlyRentalRevenue;
+            
+            const monthlyProfit = totalMonthlyRevenue - totalMonthlyCosts;
             const yearlyProfit = monthlyProfit * 12;
-            const profitMargin = monthlyRevenue > 0 ? (monthlyProfit / monthlyRevenue) * 100 : 0;
+            const profitMargin = totalMonthlyRevenue > 0 ? (monthlyProfit / totalMonthlyRevenue) * 100 : 0;
             const costPerProperty = totalProperties > 0 ? totalMonthlyCosts / totalProperties : 0;
 
             // Break-even analýza
@@ -3614,11 +3558,11 @@
             // Aktualizace UI - hlavní metriky
             document.getElementById('activeProperties').textContent = activeProperties;
             document.getElementById('monthlyRevenue').textContent = formatCurrency(monthlyRevenue);
-            document.getElementById('totalMonthlyCosts').textContent = formatCurrency(totalMonthlyCosts);
-            document.getElementById('costPerProperty').textContent = formatCurrency(costPerProperty);
-            
-            document.getElementById('monthlyProfit').textContent = formatCurrency(monthlyProfit);
-            document.getElementById('profitMargin').textContent = profitMargin.toFixed(1) + '%';
+            document.getElementById('guaranteedRentRevenue').textContent = formatCurrency(totalMonthlyRevenue);
+            document.getElementById('guaranteedRentCosts').textContent = formatCurrency(totalMonthlyCosts);
+            document.getElementById('guaranteedRentProfit').textContent = formatCurrency(monthlyProfit);
+            document.getElementById('guaranteedRentMargin').textContent = profitMargin.toFixed(1) + '%';
+            document.getElementById('rentalCommissionRevenue').textContent = formatCurrency(monthlyCommissionRevenue + monthlyRentalRevenue);
             
             // Break-even sekce
             document.getElementById('breakEvenProperties').textContent = breakEvenProperties;
@@ -4094,10 +4038,14 @@
 
         // Kalkulace Online Lead Generation
         function calculateLeadGeneration() {
+            console.log('calculateLeadGeneration() called');
+            
             // Získání hodnot z formuláře
             const targetLeads = parseFloat(document.getElementById('targetLeads').value) || 0;
             const conversionRate = parseFloat(document.getElementById('conversionRate').value) || 0;
             const avgCommission = parseFloat(document.getElementById('avgCommission').value) || 0;
+            
+            console.log('Basic params:', { targetLeads, conversionRate, avgCommission });
 
             // Tvorba obsahu
             const contentCreatorSalary = parseFloat(document.getElementById('contentCreatorSalary').value) || 0;
@@ -4178,14 +4126,20 @@
 
             const totalMonthlyCosts = contentCosts + videoCosts + socialCosts + adsCosts + toolsCosts + otherCostsTotal + emailMarketingCosts + competitiveCosts;
 
+            console.log('Total costs calculated:', totalMonthlyCosts);
+
             // Základní výpočty
-            const costPerLead = totalMonthlyCosts / targetLeads;
+            const costPerLead = targetLeads > 0 ? totalMonthlyCosts / targetLeads : 0;
             const expectedClients = targetLeads * (conversionRate / 100);
-            const costPerClient = totalMonthlyCosts / expectedClients;
+            const costPerClient = expectedClients > 0 ? totalMonthlyCosts / expectedClients : 0;
             const expectedRevenue = expectedClients * avgCommission;
             const netProfit = expectedRevenue - totalMonthlyCosts;
-            const roi = ((netProfit / totalMonthlyCosts) * 100);
-            const breakEvenLeads = Math.ceil(totalMonthlyCosts / (avgCommission * (conversionRate / 100)));
+            const roi = totalMonthlyCosts > 0 ? ((netProfit / totalMonthlyCosts) * 100) : 0;
+            const breakEvenLeads = (avgCommission * (conversionRate / 100)) > 0 ? Math.ceil(totalMonthlyCosts / (avgCommission * (conversionRate / 100))) : 0;
+            
+            console.log('Basic calculations:', { costPerLead, expectedClients, costPerClient, expectedRevenue, netProfit, roi, breakEvenLeads });
+            
+            console.log('Calculation completed successfully');
 
             // Výpočty pro personální požadavky
             const leadConversionRate = parseFloat(document.getElementById('leadConversionRate').value) || 2.5;
@@ -4257,7 +4211,7 @@
             document.getElementById('competitiveCostsTotal').textContent = formatCurrency(competitiveCosts);
             document.getElementById('competitiveCostsPercent').textContent = competitivePercent + '%';
             
-            // Aktualizace celkových měsíčních nákladů
+            
             document.getElementById('totalMonthlyCosts').textContent = formatCurrency(totalMonthlyCosts);
 
             // Pokročilé metriky pro funnel analýzu (pouze pokud je zapnutá)
@@ -4288,18 +4242,28 @@
                 { name: 'Ostatní náklady', value: otherCostsTotal, percent: otherPercent, color: '#64748b' }
             ]);
 
-            document.getElementById('costPerLead').textContent = formatCurrency(costPerLead);
-            document.getElementById('costPerClient').textContent = formatCurrency(costPerClient);
-            document.getElementById('expectedClients').textContent = expectedClients.toFixed(1);
-            document.getElementById('expectedRevenue').textContent = formatCurrency(expectedRevenue);
-            document.getElementById('netProfit').textContent = formatCurrency(netProfit);
-            document.getElementById('roi').textContent = roi.toFixed(1) + '%';
-            document.getElementById('breakEvenPoint').textContent = breakEvenLeads + ' leadů';
+            // Aktualizace základních metrik s kontrolou existence elementů
+            const updateElement = (id, value) => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = value;
+                } else {
+                    console.warn(`Element with id '${id}' not found`);
+                }
+            };
+
+            updateElement('costPerLead', formatCurrency(costPerLead));
+            updateElement('costPerClient', formatCurrency(costPerClient));
+            updateElement('expectedClients', expectedClients.toFixed(1));
+            updateElement('expectedRevenue', formatCurrency(expectedRevenue));
+            updateElement('netProfit', formatCurrency(netProfit));
+            updateElement('roi', roi.toFixed(1) + '%');
+            updateElement('breakEvenPoint', breakEvenLeads + ' leadů');
 
             // Aktualizace nových výpočtů pro personální požadavky
-            document.getElementById('peopleToContact').textContent = peopleToContact.toLocaleString('cs-CZ') + ' lidí';
-            document.getElementById('staffNeeded').textContent = staffNeeded + (staffNeeded === 1 ? ' zaměstnanec' : staffNeeded < 5 ? ' zaměstnanci' : ' zaměstnanců');
-            document.getElementById('callCenterCost').textContent = formatCurrency(callCenterMonthlyCost);
+            updateElement('peopleToContact', peopleToContact.toLocaleString('cs-CZ') + ' lidí');
+            updateElement('staffNeeded', staffNeeded + (staffNeeded === 1 ? ' zaměstnanec' : staffNeeded < 5 ? ' zaměstnanci' : ' zaměstnanců'));
+            updateElement('callCenterCost', formatCurrency(callCenterMonthlyCost));
             
             // Status zprávy pro personální požadavky
             const peopleToContactStatus = document.getElementById('peopleToContactStatus');
@@ -4340,28 +4304,28 @@
                 callCenterStatus.style.color = '#f59e0b';
             }
 
-            document.getElementById('yearlyTotalCosts').textContent = formatCurrency(yearlyExpenses);
-            document.getElementById('yearlyLeads').textContent = yearlyLeads;
-            document.getElementById('yearlyClients').textContent = yearlyClients;
-            document.getElementById('yearlyRevenue').textContent = formatCurrency(yearlyRevenue);
-            document.getElementById('yearlyNetProfit').textContent = formatCurrency(yearlyNetProfit);
+            updateElement('yearlyTotalCosts', formatCurrency(yearlyExpenses));
+            updateElement('yearlyLeads', yearlyLeads);
+            updateElement('yearlyClients', yearlyClients);
+            updateElement('yearlyRevenue', formatCurrency(yearlyRevenue));
+            updateElement('yearlyNetProfit', formatCurrency(yearlyNetProfit));
 
             // Aktualizace pokročilých analýz
             // Funnel analýza
-            document.getElementById('totalVisitors').textContent = totalVisitors.toLocaleString('cs-CZ');
-            document.getElementById('mqlLeads').textContent = mqlLeads.toFixed(1);
-            document.getElementById('sqlLeads').textContent = sqlLeads.toFixed(1);
-            document.getElementById('funnelEfficiency').textContent = funnelEfficiency + '%';
+            updateElement('totalVisitors', totalVisitors.toLocaleString('cs-CZ'));
+            updateElement('mqlLeads', mqlLeads.toFixed(1));
+            updateElement('sqlLeads', sqlLeads.toFixed(1));
+            updateElement('funnelEfficiency', funnelEfficiency + '%');
 
             // Email marketing metriky
-            document.getElementById('emailsPerMonth').textContent = Math.round(emailsPerMonth * emailDatabaseSize).toLocaleString('cs-CZ');
-            document.getElementById('emailCostPerSend').textContent = formatCurrency(emailCostPerSend);
-            document.getElementById('emailROI').textContent = emailROI + '%';
+            updateElement('emailsPerMonth', Math.round(emailsPerMonth * emailDatabaseSize).toLocaleString('cs-CZ'));
+            updateElement('emailCostPerSend', formatCurrency(emailCostPerSend));
+            updateElement('emailROI', emailROI + '%');
 
             // Konkurenční analýza
-            document.getElementById('totalMarketBudget').textContent = formatCurrency(totalMarketBudget);
-            document.getElementById('marketShareBudget').textContent = formatCurrency(marketShareBudget);
-            document.getElementById('competitiveAdvantage').textContent = competitiveAdvantage;
+            updateElement('totalMarketBudget', formatCurrency(totalMarketBudget));
+            updateElement('marketShareBudget', formatCurrency(marketShareBudget));
+            updateElement('competitiveAdvantage', competitiveAdvantage);
 
             // Vytvoření vizualizace efektivity
             createEfficiencyVisualization({
@@ -4831,10 +4795,7 @@
                 }
             });
 
-            const projectName = document.getElementById('projectName').value || 'Můj Lead Generation projekt';
-            
             const data = {
-                projectName: projectName,
                 timestamp: new Date().toISOString(),
                 toggleStates: toggleStates,
                 basicParams: {
@@ -4883,8 +4844,7 @@
             const url = URL.createObjectURL(dataBlob);
             const link = document.createElement('a');
             link.href = url;
-            const sanitizedProjectName = projectName.replace(/[^a-zA-Z0-9\s-]/g, '').replace(/\s+/g, '-').toLowerCase();
-            link.download = `${sanitizedProjectName}-leadgen-${new Date().toISOString().split('T')[0]}.json`;
+            link.download = `leadgen-kalkulacka-${new Date().toISOString().split('T')[0]}.json`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -4918,11 +4878,6 @@
                                 toggleCategory(categoryElement, toggle.checked);
                             }
                         });
-                    }
-
-                    // Načtení názvu projektu
-                    if (data.projectName) {
-                        document.getElementById('projectName').value = data.projectName;
                     }
 
                     // Načtení základních parametrů
@@ -6025,155 +5980,26 @@
             }
         }
 
-        // Spustit inicializaci ihned i při DOMContentLoaded
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initializeGuaranteedRent);
-        } else {
-            // Spustit s malým zpožděním pro jistotu
-            setTimeout(initializeGuaranteedRent, 100);
-        }
-
-        // Event listenery pro lead generation
-        document.addEventListener('DOMContentLoaded', function() {
-            // Přidání event listenerů pro všechny inputy v lead generation záložce
-            const leadgenInputs = [
-                'targetLeads', 'conversionRate', 'avgCommission', 'leadConversionRate',
-                'leadProcessingTime', 'hourlyRate', 'workingHoursPerDay', 'workingDaysPerMonth',
-                'contentCreatorSalary', 'postsPerMonth', 'costPerPost',
-                'videosPerMonth', 'cameramanCost', 'postProductionCost', 'equipmentCost',
-                'socialMediaManager', 'socialMediaTools', 'influencerBudget',
-                'facebookAdsBudget', 'googleAdsBudget', 'linkedinAdsBudget', 'otherAdsBudget',
-                'crmCost', 'analyticsTools', 'emailMarketing', 'landingPageTools',
-                'marketingConsultant', 'eventsCost', 'printMaterials', 'otherCosts'
-            ];
-
-            leadgenInputs.forEach(inputId => {
-                const element = document.getElementById(inputId);
-                if (element) {
-                    element.addEventListener('input', calculateLeadGeneration);
-                }
-            });
-
-            // Počáteční výpočet pro lead generation
-            if (document.getElementById('targetLeads')) {
-                calculateLeadGeneration();
-            }
-
-            // Automatické přepnutí na správnou záložku při načtení stránky s kotvou
-            const hash = window.location.hash.substring(1);
-            if (hash && (hash === 'garantovany' || hash === 'leadgen')) {
-                showTab(hash);
-            }
-        });
-
-        // Save/Load funkcionalita
-        function saveData() {
-            const projectName = document.getElementById('projectName').value.trim();
-            if (!projectName) {
-                alert('Prosím zadejte název projektu před uložením.');
-                return;
-            }
-
+        // Funkce pro uložení dat garantovaného nájmu
+        function saveGuaranteedRentData() {
             const data = {
-                projectName: projectName,
+                totalProperties: document.getElementById('totalProperties').value,
+                occupancyRate: document.getElementById('occupancyRate').value,
+                avgRent: document.getElementById('avgRent').value,
+                serviceFee: document.getElementById('serviceFee').value,
+                avgTenancyDuration: document.getElementById('avgTenancyDuration').value,
+                avgVacancyDays: document.getElementById('avgVacancyDays').value,
+                accountingCosts: document.getElementById('accountingCosts').value,
+                managementCosts: document.getElementById('managementCosts').value,
+                insuranceCosts: document.getElementById('insuranceCosts').value,
+                salaryCosts: document.getElementById('salaryCosts').value,
+                maintenanceCosts: document.getElementById('maintenanceCosts').value,
+                marketingCosts: document.getElementById('marketingCosts').value,
+                legalCosts: document.getElementById('legalCosts').value,
+                reserveFund: document.getElementById('reserveFund').value,
+                badDebtRate: document.getElementById('badDebtRate').value,
                 timestamp: new Date().toISOString(),
-                version: '2.0',
-                
-                // Garantovaný nájem data
-                guaranteedRent: {
-                    totalProperties: document.getElementById('totalProperties')?.value || '',
-                    occupancyRate: document.getElementById('occupancyRate')?.value || '',
-                    avgRent: document.getElementById('avgRent')?.value || '',
-                    feePercentage: document.getElementById('feePercentage')?.value || '',
-                    accountingCosts: document.getElementById('accountingCosts')?.value || '',
-                    managementCosts: document.getElementById('managementCosts')?.value || '',
-                    insuranceCosts: document.getElementById('insuranceCosts')?.value || '',
-                    salaryCosts: document.getElementById('salaryCosts')?.value || '',
-                    marketingCosts: document.getElementById('marketingCosts')?.value || '',
-                    legalCosts: document.getElementById('legalCosts')?.value || '',
-                    maintenanceCosts: document.getElementById('maintenanceCosts')?.value || ''
-                },
-                
-                // Lead Generation data
-                leadGeneration: {
-                    targetLeads: document.getElementById('targetLeads')?.value || '',
-                    conversionRate: document.getElementById('conversionRate')?.value || '',
-                    avgCommission: document.getElementById('avgCommission')?.value || '',
-                    leadConversionRate: document.getElementById('leadConversionRate')?.value || '',
-                    leadProcessingTime: document.getElementById('leadProcessingTime')?.value || '',
-                    hourlyRate: document.getElementById('hourlyRate')?.value || '',
-                    workingHoursPerDay: document.getElementById('workingHoursPerDay')?.value || '',
-                    workingDaysPerMonth: document.getElementById('workingDaysPerMonth')?.value || '',
-                    
-                    // Tvorba obsahu
-                    contentCreatorSalary: document.getElementById('contentCreatorSalary')?.value || '',
-                    postsPerMonth: document.getElementById('postsPerMonth')?.value || '',
-                    costPerPost: document.getElementById('costPerPost')?.value || '',
-                    
-                    // Video produkce
-                    videosPerMonth: document.getElementById('videosPerMonth')?.value || '',
-                    cameramanCost: document.getElementById('cameramanCost')?.value || '',
-                    postProductionCost: document.getElementById('postProductionCost')?.value || '',
-                    equipmentCost: document.getElementById('equipmentCost')?.value || '',
-                    
-                    // Sociální sítě
-                    socialMediaManager: document.getElementById('socialMediaManager')?.value || '',
-                    socialMediaTools: document.getElementById('socialMediaTools')?.value || '',
-                    influencerBudget: document.getElementById('influencerBudget')?.value || '',
-                    
-                    // Placená reklama
-                    facebookAdsBudget: document.getElementById('facebookAdsBudget')?.value || '',
-                    googleAdsBudget: document.getElementById('googleAdsBudget')?.value || '',
-                    linkedinAdsBudget: document.getElementById('linkedinAdsBudget')?.value || '',
-                    otherAdsBudget: document.getElementById('otherAdsBudget')?.value || '',
-                    
-                    // Nástroje a tech
-                    crmCost: document.getElementById('crmCost')?.value || '',
-                    analyticsTools: document.getElementById('analyticsTools')?.value || '',
-                    emailMarketing: document.getElementById('emailMarketing')?.value || '',
-                    landingPageTools: document.getElementById('landingPageTools')?.value || '',
-                    
-                    // Ostatní náklady
-                    marketingConsultant: document.getElementById('marketingConsultant')?.value || '',
-                    eventsCost: document.getElementById('eventsCost')?.value || '',
-                    printMaterials: document.getElementById('printMaterials')?.value || '',
-                    otherCosts: document.getElementById('otherCosts')?.value || '',
-                    
-                    // Email Marketing
-                    emailDatabaseSize: document.getElementById('emailDatabaseSize')?.value || '',
-                    emailAcquisitionCost: document.getElementById('emailAcquisitionCost')?.value || '',
-                    emailSequencesCost: document.getElementById('emailSequencesCost')?.value || '',
-                    emailDeliverability: document.getElementById('emailDeliverability')?.value || '',
-                    emailSegmentation: document.getElementById('emailSegmentation')?.value || '',
-                    emailFrequency: document.getElementById('emailFrequency')?.value || '',
-                    
-                    // Funnel analýza
-                    visitorToLeadRate: document.getElementById('visitorToLeadRate')?.value || '',
-                    leadToMqlRate: document.getElementById('leadToMqlRate')?.value || '',
-                    mqlToSqlRate: document.getElementById('mqlToSqlRate')?.value || '',
-                    retargetingBudget: document.getElementById('retargetingBudget')?.value || '',
-                    leadScoringCost: document.getElementById('leadScoringCost')?.value || '',
-                    
-                    // Konkurenční analýza
-                    competitorCount: document.getElementById('competitorCount')?.value || '',
-                    competitorSpendEstimate: document.getElementById('competitorSpendEstimate')?.value || '',
-                    marketShareTarget: document.getElementById('marketShareTarget')?.value || '',
-                    differentiationCost: document.getElementById('differentiationCost')?.value || '',
-                    competitiveIntelligence: document.getElementById('competitiveIntelligence')?.value || ''
-                },
-                
-                // Stav kategorií (zapnuto/vypnuto)
-                categoryStates: {
-                    content: !document.querySelector('[data-category="content"]')?.classList.contains('disabled'),
-                    video: !document.querySelector('[data-category="video"]')?.classList.contains('disabled'),
-                    social: !document.querySelector('[data-category="social"]')?.classList.contains('disabled'),
-                    ads: !document.querySelector('[data-category="ads"]')?.classList.contains('disabled'),
-                    tools: !document.querySelector('[data-category="tools"]')?.classList.contains('disabled'),
-                    other: !document.querySelector('[data-category="other"]')?.classList.contains('disabled'),
-                    email: !document.querySelector('[data-category="email"]')?.classList.contains('disabled'),
-                    funnel: !document.querySelector('[data-category="funnel"]')?.classList.contains('disabled'),
-                    competitive: !document.querySelector('[data-category="competitive"]')?.classList.contains('disabled')
-                }
+                version: "1.0"
             };
 
             const jsonString = JSON.stringify(data, null, 2);
@@ -6182,20 +6008,22 @@
             
             const a = document.createElement('a');
             a.href = url;
-            a.download = `${projectName}_kalkulacka_${new Date().toISOString().split('T')[0]}.json`;
+            a.download = `garantovany-najem-${new Date().toISOString().split('T')[0]}.json`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
             
-            alert(`Projekt "${projectName}" byl úspěšně uložen!`);
+            alert('Data garantovaného nájmu byla uložena do souboru.');
         }
 
-        function loadData() {
-            document.getElementById('fileInput').click();
+        // Funkce pro načtení dat garantovaného nájmu
+        function loadGuaranteedRentData() {
+            document.getElementById('guaranteedRentFileInput').click();
         }
 
-        function handleFileLoad(event) {
+        // Funkce pro zpracování načteného souboru
+        function handleGuaranteedRentFileLoad(event) {
             const file = event.target.files[0];
             if (!file) return;
 
@@ -6204,69 +6032,44 @@
                 try {
                     const data = JSON.parse(e.target.result);
                     
-                    // Načtení názvu projektu
-                    if (data.projectName) {
-                        document.getElementById('projectName').value = data.projectName;
-                    }
+                    // Načtení dat do formuláře
+                    if (data.totalProperties !== undefined) document.getElementById('totalProperties').value = data.totalProperties;
+                    if (data.occupancyRate !== undefined) document.getElementById('occupancyRate').value = data.occupancyRate;
+                    if (data.avgRent !== undefined) document.getElementById('avgRent').value = data.avgRent;
+                    if (data.serviceFee !== undefined) document.getElementById('serviceFee').value = data.serviceFee;
+                    if (data.avgTenancyDuration !== undefined) document.getElementById('avgTenancyDuration').value = data.avgTenancyDuration;
+                    if (data.avgVacancyDays !== undefined) document.getElementById('avgVacancyDays').value = data.avgVacancyDays;
+                    if (data.accountingCosts !== undefined) document.getElementById('accountingCosts').value = data.accountingCosts;
+                    if (data.managementCosts !== undefined) document.getElementById('managementCosts').value = data.managementCosts;
+                    if (data.insuranceCosts !== undefined) document.getElementById('insuranceCosts').value = data.insuranceCosts;
+                    if (data.salaryCosts !== undefined) document.getElementById('salaryCosts').value = data.salaryCosts;
+                    if (data.maintenanceCosts !== undefined) document.getElementById('maintenanceCosts').value = data.maintenanceCosts;
+                    if (data.marketingCosts !== undefined) document.getElementById('marketingCosts').value = data.marketingCosts;
+                    if (data.legalCosts !== undefined) document.getElementById('legalCosts').value = data.legalCosts;
+                    if (data.reserveFund !== undefined) document.getElementById('reserveFund').value = data.reserveFund;
+                    if (data.badDebtRate !== undefined) document.getElementById('badDebtRate').value = data.badDebtRate;
                     
-                    // Načtení dat garantovaného nájmu
-                    if (data.guaranteedRent) {
-                        Object.keys(data.guaranteedRent).forEach(key => {
-                            const element = document.getElementById(key);
-                            if (element && data.guaranteedRent[key] !== '') {
-                                element.value = data.guaranteedRent[key];
-                            }
-                        });
-                    }
+                    // Přepočítání po načtení dat
+                    calculateGuaranteedRent();
                     
-                    // Načtení dat lead generation
-                    if (data.leadGeneration) {
-                        Object.keys(data.leadGeneration).forEach(key => {
-                            const element = document.getElementById(key);
-                            if (element && data.leadGeneration[key] !== '') {
-                                element.value = data.leadGeneration[key];
-                            }
-                        });
-                    }
-                    
-                    // Načtení stavů kategorií
-                    if (data.categoryStates) {
-                        Object.keys(data.categoryStates).forEach(category => {
-                            const categoryElement = document.querySelector(`[data-category="${category}"]`);
-                            const toggle = categoryElement?.querySelector('.category-toggle');
-                            
-                            if (categoryElement && toggle) {
-                                const isEnabled = data.categoryStates[category];
-                                toggle.checked = isEnabled;
-                                
-                                if (isEnabled) {
-                                    categoryElement.classList.remove('disabled');
-                                } else {
-                                    categoryElement.classList.add('disabled');
-                                }
-                            }
-                        });
-                    }
-                    
-                    // Přepočítání všech kalkulací
-                    if (typeof calculateGuaranteedRent === 'function') {
-                        calculateGuaranteedRent();
-                    }
-                    if (typeof calculateLeadGeneration === 'function') {
-                        calculateLeadGeneration();
-                    }
-                    
-                    alert(`Projekt "${data.projectName || 'Neznámý'}" byl úspěšně načten!`);
-                    
+                    alert('Data garantovaného nájmu byla úspěšně načtena.');
                 } catch (error) {
-                    alert('Chyba při načítání souboru. Prosím zkontrolujte, zda je soubor ve správném formátu.');
-                    console.error('Load error:', error);
+                    alert('Chyba při načítání souboru: ' + error.message);
                 }
             };
-            
             reader.readAsText(file);
-            event.target.value = ''; // Reset file input
         }
+
+        // Inicializace při načtení stránky
+        document.addEventListener('DOMContentLoaded', function() {
+            // Nastavení výchozích hodnot a výpočtů
+            calculate();
+            calculateRent();
+            calculateBalance();
+            updateMonthlyCostsTotals();
+            calculateGuaranteedRent();
+            calculateLeadGeneration();
+        });
     </script>
 </body>
 </html>

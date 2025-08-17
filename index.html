@@ -1153,8 +1153,8 @@
             <button class="nav-tab" onclick="showTab('pronajem')">Pronájem</button>
             <button class="nav-tab" onclick="showTab('rozvaha')">Ekonomická rozvaha</button>
             <button class="nav-tab" onclick="showTab('naklady')">Měsíční náklady</button>
-            <button class="nav-tab" onclick="window.open('index 2.html#garantovany', '_blank')">Garantovaný nájem</button>
-            <button class="nav-tab" onclick="window.open('index 2.html#leadgen', '_blank')">Lead Generation</button>
+            <button class="nav-tab" onclick="window.location.href='index 2.html#garantovany'">Garantovaný nájem</button>
+            <button class="nav-tab" onclick="window.location.href='index 2.html#leadgen'">Lead Generation</button>
         </div>
 
         <!-- TAB PRODEJ -->
@@ -1947,6 +1947,216 @@
                     </div>
                 </div>
 
+                <!-- Analýza významných nákladových položek -->
+                <div style="margin-top: 40px; padding: 30px; background: white; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                    <h3 style="margin: 0 0 24px 0; font-size: 1.5rem; font-weight: 700; color: #1f2937; text-align: center;">Analýza významných nákladových položek</h3>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                        <!-- Top 5 největších nákladových položek -->
+                        <div>
+                            <h4 style="margin: 0 0 20px 0; font-size: 1.2rem; font-weight: 600; color: #374151; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px;">Top 5 největších nákladových položek</h4>
+                            <div id="topCostItems" style="display: flex; flex-direction: column; gap: 12px;">
+                                <!-- Dynamicky generováno JavaScriptem -->
+                            </div>
+                        </div>
+                        
+                        <!-- Optimalizovatelné náklady -->
+                        <div>
+                            <h4 style="margin: 0 0 20px 0; font-size: 1.2rem; font-weight: 600; color: #374151; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px;">Optimalizovatelné náklady</h4>
+                            <div id="optimizableCosts" style="display: flex; flex-direction: column; gap: 12px;">
+                                <!-- Dynamicky generováno JavaScriptem -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analýza rentability prodeje vs. pronájmu -->
+                <div style="margin-top: 40px; padding: 30px; background: white; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                    <h3 style="margin: 0 0 24px 0; font-size: 1.5rem; font-weight: 700; color: #1f2937; text-align: center;">Analýza rentability prodeje vs. pronájmu</h3>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+                        <!-- Prodej -->
+                        <div style="background: #f8fafc; border-radius: 8px; padding: 20px; border: 1px solid #e2e8f0;">
+                            <h4 style="margin: 0 0 15px 0; font-size: 1.1rem; font-weight: 600; color: #374151; text-align: center;">Prodej</h4>
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: #6b7280;">Průměrná provize:</span>
+                                    <span style="font-weight: 600;" id="avgSaleCommission">0 Kč</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: #6b7280;">Náklady na transakci:</span>
+                                    <span style="font-weight: 600;" id="saleTransactionCost">0 Kč</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: #6b7280;">Čistý zisk:</span>
+                                    <span style="font-weight: 600; color: #10b981;" id="saleNetProfit">0 Kč</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: #6b7280;">Marže:</span>
+                                    <span style="font-weight: 600;" id="saleMargin">0%</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: #6b7280;">Break-even transakcí:</span>
+                                    <span style="font-weight: 600;" id="saleBreakEvenTransactions">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Pronájem -->
+                        <div style="background: #f8fafc; border-radius: 8px; padding: 20px; border: 1px solid #e2e8f0;">
+                            <h4 style="margin: 0 0 15px 0; font-size: 1.1rem; font-weight: 600; color: #374151; text-align: center;">Pronájem</h4>
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: #6b7280;">Průměrná provize:</span>
+                                    <span style="font-weight: 600;" id="avgRentCommission">0 Kč</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: #6b7280;">Náklady na transakci:</span>
+                                    <span style="font-weight: 600;" id="rentTransactionCost">0 Kč</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: #6b7280;">Čistý zisk:</span>
+                                    <span style="font-weight: 600; color: #10b981;" id="rentNetProfit">0 Kč</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: #6b7280;">Marže:</span>
+                                    <span style="font-weight: 600;" id="rentMargin">0%</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: #6b7280;">Break-even transakcí:</span>
+                                    <span style="font-weight: 600;" id="rentBreakEvenTransactions">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Srovnání -->
+                        <div style="background: #fef3c7; border-radius: 8px; padding: 20px; border: 1px solid #fbbf24;">
+                            <h4 style="margin: 0 0 15px 0; font-size: 1.1rem; font-weight: 600; color: #92400e; text-align: center;">Srovnání</h4>
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: #a16207;">Provize prodej:</span>
+                                    <span style="font-weight: 600;" id="comparisonSaleCommission">0 Kč</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: #a16207;">Provize pronájem:</span>
+                                    <span style="font-weight: 600;" id="comparisonRentCommission">0 Kč</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: #a16207;">Zisk prodej:</span>
+                                    <span style="font-weight: 600;" id="comparisonSaleProfit">0 Kč</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: #a16207;">Zisk pronájem:</span>
+                                    <span style="font-weight: 600;" id="comparisonRentProfit">0 Kč</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: #a16207;">ROI prodej:</span>
+                                    <span style="font-weight: 600;" id="comparisonSaleROI">0%</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <span style="color: #a16207;">ROI pronájem:</span>
+                                    <span style="font-weight: 600;" id="comparisonRentROI">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Poměry a doporučení -->
+                    <div style="background: #ecfdf5; border-radius: 8px; padding: 20px; border: 1px solid #10b981;">
+                        <h4 style="margin: 0 0 15px 0; font-size: 1.1rem; font-weight: 600; color: #166534; text-align: center;">Poměry a doporučený mix</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; text-align: center;">
+                            <div>
+                                <div style="font-size: 0.9rem; color: #166534; margin-bottom: 5px;">Poměr zisku</div>
+                                <div style="font-size: 1.3rem; font-weight: 700; color: #10b981;" id="profitRatio">-</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.9rem; color: #166534; margin-bottom: 5px;">Poměr ROI</div>
+                                <div style="font-size: 1.3rem; font-weight: 700; color: #10b981;" id="roiRatio">-</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.9rem; color: #166534; margin-bottom: 5px;">Doporučený mix</div>
+                                <div style="font-size: 1.1rem; font-weight: 700; color: #10b981;">70% prodej, 30% pronájem</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Roční analýza příjmů a výdajů -->
+                <div style="margin-top: 40px; padding: 30px; background: white; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                    <h3 style="margin: 0 0 24px 0; font-size: 1.5rem; font-weight: 700; color: #1f2937; text-align: center;">Roční analýza příjmů a výdajů</h3>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+                        <!-- Roční projekce -->
+                        <div>
+                            <h4 style="margin: 0 0 20px 0; font-size: 1.2rem; font-weight: 600; color: #374151; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px;">Roční projekce</h4>
+                            <div style="display: flex; flex-direction: column; gap: 15px;">
+                                <div style="background: #fef2f2; border-radius: 8px; padding: 15px; border: 1px solid #fecaca;">
+                                    <div style="font-size: 0.9rem; color: #991b1b; margin-bottom: 5px;">Roční náklady</div>
+                                    <div style="font-size: 1.4rem; font-weight: 700; color: #dc2626;" id="annualCosts">0 Kč</div>
+                                </div>
+                                <div style="background: #f0f9ff; border-radius: 8px; padding: 15px; border: 1px solid #bae6fd;">
+                                    <div style="font-size: 0.9rem; color: #1e40af; margin-bottom: 5px;">Roční příjmy</div>
+                                    <div style="font-size: 1.4rem; font-weight: 700; color: #2563eb;" id="annualRevenue">0 Kč</div>
+                                </div>
+                                <div style="background: #ecfdf5; border-radius: 8px; padding: 15px; border: 1px solid #a7f3d0;">
+                                    <div style="font-size: 0.9rem; color: #166534; margin-bottom: 5px;">Roční zisk</div>
+                                    <div style="font-size: 1.4rem; font-weight: 700; color: #10b981;" id="annualProfit">0 Kč</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Výkonnostní metriky -->
+                        <div>
+                            <h4 style="margin: 0 0 20px 0; font-size: 1.2rem; font-weight: 600; color: #374151; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px;">Výkonnostní metriky</h4>
+                            <div style="display: flex; flex-direction: column; gap: 12px;">
+                                <div style="display: flex; justify-content: space-between; padding: 10px; background: #f8fafc; border-radius: 6px;">
+                                    <span style="color: #6b7280;">Roční ROI:</span>
+                                    <span style="font-weight: 600;" id="annualROI">0%</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding: 10px; background: #f8fafc; border-radius: 6px;">
+                                    <span style="color: #6b7280;">Potřebné transakce (break-even):</span>
+                                    <span style="font-weight: 600;" id="annualBreakEvenTransactions">0</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding: 10px; background: #f8fafc; border-radius: 6px;">
+                                    <span style="color: #6b7280;">Průměrný příjem na transakci:</span>
+                                    <span style="font-weight: 600;" id="avgRevenuePerTransaction">0 Kč</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding: 10px; background: #f8fafc; border-radius: 6px;">
+                                    <span style="color: #6b7280;">Roční marže:</span>
+                                    <span style="font-weight: 600;" id="annualMargin">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Scénáře ročního vývoje -->
+                    <div style="margin-bottom: 30px;">
+                        <h4 style="margin: 0 0 20px 0; font-size: 1.2rem; font-weight: 600; color: #374151; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px;">Scénáře ročního vývoje</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+                            <div style="background: #fef2f2; border-radius: 8px; padding: 20px; border: 1px solid #fecaca; text-align: center;">
+                                <div style="font-size: 1rem; color: #991b1b; margin-bottom: 10px; font-weight: 600;">Konzervativní (70%)</div>
+                                <div style="font-size: 1.3rem; font-weight: 700; color: #dc2626;" id="conservativeAnnualProfit">0 Kč</div>
+                            </div>
+                            <div style="background: #fef3c7; border-radius: 8px; padding: 20px; border: 1px solid #fbbf24; text-align: center;">
+                                <div style="font-size: 1rem; color: #92400e; margin-bottom: 10px; font-weight: 600;">Realistický (100%)</div>
+                                <div style="font-size: 1.3rem; font-weight: 700; color: #d97706;" id="realisticAnnualProfit">0 Kč</div>
+                            </div>
+                            <div style="background: #ecfdf5; border-radius: 8px; padding: 20px; border: 1px solid #a7f3d0; text-align: center;">
+                                <div style="font-size: 1rem; color: #166534; margin-bottom: 10px; font-weight: 600;">Optimistický (130%)</div>
+                                <div style="font-size: 1.3rem; font-weight: 700; color: #10b981;" id="optimisticAnnualProfit">0 Kč</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Struktura ročních nákladů -->
+                    <div>
+                        <h4 style="margin: 0 0 20px 0; font-size: 1.2rem; font-weight: 600; color: #374151; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px;">Struktura ročních nákladů podle kategorií</h4>
+                        <div id="annualCostBreakdown" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                            <!-- Dynamicky generováno JavaScriptem -->
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Hloubková analýza nákladů -->
                 <div class="cost-analysis-section" style="margin-top: 40px; padding: 30px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">
                     <h3 style="margin: 0 0 24px 0; font-size: 1.5rem; font-weight: 700; color: #1f2937; text-align: center;">Hloubková analýza nákladů realitní kanceláře</h3>
@@ -2354,6 +2564,7 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
 
                         <!-- Strategická doporučení -->
                     <div>
@@ -2742,6 +2953,226 @@
                             </div>
                             <div class="recommendations" id="guaranteedRentRecommendations">
                                 <!-- Doporučení se načtou automaticky -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analýza významných nákladových položek -->
+                <div style="margin-top: 40px; width: 100%;">
+                    <div style="background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid #e5e7eb;">
+                        <h3 style="margin: 0 0 25px 0; font-size: 1.4rem; font-weight: 600; color: #374151; border-bottom: 2px solid #e5e7eb; padding-bottom: 12px;">Analýza významných nákladových položek</h3>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+                            <!-- Top 5 největších nákladových položek -->
+                            <div>
+                                <h4 style="margin: 0 0 20px 0; font-size: 1.1rem; font-weight: 600; color: #475569;">Top 5 největších nákladových položek</h4>
+                                <div id="topCostItems" style="display: flex; flex-direction: column; gap: 12px;">
+                                    <!-- Bude naplněno JavaScriptem -->
+                                </div>
+                            </div>
+                            
+                            <!-- Optimalizovatelné náklady -->
+                            <div>
+                                <h4 style="margin: 0 0 20px 0; font-size: 1.1rem; font-weight: 600; color: #475569;">Optimalizovatelné náklady</h4>
+                                <div id="optimizableCosts" style="display: flex; flex-direction: column; gap: 12px;">
+                                    <!-- Bude naplněno JavaScriptem -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analýza rentability prodeje vs. pronájmu -->
+                <div style="margin-top: 30px; width: 100%;">
+                    <div style="background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid #e5e7eb;">
+                        <h3 style="margin: 0 0 25px 0; font-size: 1.4rem; font-weight: 600; color: #374151; border-bottom: 2px solid #e5e7eb; padding-bottom: 12px;">Analýza rentability prodeje vs. pronájmu</h3>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+                            <!-- Prodej nemovitostí -->
+                            <div style="background: #f8fafc; border-radius: 10px; padding: 25px; border: 1px solid #e2e8f0;">
+                                <h4 style="margin: 0 0 20px 0; font-size: 1.1rem; font-weight: 600; color: #1e293b; text-align: center;">PRODEJ NEMOVITOSTÍ</h4>
+                                <div style="display: grid; gap: 15px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #e2e8f0;">
+                                        <span style="color: #64748b; font-size: 0.9rem;">Průměrná provize:</span>
+                                        <span style="font-weight: 600; color: #1e293b;" id="avgSaleCommission">120 000 Kč</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #e2e8f0;">
+                                        <span style="color: #64748b; font-size: 0.9rem;">Náklady na transakci:</span>
+                                        <span style="font-weight: 600; color: #1e293b;" id="saleTransactionCost">0 Kč</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #e2e8f0;">
+                                        <span style="color: #64748b; font-size: 0.9rem;">Čistý zisk:</span>
+                                        <span style="font-weight: 600; color: #10b981;" id="saleNetProfit">0 Kč</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #e2e8f0;">
+                                        <span style="color: #64748b; font-size: 0.9rem;">Marže:</span>
+                                        <span style="font-weight: 600; color: #1e293b;" id="saleMargin">0%</span>
+                                    </div>
+                                    <div style="text-align: center; margin-top: 15px; padding: 15px; background: white; border-radius: 8px;">
+                                        <div style="font-size: 0.85rem; color: #64748b; margin-bottom: 5px;">Potřebné transakce/měsíc pro break-even</div>
+                                        <div style="font-size: 1.8rem; font-weight: 700; color: #dc2626;" id="saleBreakEvenTransactions">0</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Pronájem nemovitostí -->
+                            <div style="background: #f0f9ff; border-radius: 10px; padding: 25px; border: 1px solid #bae6fd;">
+                                <h4 style="margin: 0 0 20px 0; font-size: 1.1rem; font-weight: 600; color: #0c4a6e; text-align: center;">PRONÁJEM NEMOVITOSTÍ</h4>
+                                <div style="display: grid; gap: 15px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #bae6fd;">
+                                        <span style="color: #0369a1; font-size: 0.9rem;">Průměrná provize:</span>
+                                        <span style="font-weight: 600; color: #0c4a6e;" id="avgRentCommission">15 000 Kč</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #bae6fd;">
+                                        <span style="color: #0369a1; font-size: 0.9rem;">Náklady na transakci:</span>
+                                        <span style="font-weight: 600; color: #0c4a6e;" id="rentTransactionCost">0 Kč</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #bae6fd;">
+                                        <span style="color: #0369a1; font-size: 0.9rem;">Čistý zisk:</span>
+                                        <span style="font-weight: 600; color: #10b981;" id="rentNetProfit">0 Kč</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #bae6fd;">
+                                        <span style="color: #0369a1; font-size: 0.9rem;">Marže:</span>
+                                        <span style="font-weight: 600; color: #0c4a6e;" id="rentMargin">0%</span>
+                                    </div>
+                                    <div style="text-align: center; margin-top: 15px; padding: 15px; background: white; border-radius: 8px;">
+                                        <div style="font-size: 0.85rem; color: #0369a1; margin-bottom: 5px;">Potřebné transakce/měsíc pro break-even</div>
+                                        <div style="font-size: 1.8rem; font-weight: 700; color: #dc2626;" id="rentBreakEvenTransactions">0</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Srovnání rentability -->
+                        <div style="background: #fefce8; border-radius: 10px; padding: 25px; border: 1px solid #fde047;">
+                            <h4 style="margin: 0 0 20px 0; font-size: 1.1rem; font-weight: 600; color: #a16207; text-align: center;">Srovnání rentability</h4>
+                            <div style="overflow-x: auto;">
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <thead>
+                                        <tr style="background: #fbbf24; color: white;">
+                                            <th style="padding: 12px; text-align: left; font-weight: 600;">Metrika</th>
+                                            <th style="padding: 12px; text-align: center; font-weight: 600;">Prodej</th>
+                                            <th style="padding: 12px; text-align: center; font-weight: 600;">Pronájem</th>
+                                            <th style="padding: 12px; text-align: center; font-weight: 600;">Poměr</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="border-bottom: 1px solid #fde047;">
+                                            <td style="padding: 12px; font-weight: 500;">Průměrná provize</td>
+                                            <td style="padding: 12px; text-align: center;" id="comparisonSaleCommission">120 000 Kč</td>
+                                            <td style="padding: 12px; text-align: center;" id="comparisonRentCommission">15 000 Kč</td>
+                                            <td style="padding: 12px; text-align: center; font-weight: 600; color: #a16207;">8:1</td>
+                                        </tr>
+                                        <tr style="border-bottom: 1px solid #fde047;">
+                                            <td style="padding: 12px; font-weight: 500;">Čistý zisk</td>
+                                            <td style="padding: 12px; text-align: center;" id="comparisonSaleProfit">0 Kč</td>
+                                            <td style="padding: 12px; text-align: center;" id="comparisonRentProfit">0 Kč</td>
+                                            <td style="padding: 12px; text-align: center; font-weight: 600; color: #a16207;" id="profitRatio">-</td>
+                                        </tr>
+                                        <tr style="border-bottom: 1px solid #fde047;">
+                                            <td style="padding: 12px; font-weight: 500;">ROI na transakci</td>
+                                            <td style="padding: 12px; text-align: center;" id="comparisonSaleROI">0%</td>
+                                            <td style="padding: 12px; text-align: center;" id="comparisonRentROI">0%</td>
+                                            <td style="padding: 12px; text-align: center; font-weight: 600; color: #a16207;" id="roiRatio">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 12px; font-weight: 500;">Doporučený mix</td>
+                                            <td style="padding: 12px; text-align: center; font-weight: 600; color: #059669;">70%</td>
+                                            <td style="padding: 12px; text-align: center; font-weight: 600; color: #0369a1;">30%</td>
+                                            <td style="padding: 12px; text-align: center; font-weight: 600; color: #10b981;">Optimální</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Roční analýza příjmů a výdajů -->
+                <div style="margin-top: 30px; width: 100%;">
+                    <div style="background: white; border-radius: 12px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 1px solid #e5e7eb;">
+                        <h3 style="margin: 0 0 25px 0; font-size: 1.4rem; font-weight: 600; color: #374151; border-bottom: 2px solid #e5e7eb; padding-bottom: 12px;">Roční analýza příjmů a výdajů</h3>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+                            <!-- Roční náklady -->
+                            <div style="background: #fef2f2; border-radius: 10px; padding: 25px; border: 1px solid #fecaca;">
+                                <h4 style="margin: 0 0 15px 0; font-size: 1.1rem; font-weight: 600; color: #991b1b; text-align: center;">ROČNÍ NÁKLADY</h4>
+                                <div style="text-align: center; margin-bottom: 15px;">
+                                    <div style="font-size: 2.2rem; font-weight: 800; color: #dc2626;" id="annualCosts">0 Kč</div>
+                                    <div style="font-size: 0.9rem; color: #991b1b; margin-top: 5px;">Celkové provozní náklady za rok</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Roční příjmy a zisk -->
+                            <div style="background: #f0fdf4; border-radius: 10px; padding: 25px; border: 1px solid #bbf7d0;">
+                                <h4 style="margin: 0 0 15px 0; font-size: 1.1rem; font-weight: 600; color: #166534; text-align: center;">ROČNÍ PŘÍJMY A ZISK</h4>
+                                <div style="display: grid; gap: 10px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span style="color: #166534; font-size: 0.9rem;">Příjmy:</span>
+                                        <span style="font-weight: 600; color: #166534;" id="annualRevenue">0 Kč</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid #bbf7d0;">
+                                        <span style="color: #166534; font-size: 0.9rem;">Čistý zisk:</span>
+                                        <span style="font-weight: 700; font-size: 1.2rem; color: #10b981;" id="annualProfit">0 Kč</span>
+                                    </div>
+                                    <div style="font-size: 0.8rem; color: #166534; text-align: center; margin-top: 5px;">Odhad na základě transakcí</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Struktura ročních nákladů -->
+                        <div style="background: #f8fafc; border-radius: 10px; padding: 25px; border: 1px solid #e2e8f0; margin-bottom: 30px;">
+                            <h4 style="margin: 0 0 20px 0; font-size: 1.1rem; font-weight: 600; color: #475569; text-align: center;">Struktura ročních nákladů</h4>
+                            <div id="annualCostBreakdown" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                                <!-- Bude naplněno JavaScriptem -->
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                            <!-- Roční výkonnostní metriky -->
+                            <div style="background: #fffbeb; border-radius: 10px; padding: 25px; border: 1px solid #fed7aa;">
+                                <h4 style="margin: 0 0 20px 0; font-size: 1.1rem; font-weight: 600; color: #92400e; text-align: center;">Roční výkonnostní metriky</h4>
+                                <div style="display: grid; gap: 12px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #fed7aa;">
+                                        <span style="color: #92400e; font-size: 0.9rem;">ROI za rok:</span>
+                                        <span style="font-weight: 600; color: #92400e;" id="annualROI">0%</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #fed7aa;">
+                                        <span style="color: #92400e; font-size: 0.9rem;">Potřebné transakce:</span>
+                                        <span style="font-weight: 600; color: #92400e;" id="annualBreakEvenTransactions">0</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #fed7aa;">
+                                        <span style="color: #92400e; font-size: 0.9rem;">Průměr/transakci:</span>
+                                        <span style="font-weight: 600; color: #92400e;" id="avgRevenuePerTransaction">0 Kč</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0;">
+                                        <span style="color: #92400e; font-size: 0.9rem;">Marže:</span>
+                                        <span style="font-weight: 600; color: #92400e;" id="annualMargin">0%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Scénáře ročního vývoje -->
+                            <div style="background: #f0f9ff; border-radius: 10px; padding: 25px; border: 1px solid #0ea5e9;">
+                                <h4 style="margin: 0 0 20px 0; color: #0369a1; font-weight: 600; font-size: 1.1rem; text-align: center;">Scénáře ročního vývoje</h4>
+                                <div style="display: grid; gap: 15px;">
+                                    <div style="background: white; border-radius: 8px; padding: 15px; text-align: center; border: 1px solid #e5e7eb;">
+                                        <div style="font-size: 0.85rem; color: #6b7280; margin-bottom: 6px; font-weight: 600;">KONZERVATIVNÍ</div>
+                                        <div style="font-size: 1.4rem; font-weight: 800; color: #dc2626;" id="conservativeAnnualProfit">0 Kč</div>
+                                        <div style="font-size: 0.8rem; color: #6b7280; margin-top: 4px;">24 transakcí/rok</div>
+                                    </div>
+                                    <div style="background: white; border-radius: 8px; padding: 15px; text-align: center; border: 1px solid #e5e7eb;">
+                                        <div style="font-size: 0.85rem; color: #6b7280; margin-bottom: 6px; font-weight: 600;">REALISTICKÝ</div>
+                                        <div style="font-size: 1.4rem; font-weight: 800; color: #f59e0b;" id="realisticAnnualProfit">0 Kč</div>
+                                        <div style="font-size: 0.8rem; color: #6b7280; margin-top: 4px;">36 transakcí/rok</div>
+                                    </div>
+                                    <div style="background: white; border-radius: 8px; padding: 15px; text-align: center; border: 1px solid #e5e7eb;">
+                                        <div style="font-size: 0.85rem; color: #6b7280; margin-bottom: 6px; font-weight: 600;">OPTIMISTICKÝ</div>
+                                        <div style="font-size: 1.4rem; font-weight: 800; color: #10b981;" id="optimisticAnnualProfit">0 Kč</div>
+                                        <div style="font-size: 0.8rem; color: #6b7280; margin-top: 4px;">48 transakcí/rok</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -4637,6 +5068,11 @@
             document.getElementById('rent-count-display').textContent = transactionsRentCount;
             document.getElementById('broker-sale-rate-display').textContent = brokerPercentageSale + '%';
             document.getElementById('broker-rent-rate-display').textContent = brokerPercentageRent + '%';
+            document.getElementById('avg-commission-sale-display').textContent = formatCurrency(avgSaleCommission).replace(' Kč', '');
+            document.getElementById('avg-commission-rent-display').textContent = formatCurrency(avgRentCommission).replace(' Kč', '');
+            document.getElementById('broker-costs-sales').textContent = formatCurrency(brokerCostsSales);
+            document.getElementById('broker-costs-rents').textContent = formatCurrency(brokerCostsRents);
+            document.getElementById('total-broker-costs').textContent = formatCurrency(totalBrokerCosts);
             document.getElementById('externi-category-total').textContent = formatCurrency(categoryTotals.externi);
             
             // Výpočet tržeb a zisku
@@ -4725,7 +5161,236 @@
             // Spustit pokročilou analýzu nákladů
             setTimeout(() => {
                 performCostAnalysis();
+                updateCostItemsAnalysis();
+                updateProfitabilityAnalysis();
+                updateAnnualAnalysis();
             }, 50);
+        }
+
+        // Analýza významných nákladových položek
+        function updateCostItemsAnalysis() {
+            const categories = ['zamestnanci', 'fixni', 'variabilni', 'prodej', 'pronajem', 'externi', 'investicni'];
+            let allCostItems = [];
+            
+            categories.forEach(category => {
+                const categoryDiv = document.querySelector(`[data-category="${category}"]`);
+                if (categoryDiv) {
+                    const costItems = categoryDiv.querySelectorAll('.cost-item');
+                    costItems.forEach(item => {
+                        const name = item.querySelector('.cost-item-name').value;
+                        const value = parseFloat(item.querySelector('.cost-item-value').value) || 0;
+                        const checkbox = item.querySelector('.cost-item-checkbox');
+                        const reducible = checkbox ? checkbox.checked : false;
+                        
+                        if (name && value > 0) {
+                            allCostItems.push({
+                                name: name,
+                                value: value,
+                                category: category,
+                                reducible: reducible
+                            });
+                        }
+                    });
+                }
+            });
+            
+            // Seřadit podle hodnoty sestupně
+            allCostItems.sort((a, b) => b.value - a.value);
+            
+            // Top 5 největších nákladových položek
+            const topCostItems = allCostItems.slice(0, 5);
+            const topCostContainer = document.getElementById('topCostItems');
+            if (topCostContainer) {
+                topCostContainer.innerHTML = topCostItems.map((item, index) => `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;">
+                        <div>
+                            <div style="font-weight: 600; color: #374151;">${index + 1}. ${item.name}</div>
+                            <div style="font-size: 0.85rem; color: #6b7280; text-transform: capitalize;">${item.category}</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-weight: 700; color: #dc2626;">${formatCurrency(item.value)}</div>
+                            <div style="font-size: 0.8rem; color: #6b7280;">${((item.value / allCostItems.reduce((sum, i) => sum + i.value, 0)) * 100).toFixed(1)}%</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            // Optimalizovatelné náklady
+            const optimizableCosts = allCostItems.filter(item => item.reducible).slice(0, 5);
+            const optimizableContainer = document.getElementById('optimizableCosts');
+            if (optimizableContainer) {
+                if (optimizableCosts.length === 0) {
+                    optimizableContainer.innerHTML = `
+                        <div style="text-align: center; padding: 20px; color: #6b7280;">
+                            <div style="font-size: 0.9rem;">Žádné náklady nejsou označeny jako optimalizovatelné</div>
+                            <div style="font-size: 0.8rem; margin-top: 5px;">Označte položky zaškrtnutím políčka "Lze snížit"</div>
+                        </div>
+                    `;
+                } else {
+                    const totalOptimizable = optimizableCosts.reduce((sum, item) => sum + item.value, 0);
+                    optimizableContainer.innerHTML = optimizableCosts.map(item => {
+                        const potentialSaving = Math.round(item.value * 0.2); // 20% úspora
+                        return `
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #fef3c7; border-radius: 8px; border: 1px solid #fbbf24;">
+                                <div>
+                                    <div style="font-weight: 600; color: #92400e;">${item.name}</div>
+                                    <div style="font-size: 0.85rem; color: #a16207;">Potenciální úspora: ${formatCurrency(potentialSaving)}</div>
+                                </div>
+                                <div style="text-align: right;">
+                                    <div style="font-weight: 700; color: #dc2626;">${formatCurrency(item.value)}</div>
+                                    <div style="font-size: 0.8rem; color: #10b981;">-20%</div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('') + `
+                        <div style="margin-top: 15px; padding: 12px; background: #ecfdf5; border-radius: 8px; border: 1px solid #10b981; text-align: center;">
+                            <div style="font-size: 0.9rem; color: #166534;">Celková potenciální úspora</div>
+                            <div style="font-size: 1.2rem; font-weight: 700; color: #10b981;">${formatCurrency(Math.round(totalOptimizable * 0.2))}</div>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // Analýza rentability prodeje vs. pronájmu
+        function updateProfitabilityAnalysis() {
+            // Získání skutečných nákladů z jednotlivých sekcí
+            const saleUnitCosts = parseFloat(document.getElementById('prodej-total')?.textContent.replace(/[^\d]/g, '')) || 0;
+            const rentUnitCosts = parseFloat(document.getElementById('pronajem-total')?.textContent.replace(/[^\d]/g, '')) || 0;
+            
+            // Průměrné provize (standardní tržní hodnoty)
+            const avgSaleCommission = 120000; // Standardní provize z prodeje
+            const avgRentCommission = 15000; // Standardní provize z pronájmu
+            
+            const totalMonthlyCosts = parseFloat(document.getElementById('total-monthly-costs')?.textContent.replace(/[^\d]/g, '')) || 0;
+            
+            // Prodej - pouze přímé náklady na jednotku prodeje
+            const saleTransactionCost = saleUnitCosts;
+            const saleNetProfit = avgSaleCommission - saleTransactionCost;
+            const saleMargin = avgSaleCommission > 0 ? ((saleNetProfit / avgSaleCommission) * 100).toFixed(1) : 0;
+            const saleBreakEven = saleNetProfit > 0 ? Math.ceil(saleUnitCosts / saleNetProfit) : (saleNetProfit < 0 ? 'Nelze dosáhnout' : 0);
+            
+            // Pronájem - pouze přímé náklady na jednotku pronájmu
+            const rentTransactionCost = rentUnitCosts;
+            const rentNetProfit = avgRentCommission - rentTransactionCost;
+            const rentMargin = avgRentCommission > 0 ? ((rentNetProfit / avgRentCommission) * 100).toFixed(1) : 0;
+            const rentBreakEven = rentNetProfit > 0 ? Math.ceil(rentUnitCosts / rentNetProfit) : (rentNetProfit < 0 ? 'Nelze dosáhnout' : 0);
+            
+            // Aktualizace UI
+            document.getElementById('avgSaleCommission').textContent = formatCurrency(avgSaleCommission);
+            document.getElementById('saleTransactionCost').textContent = formatCurrency(saleTransactionCost);
+            document.getElementById('saleNetProfit').textContent = formatCurrency(saleNetProfit);
+            document.getElementById('saleMargin').textContent = saleMargin + '%';
+            document.getElementById('saleBreakEvenTransactions').textContent = saleBreakEven;
+            
+            document.getElementById('avgRentCommission').textContent = formatCurrency(avgRentCommission);
+            document.getElementById('rentTransactionCost').textContent = formatCurrency(rentTransactionCost);
+            document.getElementById('rentNetProfit').textContent = formatCurrency(rentNetProfit);
+            document.getElementById('rentMargin').textContent = rentMargin + '%';
+            document.getElementById('rentBreakEvenTransactions').textContent = rentBreakEven;
+            
+            // Barevné kódování podle ziskovosti
+            document.getElementById('rentNetProfit').style.color = rentNetProfit >= 0 ? '#10b981' : '#dc2626';
+            document.getElementById('rentMargin').style.color = parseFloat(rentMargin) >= 0 ? '#10b981' : '#dc2626';
+            document.getElementById('saleNetProfit').style.color = saleNetProfit >= 0 ? '#10b981' : '#dc2626';
+            document.getElementById('saleMargin').style.color = parseFloat(saleMargin) >= 0 ? '#10b981' : '#dc2626';
+            
+            // Srovnání
+            document.getElementById('comparisonSaleCommission').textContent = formatCurrency(avgSaleCommission);
+            document.getElementById('comparisonRentCommission').textContent = formatCurrency(avgRentCommission);
+            document.getElementById('comparisonSaleProfit').textContent = formatCurrency(saleNetProfit);
+            document.getElementById('comparisonRentProfit').textContent = formatCurrency(rentNetProfit);
+            
+            const saleROI = saleTransactionCost > 0 ? ((saleNetProfit / saleTransactionCost) * 100).toFixed(1) : 0;
+            const rentROI = rentTransactionCost > 0 ? ((rentNetProfit / rentTransactionCost) * 100).toFixed(1) : 0;
+            
+            document.getElementById('comparisonSaleROI').textContent = saleROI + '%';
+            document.getElementById('comparisonRentROI').textContent = rentROI + '%';
+            
+            // Barevné kódování pro srovnání
+            document.getElementById('comparisonSaleProfit').style.color = saleNetProfit >= 0 ? '#10b981' : '#dc2626';
+            document.getElementById('comparisonRentProfit').style.color = rentNetProfit >= 0 ? '#10b981' : '#dc2626';
+            document.getElementById('comparisonSaleROI').style.color = parseFloat(saleROI) >= 0 ? '#10b981' : '#dc2626';
+            document.getElementById('comparisonRentROI').style.color = parseFloat(rentROI) >= 0 ? '#10b981' : '#dc2626';
+            
+            // Poměry
+            const profitRatio = rentNetProfit > 0 ? (saleNetProfit / rentNetProfit).toFixed(1) + ':1' : 'Pronájem ztrátový';
+            const roiRatio = parseFloat(rentROI) > 0 ? (parseFloat(saleROI) / parseFloat(rentROI)).toFixed(1) + ':1' : 'Pronájem ztrátový';
+            
+            document.getElementById('profitRatio').textContent = profitRatio;
+            document.getElementById('roiRatio').textContent = roiRatio;
+        }
+
+        // Roční analýza příjmů a výdajů
+        function updateAnnualAnalysis() {
+            const totalMonthlyCosts = parseFloat(document.getElementById('total-monthly-costs')?.textContent.replace(/[^\d]/g, '')) || 0;
+            const totalRevenue = parseFloat(document.getElementById('total-revenue')?.textContent.replace(/[^\d]/g, '')) || 0;
+            const grossProfit = parseFloat(document.getElementById('gross-profit')?.textContent.replace(/[^\d]/g, '')) || 0;
+            
+            // Roční hodnoty
+            const annualCosts = totalMonthlyCosts * 12;
+            const annualRevenue = totalRevenue * 12;
+            const annualProfit = grossProfit * 12;
+            
+            // Aktualizace UI
+            document.getElementById('annualCosts').textContent = formatCurrency(annualCosts);
+            document.getElementById('annualRevenue').textContent = formatCurrency(annualRevenue);
+            document.getElementById('annualProfit').textContent = formatCurrency(annualProfit);
+            
+            // Výkonnostní metriky
+            const annualROI = annualCosts > 0 ? ((annualProfit / annualCosts) * 100).toFixed(1) : 0;
+            const avgSaleCommission = parseFloat(document.getElementById('avgCommissionSale')?.value) || 120000;
+            const avgRentCommission = parseFloat(document.getElementById('avgCommissionRent')?.value) || 15000;
+            const avgCommission = (avgSaleCommission + avgRentCommission) / 2;
+            const annualBreakEvenTransactions = avgCommission > 0 ? Math.ceil(annualCosts / avgCommission) : 0;
+            const avgRevenuePerTransaction = avgCommission;
+            const annualMargin = annualRevenue > 0 ? ((annualProfit / annualRevenue) * 100).toFixed(1) : 0;
+            
+            document.getElementById('annualROI').textContent = annualROI + '%';
+            document.getElementById('annualBreakEvenTransactions').textContent = annualBreakEvenTransactions;
+            document.getElementById('avgRevenuePerTransaction').textContent = formatCurrency(avgRevenuePerTransaction);
+            document.getElementById('annualMargin').textContent = annualMargin + '%';
+            
+            // Scénáře ročního vývoje
+            const conservativeProfit = annualProfit * 0.7; // 70% současného výsledku
+            const realisticProfit = annualProfit; // 100% současného výsledku
+            const optimisticProfit = annualProfit * 1.3; // 130% současného výsledku
+            
+            document.getElementById('conservativeAnnualProfit').textContent = formatCurrency(conservativeProfit);
+            document.getElementById('realisticAnnualProfit').textContent = formatCurrency(realisticProfit);
+            document.getElementById('optimisticAnnualProfit').textContent = formatCurrency(optimisticProfit);
+            
+            // Struktura ročních nákladů
+            const categories = ['zamestnanci', 'fixni', 'variabilni', 'prodej', 'pronajem', 'externi'];
+            const breakdown = document.getElementById('annualCostBreakdown');
+            if (breakdown) {
+                let breakdownHTML = '';
+                categories.forEach(category => {
+                    const monthlyTotal = parseFloat(document.getElementById(category + '-total')?.textContent.replace(/[^\d]/g, '')) || 0;
+                    const annualTotal = monthlyTotal * 12;
+                    const percentage = annualCosts > 0 ? ((annualTotal / annualCosts) * 100).toFixed(1) : 0;
+                    
+                    if (annualTotal > 0) {
+                        const categoryNames = {
+                            'zamestnanci': 'Zaměstnanci',
+                            'fixni': 'Fixní náklady',
+                            'variabilni': 'Variabilní náklady',
+                            'prodej': 'Prodej',
+                            'pronajem': 'Pronájem',
+                            'externi': 'Externí služby'
+                        };
+                        
+                        breakdownHTML += `
+                            <div style="background: white; border-radius: 8px; padding: 15px; border: 1px solid #e2e8f0;">
+                                <div style="font-weight: 600; color: #374151; margin-bottom: 5px;">${categoryNames[category]}</div>
+                                <div style="font-size: 1.2rem; font-weight: 700; color: #dc2626;">${formatCurrency(annualTotal)}</div>
+                                <div style="font-size: 0.8rem; color: #6b7280;">${percentage}% z celku</div>
+                            </div>
+                        `;
+                    }
+                });
+                breakdown.innerHTML = breakdownHTML;
+            }
         }
         
         // Uložení měsíčních nákladů
