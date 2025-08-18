@@ -1,0 +1,208 @@
+{
+  "id": 1737225994000,
+  "title": "Lead generation projekt - získávání kvalitních leadů",
+  "category": "marketing",
+  "description": "Systematický postup pro nastavení a optimalizaci lead generation projektů s konkrétními nástroji a měřitelnými výsledky",
+  "items": [
+    {
+      "title": "Analýza cílové skupiny a buyer journey mapping",
+      "duration": "4 hodiny",
+      "priority": "critical",
+      "money": "0 Kč",
+      "documents": "Buyer personas, customer journey map, pain points analýza",
+      "tools": "Miro, Figma, Google Analytics, CRM data",
+      "forms": "Buyer persona template, Journey mapping worksheet",
+      "description": "Detailní mapování zákaznické cesty od prvního kontaktu po uzavření obchodu. Identifikace touchpointů, pain pointů a příležitostí pro lead generation v každé fázi.",
+      "completed": false
+    },
+    {
+      "title": "Nastavení lead magnetu a hodnotné nabídky",
+      "duration": "6 hodin",
+      "priority": "high",
+      "money": "1500 Kč (design, copywriting)",
+      "documents": "E-book, checklist, kalkulačka, webinář materiály",
+      "tools": "Canva, Adobe Creative, Google Docs, Loom",
+      "forms": "Lead magnet template",
+      "description": "Vytvoření hodnotného obsahu pro výměnu za kontaktní údaje - průvodce koupí nemovitosti, investiční kalkulačka, tržní analýza lokality, checklist pro prodej.",
+      "completed": false
+    },
+    {
+      "title": "Optimalizace landing pages pro konverze",
+      "duration": "8 hodin",
+      "priority": "high",
+      "money": "3000 Kč (webdesign, development)",
+      "documents": "Wireframes, copywriting, A/B test varianty",
+      "tools": "Unbounce, Leadpages, WordPress, Hotjar",
+      "forms": "Landing page checklist",
+      "description": "Vytvoření vysoce konvertujících landing pages s jasným value proposition, minimálním počtem polí ve formuláři, social proof elementy a mobilní optimalizací.",
+      "completed": false
+    },
+    {
+      "title": "Implementace lead capture formulářů",
+      "duration": "3 hodiny",
+      "priority": "high",
+      "money": "500 Kč (form builder tools)",
+      "documents": "Formulářové flow, GDPR compliance",
+      "tools": "Typeform, Gravity Forms, OptinMonster, Sumo",
+      "forms": "Form optimization checklist",
+      "description": "Nastavení optimalizovaných formulářů s progresivním profilováním, smart fields, exit-intent popups a časově omezené nabídky pro zvýšení konverzí.",
+      "completed": false
+    },
+    {
+      "title": "Nastavení CRM systému pro lead management",
+      "duration": "5 hodin",
+      "priority": "critical",
+      "money": "2000 Kč měsíčně (CRM licence)",
+      "documents": "CRM workflow, lead scoring model, automatizace",
+      "tools": "HubSpot, Pipedrive, Salesforce, ActiveCampaign",
+      "forms": "CRM setup checklist",
+      "description": "Konfigurace CRM pro automatické zachycení leadů, lead scoring podle chování a demografických dat, pipeline management a automatické přiřazování prodejcům.",
+      "completed": false
+    },
+    {
+      "title": "Google Ads kampaně pro lead generation",
+      "duration": "6 hodin",
+      "priority": "high",
+      "money": "20000 Kč měsíčně (ad spend)",
+      "documents": "Keyword research, ad copy varianty, landing pages",
+      "tools": "Google Ads, Google Keyword Planner, SEMrush",
+      "forms": "PPC campaign template",
+      "description": "Vytvoření Search, Display a YouTube kampaní zaměřených na lead generation s využitím lead form extensions, call extensions a location extensions.",
+      "completed": false
+    },
+    {
+      "title": "Facebook a Instagram Lead Ads setup",
+      "duration": "4 hodiny",
+      "priority": "high",
+      "money": "15000 Kč měsíčně (ad spend)",
+      "documents": "Creative assets, audience targeting, lead forms",
+      "tools": "Facebook Business Manager, Canva, Meta Pixel",
+      "forms": "Social media lead gen template",
+      "description": "Nastavení Lead Ads kampaní s předvyplněnými formuláři, lookalike audiences založené na existujících zákaznících, retargeting kampaně pro website visitors.",
+      "completed": false
+    },
+    {
+      "title": "LinkedIn Lead Generation pro B2B segment",
+      "duration": "3 hodiny",
+      "priority": "normal",
+      "money": "8000 Kč měsíčně (LinkedIn ads)",
+      "documents": "B2B targeting strategie, professional content",
+      "tools": "LinkedIn Campaign Manager, Sales Navigator",
+      "forms": "B2B lead gen strategy",
+      "description": "Cílené kampaně pro investory, developery a firemní klienty s využitím LinkedIn Lead Gen Forms, Sponsored Content a Message Ads.",
+      "completed": false
+    },
+    {
+      "title": "SEO optimalizace pro organický lead flow",
+      "duration": "10 hodin",
+      "priority": "normal",
+      "money": "2000 Kč (SEO tools)",
+      "documents": "Keyword strategy, content plan, technical audit",
+      "tools": "Ahrefs, SEMrush, Google Search Console, Screaming Frog",
+      "forms": "SEO lead gen checklist",
+      "description": "Optimalizace pro high-intent keywords, vytvoření pillar pages a topic clusters, local SEO pro 'nemovitosti [město]', featured snippets optimization.",
+      "completed": false
+    },
+    {
+      "title": "Content marketing pro lead nurturing",
+      "duration": "8 hodin měsíčně",
+      "priority": "normal",
+      "money": "3000 Kč (content creation)",
+      "documents": "Obsahový kalendář, blog posty, video content",
+      "tools": "WordPress, Canva, Loom, YouTube Studio",
+      "forms": "Content calendar template",
+      "description": "Pravidelná tvorba hodnotného obsahu - market updates, investment tips, neighborhood guides, success stories pro budování důvěry a expertise.",
+      "completed": false
+    },
+    {
+      "title": "Email marketing automatizace pro lead nurturing",
+      "duration": "6 hodin",
+      "priority": "high",
+      "money": "1000 Kč měsíčně (email platform)",
+      "documents": "Email sekvence, segmentace strategie",
+      "tools": "Mailchimp, ActiveCampaign, ConvertKit, EcoMail",
+      "forms": "Email automation flows",
+      "description": "Nastavení welcome sekvencí, lead nurturing kampaní podle zájmu (kupci/prodejci), behavioral triggers, personalizované property recommendations.",
+      "completed": false
+    },
+    {
+      "title": "Webinář a online eventy pro lead generation",
+      "duration": "12 hodin",
+      "priority": "normal",
+      "money": "2000 Kč (webinar platform)",
+      "documents": "Webinář agenda, prezentace, follow-up materiály",
+      "tools": "Zoom, GoToWebinar, WebinarJam, Calendly",
+      "forms": "Webinar registration template",
+      "description": "Organizace pravidelných webinářů na témata jako 'Jak investovat do nemovitostí', 'Trendy na realitním trhu', 'Financování nemovitostí'.",
+      "completed": false
+    },
+    {
+      "title": "Chatbot implementace pro 24/7 lead capture",
+      "duration": "4 hodiny",
+      "priority": "normal",
+      "money": "800 Kč měsíčně (chatbot platform)",
+      "documents": "Chatbot flow, FAQ databáze, escalation rules",
+      "tools": "Intercom, Drift, Chatfuel, ManyChat",
+      "forms": "Chatbot conversation flows",
+      "description": "Nastavení AI chatbota pro kvalifikaci leadů, booking prohlídek, zodpovězení základních otázek a sběr kontaktních údajů mimo pracovní dobu.",
+      "completed": false
+    },
+    {
+      "title": "Referral program pro stávající klienty",
+      "duration": "3 hodiny",
+      "priority": "normal",
+      "money": "5000 Kč (referral rewards)",
+      "documents": "Referral program rules, tracking system",
+      "tools": "ReferralCandy, Friendbuy, vlastní tracking",
+      "forms": "Referral program template",
+      "description": "Vytvoření strukturovaného doporučovacího programu s atraktivními odměnami pro stávající klienty za každý kvalitní lead nebo uzavřený obchod.",
+      "completed": false
+    },
+    {
+      "title": "Partnerství s komplementárními službami",
+      "duration": "6 hodin",
+      "priority": "normal",
+      "money": "2000 Kč (partnership setup)",
+      "documents": "Partnership agreements, co-marketing materiály",
+      "tools": "CRM integrace, tracking systémy",
+      "forms": "Partnership contract template",
+      "description": "Navázání spolupráce s hypotečními poradci, právníky, architekty, stavebními firmami pro vzájemné doporučování klientů.",
+      "completed": false
+    },
+    {
+      "title": "Lead scoring a kvalifikační systém",
+      "duration": "4 hodiny",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Scoring model, kvalifikační kritéria",
+      "tools": "CRM automation, Excel modeling",
+      "forms": "Lead scoring matrix",
+      "description": "Nastavení automatického lead scoring systému založeného na demografických datech, chování na webu, email engagement a interakcích s obsahem.",
+      "completed": false
+    },
+    {
+      "title": "A/B testování a optimalizace konverzí",
+      "duration": "2 hodiny týdně",
+      "priority": "normal",
+      "money": "500 Kč (testing tools)",
+      "documents": "Test plány, výsledky optimalizací",
+      "tools": "Google Optimize, Optimizely, VWO",
+      "forms": "A/B test tracking sheet",
+      "description": "Systematické testování všech elementů lead generation funnelu - headlines, CTA buttons, form fields, colors, timing pro kontinuální zlepšování konverzí.",
+      "completed": false
+    },
+    {
+      "title": "Analytics a ROI tracking setup",
+      "duration": "5 hodin",
+      "priority": "critical",
+      "money": "1000 Kč (analytics tools)",
+      "documents": "KPI dashboard, attribution model",
+      "tools": "Google Analytics 4, Data Studio, Hotjar, Mixpanel",
+      "forms": "Analytics tracking checklist",
+      "description": "Nastavení kompletního trackingu lead generation funnelu s multi-touch attribution, cost per lead tracking, lifetime value calculation a ROI reportování.",
+      "completed": false
+    }
+  ],
+  "created": "2025-01-18T17:46:34.000Z",
+  "modified": "2025-01-18T17:46:34.000Z"
+}

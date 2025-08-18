@@ -1,0 +1,208 @@
+{
+  "id": 1737225820000,
+  "title": "Marketingový plán a budování značky",
+  "category": "marketing",
+  "description": "Kompletní strategický postup pro vytvoření marketingového plánu, mediálního plánu a systematické budování značky realitní kanceláře",
+  "items": [
+    {
+      "title": "Analýza současného stavu a konkurence",
+      "duration": "8 hodin",
+      "priority": "critical",
+      "money": "2000 Kč (výzkumné nástroje)",
+      "documents": "SWOT analýza, konkurenční analýza, market research",
+      "tools": "SimilarWeb, Google Analytics, průzkumné nástroje",
+      "forms": "Analýza trhu template",
+      "description": "Detailní analýza současné pozice na trhu, identifikace hlavních konkurentů, analýza jejich marketingových strategií, cenových politik a komunikačních kanálů. SWOT analýza vlastní firmy.",
+      "completed": false
+    },
+    {
+      "title": "Definování cílových skupin a buyer person",
+      "duration": "4 hodiny",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Buyer personas profily, segmentační mapa",
+      "tools": "Průzkumné formuláře, CRM data",
+      "forms": "Buyer persona template",
+      "description": "Vytvoření detailních profilů cílových zákazníků (mladé páry, rodiny s dětmi, investoři, senioři), analýza jejich potřeb, chování, preferencí a komunikačních kanálů.",
+      "completed": false
+    },
+    {
+      "title": "Stanovení marketingových cílů a KPI",
+      "duration": "2 hodiny",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Marketingové cíle, KPI dashboard",
+      "tools": "Excel, Google Analytics, CRM",
+      "forms": "KPI tracking template",
+      "description": "Definování SMART cílů (zvýšení povědomí o značce o 30%, získání 50 nových leadů měsíčně, zvýšení konverzí o 15%). Nastavení měřitelných KPI.",
+      "completed": false
+    },
+    {
+      "title": "Vytvoření brand identity a positioning",
+      "duration": "12 hodin",
+      "priority": "critical",
+      "money": "15000 Kč (grafik, brandbook)",
+      "documents": "Brandbook, logo, barevná paleta, typografie",
+      "tools": "Adobe Creative Suite, Figma",
+      "forms": "Brand identity guidelines",
+      "description": "Vývoj kompletní vizuální identity - logo, barevná paleta, typografie, tone of voice, brand values, positioning statement. Vytvoření brandbooku s pravidly používání.",
+      "completed": false
+    },
+    {
+      "title": "Strategické plánování komunikačních kanálů",
+      "duration": "3 hodiny",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Komunikační strategie, channel mix",
+      "tools": "Plánování nástroje, Excel",
+      "forms": "Channel strategy template",
+      "description": "Výběr optimálního mixu komunikačních kanálů (online/offline), definování role každého kanálu, stanovení rozpočtu a očekávaných výsledků pro každý kanál.",
+      "completed": false
+    },
+    {
+      "title": "Příprava obsahové strategie",
+      "duration": "6 hodin",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Obsahový kalendář, témata, formáty",
+      "tools": "Trello, Google Calendar, Canva",
+      "forms": "Content strategy template",
+      "description": "Vytvoření dlouhodobé obsahové strategie - témata, formáty obsahu, frekvence publikování, distribuční kanály. Plánování obsahu na 6 měsíců dopředu.",
+      "completed": false
+    },
+    {
+      "title": "Návrh webových stránek a UX optimalizace",
+      "duration": "20 hodin",
+      "priority": "high",
+      "money": "25000 Kč (webdesign, development)",
+      "documents": "Wireframes, mockupy, UX audit",
+      "tools": "WordPress, Figma, Google PageSpeed",
+      "forms": "Website requirements",
+      "description": "Redesign nebo optimalizace webových stránek s důrazem na UX, rychlost načítání, mobilní responzivitu, SEO optimalizaci a konverzní elementy.",
+      "completed": false
+    },
+    {
+      "title": "SEO strategie a optimalizace",
+      "duration": "8 hodin",
+      "priority": "high",
+      "money": "3000 Kč (SEO nástroje)",
+      "documents": "Keyword research, SEO audit, optimalizační plán",
+      "tools": "Ahrefs, SEMrush, Google Search Console",
+      "forms": "SEO checklist",
+      "description": "Kompletní SEO audit, keyword research pro realitní trh, on-page optimalizace, technické SEO, local SEO pro místní vyhledávání, link building strategie.",
+      "completed": false
+    },
+    {
+      "title": "Nastavení Google Ads kampaní",
+      "duration": "6 hodin",
+      "priority": "high",
+      "money": "15000 Kč měsíčně (ad spend)",
+      "documents": "Kampaňové struktury, ad copy, landing pages",
+      "tools": "Google Ads, Google Analytics, Keyword Planner",
+      "forms": "PPC campaign template",
+      "description": "Vytvoření cílených Search a Display kampaní, remarketing kampaní, local campaigns. Optimalizace bidding strategií, ad extensions a quality score.",
+      "completed": false
+    },
+    {
+      "title": "Facebook a Instagram marketing setup",
+      "duration": "4 hodiny",
+      "priority": "normal",
+      "money": "8000 Kč měsíčně (ad spend)",
+      "documents": "Social media strategie, ad creatives",
+      "tools": "Facebook Business Manager, Creator Studio",
+      "forms": "Social media calendar",
+      "description": "Nastavení business profilů, vytvoření targetovaných kampaní pro různé cílové skupiny, carousel ads s nemovitostmi, video content, lead generation campaigns.",
+      "completed": false
+    },
+    {
+      "title": "LinkedIn marketing pro B2B segment",
+      "duration": "3 hodiny",
+      "priority": "normal",
+      "money": "5000 Kč měsíčně (LinkedIn ads)",
+      "documents": "LinkedIn strategie, B2B content",
+      "tools": "LinkedIn Campaign Manager, Sales Navigator",
+      "forms": "B2B outreach template",
+      "description": "Budování profesionální přítomnosti na LinkedIn, targetované kampaně pro investory a developery, thought leadership content, networking s klíčovými osobnostmi.",
+      "completed": false
+    },
+    {
+      "title": "Email marketing automatizace",
+      "duration": "5 hodin",
+      "priority": "normal",
+      "money": "1000 Kč měsíčně (email platforma)",
+      "documents": "Email sekvence, šablony, segmentace",
+      "tools": "Mailchimp, EcoMail, Klaviyo",
+      "forms": "Email automation flows",
+      "description": "Nastavení welcome sekvencí, nurturing kampaní, segmentace podle chování, personalizované nabídky nemovitostí, newsletter s tržními trendy.",
+      "completed": false
+    },
+    {
+      "title": "PR strategie a media relations",
+      "duration": "4 hodiny",
+      "priority": "normal",
+      "money": "2000 Kč (PR nástroje)",
+      "documents": "PR strategie, press kit, media list",
+      "tools": "PR nástroje, media monitoring",
+      "forms": "Press release template",
+      "description": "Budování vztahů s médii, příprava press kitů, psaní tiskových zpráv, monitoring zmínek o značce, crisis communication plán.",
+      "completed": false
+    },
+    {
+      "title": "Influencer marketing a partnerství",
+      "duration": "3 hodiny",
+      "priority": "low",
+      "money": "10000 Kč (influencer fees)",
+      "documents": "Influencer databáze, partnership agreements",
+      "tools": "Influencer platformy, tracking nástroje",
+      "forms": "Partnership contract template",
+      "description": "Identifikace relevantních influencerů v oblasti bydlení a designu, navázání spolupráce, vytvoření autentického obsahu, měření ROI influencer kampaní.",
+      "completed": false
+    },
+    {
+      "title": "Offline marketing a eventy",
+      "duration": "6 hodin",
+      "priority": "normal",
+      "money": "15000 Kč (eventy, materiály)",
+      "documents": "Event plán, propagační materiály",
+      "tools": "Eventbrite, tiskárna, prezentační technika",
+      "forms": "Event checklist",
+      "description": "Organizace open house eventů, účast na realitních veletrzích, networking akce, tisk propagačních materiálů, outdoor reklama na strategických místech.",
+      "completed": false
+    },
+    {
+      "title": "Marketing automation a CRM integrace",
+      "duration": "8 hodin",
+      "priority": "high",
+      "money": "2000 Kč (automation tools)",
+      "documents": "Automation workflows, CRM setup",
+      "tools": "HubSpot, Pipedrive, Zapier",
+      "forms": "Automation mapping",
+      "description": "Nastavení marketing automation pro lead nurturing, scoring systém, automatické přiřazování leadů, personalizované follow-up sekvence, ROI tracking.",
+      "completed": false
+    },
+    {
+      "title": "Měření a analytika výkonnosti",
+      "duration": "4 hodiny měsíčně",
+      "priority": "high",
+      "money": "1000 Kč (analytics tools)",
+      "documents": "Měsíční reporty, KPI dashboard",
+      "tools": "Google Analytics, Data Studio, Excel",
+      "forms": "Performance report template",
+      "description": "Nastavení komprehenzivního trackingu všech kanálů, vytvoření automatizovaných reportů, analýza ROI jednotlivých kampaní, optimalizační doporučení.",
+      "completed": false
+    },
+    {
+      "title": "Kontinuální optimalizace a A/B testování",
+      "duration": "2 hodiny týdně",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Test plány, výsledky optimalizací",
+      "tools": "Google Optimize, testing nástroje",
+      "forms": "A/B test template",
+      "description": "Systematické testování všech marketingových elementů - landing pages, ad copy, email subject lines, call-to-action tlačítka. Implementace vítězných variant.",
+      "completed": false
+    }
+  ],
+  "created": "2025-01-18T17:43:40.000Z",
+  "modified": "2025-01-18T17:43:40.000Z"
+}

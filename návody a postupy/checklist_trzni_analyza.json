@@ -1,0 +1,208 @@
+{
+  "id": 1737230708000,
+  "title": "Analýza tržní ceny nemovitosti - srovnávací metoda",
+  "category": "prodej",
+  "description": "Kompletní postup pro profesionální ocenění nemovitosti pomocí srovnávací metody včetně sběru dat, analýzy a stanovení tržní ceny",
+  "items": [
+    {
+      "title": "Definování oceňované nemovitosti",
+      "duration": "20 minut",
+      "priority": "critical",
+      "money": "200 Kč (výpis LV)",
+      "documents": "LV, katastrální mapa, půdorys, energetický štítek",
+      "tools": "Katastrální úřad, měřící pásmo, fotoaparát",
+      "forms": "Specifikace oceňované nemovitosti",
+      "description": "Detailní popis oceňované nemovitosti - typ, velikost, dispozice, stáří, stav, vybavení, lokalita, dopravní dostupnost. Základní parametry pro srovnání s referenčními nemovitostmi.",
+      "completed": false
+    },
+    {
+      "title": "Vymezení relevantní lokality pro srovnání",
+      "duration": "15 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Mapa lokality, územní plán, demografické údaje",
+      "tools": "GIS mapy, Google Maps, místní znalost",
+      "forms": "Vymezení srovnávací oblasti",
+      "description": "Stanovení geografické oblasti pro hledání srovnatelných nemovitostí - stejná obec/městská část, podobná infrastruktura, dopravní dostupnost, sociální prostředí. Obvykle okruh 1-3 km.",
+      "completed": false
+    },
+    {
+      "title": "Sběr dat o prodaných nemovitostech",
+      "duration": "60 minut",
+      "priority": "critical",
+      "money": "500-2000 Kč (databáze, služby)",
+      "documents": "Databáze prodejů, inzeráty, kupní smlouvy",
+      "tools": "Sreality, Bezrealitky, CBRE, Knight Frank databáze",
+      "forms": "Seznam srovnatelných prodejů",
+      "description": "Systematický sběr dat o skutečně prodaných nemovitostech za posledních 6-12 měsíců. Priorita: skutečné prodeje před inzeráty. Min. 5-10 srovnatelných nemovitostí.",
+      "completed": false
+    },
+    {
+      "title": "Sběr dat o nabízených nemovitostech",
+      "duration": "45 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Aktuální nabídky, inzeráty, cenové trendy",
+      "tools": "Realitní portály, MLS systémy, lokální RK",
+      "forms": "Přehled aktuálních nabídek",
+      "description": "Sběr dat o aktuálně nabízených nemovitostech v lokalitě. Analýza cenových hladin, doby na trhu, slev z původních cen. Doplněk k prodaným nemovitostem.",
+      "completed": false
+    },
+    {
+      "title": "Ověření kvality a věrohodnosti dat",
+      "duration": "30 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Ověřené informace o prodejích",
+      "tools": "Telefon, email, osobní kontakty",
+      "forms": "Protokol ověření dat",
+      "description": "Ověření skutečných prodejních cen u realitních kanceláří, developerů, znalých osob. Vyloučení spekulativních nebo nepravdivých údajů. Kontrola aktuálnosti informací.",
+      "completed": false
+    },
+    {
+      "title": "Analýza srovnatelnosti nemovitostí",
+      "duration": "40 minut",
+      "priority": "critical",
+      "money": "0 Kč",
+      "documents": "Srovnávací tabulka parametrů",
+      "tools": "Excel, srovnávací matice, kalkulačka",
+      "forms": "Matice srovnatelnosti",
+      "description": "Detailní porovnání každé referenční nemovitosti s oceňovanou - velikost, stav, vybavení, lokalita, doprava. Hodnocení míry srovnatelnosti (vysoká/střední/nízká).",
+      "completed": false
+    },
+    {
+      "title": "Korekce na rozdíly v lokalitě",
+      "duration": "25 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Lokální cenové koeficienty, mapy hodnot",
+      "tools": "Cenové mapy, místní znalost trhu",
+      "forms": "Korekce na lokalitu",
+      "description": "Úprava cen referenčních nemovitostí podle rozdílů v lokalitě - prestižnost, infrastruktura, hluk, výhled, bezpečnost. Korekce obvykle ±5-20% podle významnosti rozdílů.",
+      "completed": false
+    },
+    {
+      "title": "Korekce na velikost a dispozici",
+      "duration": "20 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Přepočty na m², korekční koeficienty",
+      "tools": "Kalkulačka, koeficienty velikosti",
+      "forms": "Korekce na velikost",
+      "description": "Úprava cen podle rozdílů ve velikosti a dispozici. Menší byty obvykle dražší za m², větší levnější. Korekce na počet pokojů, praktičnost dispozice.",
+      "completed": false
+    },
+    {
+      "title": "Korekce na stav a vybavení",
+      "duration": "30 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Hodnocení stavu, náklady na renovace",
+      "tools": "Kalkulačka renovací, ceníky prací",
+      "forms": "Korekce na stav",
+      "description": "Úprava cen podle rozdílů ve stavu a vybavení - nová/po rekonstrukci/původní stav. Odhad nákladů na uvedení do srovnatelného stavu. Korekce ±10-30%.",
+      "completed": false
+    },
+    {
+      "title": "Korekce na stáří nemovitosti",
+      "duration": "15 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Věk nemovitostí, opotřebení",
+      "tools": "Kalkulačka opotřebení, životnost",
+      "forms": "Korekce na stáří",
+      "description": "Úprava cen podle rozdílů ve stáří nemovitosti. Nové nemovitosti prémiové, starší s vyšším opotřebením levnější. Korekce podle technického stavu a životnosti.",
+      "completed": false
+    },
+    {
+      "title": "Korekce na časový faktor",
+      "duration": "10 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Cenové indexy, inflace, tržní trendy",
+      "tools": "Cenové indexy ČSÚ, tržní analýzy",
+      "forms": "Korekce na čas",
+      "description": "Úprava starších prodejů na současnou cenovou hladinu. Zohlednění inflace, tržních trendů, změn na trhu nemovitostí. Obvykle +2-5% ročně podle trhu.",
+      "completed": false
+    },
+    {
+      "title": "Korekce na podmínky prodeje",
+      "duration": "15 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Okolnosti prodeje, motivace stran",
+      "tools": "Analýza podmínek, tržní standardy",
+      "forms": "Korekce na podmínky",
+      "description": "Úprava cen podle specifických podmínek prodeje - nucený prodej, rodinný prodej, rychlý prodej, exekuce. Standardní tržní podmínky = bez korekce.",
+      "completed": false
+    },
+    {
+      "title": "Výpočet korigovaných jednotkových cen",
+      "duration": "20 minut",
+      "priority": "critical",
+      "money": "0 Kč",
+      "documents": "Tabulka korigovaných cen za m²",
+      "tools": "Excel, kalkulačka, statistické funkce",
+      "forms": "Korigované jednotkové ceny",
+      "description": "Aplikace všech korekcí na původní ceny referenčních nemovitostí. Výpočet korigovaných cen za m² pro každou srovnávanou nemovitost.",
+      "completed": false
+    },
+    {
+      "title": "Statistická analýza výsledků",
+      "duration": "25 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Statistické vyhodnocení, rozptyly",
+      "tools": "Excel, statistické funkce, grafy",
+      "forms": "Statistická analýza",
+      "description": "Výpočet průměru, mediánu, směrodatné odchylky korigovaných cen. Vyloučení extrémních hodnot. Analýza rozptylu a spolehlivosti výsledků.",
+      "completed": false
+    },
+    {
+      "title": "Stanovení váženého průměru",
+      "duration": "15 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Vážený průměr podle kvality srovnání",
+      "tools": "Kalkulačka, váhové koeficienty",
+      "forms": "Vážený průměr cen",
+      "description": "Výpočet váženého průměru podle kvality srovnání - vysoce srovnatelné nemovitosti vyšší váha, méně srovnatelné nižší váha. Obvykle váhy 0,1-1,0.",
+      "completed": false
+    },
+    {
+      "title": "Analýza tržních trendů",
+      "duration": "20 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Tržní analýzy, prognózy, trendy",
+      "tools": "Tržní reporty, analytické studie",
+      "forms": "Analýza tržních trendů",
+      "description": "Zohlednění aktuálních tržních trendů - rostoucí/klesající trh, sezónnost, ekonomické faktory. Úprava výsledné ceny podle očekávaného vývoje.",
+      "completed": false
+    },
+    {
+      "title": "Stanovení rozpětí tržní ceny",
+      "duration": "10 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Rozpětí min-max tržní ceny",
+      "tools": "Kalkulačka, analýza rozptylu",
+      "forms": "Rozpětí tržní ceny",
+      "description": "Stanovení realistického rozpětí tržní ceny na základě analýzy - obvykle ±5-10% od průměrné hodnoty. Zohlednění nejistoty a variability trhu.",
+      "completed": false
+    },
+    {
+      "title": "Finální ocenění a dokumentace",
+      "duration": "30 minut",
+      "priority": "critical",
+      "money": "0 Kč",
+      "documents": "Tržní ocenění, zdůvodnění, metodika",
+      "tools": "Tiskárna, archivace, prezentace",
+      "forms": "Tržní ocenění nemovitosti",
+      "description": "Sestavení finálního tržního ocenění s detailním zdůvodněním, použitou metodikou, srovnávacími nemovitostmi. Doporučení pro prodejní/nákupní strategii.",
+      "completed": false
+    }
+  ],
+  "created": "2025-01-18T20:25:08.000Z",
+  "modified": "2025-01-18T20:25:08.000Z"
+}

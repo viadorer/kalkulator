@@ -1,0 +1,175 @@
+{
+  "id": 1737226188000,
+  "title": "Nastavení lead magnetu a hodnotné nabídky",
+  "category": "marketing",
+  "description": "Detailní postup pro vytvoření a implementaci efektivních lead magnetů pro získávání kvalitních kontaktů v realitním byznysu",
+  "items": [
+    {
+      "title": "Analýza potřeb cílové skupiny a pain pointů",
+      "duration": "45 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Průzkum potřeb, buyer personas, pain points mapa",
+      "tools": "Google Forms, SurveyMonkey, CRM data",
+      "forms": "Průzkumový dotazník",
+      "description": "Identifikace největších problémů a potřeb cílové skupiny prostřednictvím průzkumů, analýzy CRM dat a rozhovorů s existujícími klienty. Zjištění, co nejvíce trápí kupce a prodejce nemovitostí.",
+      "completed": false
+    },
+    {
+      "title": "Výběr typu lead magnetu podle cílové skupiny",
+      "duration": "30 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Strategie lead magnetů, competitive analysis",
+      "tools": "Excel, mind mapping nástroje",
+      "forms": "Lead magnet strategy template",
+      "description": "Rozhodnutí o typu lead magnetu - e-book pro začátečníky, kalkulačka pro investory, checklist pro prodejce, webinář pro pokročilé. Analýza konkurenčních nabídek.",
+      "completed": false
+    },
+    {
+      "title": "Vytvoření e-booku 'Průvodce koupí nemovitosti'",
+      "duration": "3 hodiny",
+      "priority": "normal",
+      "money": "800 Kč (design, stock photos)",
+      "documents": "E-book PDF, cover design, kapitoly",
+      "tools": "Canva, Adobe InDesign, Google Docs",
+      "forms": "E-book outline template",
+      "description": "Napsání a design 15-20 stránkového průvodce pokrývající celý proces koupě - od financování přes právní náležitosti po předání nemovitosti. Profesionální grafické zpracování.",
+      "completed": false
+    },
+    {
+      "title": "Vývoj investiční kalkulačky ROI",
+      "duration": "2 hodiny",
+      "priority": "normal",
+      "money": "500 Kč (web development)",
+      "documents": "Kalkulačka formulář, výpočetní logika",
+      "tools": "Excel, Google Sheets, HTML/JavaScript",
+      "forms": "Kalkulačka template",
+      "description": "Vytvoření interaktivní kalkulačky pro výpočet ROI investice do nemovitostí včetně cash flow, kapitálového zhodnocení a daňových úlev. Embedding na web.",
+      "completed": false
+    },
+    {
+      "title": "Příprava tržní analýzy lokality (template)",
+      "duration": "1.5 hodiny",
+      "priority": "normal",
+      "money": "200 Kč (data sources)",
+      "documents": "Analýza template, data sources, grafy",
+      "tools": "Excel, Canva, realitní databáze",
+      "forms": "Tržní analýza template",
+      "description": "Vytvoření šablony pro personalizované tržní analýzy konkrétních lokalit s cenami, trendy, demografií a prognózami. Automatizace sběru dat.",
+      "completed": false
+    },
+    {
+      "title": "Sestavení checklistu pro prodej nemovitosti",
+      "duration": "1 hodina",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Checklist PDF, step-by-step guide",
+      "tools": "Canva, Google Docs",
+      "forms": "Prodejní checklist",
+      "description": "Detailní checklist s 30+ kroky pro úspěšný prodej nemovitosti od přípravy po uzavření smlouvy. Včetně časového harmonogramu a tipů.",
+      "completed": false
+    },
+    {
+      "title": "Plánování a příprava webináře",
+      "duration": "2 hodiny",
+      "priority": "low",
+      "money": "0 Kč",
+      "documents": "Webinář agenda, prezentace, Q&A",
+      "tools": "PowerPoint, Zoom, Loom",
+      "forms": "Webinář script",
+      "description": "Příprava 45-minutového webináře na téma 'Investice do nemovitostí v roce 2025' včetně prezentace, interaktivních prvků a Q&A sekce.",
+      "completed": false
+    },
+    {
+      "title": "Grafický design a branding lead magnetů",
+      "duration": "2 hodiny",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Brand guidelines, cover designs, layouts",
+      "tools": "Canva, Adobe Creative Suite",
+      "forms": "Design checklist",
+      "description": "Jednotný vizuální styl všech lead magnetů v souladu s firemním brandingem. Atraktivní cover designs, čitelná typografie, profesionální layout.",
+      "completed": false
+    },
+    {
+      "title": "Copywriting a value proposition",
+      "duration": "1.5 hodiny",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Headlines, descriptions, CTA texty",
+      "tools": "Google Docs, Grammarly",
+      "forms": "Copywriting template",
+      "description": "Napsání přesvědčivých textů zdůrazňujících hodnotu každého lead magnetu. Jasné benefit-oriented headlines, urgency a social proof elementy.",
+      "completed": false
+    },
+    {
+      "title": "Nastavení delivery systému a automatizace",
+      "duration": "1 hodina",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Email sekvence, download links",
+      "tools": "Mailchimp, ActiveCampaign, Zapier",
+      "forms": "Automation workflow",
+      "description": "Automatické doručování lead magnetů po vyplnění formuláře, welcome email sekvence, follow-up kampaně a segmentace podle stažených materiálů.",
+      "completed": false
+    },
+    {
+      "title": "Vytvoření landing pages pro každý lead magnet",
+      "duration": "3 hodiny",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Landing page copy, wireframes",
+      "tools": "Unbounce, Leadpages, WordPress",
+      "forms": "Landing page template",
+      "description": "Specializované landing pages pro každý lead magnet s jasným value proposition, minimálním formulářem, social proof a mobilní optimalizací.",
+      "completed": false
+    },
+    {
+      "title": "A/B testování headlines a formulářů",
+      "duration": "30 minut týdně",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Test varianty, výsledky testů",
+      "tools": "Google Optimize, landing page builders",
+      "forms": "A/B test tracker",
+      "description": "Systematické testování různých headlines, formulářových polí, CTA buttonů a designových elementů pro optimalizaci konverzních poměrů.",
+      "completed": false
+    },
+    {
+      "title": "Integrace s CRM a lead scoring",
+      "duration": "1 hodina",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "CRM mapping, scoring rules",
+      "tools": "HubSpot, Pipedrive, Zapier",
+      "forms": "Integration checklist",
+      "description": "Propojení lead magnetů s CRM systémem, automatické tagování podle stažených materiálů, nastavení lead scoring bodů pro různé typy obsahu.",
+      "completed": false
+    },
+    {
+      "title": "Promoce lead magnetů přes různé kanály",
+      "duration": "2 hodiny",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Promoce strategie, social media posty",
+      "tools": "Facebook, LinkedIn, email, blog",
+      "forms": "Promotion calendar",
+      "description": "Systematická promoce lead magnetů přes sociální sítě, email podpisy, blog posty, guest posting a partnerské weby pro maximální dosah.",
+      "completed": false
+    },
+    {
+      "title": "Měření výkonnosti a optimalizace",
+      "duration": "1 hodina měsíčně",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Performance reporty, optimalizace plán",
+      "tools": "Google Analytics, CRM analytics",
+      "forms": "Performance dashboard",
+      "description": "Sledování konverzních poměrů, cost per lead, kvalita leadů z různých magnetů. Identifikace nejúspěšnějších materiálů a optimalizace méně výkonných.",
+      "completed": false
+    }
+  ],
+  "created": "2025-01-18T17:49:48.000Z",
+  "modified": "2025-01-18T17:49:48.000Z"
+}

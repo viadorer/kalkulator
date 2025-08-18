@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realitní kalkulačky a nástroje</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #f5f5f7;
+            color: #1d1d1f;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 600;
+            color: #1d1d1f;
+            text-decoration: none;
+        }
+
+        main {
+            padding: 60px 0;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero p {
+            font-size: 21px;
+            color: #86868b;
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 18px;
+            padding: 40px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .tool-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #007AFF, #5856D6);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 24px;
+            color: white;
+            font-weight: 600;
+        }
+
+        .tool-card h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #1d1d1f;
+        }
+
+        .tool-card p {
+            font-size: 17px;
+            color: #86868b;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .tool-features {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .tool-features li {
+            font-size: 15px;
+            color: #515154;
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .tool-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #34C759;
+            font-weight: 600;
+        }
+
+        .category {
+            margin-bottom: 60px;
+        }
+
+        .category-title {
+            font-size: 32px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .footer {
+            background: white;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer p {
+            color: #86868b;
+            font-size: 17px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 19px;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .tool-card {
+                padding: 30px;
+            }
+
+            .category-title {
+                font-size: 28px;
+            }
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            margin-left: 12px;
+        }
+
+        .status-new {
+            background: #E3F2FD;
+            color: #1976D2;
+        }
+
+        .status-updated {
+            background: #E8F5E8;
+            color: #2E7D32;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">Realitní nástroje</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="hero">
+                <h1>Profesionální kalkulačky pro realitní kanceláře</h1>
+                <p>Komplexní sada nástrojů pro analýzu trhu, hodnocení bonity, developerské projekty a marketing v českém realitním prostředí</p>
+            </div>
+
+            <div class="category">
+                <h2 class="category-title">Analýza a hodnocení</h2>
+                <div class="tools-grid">
+                    <a href="index 1.html" class="tool-card">
+                        <div class="tool-icon">MN</div>
+                        <h3>Analýza měsíčních nákladů</h3>
+                        <p>Specializovaný nástroj pro detailní analýzu a správu měsíčních nákladů realitní kanceláře</p>
+                        <ul class="tool-features">
+                            <li>Detailní rozpis měsíčních nákladů</li>
+                            <li>Auto-loader ze složky Downloads</li>
+                            <li>7 kategorií nákladů</li>
+                            <li>Editovatelné nákladové položky</li>
+                        </ul>
+                    </a>
+
+                    <a href="index 2.html" class="tool-card">
+                        <div class="tool-icon">GL</div>
+                        <h3>Garantovaný nájem & Lead generation <span class="status-badge status-updated">Aktualizováno</span></h3>
+                        <p>Pokročilá kalkulačka pro garantovaný nájem a online lead generation s ROI analýzou</p>
+                        <ul class="tool-features">
+                            <li>Kalkulace garantovaného nájmu</li>
+                            <li>Online lead generation analýza</li>
+                            <li>ROI a konverzní metriky</li>
+                            <li>Optimalizační doporučení</li>
+                        </ul>
+                    </a>
+
+                    <a href="bonita_najemnika.html" class="tool-card">
+                        <div class="tool-icon">BN</div>
+                        <h3>Kalkulačka bonity nájemníka <span class="status-badge status-new">Nové</span></h3>
+                        <p>Profesionální nástroj pro prověření platební schopnosti potenciálních nájemníků</p>
+                        <ul class="tool-features">
+                            <li>16-krokový checklist podle standardů</li>
+                            <li>Kontrola BRKI/NRKI/Insolvence</li>
+                            <li>Hodnocení ručitele a spolubydlících</li>
+                            <li>Automatická doporučení kauce</li>
+                        </ul>
+                    </a>
+
+                    <a href="ai_property_evaluator.html" class="tool-card">
+                        <div class="tool-icon">AI</div>
+                        <h3>AI Oceňování nemovitostí</h3>
+                        <p>Inteligentní nástroj pro rychlé a přesné ocenění nemovitostí s využitím AI</p>
+                        <ul class="tool-features">
+                            <li>Automatické ocenění na základě parametrů</li>
+                            <li>Srovnání s tržními cenami</li>
+                            <li>Analýza lokalitních faktorů</li>
+                            <li>Export výsledků</li>
+                        </ul>
+                    </a>
+                </div>
+            </div>
+
+            <div class="category">
+                <h2 class="category-title">Developerské projekty</h2>
+                <div class="tools-grid">
+                    <a href="developer_calculator_professional.html" class="tool-card">
+                        <div class="tool-icon">DP</div>
+                        <h3>Profesionální developerská kalkulačka</h3>
+                        <p>Pokročilý nástroj pro kompletní analýzu developerských projektů všech typů</p>
+                        <ul class="tool-features">
+                            <li>Parcely, rodinné domy, bytová výstavba</li>
+                            <li>Finanční metriky (NPV, IRR, MIRR)</li>
+                            <li>Cashflow analýza po měsících</li>
+                            <li>Save/Load a PDF export</li>
+                        </ul>
+                    </a>
+
+                    <a href="zamer.html" class="tool-card">
+                        <div class="tool-icon">ZT</div>
+                        <h3>Záměr realitního trhu</h3>
+                        <p>Specializovaná kalkulačka pro analýzu českého realitního trhu a investičních příležitostí</p>
+                        <ul class="tool-features">
+                            <li>Analýza tržních trendů</li>
+                            <li>Investiční kalkulace</li>
+                            <li>Regionální srovnání</li>
+                            <li>Prognózy vývoje</li>
+                        </ul>
+                    </a>
+                </div>
+            </div>
+
+            <div class="category">
+                <h2 class="category-title">Marketing a analytika</h2>
+                <div class="tools-grid">
+                    <a href="campaign_analytics_tool.html" class="tool-card">
+                        <div class="tool-icon">CA</div>
+                        <h3>Nástroj pro analýzu kampaní</h3>
+                        <p>Pokročilá analytika marketingových kampaní s detailními metrikami a ROI</p>
+                        <ul class="tool-features">
+                            <li>Analýza výkonnosti kampaní</li>
+                            <li>ROI a konverzní metriky</li>
+                            <li>Srovnání kanálů</li>
+                            <li>Optimalizační doporučení</li>
+                        </ul>
+                    </a>
+
+                    <a href="navody_postupy.html" class="tool-card">
+                        <div class="tool-icon">NP</div>
+                        <h3>Návody a postupy</h3>
+                        <p>Kompletní databáze checklistů a postupů pro realitní profesionály</p>
+                        <ul class="tool-features">
+                            <li>Strukturované checklisy</li>
+                            <li>Krok za krokem návody</li>
+                            <li>Best practices</li>
+                            <li>Šablony dokumentů</li>
+                        </ul>
+                    </a>
+
+                    <a href="checklist_manager.html" class="tool-card">
+                        <div class="tool-icon">CM</div>
+                        <h3>Správce checklistů</h3>
+                        <p>Nástroj pro vytváření, správu a sledování checklistů pro realitní procesy</p>
+                        <ul class="tool-features">
+                            <li>Vytváření vlastních checklistů</li>
+                            <li>Sledování pokroku</li>
+                            <li>Týmová spolupráce</li>
+                            <li>Export a sdílení</li>
+                        </ul>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>Profesionální nástroje pro realitní kanceláře v České republice</p>
+        </div>
+    </footer>
+</body>
+</html>

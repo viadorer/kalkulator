@@ -1,0 +1,175 @@
+{
+  "id": 1737215149000,
+  "title": "Pronájem bytu - kompletní postup",
+  "category": "pronájem",
+  "description": "Kompletní checklist pro proces pronájmu bytu od prvního kontaktu s majitelem až po předání klíčů nájemníkovi",
+  "items": [
+    {
+      "title": "Prvotní kontakt s majitelem nemovitosti",
+      "duration": "30min",
+      "priority": "high",
+      "money": "0 Kč (pouze telefonní náklady)",
+      "documents": "Poznámky z rozhovoru, kontaktní údaje majitele",
+      "tools": "Telefon, notebook/tablet pro poznámky",
+      "forms": "Formulář prvotního kontaktu, záznam o nemovitosti",
+      "description": "Navázání prvního kontaktu s majitelem, zjištění základních informací o nemovitosti, podmínkách pronájmu a očekáváních. Domluvení termínu prohlídky.",
+      "completed": false
+    },
+    {
+      "title": "Prohlídka nemovitosti a fotodokumentace",
+      "duration": "1h",
+      "priority": "critical",
+      "money": "Cestovné (cca 200-500 Kč)",
+      "documents": "Výpis z katastru nemovitostí, energetický štítek",
+      "tools": "Fotoaparát/smartphone, metr, baterka, poznámkový blok",
+      "forms": "Protokol o prohlídce nemovitosti, fotodokumentace",
+      "description": "Důkladná prohlídka bytu se zaměřením na stav, vybavení, možné závady. Pořízení kvalitních fotografií pro marketing. Změření rozměrů místností. Kontrola funkčnosti všech zařízení.",
+      "completed": false
+    },
+    {
+      "title": "Kontrola právních dokumentů majitele",
+      "duration": "45min",
+      "priority": "critical",
+      "money": "0 Kč",
+      "documents": "List vlastnictví, občanský průkaz majitele, plná moc (pokud jedná zástupce)",
+      "tools": "Scanner/fotoaparát pro kopie dokumentů",
+      "forms": "Checklist kontroly dokumentů",
+      "description": "Ověření vlastnických práv majitele k nemovitosti. Kontrola aktuálnosti listu vlastnictví, ověření totožnosti majitele. Pokud jedná zástupce, kontrola platné plné moci.",
+      "completed": false
+    },
+    {
+      "title": "Stanovení tržní ceny pronájmu",
+      "duration": "2h",
+      "priority": "high",
+      "money": "0 Kč (čas makléře)",
+      "documents": "Analýza trhu, srovnávací studie podobných nemovitostí",
+      "tools": "Přístup k realitním databázím, kalkulačka, počítač",
+      "forms": "Tržní analýza, doporučení ceny",
+      "description": "Provedení tržní analýzy podobných nemovitostí v lokalitě. Zohlednění stavu bytu, vybavení, polohy a aktuální poptávky. Doporučení optimální výše nájmu a služeb.",
+      "completed": false
+    },
+    {
+      "title": "Uzavření smlouvy o zprostředkování s majitelem",
+      "duration": "1h",
+      "priority": "critical",
+      "money": "0 Kč (příjem provize až po úspěšném pronájmu)",
+      "documents": "Smlouva o zprostředkování, občanský průkaz majitele",
+      "tools": "Tiskárna, pero, razítko RK",
+      "forms": "Smlouva o zprostředkování pronájmu",
+      "description": "Sepsání a podpis smlouvy o zprostředkování s majitelem. Stanovení výše provize, podmínek spolupráce a odpovědností stran. Předání klíčů pro prohlídky.",
+      "completed": false
+    },
+    {
+      "title": "Příprava marketingových materiálů",
+      "duration": "2h",
+      "priority": "high",
+      "money": "0 Kč (čas na přípravu)",
+      "documents": "Fotografie nemovitosti, technické údaje",
+      "tools": "Počítač, grafický software, přístup k realitním portálům",
+      "forms": "Inzerát pro realitní portály, leták",
+      "description": "Vytvoření atraktivního inzerátu s kvalitními fotografiemi a popisem. Příprava textů zdůrazňujících výhody nemovitosti a lokality. Optimalizace pro vyhledávání.",
+      "completed": false
+    },
+    {
+      "title": "Zveřejnění inzerátu na realitních portálech",
+      "duration": "1h",
+      "priority": "high",
+      "money": "Poplatky za inzerci (2000-5000 Kč/měsíc)",
+      "documents": "Připravené texty a fotografie",
+      "tools": "Počítač, přístup k realitním portálům (Sreality, Bezrealitky, atd.)",
+      "forms": "Inzeráty na jednotlivých portálech",
+      "description": "Zveřejnění inzerátu na hlavních realitních portálech. Optimalizace klíčových slov pro lepší viditelnost. Nastavení kontaktních informací a dostupnosti.",
+      "completed": false
+    },
+    {
+      "title": "Příjem a třídění zájemců o pronájem",
+      "duration": "4h",
+      "priority": "normal",
+      "money": "0 Kč (telefonní náklady)",
+      "documents": "Databáze zájemců, poznámky z rozhovorů",
+      "tools": "Telefon, CRM systém nebo tabulka Excel",
+      "forms": "Formulář pro evidenci zájemců",
+      "description": "Příjem telefonátů a e-mailů od zájemců. Základní předběžná kvalifikace (příjem, důvod stěhování, termín). Domlouvání termínů prohlídek s vhodnými kandidáty.",
+      "completed": false
+    },
+    {
+      "title": "Organizace a vedení prohlídek s zájemci",
+      "duration": "8h",
+      "priority": "high",
+      "money": "Cestovné k nemovitosti (500-1000 Kč)",
+      "documents": "Seznam zájemců, časový harmonogram prohlídek",
+      "tools": "Klíče od bytu, vizitky, informační materiály",
+      "forms": "Formulář zpětné vazby od zájemců",
+      "description": "Vedení prohlídek s předběžně kvalifikovanými zájemci. Prezentace výhod nemovitosti, zodpovězení dotazů. Získání zpětné vazby a vyhodnocení vážnosti zájmu.",
+      "completed": false
+    },
+    {
+      "title": "Předběžná kvalifikace nejvhodnějších kandidátů",
+      "duration": "2h",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Potvrzení o příjmech zájemců, reference z předchozího bydlení",
+      "tools": "Telefon pro ověření referencí",
+      "forms": "Formulář pro kvalifikaci nájemníka",
+      "description": "Detailní prověření finančních možností a spolehlivosti nejzájemnějších kandidátů. Ověření příjmů, kontaktování předchozích pronajímatelů, posouzení bonity.",
+      "completed": false
+    },
+    {
+      "title": "Prezentace kandidátů majiteli a výběr nájemníka",
+      "duration": "1h",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Profily kandidátů, doporučení makléře",
+      "tools": "Prezentační materiály, telefon",
+      "forms": "Doporučení pro majitele",
+      "description": "Prezentace nejlepších kandidátů majiteli s doporučením. Poskytnutí všech relevantních informací pro rozhodnutí. Získání souhlasu majitele s vybraným nájemníkem.",
+      "completed": false
+    },
+    {
+      "title": "Příprava nájemní smlouvy",
+      "duration": "1h",
+      "priority": "critical",
+      "money": "0 Kč",
+      "documents": "Vzor nájemní smlouvy, údaje nájemníka a majitele",
+      "tools": "Počítač, tiskárna, právní vzory smluv",
+      "forms": "Nájemní smlouva",
+      "description": "Sepsání nájemní smlouvy podle platné legislativy. Zahrnutí všech dohodnutých podmínek (výše nájmu, služby, kauce, doba nájmu). Kontrola právní správnosti.",
+      "completed": false
+    },
+    {
+      "title": "Podpis nájemní smlouvy a předávací protokol",
+      "duration": "2h",
+      "priority": "critical",
+      "money": "Kauce + první nájem (obvykle 2-3 měsíční nájmy)",
+      "documents": "Nájemní smlouva, občanské průkazy, předávací protokol",
+      "tools": "Pero, razítko, fotoaparát pro dokumentaci stavu",
+      "forms": "Předávací protokol, potvrzení o přijetí kauce",
+      "description": "Organizace setkání majitele a nájemníka pro podpis smlouvy. Provedení detailního předávacího protokolu se stavem bytu. Převzetí kauce a prvního nájmu.",
+      "completed": false
+    },
+    {
+      "title": "Předání klíčů a dokončení procesu",
+      "duration": "30min",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Podepsaná smlouva, předávací protokol, potvrzení o kauci",
+      "tools": "Klíče od bytu, kopie dokumentů",
+      "forms": "Protokol o předání klíčů",
+      "description": "Předání všech klíčů nájemníkovi, poskytnutí kontaktů na správce domu a služby. Vysvětlení praktických záležitostí (topení, elektřina, internet). Dokončení administrativy.",
+      "completed": false
+    },
+    {
+      "title": "Vyúčtování provize a uzavření zakázky",
+      "duration": "30min",
+      "priority": "normal",
+      "money": "Příjem provize (obvykle 1 měsíční nájem + DPH)",
+      "documents": "Faktura za zprostředkování, smlouva o zprostředkování",
+      "tools": "Fakturační systém, účetní evidence",
+      "forms": "Faktura, potvrzení o dokončení zakázky",
+      "description": "Vystavení faktury za zprostředkování pronájmu. Předání všech dokumentů majiteli. Archivace dokumentace zakázky. Nabídka dalších služeb (správa nemovitosti).",
+      "completed": false
+    }
+  ],
+  "created": "2025-01-18T16:45:49.000Z",
+  "modified": "2025-01-18T16:45:49.000Z"
+}

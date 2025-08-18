@@ -1,0 +1,175 @@
+{
+  "id": 1737225204000,
+  "title": "Nábor zakázky od reasu",
+  "category": "prodej",
+  "description": "Kompletní postup pro získání a zpracování zakázky od realitního developera nebo investora",
+  "items": [
+    {
+      "title": "Prvotní kontakt a identifikace příležitosti",
+      "duration": "30 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Vizitka, základní informace o společnosti",
+      "tools": "Telefon, CRM systém, kalendář",
+      "forms": "Formulář prvotního kontaktu",
+      "description": "Navázání prvního kontaktu s reasem, zjištění základních informací o projektu, typu nemovitostí a časovém harmonogramu. Zaznamenání kontaktních údajů a preferencí.",
+      "completed": false
+    },
+    {
+      "title": "Analýza projektu a lokality",
+      "duration": "2 hodiny",
+      "priority": "high",
+      "money": "500 Kč (doprava, materiály)",
+      "documents": "Územní plán, katastrální mapa, projektová dokumentace",
+      "tools": "Auto, fotoaparát, měřící pásmo, tablet",
+      "forms": "Formulář analýzy lokality",
+      "description": "Osobní prohlídka lokality, analýza dopravní dostupnosti, občanské vybavenosti, konkurence v okolí. Pořízení fotografií a základních měření. Ověření územně plánovacích podmínek.",
+      "completed": false
+    },
+    {
+      "title": "Příprava cenové analýzy a tržního odhadu",
+      "duration": "3 hodiny",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Srovnávací analýza, tržní studie",
+      "tools": "Databáze nemovitostí, Excel, kalkulačka",
+      "forms": "Tržní analýza template",
+      "description": "Zpracování srovnávací analýzy podobných projektů v okolí, stanovení reálných prodejních cen, analýza poptávky v segmentu. Příprava doporučení pro cenovou strategii.",
+      "completed": false
+    },
+    {
+      "title": "Vypracování marketingové strategie",
+      "duration": "4 hodiny",
+      "priority": "normal",
+      "money": "1000 Kč (grafické návrhy)",
+      "documents": "Marketingový plán, rozpočet kampaně",
+      "tools": "Grafický software, sociální sítě, webové stránky",
+      "forms": "Marketingová strategie template",
+      "description": "Návrh komplexní marketingové strategie zahrnující online i offline propagaci, targeting cílových skupin, rozpočet na reklamu, harmonogram kampaně a očekávané výsledky.",
+      "completed": false
+    },
+    {
+      "title": "Příprava prezentace pro reasa",
+      "duration": "2 hodiny",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "PowerPoint prezentace, reference, certifikáty",
+      "tools": "PowerPoint, tiskárna, prezentační materiály",
+      "forms": "Prezentační template",
+      "description": "Vytvoření profesionální prezentace obsahující analýzu trhu, cenovou strategii, marketingový plán, reference z podobných projektů a navrhovanou provizi.",
+      "completed": false
+    },
+    {
+      "title": "Jednání s reasem - prezentace nabídky",
+      "duration": "1.5 hodiny",
+      "priority": "critical",
+      "money": "200 Kč (doprava, občerstvení)",
+      "documents": "Vytištěná prezentace, smlouva o spolupráci",
+      "tools": "Laptop, projektor, vizitky",
+      "forms": "Zápis z jednání",
+      "description": "Osobní prezentace naší nabídky, představení analýzy a strategie, diskuse o podmínkách spolupráce, výši provize a exkluzivitě. Zodpovězení dotazů a námítek.",
+      "completed": false
+    },
+    {
+      "title": "Vyjednávání podmínek spolupráce",
+      "duration": "1 hodina",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Návrh smlouvy, ceník služeb",
+      "tools": "Telefon, email, právní poradna",
+      "forms": "Smluvní podmínky template",
+      "description": "Vyjednání výše provize, délky exkluzivity, rozsahu služeb, marketingového rozpočtu a dalších podmínek spolupráce. Příprava návrhu smlouvy.",
+      "completed": false
+    },
+    {
+      "title": "Právní kontrola a podpis smlouvy",
+      "duration": "30 minut",
+      "priority": "critical",
+      "money": "500 Kč (právní poradenství)",
+      "documents": "Smlouva o exkluzivním zastoupení",
+      "tools": "Právník, notář (pokud potřeba)",
+      "forms": "Smlouva o spolupráci",
+      "description": "Právní kontrola smlouvy, případné úpravy podmínek, podpis smlouvy oběma stranami. Zajištění všech potřebných příloh a dokumentů.",
+      "completed": false
+    },
+    {
+      "title": "Získání kompletní projektové dokumentace",
+      "duration": "1 hodina",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Projektová dokumentace, technické specifikace, vizualizace",
+      "tools": "Scanner, cloud úložiště",
+      "forms": "Checklist dokumentace",
+      "description": "Převzetí všech potřebných dokumentů od reasa - půdorysy, technické specifikace, vizualizace, rozpočty, harmonogram výstavby, povolení.",
+      "completed": false
+    },
+    {
+      "title": "Nastavení CRM a evidence zakázky",
+      "duration": "45 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Karta zakázky v CRM",
+      "tools": "CRM systém, databáze",
+      "forms": "Karta projektu",
+      "description": "Založení zakázky v CRM systému, nastavení všech kontaktů, dokumentů, harmonogramu, připomínek a úkolů. Přiřazení odpovědných osob.",
+      "completed": false
+    },
+    {
+      "title": "Příprava prodejních materiálů",
+      "duration": "6 hodin",
+      "priority": "normal",
+      "money": "3000 Kč (grafika, tisk)",
+      "documents": "Brožury, letáky, cenové listy",
+      "tools": "Grafický software, tiskárna, fotoaparát",
+      "forms": "Prodejní materiály checklist",
+      "description": "Vytvoření profesionálních prodejních materiálů - brožur, letáků, cenových listů, vizualizací. Zajištění kvalitního tisku a distribuce.",
+      "completed": false
+    },
+    {
+      "title": "Spuštění online marketingové kampaně",
+      "duration": "3 hodiny",
+      "priority": "normal",
+      "money": "5000 Kč (reklamní rozpočet)",
+      "documents": "Kampaňové materiály, targeting nastavení",
+      "tools": "Facebook Ads, Google Ads, realitní portály",
+      "forms": "Kampaňový report",
+      "description": "Spuštění cílené online kampaně na sociálních sítích a realitních portálech. Nastavení targetingu, rozpočtu a sledování výkonnosti.",
+      "completed": false
+    },
+    {
+      "title": "Organizace prezentačních akcí",
+      "duration": "4 hodiny",
+      "priority": "low",
+      "money": "2000 Kč (občerstvení, materiály)",
+      "documents": "Pozvánky, prezentační materiály",
+      "tools": "Prezentační technika, občerstvení",
+      "forms": "Seznam účastníků",
+      "description": "Zorganizování prezentačních akcí pro potenciální kupce - den otevřených dveří, prezentace v showroomu, individuální prohlídky vzorových jednotek.",
+      "completed": false
+    },
+    {
+      "title": "Vedení databáze zájemců",
+      "duration": "Průběžně",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Databáze kontaktů, komunikační historie",
+      "tools": "CRM, telefon, email",
+      "forms": "Karta zájemce",
+      "description": "Systematické vedení databáze všech zájemců, zaznamenávání komunikace, preferencí, finančních možností a postupu v prodejním procesu.",
+      "completed": false
+    },
+    {
+      "title": "Pravidelný reporting pro reasa",
+      "duration": "1 hodina týdně",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Týdenní/měsíční reporty",
+      "tools": "Excel, email, CRM",
+      "forms": "Report template",
+      "description": "Pravidelné zasílání reportů o průběhu prodeje, počtu zájemců, efektivitě kampaní, rezervacích a uzavřených smlouvách. Doporučení pro optimalizaci.",
+      "completed": false
+    }
+  ],
+  "created": "2025-01-18T17:33:24.000Z",
+  "modified": "2025-01-18T17:33:24.000Z"
+}

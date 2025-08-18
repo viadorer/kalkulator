@@ -1,0 +1,208 @@
+{
+  "id": 1737227917000,
+  "title": "Prověření nájemníka podle českého práva",
+  "category": "pronájem",
+  "description": "Kompletní postup pro důkladné prověření potenciálního nájemníka včetně všech právních náležitostí a obvyklých postupů v České republice",
+  "items": [
+    {
+      "title": "Identifikace a ověření totožnosti",
+      "duration": "15 minut",
+      "priority": "critical",
+      "money": "0 Kč",
+      "documents": "Platný OP/pas, potvrzení o trvalém pobytu",
+      "tools": "Kopírka, scanner, ověření pravosti dokladů",
+      "forms": "Formulář identifikace nájemníka",
+      "description": "Ověření totožnosti všech budoucích nájemníků - jméno, příjmení, rodné číslo, datum narození, místo trvalého pobytu. U cizinců ověření platnosti víza/povolení k pobytu. Kopie dokladů do spisu.",
+      "completed": false
+    },
+    {
+      "title": "Prověření platební schopnosti - příjmy",
+      "duration": "20 minut",
+      "priority": "critical",
+      "money": "0 Kč",
+      "documents": "Potvrzení o příjmech, pracovní smlouva, daňové přiznání",
+      "tools": "Kalkulačka příjmů, ověření u zaměstnavatele",
+      "forms": "Analýza platební schopnosti",
+      "description": "Ověření měsíčních příjmů - potvrzení od zaměstnavatele (ne starší 30 dní), u OSVČ daňové přiznání + výpis z účtu. Pravidlo: nájemné max. 30-40% čistého příjmu. Ověření stability zaměstnání.",
+      "completed": false
+    },
+    {
+      "title": "Kontrola v registru dlužníků",
+      "duration": "10 minut",
+      "priority": "high",
+      "money": "50-200 Kč (registr dlužníků)",
+      "documents": "Výpis z registru dlužníků, SOLUS, BRCI",
+      "tools": "Online registr dlužníků, CRIF, Equa bank",
+      "forms": "Výpis z registru dlužníků",
+      "description": "Prověření v registru dlužníků (SOLUS, BRCI) - nesplacené půjčky, exekuce, insolvence. Kontrola kreditní historie a platební morálky. Vyžádání souhlasu s prověřením před kontrolou.",
+      "completed": false
+    },
+    {
+      "title": "Ověření v exekučním rejstříku",
+      "duration": "5 minut",
+      "priority": "high",
+      "money": "0 Kč (veřejný rejstřík)",
+      "documents": "Výpis z exekučního rejstříku justice.cz",
+      "tools": "justice.cz, vyhledávání podle jména a data narození",
+      "forms": "Výpis z exekučního rejstříku",
+      "description": "Kontrola probíhajících exekucí na portálu justice.cz. Vyhledání podle jména, příjmení a data narození. Pozor na shody jmen - ověřit podle rodného čísla nebo adresy.",
+      "completed": false
+    },
+    {
+      "title": "Kontrola insolvenčního rejstříku",
+      "duration": "5 minut",
+      "priority": "high",
+      "money": "0 Kč (veřejný rejstřík)",
+      "documents": "Výpis z insolvenčního rejstříku",
+      "tools": "isir.justice.cz, vyhledávání dlužníků",
+      "forms": "Výpis z insolvenčního rejstříku",
+      "description": "Prověření v insolvenčním rejstříku na isir.justice.cz - probíhající nebo ukončené insolvence, oddlužení. Kontrola statusu řízení a splácení splátek u oddlužení.",
+      "completed": false
+    },
+    {
+      "title": "Reference od předchozích pronajímatelů",
+      "duration": "30 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Kontakty na předchozí pronajímatele, reference",
+      "tools": "Telefon, email, ověřovací dotazník",
+      "forms": "Referenční dotazník",
+      "description": "Kontakt na předchozí pronajímatele (min. 2 roky zpět) - platební morálka, péče o nemovitost, dodržování pravidel, důvody ukončení nájmu. Ověření pravosti kontaktů.",
+      "completed": false
+    },
+    {
+      "title": "Ověření zaměstnání a pracovního poměru",
+      "duration": "15 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Pracovní smlouva, kontakt na personální oddělení",
+      "tools": "Telefon, email zaměstnavateli",
+      "forms": "Potvrzení zaměstnání",
+      "description": "Ověření u zaměstnavatele - délka pracovního poměru, typ smlouvy (HPP/DPP), stabilita pozice, výše platu. U OSVČ ověření živnostenského oprávnění a faktického podnikání.",
+      "completed": false
+    },
+    {
+      "title": "Kontrola trestního rejstříku (doporučeno)",
+      "duration": "10 minut",
+      "priority": "normal",
+      "money": "50 Kč (výpis z TR)",
+      "documents": "Výpis z trestního rejstříku (ne starší 3 měsíce)",
+      "tools": "Czech POINT, online žádost",
+      "forms": "Výpis z trestního rejstříku",
+      "description": "Vyžádání výpisu z trestního rejstříku - zejména u dlouhodobých nájmů nebo luxusních nemovitostí. Pozor na trestné činy proti majetku, násilné trestné činy. Souhlas nájemníka nutný.",
+      "completed": false
+    },
+    {
+      "title": "Ověření rodinného stavu a počtu osob",
+      "duration": "10 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Oddací list, rodný list dětí, rozvodový dekret",
+      "tools": "Kopie dokladů, evidence osob",
+      "forms": "Přehled osob v nájmu",
+      "description": "Zjištění všech osob, které budou v nemovitosti bydlet - manžel/ka, děti, další příbuzní. Ověření souladu s kapacitou nemovitosti a domovním řádem. Evidence všech budoucích uživatelů.",
+      "completed": false
+    },
+    {
+      "title": "Finanční zajištění - kauce a zálohy",
+      "duration": "15 minut",
+      "priority": "critical",
+      "money": "Variable (1-3x nájemné)",
+      "documents": "Smlouva o kauci, potvrzení o úhradě",
+      "tools": "Bankovní účet, pokladna, účetní doklady",
+      "forms": "Potvrzení o přijetí kauce",
+      "description": "Stanovení výše kauce (obvykle 1-3x měsíční nájemné), způsob úhrady, podmínky vrácení. Úhrada před podpisem smlouvy. Zálohy na služby podle skutečné spotřeby předchozího roku.",
+      "completed": false
+    },
+    {
+      "title": "Pojištění odpovědnosti nájemníka",
+      "duration": "10 minut",
+      "priority": "normal",
+      "money": "1000-3000 Kč/rok (pojistné)",
+      "documents": "Pojistná smlouva, pojistné podmínky",
+      "tools": "Pojišťovna, online kalkulačka",
+      "forms": "Pojistná smlouva",
+      "description": "Doporučení nebo požadavek na pojištění odpovědnosti za škody způsobené nájemníkem. Minimální pojistná částka 1-2 mil. Kč. Ověření platnosti pojištění po celou dobu nájmu.",
+      "completed": false
+    },
+    {
+      "title": "Kontrola účelu nájmu a podnikání",
+      "duration": "10 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Prohlášení o účelu užívání, živnostenské oprávnění",
+      "tools": "Živnostenský rejstřík, dotazník",
+      "forms": "Prohlášení o účelu nájmu",
+      "description": "Ověření, zda bude nemovitost užívána pouze k bydlení nebo i k podnikání. Kontrola souladu s územním plánem a povolením. U podnikání požadavek na vyšší kauci a pojištění.",
+      "completed": false
+    },
+    {
+      "title": "Domácí zvířata - pravidla a podmínky",
+      "duration": "5 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Prohlášení o zvířatech, veterinární průkaz",
+      "tools": "Dotazník o zvířatech, pravidla domu",
+      "forms": "Souhlas s chovem zvířat",
+      "description": "Zjištění, zda nájemník chová nebo plánuje chovat domácí zvířata. Stanovení pravidel, případný zákaz, vyšší kauce. Ověření očkování a registrace u větších zvířat.",
+      "completed": false
+    },
+    {
+      "title": "GDPR a ochrana osobních údajů",
+      "duration": "5 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "GDPR souhlas, informace o zpracování údajů",
+      "tools": "GDPR formuláře, právní šablony",
+      "forms": "GDPR souhlas",
+      "description": "Informování nájemníka o zpracování osobních údajů, účelu, době uchovávání. Získání souhlasu se zpracováním pro účely nájmu, kontakt s třetími stranami (pojišťovna, služby).",
+      "completed": false
+    },
+    {
+      "title": "Osobní pohovor a prohlídka nemovitosti",
+      "duration": "45 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Záznam z pohovoru, dotazník nájemníka",
+      "tools": "Dotazník, klíče od nemovitosti",
+      "forms": "Záznam z osobního pohovoru",
+      "description": "Osobní setkání s nájemníkem při prohlídce nemovitosti. Posouzení chování, komunikace, péče o vzhled, reakce na pravidla. Zodpovězení dotazů, vysvětlení podmínek nájmu.",
+      "completed": false
+    },
+    {
+      "title": "Ověření kontaktních údajů",
+      "duration": "10 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Telefonní čísla, emailové adresy, nouzové kontakty",
+      "tools": "Telefon, email, SMS ověření",
+      "forms": "Ověření kontaktů",
+      "description": "Ověření funkčnosti všech kontaktních údajů - telefon, email, adresa. Získání nouzového kontaktu na příbuzného/přítele. Test komunikace před podpisem smlouvy.",
+      "completed": false
+    },
+    {
+      "title": "Právní kontrola a příprava smlouvy",
+      "duration": "30 minut",
+      "priority": "critical",
+      "money": "2000-5000 Kč (právník)",
+      "documents": "Návrh nájemní smlouvy, právní kontrola",
+      "tools": "Právník, právní software, šablony",
+      "forms": "Nájemní smlouva",
+      "description": "Příprava nájemní smlouvy dle občanského zákoníku, kontrola všech klauzulí, podmínek, práv a povinností. Ošetření specifických situací, sankce, výpovědní důvody.",
+      "completed": false
+    },
+    {
+      "title": "Finální rozhodnutí a dokumentace",
+      "duration": "15 minut",
+      "priority": "critical",
+      "money": "0 Kč",
+      "documents": "Kompletní spis nájemníka, rozhodovací matice",
+      "tools": "Hodnotící tabulka, archivace dokumentů",
+      "forms": "Rozhodnutí o přijetí/odmítnutí",
+      "description": "Celkové vyhodnocení všech získaných informací, rozhodnutí o přijetí nebo odmítnutí nájemníka. Zdokumentování důvodů rozhodnutí, archivace všech dokumentů podle GDPR.",
+      "completed": false
+    }
+  ],
+  "created": "2025-01-18T19:28:37.000Z",
+  "modified": "2025-01-18T19:28:37.000Z"
+}

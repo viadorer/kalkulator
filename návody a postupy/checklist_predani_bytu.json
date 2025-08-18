@@ -1,0 +1,208 @@
+{
+  "id": 1737230592000,
+  "title": "Předání bytu novému nájemníkovi - postup a dokumentace",
+  "category": "pronájem",
+  "description": "Kompletní checklist pro předání bytu novému nájemníkovi včetně všech právních náležitostí, dokumentace stavu a předávacího protokolu",
+  "items": [
+    {
+      "title": "Příprava předávacího protokolu",
+      "duration": "30 minut",
+      "priority": "critical",
+      "money": "0 Kč",
+      "documents": "Předávací protokol, fotodokumentace, seznam vybavení",
+      "tools": "Tiskárna, fotoaparát, měřící pásmo",
+      "forms": "Předávací protokol bytu",
+      "description": "Příprava detailního předávacího protokolu se seznamem všech místností, vybavení, stavu povrchů, funkčnosti zařízení. Příprava formuláře pro zápis závad a poškození.",
+      "completed": false
+    },
+    {
+      "title": "Kontrola a čištění bytu před předáním",
+      "duration": "120 minut",
+      "priority": "high",
+      "money": "2000-5000 Kč (úklid)",
+      "documents": "Protokol o úklidu, faktury za úklidové služby",
+      "tools": "Úklidové prostředky, vysavač, hadry",
+      "forms": "Potvrzení o úklidu",
+      "description": "Důkladný úklid bytu - mytí oken, podlah, koupelny, kuchyně. Kontrola funkčnosti všech zařízení, výměna žárovek, drobné opravy. Byt musí být v bezvadném stavu.",
+      "completed": false
+    },
+    {
+      "title": "Kontrola funkčnosti elektroinstalace",
+      "duration": "20 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Protokol o kontrole elektroinstalace",
+      "tools": "Tester, kontrola jističů, zásuvek",
+      "forms": "Kontrolní list elektroinstalace",
+      "description": "Kontrola všech zásuvek, vypínačů, osvětlení, jističů. Test funkčnosti spotřebičů (sporák, bojler, digestoř). Ověření bezpečnosti elektroinstalace.",
+      "completed": false
+    },
+    {
+      "title": "Kontrola vodovodního a kanalizačního systému",
+      "duration": "15 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Protokol o kontrole VaK",
+      "tools": "Kontrola kohoutků, splachovačů, odtoků",
+      "forms": "Kontrolní list VaK",
+      "description": "Kontrola všech kohoutků, sprch, WC, odtoků. Test tlaku vody, teploty, funkčnosti splachovačů. Kontrola těsnosti, případných úniků vody.",
+      "completed": false
+    },
+    {
+      "title": "Kontrola topení a ventilace",
+      "duration": "15 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Protokol o kontrole topení",
+      "tools": "Teploměr, kontrola radiátorů, ventilů",
+      "forms": "Kontrolní list topení",
+      "description": "Kontrola funkčnosti všech radiátorů, termostatických ventilů, odvětrání. Test topného systému, kontrola těsnosti, nastavení optimální teploty.",
+      "completed": false
+    },
+    {
+      "title": "Inventarizace vybavení a zařízení",
+      "duration": "30 minut",
+      "priority": "critical",
+      "money": "0 Kč",
+      "documents": "Inventární seznam, sériová čísla spotřebičů",
+      "tools": "Inventární seznamy, štítky, fotoaparát",
+      "forms": "Inventární protokol",
+      "description": "Detailní seznam všeho vybavení - nábytek, spotřebiče, dekorace. Zápis sériových čísel, stavu, funkčnosti. Fotodokumentace každé položky.",
+      "completed": false
+    },
+    {
+      "title": "Fotodokumentace stavu bytu",
+      "duration": "45 minut",
+      "priority": "critical",
+      "money": "0 Kč",
+      "documents": "Kompletní fotodokumentace všech místností",
+      "tools": "Fotoaparát, smartphone, datum/čas na fotkách",
+      "forms": "Fotodokumentace bytu",
+      "description": "Systematická fotodokumentace každé místnosti ze všech úhlů. Detailní snímky poškození, opotřebení, stavu povrchů. Foto s datem a časem předání.",
+      "completed": false
+    },
+    {
+      "title": "Předání klíčů a čipů",
+      "duration": "10 minut",
+      "priority": "critical",
+      "money": "200-500 Kč (výroba kopií)",
+      "documents": "Protokol o předání klíčů, evidence kopií",
+      "tools": "Všechny klíče, čipy, dálkové ovladače",
+      "forms": "Předávací protokol klíčů",
+      "description": "Předání všech klíčů - byt, sklep, společné prostory, poštovní schránka. Čipy, dálkové ovladače. Zápis počtu kusů, evidence kopií.",
+      "completed": false
+    },
+    {
+      "title": "Vysvětlení ovládání spotřebičů a systémů",
+      "duration": "20 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Návody k obsluze, kontakty na servisy",
+      "tools": "Návody k použití, demonstrace",
+      "forms": "Protokol o zaškolení",
+      "description": "Praktické předvedení ovládání bojleru, topení, spotřebičů, zabezpečovacího systému. Předání návodů, kontaktů na servisy a opraváře.",
+      "completed": false
+    },
+    {
+      "title": "Předání dokumentů k nemovitosti",
+      "duration": "15 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Kopie LV, energetický štítek, domovní řád",
+      "tools": "Kopírka, archivace dokumentů",
+      "forms": "Protokol o předání dokumentů",
+      "description": "Předání kopií důležitých dokumentů - list vlastnictví, energetický štítek, domovní řád, kontakty na správce, havárie. Vysvětlení pravidel domu.",
+      "completed": false
+    },
+    {
+      "title": "Stav měřidel a odečty",
+      "duration": "10 minut",
+      "priority": "critical",
+      "money": "0 Kč",
+      "documents": "Protokol o odečtech měřidel",
+      "tools": "Odečet elektroměru, plynoměru, vodoměru",
+      "forms": "Protokol odečtů",
+      "description": "Přesný odečet všech měřidel - elektřina, plyn, voda, teplo. Zápis do protokolu, fotodokumentace stavů. Základní stav pro vyúčtování služeb.",
+      "completed": false
+    },
+    {
+      "title": "Nastavení záloh na služby",
+      "duration": "15 minut",
+      "priority": "high",
+      "money": "Variable (zálohy na služby)",
+      "documents": "Smlouvy o dodávkách energií, kalkulace záloh",
+      "tools": "Kalkulačka, předchozí vyúčtování",
+      "forms": "Nastavení záloh na služby",
+      "description": "Stanovení měsíčních záloh na elektřinu, plyn, vodu, teplo na základě předchozí spotřeby. Vysvětlení systému vyúčtování, termínů plateb.",
+      "completed": false
+    },
+    {
+      "title": "Kontakty na správce a havárie",
+      "duration": "5 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Seznam kontaktů, havárie 24/7",
+      "tools": "Telefonní seznam, nástěnka",
+      "forms": "Kontaktní seznam",
+      "description": "Předání všech důležitých kontaktů - správce domu, údržba, havárie vody/plynu/elektřiny, úklid společných prostor, výtahy.",
+      "completed": false
+    },
+    {
+      "title": "Vysvětlení domovního řádu",
+      "duration": "10 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Domovní řád, pravidla společenství",
+      "tools": "Domovní řád, vysvětlení pravidel",
+      "forms": "Potvrzení o seznámení s řádem",
+      "description": "Detailní vysvětlení domovního řádu - noční klid, parkování, společné prostory, odpad, domácí zvířata, návštěvy. Zdůraznění důležitých pravidel.",
+      "completed": false
+    },
+    {
+      "title": "Pojištění domácnosti",
+      "duration": "10 minut",
+      "priority": "normal",
+      "money": "2000-5000 Kč/rok",
+      "documents": "Pojistná smlouva, pojistné podmínky",
+      "tools": "Kontakt na pojišťovnu, kalkulačka",
+      "forms": "Pojistná smlouva",
+      "description": "Doporučení nebo požadavek na pojištění domácnosti a odpovědnosti. Vysvětlení rozsahu pojištění, výše pojistného, postupu při škodě.",
+      "completed": false
+    },
+    {
+      "title": "Podpis předávacího protokolu",
+      "duration": "15 minut",
+      "priority": "critical",
+      "money": "0 Kč",
+      "documents": "Podepsaný předávací protokol",
+      "tools": "Pero, razítko, svědci",
+      "forms": "Předávací protokol",
+      "description": "Společné projití celého protokolu, doplnění případných připomínek, podpis obou stran. Protokol v několika vyhotoveních, každá strana si ponechá originál.",
+      "completed": false
+    },
+    {
+      "title": "Předání kontaktů a dostupnost",
+      "duration": "5 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Kontaktní údaje pronajímatele",
+      "tools": "Telefon, email, dostupnost",
+      "forms": "Kontaktní informace",
+      "description": "Předání kontaktních údajů pronajímatele, dostupnost pro urgentní případy, preferované způsoby komunikace, reakce na reklamace.",
+      "completed": false
+    },
+    {
+      "title": "Archivace dokumentace",
+      "duration": "10 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Kompletní spis nájmu, archivace",
+      "tools": "Archivační systém, skenování",
+      "forms": "Archivační protokol",
+      "description": "Archivace všech dokumentů z předání - protokoly, fotografie, smlouvy. Digitalizace, zálohování, označení podle GDPR. Přístupnost pro případné spory.",
+      "completed": false
+    }
+  ],
+  "created": "2025-01-18T20:23:12.000Z",
+  "modified": "2025-01-18T20:23:12.000Z"
+}

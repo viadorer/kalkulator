@@ -1,0 +1,208 @@
+{
+  "id": 1737226397000,
+  "title": "Rezervační smlouva - prodej a pronájem",
+  "category": "administrativa",
+  "description": "Kompletní checklist pro přípravu a kontrolu rezervačních smluv včetně všech právních náležitostí pro prodej i pronájem nemovitostí",
+  "items": [
+    {
+      "title": "Identifikace smluvních stran",
+      "duration": "15 minut",
+      "priority": "critical",
+      "money": "0 Kč",
+      "documents": "OP/pas, výpis z OR (právnické osoby), plná moc",
+      "tools": "Kopírka, scanner, ověření dokladů",
+      "forms": "Formulář identifikace stran",
+      "description": "Úplná identifikace rezervujícího i vlastníka - jméno, příjmení, rodné číslo/IČO, adresa trvalého pobytu/sídla. U právnických osob ověření oprávnění jednat za společnost.",
+      "completed": false
+    },
+    {
+      "title": "Přesná specifikace nemovitosti",
+      "duration": "20 minut",
+      "priority": "critical",
+      "money": "200 Kč (aktuální výpis LV)",
+      "documents": "List vlastnictví, katastrální mapa, půdorys",
+      "tools": "Katastrální úřad online, měřící nástroje",
+      "forms": "Specifikace nemovitosti",
+      "description": "Detailní popis nemovitosti - adresa, číslo parcely, LV, výměra, dispozice, podlahová plocha, příslušenství (sklep, garáž, zahrada). Aktuální stav dle katastru.",
+      "completed": false
+    },
+    {
+      "title": "Stanovení rezervační ceny a způsobu platby",
+      "duration": "10 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Cenová kalkulace, platební instrukce",
+      "tools": "Kalkulačka, bankovní údaje",
+      "forms": "Cenové podmínky",
+      "description": "Výše rezervační částky (obvykle 50-100k Kč), způsob platby (hotově/převodem), lhůta pro zaplacení, číslo účtu, variabilní symbol, zacházení s rezervací při uzavření/neuzavření smlouvy.",
+      "completed": false
+    },
+    {
+      "title": "Definování rezervační lhůty",
+      "duration": "5 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Časový harmonogram, kalendář",
+      "tools": "Kalendář, právní poradna",
+      "forms": "Časové podmínky",
+      "description": "Přesné datum a čas začátku a konce rezervace, možnost prodloužení, podmínky automatického ukončení, pracovní vs. kalendářní dny, svátky.",
+      "completed": false
+    },
+    {
+      "title": "Podmínky pro uzavření hlavní smlouvy (prodej)",
+      "duration": "15 minut",
+      "priority": "critical",
+      "money": "0 Kč",
+      "documents": "Návrh kupní smlouvy, financování dokumenty",
+      "tools": "Právní šablony, hypoteční kalkulačka",
+      "forms": "Podmínky prodeje",
+      "description": "Kupní cena, způsob financování, termín podpisu kupní smlouvy, termín předání nemovitosti, stav nemovitosti při předání, co zůstává/nezůstává v nemovitosti.",
+      "completed": false
+    },
+    {
+      "title": "Podmínky pro uzavření nájemní smlouvy (pronájem)",
+      "duration": "15 minut",
+      "priority": "critical",
+      "money": "0 Kč",
+      "documents": "Návrh nájemní smlouvy, pravidla domu",
+      "tools": "Právní šablony, kalkulačka služeb",
+      "forms": "Podmínky pronájmu",
+      "description": "Výše nájmu, služby, kauce, doba nájmu, možnost výpovědi, pravidla užívání, domácí zvířata, kouření, návštěvy, údržba a opravy.",
+      "completed": false
+    },
+    {
+      "title": "Kontrola právní čistoty nemovitosti",
+      "duration": "30 minut",
+      "priority": "critical",
+      "money": "200 Kč (výpisy, ověření)",
+      "documents": "Aktuální LV, výpis z katastru, energetický štítek",
+      "tools": "Katastrální úřad, exekutorský úřad, insolvence",
+      "forms": "Checklist právní čistoty",
+      "description": "Ověření vlastnických práv, zástavních práv, věcných břemen, exekucí, insolvencí, energetického štítku, kolaudačního rozhodnutí, stavebního povolení.",
+      "completed": false
+    },
+    {
+      "title": "Finanční ověření rezervujícího",
+      "duration": "20 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Potvrzení o příjmech, výpis z účtu, předschválení hypotéky",
+      "tools": "Bankovní kontakty, hypoteční kalkulačka",
+      "forms": "Finanční bonita",
+      "description": "Ověření platební schopnosti - potvrzení o příjmech, předschválení hypotéky, výpis z účtu, u podnikatelů daňové přiznání, u investorů portfolium.",
+      "completed": false
+    },
+    {
+      "title": "Vymezení práv a povinností stran",
+      "duration": "10 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Právní ustanovení, odpovědnostní matice",
+      "tools": "Právní literatura, vzorové smlouvy",
+      "forms": "Práva a povinnosti",
+      "description": "Co smí/nesmí rezervující během rezervace, povinnosti vlastníka, zákaz nabízení třetím stranám, údržba nemovitosti, pojištění, přístup k nemovitosti.",
+      "completed": false
+    },
+    {
+      "title": "Sankce za porušení smlouvy",
+      "duration": "10 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Sankční ustanovení, smluvní pokuty",
+      "tools": "Právní poradna, kalkulačka pokut",
+      "forms": "Sankční řád",
+      "description": "Smluvní pokuta za odstoupení rezervujícího, za nabídnutí nemovitosti třetí straně vlastníkem, za prodlení s platbou rezervace, úroky z prodlení.",
+      "completed": false
+    },
+    {
+      "title": "Podmínky vrácení/započtení rezervace",
+      "duration": "10 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Finanční podmínky, účetní doklady",
+      "tools": "Kalkulačka, bankovní údaje",
+      "forms": "Finanční vypořádání",
+      "description": "Kdy se rezervace vrací, kdy propadá, jak se započítává do kupní ceny/kauce, lhůty pro vrácení, bankovní údaje pro vrácení, DPH a daňové aspekty.",
+      "completed": false
+    },
+    {
+      "title": "Zprostředkovatelská provize a podmínky",
+      "duration": "5 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Smlouva o zprostředkování, faktura",
+      "tools": "Kalkulačka provize, fakturační systém",
+      "forms": "Provizní podmínky",
+      "description": "Výše provize, kdy je splatná, kdo ji platí, co zahrnuje, DPH, vystavení faktury, splatnost, bankovní údaje realitní kanceláře.",
+      "completed": false
+    },
+    {
+      "title": "GDPR a ochrana osobních údajů",
+      "duration": "5 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "GDPR souhlas, zásady ochrany údajů",
+      "tools": "GDPR šablony, právní dokumenty",
+      "forms": "GDPR souhlas",
+      "description": "Souhlas se zpracováním osobních údajů, účel zpracování, doba uchovávání, práva subjektu údajů, kontakt na pověřence, možnost odvolání souhlasu.",
+      "completed": false
+    },
+    {
+      "title": "Komunikační kanály a kontakty",
+      "duration": "5 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Kontaktní údaje, komunikační matice",
+      "tools": "Telefon, email, CRM systém",
+      "forms": "Kontaktní formulář",
+      "description": "Kontaktní údaje všech stran, preferované způsoby komunikace, dostupnost, náhradní kontakty, urgentní situace, komunikace během rezervace.",
+      "completed": false
+    },
+    {
+      "title": "Právní doložky a rozhodné právo",
+      "duration": "5 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Právní ustanovení, jurisdikce",
+      "tools": "Právní literatura, soudní praxe",
+      "forms": "Právní doložky",
+      "description": "Rozhodné právo (české), místní příslušnost soudu, oddělitelnost ustanovení, změny smlouvy pouze písemně, počet vyhotovení smlouvy.",
+      "completed": false
+    },
+    {
+      "title": "Podpis a ověření smlouvy",
+      "duration": "15 minut",
+      "priority": "critical",
+      "money": "100 Kč (ověření podpisů)",
+      "documents": "Podepsaná smlouva, ověřené podpisy",
+      "tools": "Notář, Czech POINT, tiskárna",
+      "forms": "Podpisový protokol",
+      "description": "Kontrola všech údajů před podpisem, podpis všech stran, datum a místo podpisu, případné ověření podpisů u notáře, počet originálů pro každou stranu.",
+      "completed": false
+    },
+    {
+      "title": "Registrace a evidence smlouvy",
+      "duration": "10 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Evidence smluv, CRM záznam",
+      "tools": "CRM systém, archivační systém",
+      "forms": "Evidenční list",
+      "description": "Zaevidování smlouvy do CRM, přiřazení čísla smlouvy, nastavení připomínek a termínů, archivace dokumentů, backup, přístupová práva.",
+      "completed": false
+    },
+    {
+      "title": "Monitoring a follow-up aktivit",
+      "duration": "5 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Harmonogram aktivit, připomínky",
+      "tools": "Kalendář, CRM, automatické připomínky",
+      "forms": "Follow-up plán",
+      "description": "Nastavení připomínek pro kontrolu platby rezervace, kontakt s klientem, příprava hlavní smlouvy, monitoring termínů, eskalační procedury při problémech.",
+      "completed": false
+    }
+  ],
+  "created": "2025-01-18T17:53:17.000Z",
+  "modified": "2025-01-18T17:53:17.000Z"
+}

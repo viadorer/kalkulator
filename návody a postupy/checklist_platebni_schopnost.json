@@ -1,0 +1,186 @@
+{
+  "id": 1737230013000,
+  "title": "Prověření platební schopnosti nájemníka - příjmy",
+  "category": "pronájem",
+  "description": "Detailní postup pro ověření platební schopnosti potenciálního nájemníka včetně analýzy příjmů, stability zaměstnání a finančních závazků",
+  "items": [
+    {
+      "title": "Vyžádání aktuálního potvrzení o příjmech",
+      "duration": "5 minut",
+      "priority": "critical",
+      "money": "0 Kč",
+      "documents": "Potvrzení o příjmech ne starší 30 dní",
+      "tools": "Email, telefon, osobní předání",
+      "forms": "Žádost o potvrzení příjmů",
+      "description": "Vyžádání oficiálního potvrzení o příjmech od zaměstnavatele. Dokument nesmí být starší 30 dní. Musí obsahovat hrubý i čistý příjem, typ pracovního poměru, délku zaměstnání.",
+      "completed": false
+    },
+    {
+      "title": "Kontrola pravosti potvrzení o příjmech",
+      "duration": "10 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Kontaktní údaje zaměstnavatele, razítko, podpis",
+      "tools": "Telefon, internet, ověření firmy",
+      "forms": "Ověřovací protokol",
+      "description": "Ověření pravosti dokumentu - kontrola razítka, podpisu, kontaktních údajů firmy. Telefonické ověření u personálního oddělení nebo nadřízeného. Kontrola existence firmy v OR.",
+      "completed": false
+    },
+    {
+      "title": "Analýza výše příjmů vs. nájemné",
+      "duration": "5 minut",
+      "priority": "critical",
+      "money": "0 Kč",
+      "documents": "Kalkulace poměru příjmů a nájemného",
+      "tools": "Kalkulačka, Excel, finanční analýza",
+      "forms": "Analýza platební schopnosti",
+      "description": "Výpočet poměru nájemného k čistému příjmu. Bezpečné pravidlo: nájemné max. 30% čistého příjmu, tolerovatelné do 40%. Při překročení požadavek na ručitele nebo vyšší kauci.",
+      "completed": false
+    },
+    {
+      "title": "Prověření u OSVČ - daňové přiznání",
+      "duration": "15 minut",
+      "priority": "critical",
+      "money": "0 Kč",
+      "documents": "Daňové přiznání za poslední 2 roky, přehled příjmů a výdajů",
+      "tools": "Analýza daňových přiznání, průměrování příjmů",
+      "forms": "Analýza příjmů OSVČ",
+      "description": "U OSVČ vyžádání daňových přiznání za poslední 2 roky. Výpočet průměrného měsíčního příjmu po zdanění. Kontrola trendu příjmů (rostoucí/klesající). Zohlednění sezónnosti podnikání.",
+      "completed": false
+    },
+    {
+      "title": "Výpis z bankovního účtu OSVČ",
+      "duration": "10 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Výpis z účtu za posledních 6 měsíců",
+      "tools": "Analýza cash flow, pravidelnost příjmů",
+      "forms": "Analýza bankovních výpisů",
+      "description": "U OSVČ vyžádání výpisů z účtu za 6 měsíců pro ověření skutečných příjmů. Kontrola pravidelnosti plateb od klientů, cash flow, rezerv na účtu. Porovnání s daňovým přiznáním.",
+      "completed": false
+    },
+    {
+      "title": "Ověření stability zaměstnání",
+      "duration": "10 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Pracovní smlouva, délka zaměstnání, typ smlouvy",
+      "tools": "Telefon, email, personální oddělení",
+      "forms": "Potvrzení stability zaměstnání",
+      "description": "Ověření délky současného zaměstnání (min. 6 měsíců ideálně), typu smlouvy (HPP vs. DPP), zkušební doby, perspektivy pokračování. U krátkodobého zaměstnání požadavek na ručitele.",
+      "completed": false
+    },
+    {
+      "title": "Kontrola dalších zdrojů příjmů",
+      "duration": "5 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Potvrzení o důchodu, invalidním důchodu, rodičovském příspěvku",
+      "tools": "Doklady o sociálních dávkách, investičních výnosech",
+      "forms": "Přehled všech příjmů",
+      "description": "Zjištění všech zdrojů příjmů - důchod, invalidní důchod, rodičovský příspěvek, alimenty, příjmy z pronájmu, dividendy. Součet všech pravidelných příjmů pro celkovou analýzu.",
+      "completed": false
+    },
+    {
+      "title": "Analýza pravidelných výdajů a závazků",
+      "duration": "10 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Přehled splátek úvěrů, alimentů, pojištění",
+      "tools": "Kalkulačka disponibilního příjmu",
+      "forms": "Analýza měsíčních závazků",
+      "description": "Zjištění všech pravidelných měsíčních závazků - splátky úvěrů, alimenty, pojištění, jiné nájmy. Výpočet disponibilního příjmu po odečtení všech závazků. Kontrola únosnosti celkového zadlužení.",
+      "completed": false
+    },
+    {
+      "title": "Prověření u více příjmových osob",
+      "duration": "15 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Příjmy všech dospělých osob v domácnosti",
+      "tools": "Součet příjmů, analýza stability",
+      "forms": "Analýza společných příjmů",
+      "description": "U více osob (manželé, partneři) prověření příjmů všech dospělých. Výpočet společného disponibilního příjmu. Ověření, zda všichni budou podepsáni na smlouvě jako solidární dlužníci.",
+      "completed": false
+    },
+    {
+      "title": "Kontrola sezónních výkyvů příjmů",
+      "duration": "5 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Roční přehled příjmů, sezónní analýza",
+      "tools": "Analýza trendů, průměrování",
+      "forms": "Sezónní analýza příjmů",
+      "description": "U sezónních profesí (stavebnictví, cestovní ruch, zemědělství) analýza výkyvů příjmů během roku. Výpočet nejnižšího měsíčního příjmu jako základu pro posouzení platební schopnosti.",
+      "completed": false
+    },
+    {
+      "title": "Ověření u studenta nebo důchodce",
+      "duration": "10 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Potvrzení o studiu, výše stipendia, důchodu",
+      "tools": "Kontrola u školy, ČSSZ",
+      "forms": "Specifická analýza příjmů",
+      "description": "U studentů ověření stipendia, podpory od rodičů, brigád. U důchodců kontrola výše důchodu, případných přivýdělků. Často nutnost ručitele nebo vyšší kauce.",
+      "completed": false
+    },
+    {
+      "title": "Posouzení trendu příjmů",
+      "duration": "5 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Srovnání příjmů za posledních 12-24 měsíců",
+      "tools": "Trendová analýza, prognóza",
+      "forms": "Analýza trendu příjmů",
+      "description": "Analýza vývoje příjmů za posledních 12-24 měsíců. Rostoucí trend = pozitivní, klesající = rizikový faktor. Zohlednění ekonomické situace v oboru a regionu.",
+      "completed": false
+    },
+    {
+      "title": "Kalkulace rezervy na nepředvídané výdaje",
+      "duration": "5 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Výpočet finanční rezervy",
+      "tools": "Finanční kalkulačka, analýza rizik",
+      "forms": "Kalkulace finanční rezervy",
+      "description": "Výpočet doporučené finanční rezervy (min. 3x měsíční náklady na bydlení). Posouzení, zda má nájemník dostatečnou rezervu na pokrytí nájmu při dočasné ztrátě příjmů.",
+      "completed": false
+    },
+    {
+      "title": "Rozhodnutí o požadavku na ručitele",
+      "duration": "5 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Rozhodovací matrice, kritéria pro ručitele",
+      "tools": "Hodnotící tabulka, riziková analýza",
+      "forms": "Rozhodnutí o ručiteli",
+      "description": "Na základě analýzy rozhodnutí, zda požadovat ručitele. Kritéria: nájemné >35% příjmu, nestabilní zaměstnání, OSVČ <2 roky, student, nízké příjmy, negativní trend.",
+      "completed": false
+    },
+    {
+      "title": "Stanovení výše kauce podle rizika",
+      "duration": "5 minut",
+      "priority": "high",
+      "money": "Variable (1-6x nájemné)",
+      "documents": "Kalkulace kauce podle rizikového profilu",
+      "tools": "Riziková matrice, kalkulačka kauce",
+      "forms": "Stanovení výše kauce",
+      "description": "Stanovení výše kauce podle rizikového profilu: nízké riziko 1-2x nájemné, střední riziko 2-3x nájemné, vysoké riziko 3-6x nájemné nebo odmítnutí.",
+      "completed": false
+    },
+    {
+      "title": "Dokumentace rozhodnutí a zdůvodnění",
+      "duration": "10 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Kompletní finanční analýza, rozhodnutí",
+      "tools": "Archivace dokumentů, GDPR compliance",
+      "forms": "Finanční posouzení nájemníka",
+      "description": "Zdokumentování celé finanční analýzy, rozhodnutí o přijetí/odmítnutí, stanovené podmínky (kauce, ručitel). Archivace podle GDPR, zdůvodnění rozhodnutí.",
+      "completed": false
+    }
+  ],
+  "created": "2025-01-18T20:13:33.000Z",
+  "modified": "2025-01-18T20:13:33.000Z"
+}

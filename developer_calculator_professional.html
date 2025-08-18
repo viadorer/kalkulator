@@ -1,0 +1,2585 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developerská kalkulačka - Profesionální nástroj pro rozpočtáře</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background: #f8f9fa;
+            color: #2c3e50;
+            min-height: 100vh;
+            font-size: 17px;
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 4px;
+            color: #2c3e50;
+            border-bottom: 2px solid #e9ecef;
+            position: relative;
+        }
+
+        .menu-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #007AFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            background: #0056CC;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,122,255,0.3);
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 600;
+            margin: 0 0 12px 0;
+            color: #2c3e50;
+        }
+
+        .header p {
+            font-size: 16px;
+            margin: 0;
+            color: #6c757d;
+            font-weight: 400;
+        }
+
+        .main-card {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .project-types {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .project-type {
+            padding: 12px 24px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            background: #ffffff;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            font-size: 14px;
+            color: #495057;
+        }
+
+        .project-type:hover {
+            background: #f8f9fa;
+            border-color: #6c757d;
+        }
+
+        .project-type.selected {
+            background: #2c3e50;
+            color: white;
+            border-color: #2c3e50;
+        }
+
+        .content {
+            padding: 24px;
+        }
+
+        .section {
+            background: #ffffff;
+            border-radius: 4px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid #e9ecef;
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .section h3 {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .section h4 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #374151;
+            margin: 32px 0 20px 0;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #495057;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .form-input {
+            padding: 10px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.2s ease;
+            background: #ffffff;
+            color: #495057;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #2c3e50;
+            box-shadow: 0 0 0 2px rgba(44, 62, 80, 0.1);
+        }
+
+        .form-input:hover {
+            border-color: #d1d5db;
+        }
+
+        .custom-items {
+            margin-top: 16px;
+            padding: 16px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            border: 1px solid #e9ecef;
+        }
+
+        .custom-item {
+            display: grid;
+            grid-template-columns: 2fr 1fr 80px 1fr 2fr auto;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 12px;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #e9ecef;
+            transition: all 0.2s ease;
+        }
+        
+        .item-name, .item-quantity, .item-price, .item-total, .item-unit, .item-help {
+            padding: 8px;
+            font-size: 14px;
+            color: #495057;
+        }
+        
+        .item-help {
+            font-size: 12px;
+            color: #6c757d;
+            font-style: italic;
+        }
+        
+        .item-unit {
+            text-align: center;
+            font-weight: 500;
+            color: #6c757d;
+        }
+        
+        .item-name {
+            font-weight: 500;
+        }
+        
+        .item-total {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        /* Notifikace */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 4px;
+            color: white;
+            font-weight: 500;
+            z-index: 10000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification-success {
+            background: #27ae60;
+        }
+        
+        .notification-error {
+            background: #e74c3c;
+        }
+        
+        .notification-info {
+            background: #3498db;
+        }
+        
+        .notification-warning {
+            background: #f39c12;
+        }
+
+        .custom-item:hover {
+            border-color: #6c757d;
+        }
+
+        .custom-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .apartment-grid {
+            display: grid;
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .apartment-row {
+            display: grid;
+            grid-template-columns: 140px 1fr 1fr 1fr;
+            gap: 20px;
+            align-items: center;
+            padding: 24px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 2px solid #e5e7eb;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .apartment-row:hover {
+            border-color: #6c757d;
+            background: #f8f9fa;
+        }
+
+        .apartment-label {
+            font-weight: 600;
+            background: #2c3e50;
+            color: white;
+            padding: 12px;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .supplementary-spaces {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .space-card {
+            padding: 24px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 2px solid #e5e7eb;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .space-card:hover {
+            border-color: #6c757d;
+            background: #f8f9fa;
+        }
+
+        .apartment-summary {
+            padding: 20px;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            margin-top: 24px;
+        }
+
+        .apartment-summary h4 {
+            color: #1e40af;
+            margin-bottom: 20px;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #1e40af;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e40af;
+        }
+
+        .summary-panel {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            color: #ffffff;
+            border-radius: 20px;
+            padding: 32px;
+            margin: 40px 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .summary-panel h3 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .summary-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .summary-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .summary-item .label {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 6px;
+            font-weight: 400;
+        }
+
+        .summary-item .value {
+            font-size: 20px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .profitability-card {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border: 2px solid #10b981;
+            padding: 32px;
+            border-radius: 20px;
+            margin: 32px 0;
+        }
+
+        .profitability-card h3 {
+            color: #065f46;
+            margin-bottom: 24px;
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .profitability-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+        }
+
+        .metric-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 16px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #065f46;
+            margin-bottom: 8px;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: #065f46;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            background: #ffffff;
+            border-radius: 4px;
+            border: 1px solid #e9ecef;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: #f8fafc;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox-item:hover {
+            border-color: #6c757d;
+            background: #f8f9fa;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #2c3e50;
+        }
+
+        .checkbox-item label {
+            font-weight: 500;
+            cursor: pointer;
+            margin: 0;
+            font-size: 15px;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .action-btn.primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .action-btn.secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .action-btn.tertiary {
+            background: #28a745;
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .action-btn:active {
+            transform: translateY(0);
+        }
+
+        .add-item-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-left: 12px;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(0,123,255,0.2);
+        }
+
+        .add-item-btn:hover {
+            background: #0056b3;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,123,255,0.3);
+        }
+        
+        .add-item-btn:active {
+            transform: translateY(0);
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: #2c3e50;
+            color: white;
+            border: 1px solid #2c3e50;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+            border: 2px solid #e5e7eb;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+            transform: translateY(-1px);
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 32px 0;
+        }
+
+        .detailed-table {
+            margin-top: 40px;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .detailed-table h3 {
+            margin-bottom: 24px;
+            font-size: 28px;
+            font-weight: 700;
+            color: #1d1d1f;
+            text-align: center;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .table {
+            width: 100%;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .table th {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 20px 16px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 14px;
+            color: #374151;
+            border-bottom: 2px solid #e5e7eb;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 14px;
+            color: #495057;
+        }
+
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .table .text-right {
+            text-align: right;
+        }
+
+        .table .bg-blue { background: #f8f9fa; }
+        .table .bg-green { background: #f8f9fa; }
+        .table .bg-yellow { background: #f8f9fa; }
+        .table .bg-red { background: #f8f9fa; }
+        .table .bg-gray { background: #f8f9fa; }
+
+        .table .total-row {
+            background: #2c3e50;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #6c757d;
+            border-top: 1px solid #e9ecef;
+            margin-top: 24px;
+        }
+
+        .footer p {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .validation-results {
+            margin-top: 16px;
+            padding: 16px;
+            border-radius: 4px;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+        }
+
+        .warnings-section h4 {
+            color: #dc2626;
+            margin-bottom: 12px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .recommendations-section h4 {
+            color: #059669;
+            margin-bottom: 12px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .warning-item {
+            color: #dc2626;
+            margin-bottom: 8px;
+            padding: 8px 12px;
+            background: #fef2f2;
+            border-radius: 4px;
+            border: 1px solid #fecaca;
+        }
+
+        .recommendation-item {
+            color: #059669;
+            margin-bottom: 8px;
+            padding: 8px 12px;
+            background: #f0fdf4;
+            border-radius: 4px;
+            border: 1px solid #bbf7d0;
+        }
+
+        .success-message {
+            color: #059669;
+            padding: 16px;
+            background: #f0fdf4;
+            border-radius: 8px;
+            border: 1px solid #bbf7d0;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .advanced-analysis .metric-group {
+            margin-bottom: 20px;
+            padding: 16px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            border: 1px solid #e9ecef;
+        }
+
+        .advanced-analysis .metric-group h4 {
+            margin-bottom: 16px;
+            color: #1f2937;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .advanced-analysis .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .advanced-analysis .metric-row:last-child {
+            border-bottom: none;
+        }
+
+        .advanced-analysis .scenario {
+            margin-bottom: 20px;
+            padding: 16px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+        }
+
+        .advanced-analysis .scenario h5 {
+            margin-bottom: 12px;
+            color: #374151;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            overflow-y: auto;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 40px auto;
+            padding: 0;
+            border-radius: 4px;
+            max-width: 1200px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #2c3e50;
+            color: white;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            padding: 12px;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.2s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .modal-body {
+            padding: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 16px;
+            }
+            
+            .content {
+                padding: 24px;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .project-types {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            .apartment-row {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .supplementary-spaces {
+                grid-template-columns: 1fr;
+            }
+            
+            .custom-item {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="container">
+        <div class="header">
+            <a href="menu.html" class="menu-btn">← Hlavní menu</a>
+            <h1>Developerská kalkulačka</h1>
+            <p>Profesionální nástroj pro rozpočtáře a developery</p>
+        </div>
+
+        <!-- Main Card -->
+        <div class="main-card">
+            <!-- Project Type Selection -->
+            <div class="project-types">
+                <div class="project-type selected" data-type="residential" onclick="switchProjectType('residential')">
+                    <h3>Bytový projekt</h3>
+                    <p>Bytový dům s různými dispozicemi, parkovacími místy a sklepy</p>
+                </div>
+                <div class="project-type" data-type="building_plots" onclick="switchProjectType('building_plots')">
+                    <h3>Stavební pozemky</h3>
+                    <p>Příprava, zasíťování a prodej stavebních parcel</p>
+                </div>
+                <div class="project-type" data-type="house_plots" onclick="switchProjectType('house_plots')">
+                    <h3>Pozemky pro RD</h3>
+                    <p>Rodinné domy na připravených parcelách</p>
+                </div>
+            </div>
+
+            <div class="content">
+                <!-- Apartment Mix Section (only for residential) -->
+                <div id="apartmentMixSection" class="section">
+                    <h3>Skladba bytů a doplňkových prostor</h3>
+                    
+                    <h4>Byty podle dispozic</h4>
+                    <div class="apartment-grid">
+                        <div class="apartment-row">
+                            <div class="apartment-label">1+kk</div>
+                            <div class="form-group">
+                                <label>Počet bytů</label>
+                                <input type="number" class="form-input" id="apt_1kk_count" value="8" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Průměrná plocha (m²)</label>
+                                <input type="number" class="form-input" id="apt_1kk_size" value="35">
+                            </div>
+                            <div class="form-group">
+                                <label>Cena za m² (Kč)</label>
+                                <input type="number" class="form-input" id="apt_1kk_price" value="95000">
+                            </div>
+                        </div>
+                        <div class="apartment-row">
+                            <div class="apartment-label">2+kk</div>
+                            <div class="form-group">
+                                <label>Počet bytů</label>
+                                <input type="number" class="form-input" id="apt_2kk_count" value="6" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Průměrná plocha (m²)</label>
+                                <input type="number" class="form-input" id="apt_2kk_size" value="55">
+                            </div>
+                            <div class="form-group">
+                                <label>Cena za m² (Kč)</label>
+                                <input type="number" class="form-input" id="apt_2kk_price" value="90000">
+                            </div>
+                        </div>
+                        <div class="apartment-row">
+                            <div class="apartment-label">3+kk</div>
+                            <div class="form-group">
+                                <label>Počet bytů</label>
+                                <input type="number" class="form-input" id="apt_3kk_count" value="4" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Průměrná plocha (m²)</label>
+                                <input type="number" class="form-input" id="apt_3kk_size" value="75">
+                            </div>
+                            <div class="form-group">
+                                <label>Cena za m² (Kč)</label>
+                                <input type="number" class="form-input" id="apt_3kk_price" value="85000">
+                            </div>
+                        </div>
+                        <div class="apartment-row">
+                            <div class="apartment-label">4+kk</div>
+                            <div class="form-group">
+                                <label>Počet bytů</label>
+                                <input type="number" class="form-input" id="apt_4kk_count" value="2" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Průměrná plocha (m²)</label>
+                                <input type="number" class="form-input" id="apt_4kk_size" value="95">
+                            </div>
+                            <div class="form-group">
+                                <label>Cena za m² (Kč)</label>
+                                <input type="number" class="form-input" id="apt_4kk_price" value="80000">
+                            </div>
+                        </div>
+                        <div class="apartment-row">
+                            <div class="apartment-label">5+kk+</div>
+                            <div class="form-group">
+                                <label>Počet bytů</label>
+                                <input type="number" class="form-input" id="apt_larger_count" value="0" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Průměrná plocha (m²)</label>
+                                <input type="number" class="form-input" id="apt_larger_size" value="120">
+                            </div>
+                            <div class="form-group">
+                                <label>Cena za m² (Kč)</label>
+                                <input type="number" class="form-input" id="apt_larger_price" value="75000">
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4>Doplňkové prostory</h4>
+                    <div class="supplementary-spaces">
+                        <div class="space-card">
+                            <h5>Parkovací místa</h5>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Počet míst</label>
+                                    <input type="number" class="form-input" id="parking_count" value="18" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Cena za místo (Kč)</label>
+                                    <input type="number" class="form-input" id="parking_price" value="350000">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-card">
+                            <h5>Sklepy</h5>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Počet sklepů</label>
+                                    <input type="number" class="form-input" id="storage_count" value="15" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Cena za sklep (Kč)</label>
+                                    <input type="number" class="form-input" id="storage_price" value="180000">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Apartment Summary -->
+                    <div class="apartment-summary">
+                        <h4>Souhrn skladby</h4>
+                        <div class="summary-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Celkem bytů:</span>
+                                <span class="stat-value" id="totalApartments">20</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Celková plocha:</span>
+                                <span class="stat-value" id="totalArea">1240 m²</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Průměrná plocha:</span>
+                                <span class="stat-value" id="avgArea">62 m²</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Basic Parameters Section -->
+                <div class="section">
+                    <h3>Základní parametry projektu</h3>
+                    <div class="custom-items">
+                        <div id="basicParametersItems">
+                            <!-- Předdefinované položky -->
+                            <div class="custom-item">
+                                <span class="item-name">Plocha pozemku</span>
+                                <input type="number" class="form-input" id="landArea" value="5000">
+                                <span class="item-unit">m²</span>
+                                <span class="item-total" id="landAreaTotal">-</span>
+                                <span class="item-help">Celková plocha pozemku určeného k zástavbě</span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item">
+                                <span class="item-name">Cena pozemku</span>
+                                <input type="number" class="form-input" id="landPrice" value="2000">
+                                <span class="item-unit">Kč/m²</span>
+                                <span class="item-total" id="landPriceTotal">-</span>
+                                <span class="item-help">Kupní cena pozemku za metr čtvereční</span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item" id="unitsGroup">
+                                <span class="item-name" id="unitsLabel">Počet bytů (automaticky)</span>
+                                <input type="number" class="form-input" id="units" value="20" disabled>
+                                <span class="item-unit">ks</span>
+                                <span class="item-total">-</span>
+                                <span class="item-help">Počet se automaticky vypočítá ze skladby bytů</span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item">
+                                <span class="item-name">Zastavěná plocha</span>
+                                <input type="number" class="form-input" id="buildingArea" value="1500">
+                                <span class="item-unit">m²</span>
+                                <span class="item-total" id="buildingAreaTotal">-</span>
+                                <span class="item-help">Plocha zastavěná budovou (půdorys)</span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item" id="floorsGroup">
+                                <span class="item-name">Počet podlaží</span>
+                                <input type="number" class="form-input" id="floors" value="3">
+                                <span class="item-unit">ks</span>
+                                <span class="item-total">-</span>
+                                <span class="item-help">Počet nadzemních podlaží</span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item" id="constructionPriceGroup">
+                                <span class="item-name">Cena stavby</span>
+                                <input type="number" class="form-input" id="constructionPrice" value="35000">
+                                <span class="item-unit">Kč/m²</span>
+                                <span class="item-total" id="constructionPriceTotal">-</span>
+                                <span class="item-help">Základní: 20-25k, Střední: 30-40k, Prémiový: 45-60k Kč/m²</span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Land Acquisition Section -->
+                <div class="section">
+                    <h3>Pořízení pozemku
+                        <button class="add-item-btn" onclick="addCustomItem('landAcquisition')">Přidat položku</button>
+                    </h3>
+                    <div class="custom-items">
+                        <div id="landAcquisitionItems">
+                            <!-- Předdefinované položky -->
+                            <div class="custom-item">
+                                <span class="item-name">Daň z nabytí</span>
+                                <input type="number" class="form-input" id="acquisitionTax" value="4" step="0.1">
+                                <span class="item-unit">%</span>
+                                <span class="item-total" id="acquisitionTaxTotal">-</span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item">
+                                <span class="item-name">RK provize nákup</span>
+                                <input type="number" class="form-input" id="brokerageAcquisition" value="3" step="0.1">
+                                <span class="item-unit">%</span>
+                                <span class="item-total" id="brokerageAcquisitionTotal">-</span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item">
+                                <span class="item-name">Právní služby</span>
+                                <input type="number" class="form-input" id="legalFees" value="150000">
+                                <span class="item-unit">Kč</span>
+                                <span class="item-total" id="legalFeesTotal">-</span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item">
+                                <span class="item-name">Geodetické zaměření</span>
+                                <input type="number" class="form-input" id="surveying" value="80000">
+                                <span class="item-unit">Kč</span>
+                                <span class="item-total" id="surveyingTotal">-</span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Preparation Section -->
+                <div class="section">
+                    <h3>Projektová příprava
+                        <button class="add-item-btn" onclick="addCustomItem('projectPreparation')">Přidat položku</button>
+                    </h3>
+                    <div class="custom-items">
+                        <div id="projectPreparationItems">
+                            <!-- Předdefinované položky -->
+                            <div class="custom-item">
+                                <span class="item-name">Geologické průzkumy</span>
+                                <input type="number" class="form-input" id="geologicalSurveyRate" value="300">
+                                <span class="item-unit">Kč/m²</span>
+                                <span class="item-total" id="geologicalSurveyTotal">-</span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item">
+                                <span class="item-name">Projektová dokumentace</span>
+                                <input type="number" class="form-input" id="projectDocumentationRate" value="800">
+                                <span class="item-unit">Kč/m²</span>
+                                <span class="item-total" id="projectDocumentationTotal">-</span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item">
+                                <span class="item-name">Povolení a správní řízení</span>
+                                <input type="number" class="form-input" id="permitsRate" value="2" step="0.1">
+                                <span class="item-unit">%</span>
+                                <span class="item-total" id="permitsTotal">-</span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item">
+                                <span class="item-name">Technické posudky</span>
+                                <input type="number" class="form-input" id="technicalReports" value="120000">
+                                <span class="item-unit">Kč</span>
+                                <span class="item-total" id="technicalReportsTotal">-</span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Infrastructure Section -->
+                <div class="section">
+                    <h3>Infrastruktura a inženýrské sítě
+                        <button class="add-item-btn" onclick="addCustomItem('infrastructure')">Přidat položku</button>
+                    </h3>
+                    
+                    <h4>Komunikace a zpevněné plochy</h4>
+                    <div class="custom-items">
+                        <div id="infrastructureItems">
+                            <!-- Předdefinované položky -->
+                            <div class="custom-item">
+                                <span class="item-name">Komunikace</span>
+                                <input type="number" class="form-input" id="roadLength" value="500">
+                                <span class="item-unit">m</span>
+                                <input type="number" class="form-input" id="roadPricePerMeter" value="5000" style="grid-column: 4;">
+                                <span class="item-total" id="roadTotal">-</span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item">
+                                <span class="item-name">Chodníky</span>
+                                <input type="number" class="form-input" id="sidewalkArea" value="800">
+                                <span class="item-unit">m²</span>
+                                <input type="number" class="form-input" id="sidewalkPricePerM2" value="2500" style="grid-column: 4;">
+                                <span class="item-total" id="sidewalkTotal">-</span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item">
+                                <span class="item-name">Parkovací místa</span>
+                                <input type="number" class="form-input" id="parkingSpaces" value="25">
+                                <span class="item-unit">ks</span>
+                                <input type="number" class="form-input" id="parkingPricePerSpace" value="15000" style="grid-column: 4;">
+                                <span class="item-total" id="parkingTotal">-</span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4>Inženýrské sítě</h4>
+                    <div class="custom-items">
+                        <div>
+                            <div class="custom-item">
+                                <span class="item-name">Vodovodní řad</span>
+                                <input type="number" class="form-input" id="waterPipeLength" value="600">
+                                <span class="item-unit">m</span>
+                                <input type="number" class="form-input" id="waterPipePrice" value="3500" style="grid-column: 4;">
+                                <span class="item-total" id="waterPipeTotal">-</span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item">
+                                <span class="item-name">Kanalizace</span>
+                                <input type="number" class="form-input" id="sewerPipeLength" value="600">
+                                <span class="item-unit">m</span>
+                                <input type="number" class="form-input" id="sewerPipePrice" value="3000" style="grid-column: 4;">
+                                <span class="item-total" id="sewerPipeTotal">-</span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item">
+                                <span class="item-name">Elektro NN</span>
+                                <input type="number" class="form-input" id="electricLowLength" value="500">
+                                <span class="item-unit">m</span>
+                                <input type="number" class="form-input" id="electricLowPrice" value="2800" style="grid-column: 4;">
+                                <span class="item-total" id="electricLowTotal">-</span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item">
+                                <span class="item-name">Plyn STL</span>
+                                <input type="number" class="form-input" id="gasLength" value="500">
+                                <span class="item-unit">m</span>
+                                <input type="number" class="form-input" id="gasPrice" value="2200" style="grid-column: 4;">
+                                <span class="item-total" id="gasTotal">-</span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item">
+                                <span class="item-name">Telekomunikace</span>
+                                <input type="number" class="form-input" id="telecomLength" value="500">
+                                <span class="item-unit">m</span>
+                                <input type="number" class="form-input" id="telecomPrice" value="1500" style="grid-column: 4;">
+                                <span class="item-total" id="telecomTotal">-</span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4>Přípojky</h4>
+                    <div class="custom-items">
+                        <div>
+                            <div class="custom-item">
+                                <span class="item-name">Elektrická přípojka</span>
+                                <input type="checkbox" class="form-input" id="needsElectricConnection" checked style="width: auto;">
+                                <span class="item-unit">-</span>
+                                <input type="number" class="form-input" id="electricConnectionPrice" value="150000" style="grid-column: 4;">
+                                <span class="item-total" id="electricConnectionTotal">-</span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item">
+                                <span class="item-name">Vodovodní přípojka</span>
+                                <input type="checkbox" class="form-input" id="needsWaterConnection" checked style="width: auto;">
+                                <span class="item-unit">-</span>
+                                <input type="number" class="form-input" id="waterConnectionPrice" value="100000" style="grid-column: 4;">
+                                <span class="item-total" id="waterConnectionTotal">-</span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item">
+                                <span class="item-name">Kanalizační přípojka</span>
+                                <input type="checkbox" class="form-input" id="needsSewerConnection" checked style="width: auto;">
+                                <span class="item-unit">-</span>
+                                <input type="number" class="form-input" id="sewerConnectionPrice" value="120000" style="grid-column: 4;">
+                                <span class="item-total" id="sewerConnectionTotal">-</span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item">
+                                <span class="item-name">Plynová přípojka</span>
+                                <input type="checkbox" class="form-input" id="needsGasConnection" checked style="width: auto;">
+                                <span class="item-unit">-</span>
+                                <input type="number" class="form-input" id="gasConnectionPrice" value="80000" style="grid-column: 4;">
+                                <span class="item-total" id="gasConnectionTotal">-</span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Construction Section (only for residential) -->
+                <div id="constructionSection" class="section">
+                    <h3>Výstavba
+                        <button class="add-item-btn" onclick="addCustomItem('construction')">Přidat položku</button>
+                    </h3>
+                    <div class="custom-items">
+                        <div id="constructionItems">
+                            <!-- Předdefinované položky -->
+                            <div class="custom-item">
+                                <span class="item-name">Koeficient společných prostor</span>
+                                <input type="number" class="form-input" id="commonAreasCoeff" value="1.4" step="0.1">
+                                <span class="item-unit">x</span>
+                                <span class="item-total">-</span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item">
+                                <span class="item-name">Dodatecné stavební práce</span>
+                                <input type="number" class="form-input" id="additionalConstruction" value="0">
+                                <span class="item-unit">Kč</span>
+                                <span class="item-total" id="additionalConstructionTotal">-</span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item">
+                                <span class="item-name">Technologie a zařízení</span>
+                                <input type="number" class="form-input" id="technologyEquipment" value="0">
+                                <span class="item-unit">Kč</span>
+                                <span class="item-total" id="technologyEquipmentTotal">-</span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item">
+                                <span class="item-name">Venkovní úpravy</span>
+                                <input type="number" class="form-input" id="landscaping" value="0">
+                                <span class="item-unit">Kč</span>
+                                <span class="item-total" id="landscapingTotal">-</span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Overhead and Other Costs Section -->
+                <div class="section">
+                    <h3>Režie a ostatní náklady
+                        <button class="add-item-btn" onclick="addCustomItem('overhead')">Přidat položku</button>
+                    </h3>
+                    <div class="custom-items">
+                        <div id="overheadItems">
+                            <!-- Předdefinované položky -->
+                            <div class="custom-item">
+                                <span class="item-name">Správa projektu</span>
+                                <input type="number" class="form-input" id="projectManagement" value="3" step="0.1">
+                                <span class="item-unit">%</span>
+                                <span class="item-total" id="projectManagementTotal">-</span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item">
+                                <span class="item-name">Marketing a prodej</span>
+                                <input type="number" class="form-input" id="marketing" value="2" step="0.1">
+                                <span class="item-unit">%</span>
+                                <span class="item-total" id="marketingTotal">-</span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item">
+                                <span class="item-name">Nepředvídané náklady</span>
+                                <input type="number" class="form-input" id="contingency" value="5" step="0.1">
+                                <span class="item-unit">%</span>
+                                <span class="item-total" id="contingencyTotal">-</span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item">
+                                <span class="item-name">RK provize prodej</span>
+                                <input type="number" class="form-input" id="brokerageSale" value="4" step="0.1">
+                                <span class="item-unit">%</span>
+                                <span class="item-total" id="brokerageSaleTotal">-</span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item">
+                                <span class="item-name">Úroková sazba</span>
+                                <input type="number" class="form-input" id="interestRate" value="6" step="0.1">
+                                <span class="item-unit">% p.a.</span>
+                                <span class="item-total">-</span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item">
+                                <span class="item-name">Doba realizace</span>
+                                <input type="number" class="form-input" id="projectDuration" value="24">
+                                <span class="item-unit">měs.</span>
+                                <span class="item-total">-</span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary Panel -->
+                <div class="summary-panel">
+                    <h3>Finanční souhrn</h3>
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <div class="label">Celkové náklady</div>
+                            <div class="value" id="totalCosts">0 Kč</div>
+                        </div>
+                        <div class="summary-item" id="costPerM2Row">
+                            <div class="label">Náklady na m² bytu</div>
+                            <div class="value" id="costPerM2Apartment">0 Kč</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="label">Náklady na m² pozemku</div>
+                            <div class="value" id="costPerM2Land">0 Kč</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="label">Celkové příjmy</div>
+                            <div class="value" id="totalRevenues">0 Kč</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="label">Hrubý zisk</div>
+                            <div class="value" id="grossProfit">0 Kč</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="label">ROI (%)</div>
+                            <div class="value" id="roi">0%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profitability Analysis (only for residential) -->
+                <div id="profitabilitySection" class="profitability-card">
+                    <h3>Analýza ziskovosti</h3>
+                    <div class="profitability-metrics">
+                        <div class="metric-item">
+                            <div class="metric-value" id="profitMargin">0%</div>
+                            <div class="metric-label">Zisková marže</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value" id="breakEvenPrice">0 Kč</div>
+                            <div class="metric-label">Break-even cena/m²</div>
+                        </div>
+                        <div class="metric-item">
+                            <div class="metric-value" id="paybackPeriod">0</div>
+                            <div class="metric-label">Doba návratnosti (měsíce)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="saveProject()">Uložit projekt</button>
+                    <button class="btn btn-primary" onclick="loadProject()">Načíst projekt</button>
+                    <button class="btn btn-primary" onclick="exportToPDF()">Export PDF</button>
+                    <button class="btn btn-secondary" onclick="showAdvancedAnalysis()">Pokročilá analýza</button>
+                    <button class="btn btn-secondary" onclick="showBenchmarks()">Benchmarky</button>
+                    <button class="btn btn-secondary" onclick="resetCalculator()">Resetovat</button>
+                </div>
+            </div>
+
+            <!-- Detailed Cost Breakdown Table -->
+            <div class="detailed-table">
+                <h3>Detailní rozpis nákladů</h3>
+                <div class="table-container">
+                    <table class="table" id="costBreakdownTable">
+                        <thead>
+                            <tr>
+                                <th>Kategorie</th>
+                                <th>Položka</th>
+                                <th class="text-right">Množství</th>
+                                <th class="text-right">Jednotka</th>
+                                <th class="text-right">Cena/jednotku</th>
+                                <th class="text-right">Celkem</th>
+                            </tr>
+                        </thead>
+                        <tbody id="costBreakdownBody">
+                            <!-- Dynamicky generováno -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <p><strong>Developerská kalkulačka</strong> - Profesionální nástroj pro rozpočtáře a developery</p>
+                <p>Všechny výpočty jsou orientační a slouží pro předběžné hodnocení projektů. Pro přesnou kalkulaci doporučujeme konzultaci s odborníky.</p>
+                <p>Verze 2.0 | © 2024 | Vytvořeno pro profesionální použití</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Advanced Analysis Modal -->
+    <div id="advancedModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Pokročilá analýza projektu</h2>
+                <button class="close-btn" onclick="closeAdvancedModal()">×</button>
+            </div>
+            <div class="modal-body" id="advancedContent">
+                <!-- Dynamicky generováno -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Benchmarks Modal -->
+    <div id="benchmarksModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Tržní benchmarky</h2>
+                <button class="close-btn" onclick="closeBenchmarksModal()">×</button>
+            </div>
+            <div class="modal-body" id="benchmarksContent">
+                <!-- Dynamicky generováno -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts will be added in next step -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        // Globální proměnné
+        let currentProjectType = 'residential';
+        let customItems = {
+            landAcquisition: [],
+            projectPreparation: [],
+            infrastructure: [],
+            construction: [],
+            overhead: []
+        };
+        let costs = {};
+
+        // Přidání event listenerů pro automatické přepočítávání
+        document.addEventListener('DOMContentLoaded', function() {
+            // Přidání event listenerů na všechny input fieldy
+            const inputs = document.querySelectorAll('input[type="number"], input[type="checkbox"]');
+            inputs.forEach(input => {
+                input.addEventListener('input', calculateTotals);
+                input.addEventListener('change', calculateTotals);
+            });
+            
+            // Inicializace
+            switchProjectType('residential');
+        });
+        
+        // Přidání event listenerů pro real-time aktualizaci totálů
+        function addRealTimeListeners() {
+            const inputs = document.querySelectorAll('.custom-item input[type="number"], .custom-item input[type="checkbox"]');
+            inputs.forEach(input => {
+                input.addEventListener('input', debounce(function() {
+                    updateItemTotals();
+                    calculateTotals();
+                }, 300));
+                input.addEventListener('change', function() {
+                    updateItemTotals();
+                    calculateTotals();
+                });
+            });
+        }
+        
+        // Debounce funkce pro optimalizaci výkonu
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+        
+        // Volání po načtení stránky
+        setTimeout(addRealTimeListeners, 100);
+
+        // Formátování měny
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('cs-CZ', {
+                style: 'currency',
+                currency: 'CZK',
+                maximumFractionDigits: 0
+            }).format(amount);
+        }
+
+        // Formátování čísel
+        function formatNumber(number) {
+            return new Intl.NumberFormat('cs-CZ').format(number);
+        }
+
+        // Přepínání typu projektu
+        function switchProjectType(type) {
+            currentProjectType = type;
+            
+            document.querySelectorAll('.project-type').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            document.querySelector(`[data-type="${type}"]`).classList.add('selected');
+            
+            const apartmentSection = document.getElementById('apartmentMixSection');
+            const constructionSection = document.getElementById('constructionSection');
+            const profitabilitySection = document.getElementById('profitabilitySection');
+            const costPerM2Row = document.getElementById('costPerM2Row');
+            
+            if (type === 'residential') {
+                apartmentSection.style.display = 'block';
+                constructionSection.style.display = 'block';
+                profitabilitySection.style.display = 'block';
+                costPerM2Row.style.display = 'block';
+                document.getElementById('unitsLabel').textContent = 'Počet bytů (automaticky)';
+                document.getElementById('units').disabled = true;
+            } else {
+                apartmentSection.style.display = 'none';
+                constructionSection.style.display = 'none';
+                profitabilitySection.style.display = 'none';
+                costPerM2Row.style.display = 'none';
+                document.getElementById('units').disabled = false;
+                
+                if (type === 'building_plots') {
+                    document.getElementById('unitsLabel').textContent = 'Počet stavebních parcel';
+                    document.getElementById('units').value = '15';
+                } else if (type === 'house_plots') {
+                    document.getElementById('unitsLabel').textContent = 'Počet parcel pro RD';
+                    document.getElementById('units').value = '8';
+                }
+            }
+            calculateTotals();
+        }
+
+        // Získání hodnot z formuláře
+        // Validace vstupních hodnot
+        function validateInput(value, min = 0, max = Infinity) {
+            const num = parseFloat(value) || 0;
+            return Math.max(min, Math.min(max, num));
+        }
+        
+        function getFormValues() {
+            return {
+                // Základní parametry s validací
+                landArea: validateInput(document.getElementById('landArea').value, 1),
+                landPrice: validateInput(document.getElementById('landPrice').value, 0),
+                units: validateInput(document.getElementById('units').value, 1),
+                buildingArea: validateInput(document.getElementById('buildingArea').value, 1),
+                floors: validateInput(document.getElementById('floors').value, 1, 20),
+                constructionPrice: validateInput(document.getElementById('constructionPrice').value, 0),
+                
+                // Byty
+                apt_1kk_count: parseFloat(document.getElementById('apt_1kk_count').value) || 0,
+                apt_1kk_size: parseFloat(document.getElementById('apt_1kk_size').value) || 0,
+                apt_1kk_price: parseFloat(document.getElementById('apt_1kk_price').value) || 0,
+                apt_2kk_count: parseFloat(document.getElementById('apt_2kk_count').value) || 0,
+                apt_2kk_size: parseFloat(document.getElementById('apt_2kk_size').value) || 0,
+                apt_2kk_price: parseFloat(document.getElementById('apt_2kk_price').value) || 0,
+                apt_3kk_count: parseFloat(document.getElementById('apt_3kk_count').value) || 0,
+                apt_3kk_size: parseFloat(document.getElementById('apt_3kk_size').value) || 0,
+                apt_3kk_price: parseFloat(document.getElementById('apt_3kk_price').value) || 0,
+                apt_4kk_count: parseFloat(document.getElementById('apt_4kk_count').value) || 0,
+                apt_4kk_size: parseFloat(document.getElementById('apt_4kk_size').value) || 0,
+                apt_4kk_price: parseFloat(document.getElementById('apt_4kk_price').value) || 0,
+                
+                // Pořízení pozemku s validací
+                acquisitionTax: validateInput(document.getElementById('acquisitionTax').value, 0, 20),
+                brokerageAcquisition: validateInput(document.getElementById('brokerageAcquisition').value, 0, 20),
+                legalFees: validateInput(document.getElementById('legalFees').value, 0),
+                surveying: validateInput(document.getElementById('surveying').value, 0),
+                
+                // Projektová příprava
+                geologicalSurveyRate: parseFloat(document.getElementById('geologicalSurveyRate').value) || 0,
+                projectDocumentationRate: parseFloat(document.getElementById('projectDocumentationRate').value) || 0,
+                permitsRate: parseFloat(document.getElementById('permitsRate').value) || 0,
+                technicalReports: parseFloat(document.getElementById('technicalReports').value) || 0,
+                
+                // Infrastruktura
+                roadLength: parseFloat(document.getElementById('roadLength').value) || 0,
+                roadPricePerMeter: parseFloat(document.getElementById('roadPricePerMeter').value) || 0,
+                sidewalkArea: parseFloat(document.getElementById('sidewalkArea').value) || 0,
+                sidewalkPricePerM2: parseFloat(document.getElementById('sidewalkPricePerM2').value) || 0,
+                parkingSpaces: parseFloat(document.getElementById('parkingSpaces').value) || 0,
+                parkingPricePerSpace: parseFloat(document.getElementById('parkingPricePerSpace').value) || 0,
+                waterPipeLength: parseFloat(document.getElementById('waterPipeLength').value) || 0,
+                waterPipePrice: parseFloat(document.getElementById('waterPipePrice').value) || 0,
+                sewerPipeLength: parseFloat(document.getElementById('sewerPipeLength').value) || 0,
+                sewerPipePrice: parseFloat(document.getElementById('sewerPipePrice').value) || 0,
+                electricLowLength: parseFloat(document.getElementById('electricLowLength').value) || 0,
+                electricLowPrice: parseFloat(document.getElementById('electricLowPrice').value) || 0,
+                gasLength: parseFloat(document.getElementById('gasLength').value) || 0,
+                gasPrice: parseFloat(document.getElementById('gasPrice').value) || 0,
+                telecomLength: parseFloat(document.getElementById('telecomLength').value) || 0,
+                telecomPrice: parseFloat(document.getElementById('telecomPrice').value) || 0,
+                
+                // Přípojky
+                needsElectricConnection: document.getElementById('needsElectricConnection').checked,
+                electricConnectionPrice: parseFloat(document.getElementById('electricConnectionPrice').value) || 0,
+                needsWaterConnection: document.getElementById('needsWaterConnection').checked,
+                waterConnectionPrice: parseFloat(document.getElementById('waterConnectionPrice').value) || 0,
+                needsGasConnection: document.getElementById('needsGasConnection').checked,
+                gasConnectionPrice: parseFloat(document.getElementById('gasConnectionPrice').value) || 0,
+                needsSewerConnection: document.getElementById('needsSewerConnection').checked,
+                sewerConnectionPrice: parseFloat(document.getElementById('sewerConnectionPrice').value) || 0,
+                
+                // Výstavba
+                commonAreasCoeff: parseFloat(document.getElementById('commonAreasCoeff').value) || 0,
+                additionalConstruction: parseFloat(document.getElementById('additionalConstruction').value) || 0,
+                technologyEquipment: parseFloat(document.getElementById('technologyEquipment').value) || 0,
+                landscaping: parseFloat(document.getElementById('landscaping').value) || 0,
+                
+                // Režie
+                projectManagement: parseFloat(document.getElementById('projectManagement').value) || 0,
+                marketing: parseFloat(document.getElementById('marketing').value) || 0,
+                contingency: parseFloat(document.getElementById('contingency').value) || 0,
+                brokerageSale: parseFloat(document.getElementById('brokerageSale').value) || 0,
+                interestRate: parseFloat(document.getElementById('interestRate').value) || 0,
+                projectDuration: parseFloat(document.getElementById('projectDuration').value) || 0
+            };
+        }
+
+        // Získání skladby bytů
+        function getApartmentMix() {
+            if (currentProjectType !== 'residential') return null;
+            
+            return {
+                '1kk': {
+                    count: parseFloat(document.getElementById('apt_1kk_count').value) || 0,
+                    avgSize: parseFloat(document.getElementById('apt_1kk_size').value) || 0,
+                    pricePerM2: parseFloat(document.getElementById('apt_1kk_price').value) || 0
+                },
+                '2kk': {
+                    count: parseFloat(document.getElementById('apt_2kk_count').value) || 0,
+                    avgSize: parseFloat(document.getElementById('apt_2kk_size').value) || 0,
+                    pricePerM2: parseFloat(document.getElementById('apt_2kk_price').value) || 0
+                },
+                '3kk': {
+                    count: parseFloat(document.getElementById('apt_3kk_count').value) || 0,
+                    avgSize: parseFloat(document.getElementById('apt_3kk_size').value) || 0,
+                    pricePerM2: parseFloat(document.getElementById('apt_3kk_price').value) || 0
+                },
+                '4kk': {
+                    count: parseFloat(document.getElementById('apt_4kk_count').value) || 0,
+                    avgSize: parseFloat(document.getElementById('apt_4kk_size').value) || 0,
+                    pricePerM2: parseFloat(document.getElementById('apt_4kk_price').value) || 0
+                },
+                'larger': {
+                    count: parseFloat(document.getElementById('apt_larger_count').value) || 0,
+                    avgSize: parseFloat(document.getElementById('apt_larger_size').value) || 0,
+                    pricePerM2: parseFloat(document.getElementById('apt_larger_price').value) || 0
+                },
+                parking: {
+                    count: parseFloat(document.getElementById('parking_count').value) || 0,
+                    price: parseFloat(document.getElementById('parking_price').value) || 0
+                },
+                storage: {
+                    count: parseFloat(document.getElementById('storage_count').value) || 0,
+                    price: parseFloat(document.getElementById('storage_price').value) || 0
+                }
+            };
+        }
+
+        // Aktualizace souhrnu skladby bytů
+        function updateApartmentSummary() {
+            if (currentProjectType !== 'residential') return { totalApartments: 0, totalArea: 0, avgArea: 0 };
+            
+            const mix = getApartmentMix();
+            let totalApartments = 0;
+            let totalArea = 0;
+            
+            Object.entries(mix).forEach(([key, data]) => {
+                if (!['parking', 'storage'].includes(key)) {
+                    totalApartments += data.count;
+                    totalArea += data.count * data.avgSize;
+                }
+            });
+            
+            const avgArea = totalApartments > 0 ? Math.round(totalArea / totalApartments) : 0;
+            
+            document.getElementById('totalApartments').textContent = totalApartments;
+            document.getElementById('totalArea').textContent = formatNumber(totalArea) + ' m²';
+            document.getElementById('avgArea').textContent = avgArea + ' m²';
+            document.getElementById('units').value = totalApartments;
+            
+            return { totalApartments, totalArea, avgArea };
+        }
+
+        // Výpočet vlastních položek
+        function calculateCustomItems(category) {
+            let total = 0;
+            customItems[category].forEach(item => {
+                total += item.quantity * item.price;
+            });
+            return total;
+        }
+
+        // Hlavní výpočet nákladů
+        function calculateTotals() {
+            try {
+                const params = getFormValues();
+                const mix = getApartmentMix();
+                
+                let totalUnits = params.units;
+                let totalApartmentArea = 0;
+                let totalRevenues = 0;
+                
+                if (currentProjectType === 'residential') {
+                    const summary = updateApartmentSummary();
+                    totalUnits = summary.totalApartments;
+                    totalApartmentArea = summary.totalArea;
+                    
+                    // Výpočet příjmů z bytů
+                    Object.entries(mix).forEach(([key, data]) => {
+                        if (!['parking', 'storage'].includes(key)) {
+                            totalRevenues += data.count * data.avgSize * data.pricePerM2;
+                        }
+                    });
+                    
+                    // Příjmy z doplňkových prostor
+                    totalRevenues += mix.parking.count * mix.parking.price;
+                    totalRevenues += mix.storage.count * mix.storage.price;
+                } else {
+                    if (currentProjectType === 'building_plots') {
+                        totalRevenues = totalUnits * 800000;
+                    } else if (currentProjectType === 'house_plots') {
+                        totalRevenues = totalUnits * (120 * 45000 + 500000);
+                    }
+                }
+                
+                // Pořízení pozemku
+                const landCost = params.landArea * params.landPrice;
+                const acquisitionTax = landCost * (params.acquisitionTax / 100);
+                const brokerageAcq = landCost * (params.brokerageAcquisition / 100);
+                const customLandAcquisition = calculateCustomItems('landAcquisition');
+                const totalLandAcquisition = landCost + acquisitionTax + brokerageAcq + params.legalFees + params.surveying + customLandAcquisition;
+                
+                // Projektová příprava
+                const geologicalSurvey = params.buildingArea * params.geologicalSurveyRate;
+                const projectDocs = params.buildingArea * params.projectDocumentationRate;
+                const permits = totalLandAcquisition * (params.permitsRate / 100);
+                const customProjectPreparation = calculateCustomItems('projectPreparation');
+                const totalProjectPreparation = geologicalSurvey + projectDocs + permits + params.technicalReports + customProjectPreparation;
+                
+                // Infrastruktura
+                const roads = params.roadLength * params.roadPricePerMeter;
+                const sidewalks = params.sidewalkArea * params.sidewalkPricePerM2;
+                const parking = params.parkingSpaces * params.parkingPricePerSpace;
+                const water = params.waterPipeLength * params.waterPipePrice;
+                const sewer = params.sewerPipeLength * params.sewerPipePrice;
+                const electric = params.electricLowLength * params.electricLowPrice;
+                const gas = params.gasLength * params.gasPrice;
+                const telecom = params.telecomLength * params.telecomPrice;
+                
+                const connections = 
+                    (params.needsElectricConnection ? params.electricConnectionPrice : 0) +
+                    (params.needsWaterConnection ? params.waterConnectionPrice : 0) +
+                    (params.needsGasConnection ? params.gasConnectionPrice : 0) +
+                    (params.needsSewerConnection ? params.sewerConnectionPrice : 0);
+                
+                const customInfrastructure = calculateCustomItems('infrastructure');
+                const totalInfrastructure = roads + sidewalks + parking + water + sewer + electric + gas + telecom + connections + customInfrastructure;
+                
+                // Výstavba
+                let totalConstruction = 0;
+                if (currentProjectType === 'residential') {
+                    const totalFloorArea = totalApartmentArea * params.commonAreasCoeff;
+                    totalConstruction = totalFloorArea * params.constructionPrice + params.additionalConstruction + params.technologyEquipment + params.landscaping;
+                    totalConstruction += calculateCustomItems('construction');
+                } else if (currentProjectType === 'house_plots') {
+                    totalConstruction = totalUnits * 120 * params.constructionPrice;
+                }
+                
+                const subtotalBeforeOverhead = totalLandAcquisition + totalProjectPreparation + totalInfrastructure + totalConstruction;
+                
+                // Režie
+                const projectManagement = subtotalBeforeOverhead * (params.projectManagement / 100);
+                const marketing = subtotalBeforeOverhead * (params.marketing / 100);
+                const contingency = subtotalBeforeOverhead * (params.contingency / 100);
+                const brokerageSale = totalRevenues * (params.brokerageSale / 100);
+                const averageInvestment = subtotalBeforeOverhead * 0.6;
+                const financialCosts = averageInvestment * (params.interestRate / 100) * (params.projectDuration / 12);
+                const customOverhead = calculateCustomItems('overhead');
+                const totalOverhead = projectManagement + marketing + contingency + brokerageSale + financialCosts + customOverhead;
+                
+                // Celkové náklady
+                const totalCosts = subtotalBeforeOverhead + totalOverhead;
+                const costPerUnit = totalUnits > 0 ? totalCosts / totalUnits : 0;
+                const costPerM2Land = params.landArea > 0 ? totalCosts / params.landArea : 0;
+                const costPerM2Apartment = totalApartmentArea > 0 ? totalCosts / totalApartmentArea : 0;
+                
+                // Ziskovost
+                const grossProfit = totalRevenues - totalCosts;
+                const roi = totalCosts > 0 ? (grossProfit / totalCosts) * 100 : 0;
+                const profitMargin = totalRevenues > 0 ? (grossProfit / totalRevenues) * 100 : 0;
+                const breakEvenPrice = totalApartmentArea > 0 ? totalCosts / totalApartmentArea : 0;
+                const paybackPeriod = roi > 0 ? (params.projectDuration * 100) / roi : 0;
+                
+                // Uložení výsledků
+                costs = {
+                    landAcquisition: { landCost, acquisitionTax, brokerageAcq, legalFees: params.legalFees, surveying: params.surveying, custom: customLandAcquisition, total: totalLandAcquisition },
+                    projectPreparation: { geologicalSurvey, projectDocs, permits, technicalReports: params.technicalReports, custom: customProjectPreparation, total: totalProjectPreparation },
+                    infrastructure: { roads, sidewalks, parking, water, sewer, electric, gas, connections, custom: customInfrastructure, total: totalInfrastructure },
+                    construction: { total: totalConstruction, totalApartmentArea, totalUnits },
+                    overhead: { projectManagement, marketing, contingency, brokerageSale, financialCosts, custom: customOverhead, total: totalOverhead },
+                    summary: { totalCosts, totalRevenues, grossProfit, roi, profitMargin, costPerUnit, costPerM2Land, costPerM2Apartment, breakEvenPrice, paybackPeriod, subtotalBeforeOverhead, totalUnits, totalApartmentArea }
+                };
+                
+                updateDisplay();
+                
+            } catch (error) {
+                console.error('Chyba při výpočtu:', error);
+            }
+        }
+
+        // Aktualizace zobrazení výsledků
+        function updateDisplay() {
+            document.getElementById('totalCosts').textContent = formatCurrency(costs.summary.totalCosts);
+            document.getElementById('totalRevenues').textContent = formatCurrency(costs.summary.totalRevenues);
+            document.getElementById('grossProfit').textContent = formatCurrency(costs.summary.grossProfit);
+            document.getElementById('roi').textContent = costs.summary.roi.toFixed(1) + '%';
+            document.getElementById('costPerM2Land').textContent = formatCurrency(costs.summary.costPerM2Land);
+            
+            if (currentProjectType === 'residential') {
+                document.getElementById('costPerM2Apartment').textContent = formatCurrency(costs.summary.costPerM2Apartment);
+                document.getElementById('profitMargin').textContent = costs.summary.profitMargin.toFixed(1) + '%';
+                document.getElementById('breakEvenPrice').textContent = formatCurrency(costs.summary.breakEvenPrice);
+                document.getElementById('paybackPeriod').textContent = costs.summary.paybackPeriod.toFixed(0);
+            }
+            
+            updateItemTotals();
+            updateCostBreakdownTable();
+            validateAndShowRecommendations();
+        }
+        
+        // Aktualizace celkových částek u jednotlivých položek
+        function updateItemTotals() {
+            try {
+                const params = getFormValues();
+                
+                // Základní parametry
+                safeUpdateElement('landAreaTotal', formatNumber(params.landArea) + ' m²');
+                safeUpdateElement('landPriceTotal', formatCurrency(params.landPrice) + '/m²');
+                safeUpdateElement('buildingAreaTotal', formatNumber(params.buildingArea) + ' m²');
+                safeUpdateElement('constructionPriceTotal', formatCurrency(params.constructionPrice) + '/m²');
+                
+                // Pořízení pozemku
+                const landCost = params.landArea * params.landPrice;
+                safeUpdateElement('acquisitionTaxTotal', formatCurrency(landCost * (params.acquisitionTax / 100)));
+                safeUpdateElement('brokerageAcquisitionTotal', formatCurrency(landCost * (params.brokerageAcquisition / 100)));
+                safeUpdateElement('legalFeesTotal', formatCurrency(params.legalFees));
+                safeUpdateElement('surveyingTotal', formatCurrency(params.surveying));
+            
+                // Projektová příprava
+                safeUpdateElement('geologicalSurveyTotal', formatCurrency(params.landArea * params.geologicalSurveyRate));
+                safeUpdateElement('projectDocumentationTotal', formatCurrency(params.landArea * params.projectDocumentationRate));
+                safeUpdateElement('permitsTotal', formatCurrency(landCost * (params.permitsRate / 100)));
+                safeUpdateElement('technicalReportsTotal', formatCurrency(params.technicalReports));
+            
+                // Infrastruktura
+                safeUpdateElement('roadTotal', formatCurrency(params.roadLength * params.roadPricePerMeter));
+                safeUpdateElement('sidewalkTotal', formatCurrency(params.sidewalkArea * params.sidewalkPricePerM2));
+                safeUpdateElement('parkingTotal', formatCurrency(params.parkingSpaces * params.parkingPricePerSpace));
+                safeUpdateElement('waterPipeTotal', formatCurrency(params.waterPipeLength * params.waterPipePrice));
+                safeUpdateElement('sewerPipeTotal', formatCurrency(params.sewerPipeLength * params.sewerPipePrice));
+                safeUpdateElement('electricLowTotal', formatCurrency(params.electricLowLength * params.electricLowPrice));
+                safeUpdateElement('gasTotal', formatCurrency(params.gasLength * params.gasPrice));
+                safeUpdateElement('telecomTotal', formatCurrency(params.telecomLength * params.telecomPrice));
+            
+                // Přípojky
+                safeUpdateElement('electricConnectionTotal', params.needsElectricConnection ? formatCurrency(params.electricConnectionPrice) : '0 Kč');
+                safeUpdateElement('waterConnectionTotal', params.needsWaterConnection ? formatCurrency(params.waterConnectionPrice) : '0 Kč');
+                safeUpdateElement('sewerConnectionTotal', params.needsSewerConnection ? formatCurrency(params.sewerConnectionPrice) : '0 Kč');
+                safeUpdateElement('gasConnectionTotal', params.needsGasConnection ? formatCurrency(params.gasConnectionPrice) : '0 Kč');
+            
+                // Výstavba
+                safeUpdateElement('additionalConstructionTotal', formatCurrency(params.additionalConstruction));
+                safeUpdateElement('technologyEquipmentTotal', formatCurrency(params.technologyEquipment));
+                safeUpdateElement('landscapingTotal', formatCurrency(params.landscaping));
+                
+                // Režie - výpočet z mezisoučtu
+                const subtotal = costs.summary ? costs.summary.subtotalBeforeOverhead : 0;
+                const totalRevenues = costs.summary ? costs.summary.totalRevenues : 0;
+                
+                safeUpdateElement('projectManagementTotal', formatCurrency(subtotal * (params.projectManagement / 100)));
+                safeUpdateElement('marketingTotal', formatCurrency(subtotal * (params.marketing / 100)));
+                safeUpdateElement('contingencyTotal', formatCurrency(subtotal * (params.contingency / 100)));
+                safeUpdateElement('brokerageSaleTotal', formatCurrency(totalRevenues * (params.brokerageSale / 100)));
+                
+            } catch (error) {
+                console.error('Chyba při aktualizaci totálů:', error);
+            }
+        }
+        
+        // Bezpečná aktualizace elementů
+        function safeUpdateElement(id, value) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.textContent = value;
+            }
+        }
+        
+        // Notifikační systém
+        function showNotification(message, type = 'info') {
+            // Odstraníme existující notifikace
+            const existing = document.querySelector('.notification');
+            if (existing) existing.remove();
+            
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.textContent = message;
+            
+            // Přidáme do DOM
+            document.body.appendChild(notification);
+            
+            // Animace
+            setTimeout(() => notification.classList.add('show'), 10);
+            
+            // Automatické skrytí po 3 sekundách
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Aktualizace detailní tabulky nákladů
+        function updateCostBreakdownTable() {
+            const tbody = document.getElementById('costBreakdownBody');
+            tbody.innerHTML = '';
+            
+            const params = getFormValues();
+            
+            // Pořízení pozemku
+            addTableCategory(tbody, 'Pořízení pozemku', 'bg-blue', [
+                ['Kupní cena pozemku', formatNumber(params.landArea), 'm²', formatCurrency(params.landPrice), formatCurrency(costs.landAcquisition.landCost)],
+                ['Daň z nabytí (' + params.acquisitionTax + '%)', '-', '%', '-', formatCurrency(costs.landAcquisition.acquisitionTax)],
+                ['RK provize nákup (' + params.brokerageAcquisition + '%)', '-', '%', '-', formatCurrency(costs.landAcquisition.brokerageAcq)],
+                ['Právní služby', '1', 'paušál', formatCurrency(params.legalFees), formatCurrency(costs.landAcquisition.legalFees)],
+                ['Geodetické zaměření', '1', 'paušál', formatCurrency(params.surveying), formatCurrency(costs.landAcquisition.surveying)]
+            ]);
+            
+            if (costs.landAcquisition.custom > 0) {
+                addTableRow(tbody, ['Vlastní položky', '-', '-', '-', formatCurrency(costs.landAcquisition.custom)], 'bg-blue');
+            }
+            
+            // Celkový řádek
+            const totalRow = document.createElement('tr');
+            totalRow.className = 'total-row';
+            totalRow.innerHTML = `
+                <td colspan="5"><strong>CELKOVÉ NÁKLADY</strong></td>
+                <td class="text-right"><strong>${formatCurrency(costs.summary.totalCosts)}</strong></td>
+            `;
+            tbody.appendChild(totalRow);
+        }
+
+        function addTableCategory(tbody, categoryName, cssClass, rows) {
+            rows.forEach((row, index) => {
+                const tr = document.createElement('tr');
+                tr.className = cssClass;
+                
+                if (index === 0) {
+                    tr.innerHTML = `
+                        <td rowspan="${rows.length}">${categoryName}</td>
+                        <td>${row[0]}</td>
+                        <td class="text-right">${row[1]}</td>
+                        <td class="text-right">${row[2]}</td>
+                        <td class="text-right">${row[3]}</td>
+                        <td class="text-right">${row[4]}</td>
+                    `;
+                } else {
+                    tr.innerHTML = `
+                        <td>${row[0]}</td>
+                        <td class="text-right">${row[1]}</td>
+                        <td class="text-right">${row[2]}</td>
+                        <td class="text-right">${row[3]}</td>
+                        <td class="text-right">${row[4]}</td>
+                    `;
+                }
+                tbody.appendChild(tr);
+            });
+        }
+
+        function addTableRow(tbody, row, cssClass) {
+            const tr = document.createElement('tr');
+            tr.className = cssClass;
+            tr.innerHTML = `
+                <td>${row[0]}</td>
+                <td class="text-right">${row[1]}</td>
+                <td class="text-right">${row[2]}</td>
+                <td class="text-right">${row[3]}</td>
+                <td class="text-right">${row[4]}</td>
+            `;
+            tbody.appendChild(tr);
+        }
+
+        // Funkce pro přidávání vlastních položek
+        function addCustomItem(category) {
+            const item = {
+                id: Date.now(),
+                name: '',
+                quantity: 1,
+                price: 0,
+                isEditing: true
+            };
+            
+            customItems[category].push(item);
+            updateCustomItemsDisplay(category);
+        }
+
+        function updateCustomItemField(category, itemId, field, value) {
+            const item = customItems[category].find(item => item.id === itemId);
+            if (!item) return;
+            
+            if (field === 'quantity' || field === 'price') {
+                item[field] = parseFloat(value) || 0;
+            } else {
+                item[field] = value;
+            }
+        }
+        
+        function finishEditingCustomItem(category, itemId) {
+            const item = customItems[category].find(item => item.id === itemId);
+            if (!item) return;
+            
+            // Validace - název a cena musí být vyplněny
+            if (!item.name || !item.name.trim()) {
+                showNotification('Název položky je povinný', 'error');
+                return;
+            }
+            
+            if (item.price <= 0) {
+                showNotification('Cena musí být větší než 0', 'error');
+                return;
+            }
+            
+            if (item.quantity <= 0) {
+                showNotification('Množství musí být větší než 0', 'error');
+                return;
+            }
+            
+            item.isEditing = false;
+            updateCustomItemsDisplay(category);
+            calculateTotals();
+            showNotification('Položka byla úspěšně přidána', 'success');
+        }
+        
+        function editCustomItem(category, itemId) {
+            const item = customItems[category].find(item => item.id === itemId);
+            if (!item) return;
+            
+            item.isEditing = true;
+            updateCustomItemsDisplay(category);
+        }
+
+        function removeCustomItem(category, itemId) {
+            if (confirm('Opravdu chcete odstranit tuto položku?')) {
+                customItems[category] = customItems[category].filter(item => item.id !== itemId);
+                updateCustomItemsDisplay(category);
+                calculateTotals();
+                showNotification('Položka byla odebrána', 'info');
+            }
+        }
+
+        function updateCustomItemsDisplay(category) {
+            const container = document.getElementById(category + 'Items');
+            
+            // Najdeme vlastní položky v kontejneru (ne předdefinované)
+            const existingCustomItems = container.querySelectorAll('.custom-item[data-custom="true"]');
+            existingCustomItems.forEach(item => item.remove());
+            
+            // Přidáme vlastní položky
+            customItems[category].forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'custom-item';
+                itemDiv.setAttribute('data-custom', 'true');
+                
+                if (item.isEditing) {
+                    itemDiv.innerHTML = `
+                        <input type="text" class="form-input" placeholder="Název položky" 
+                               onblur="updateCustomItemField('${category}', ${item.id}, 'name', this.value)"
+                               onkeypress="if(event.key==='Enter') this.blur()">
+                        <input type="number" class="form-input" value="${item.quantity}" min="0" step="0.01"
+                               onblur="updateCustomItemField('${category}', ${item.id}, 'quantity', this.value)"
+                               onkeypress="if(event.key==='Enter') this.blur()">
+                        <input type="number" class="form-input" placeholder="Cena za jednotku" min="0" step="0.01"
+                               onblur="updateCustomItemField('${category}', ${item.id}, 'price', this.value)"
+                               onkeypress="if(event.key==='Enter') this.blur()">
+                        <span class="item-unit">ks</span>
+                        <button class="action-btn tertiary" onclick="finishEditingCustomItem('${category}', ${item.id})">Uložit</button>
+                        <button class="remove-item-btn" onclick="removeCustomItem('${category}', ${item.id})">Zrušit</button>
+                    `;
+                } else {
+                    const total = item.quantity * item.price;
+                    itemDiv.innerHTML = `
+                        <span class="item-name">${item.name}</span>
+                        <span class="item-quantity">${formatNumber(item.quantity)}</span>
+                        <span class="item-unit">ks</span>
+                        <span class="item-price">${formatCurrency(item.price)}</span>
+                        <span class="item-total">${formatCurrency(total)}</span>
+                        <button class="action-btn tertiary" onclick="editCustomItem('${category}', ${item.id})">Upravit</button>
+                        <button class="remove-item-btn" onclick="removeCustomItem('${category}', ${item.id})">Odstranit</button>
+                    `;
+                }
+                
+                container.appendChild(itemDiv);
+            });
+        }
+
+        // Validace a doporučení
+        function validateAndShowRecommendations() {
+            if (!costs.summary) return;
+            
+            const warnings = [];
+            const recommendations = [];
+            const params = getFormValues();
+            
+            // Kontrola ROI
+            if (costs.summary.roi < 15) {
+                warnings.push('VAROVÁNÍ: ROI pod 15% je pro developerské projekty riziková');
+                recommendations.push('Zvažte snížení nákladů nebo zvýšení prodejních cen');
+            } else if (costs.summary.roi > 50) {
+                warnings.push('POZOR: ROI nad 50% může být nerealistická');
+                recommendations.push('Ověřte si tržní ceny a náklady');
+            }
+            
+            // Kontrola nákladů na m²
+            if (currentProjectType === 'residential' && costs.summary.costPerM2Apartment > 60000) {
+                warnings.push('VAROVÁNÍ: Náklady nad 60 000 Kč/m² jsou velmi vysoké');
+                recommendations.push('Analyzujte možnosti optimalizace nákladů');
+            }
+            
+            // Kontrola doby návratnosti
+            if (costs.summary.paybackPeriod > 60) {
+                warnings.push('VAROVÁNÍ: Doba návratnosti nad 5 let je riziková');
+                recommendations.push('Zvažte zkrácení projektu nebo zlepšení cash flow');
+            }
+            
+            // Kontrola úrokové sazby vs inflace
+            if (params.interestRate > 0) {
+                const expectedInflation = 3; // Očekávaná inflace 3%
+                const realInterestRate = params.interestRate - expectedInflation;
+                if (realInterestRate > 2) {
+                    warnings.push(`POZOR: Reálná úroková sazba ${realInterestRate.toFixed(1)}% je vysoká`);
+                    recommendations.push('Zvažte refinancování nebo jiné zdroje financování');
+                }
+            }
+            
+            // Kontrola struktury nákladů
+            const landRatio = (costs.landAcquisition.total / costs.summary.totalCosts) * 100;
+            if (landRatio > 40) {
+                warnings.push(`VAROVÁNÍ: Podíl pozemku ${landRatio.toFixed(1)}% je příliš vysoký`);
+                recommendations.push('Vysoký podíl pozemku snižuje flexibilitu projektu');
+            }
+            
+            displayValidationResults(warnings, recommendations);
+        }
+        
+        function displayValidationResults(warnings, recommendations) {
+            let html = '<div class="validation-results">';
+            
+            if (warnings.length > 0) {
+                html += '<div class="warnings-section"><h4>Varování:</h4><ul>';
+                warnings.forEach(warning => {
+                    html += `<li class="warning-item">${warning}</li>`;
+                });
+                html += '</ul></div>';
+            }
+            
+            if (recommendations.length > 0) {
+                html += '<div class="recommendations-section"><h4>Doporučení:</h4><ul>';
+                recommendations.forEach(rec => {
+                    html += `<li class="recommendation-item">${rec}</li>`;
+                });
+                html += '</ul></div>';
+            }
+            
+            if (warnings.length === 0 && recommendations.length === 0) {
+                html += '<div class="success-message">Projekt vypadá finančně zdravě. Žádná zásadní varování.</div>';
+            }
+            
+            html += '</div>';
+            
+            // Zobrazit v modalu nebo přidat do stránky
+            const existingResults = document.getElementById('validationResults');
+            if (existingResults) {
+                existingResults.innerHTML = html;
+            } else {
+                const container = document.createElement('div');
+                container.id = 'validationResults';
+                container.innerHTML = html;
+                document.querySelector('.summary-panel').appendChild(container);
+            }
+        }
+        
+        // Výpočet s inflací a časovou hodnotou peněz
+        function calculateNPVWithInflation() {
+            const params = getFormValues();
+            const discountRate = (params.interestRate || 5) / 100;
+            const inflationRate = 0.03; // 3% inflace
+            const realDiscountRate = ((1 + discountRate) / (1 + inflationRate)) - 1;
+            
+            // Simulace cash flow po měsících
+            const monthlyInvestment = costs.summary.totalCosts / params.projectDuration;
+            const monthlyRevenue = costs.summary.totalRevenues / 6; // Prodej za 6 měsíců
+            
+            let npv = 0;
+            let cumulativeCashFlow = 0;
+            
+            // Investiční fáze
+            for (let month = 1; month <= params.projectDuration; month++) {
+                const monthlyDiscount = Math.pow(1 + realDiscountRate/12, month);
+                npv -= monthlyInvestment / monthlyDiscount;
+                cumulativeCashFlow -= monthlyInvestment;
+            }
+            
+            // Prodejní fáze
+            for (let month = params.projectDuration + 1; month <= params.projectDuration + 6; month++) {
+                const monthlyDiscount = Math.pow(1 + realDiscountRate/12, month);
+                npv += monthlyRevenue / monthlyDiscount;
+                cumulativeCashFlow += monthlyRevenue;
+            }
+            
+            return {
+                npv: npv,
+                realDiscountRate: realDiscountRate * 100,
+                inflationAdjustedROI: ((costs.summary.totalRevenues / Math.pow(1 + inflationRate, params.projectDuration/12)) / costs.summary.totalCosts - 1) * 100
+            };
+        }
+        
+        // Funkce pro pokročilé funkce
+        function saveProject() {
+            const projectData = {
+                projectType: currentProjectType,
+                formData: getFormValues(),
+                apartmentMix: getApartmentMix(),
+                customItems: customItems,
+                costs: costs,
+                timestamp: new Date().toISOString()
+            };
+            
+            const dataStr = JSON.stringify(projectData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `developer_project_${new Date().toISOString().slice(0,10)}.json`;
+            link.click();
+            
+            URL.revokeObjectURL(url);
+        }
+
+        function loadProject() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const projectData = JSON.parse(e.target.result);
+                        
+                        // Načtení dat do formuláře
+                        currentProjectType = projectData.projectType;
+                        customItems = projectData.customItems || {landAcquisition: [], projectPreparation: [], infrastructure: [], construction: [], overhead: []};
+                        
+                        // Nastavení hodnot formuláře
+                        Object.entries(projectData.formData).forEach(([key, value]) => {
+                            const element = document.getElementById(key);
+                            if (element) {
+                                if (element.type === 'checkbox') {
+                                    element.checked = value;
+                                } else {
+                                    element.value = value;
+                                }
+                            }
+                        });
+                        
+                        // Načtení skladby bytů
+                        if (projectData.apartmentMix) {
+                            Object.entries(projectData.apartmentMix).forEach(([key, data]) => {
+                                if (key === 'parking' || key === 'storage') {
+                                    document.getElementById(key + '_count').value = data.count || 0;
+                                    document.getElementById(key + '_price').value = data.price || 0;
+                                } else {
+                                    document.getElementById('apt_' + key + '_count').value = data.count || 0;
+                                    document.getElementById('apt_' + key + '_size').value = data.avgSize || 0;
+                                    document.getElementById('apt_' + key + '_price').value = data.pricePerM2 || 0;
+                                }
+                            });
+                        }
+                        
+                        // Aktualizace UI
+                        switchProjectType(currentProjectType);
+                        
+                        // Aktualizace vlastních položek
+                        Object.keys(customItems).forEach(category => {
+                            updateCustomItemsDisplay(category);
+                        });
+                        
+                        calculateTotals();
+                        alert('Projekt byl úspěšně načten!');
+                        
+                    } catch (error) {
+                        alert('Chyba při načítání projektu: ' + error.message);
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        function exportToPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Nastavení fontu pro češtinu
+            doc.setFont('helvetica');
+            
+            // Hlavička
+            doc.setFontSize(20);
+            doc.text('Kalkulace developerského projektu', 20, 20);
+            
+            doc.setFontSize(12);
+            doc.text(`Typ projektu: ${currentProjectType === 'residential' ? 'Bytový dům' : currentProjectType === 'building_plots' ? 'Stavební parcely' : 'Parcely pro RD'}`, 20, 35);
+            doc.text(`Datum: ${new Date().toLocaleDateString('cs-CZ')}`, 20, 45);
+            
+            // Finanční souhrn
+            doc.setFontSize(16);
+            doc.text('Finanční souhrn', 20, 65);
+            
+            doc.setFontSize(12);
+            let yPos = 80;
+            doc.text(`Celkové náklady: ${formatCurrency(costs.summary.totalCosts)}`, 20, yPos);
+            doc.text(`Celkové příjmy: ${formatCurrency(costs.summary.totalRevenues)}`, 20, yPos + 10);
+            doc.text(`Hrubý zisk: ${formatCurrency(costs.summary.grossProfit)}`, 20, yPos + 20);
+            doc.text(`ROI: ${costs.summary.roi.toFixed(1)}%`, 20, yPos + 30);
+            
+            if (currentProjectType === 'residential') {
+                doc.text(`Náklady na m²: ${formatCurrency(costs.summary.costPerM2Apartment)}`, 20, yPos + 40);
+                doc.text(`Marže: ${costs.summary.profitMargin.toFixed(1)}%`, 20, yPos + 50);
+            }
+            
+            // Pokročilá analýza s inflací
+            const advancedMetrics = calculateNPVWithInflation();
+            doc.setFontSize(16);
+            doc.text('Pokročilá analýza', 20, yPos + 70);
+            
+            doc.setFontSize(12);
+            doc.text(`NPV (s inflací): ${formatCurrency(advancedMetrics.npv)}`, 20, yPos + 85);
+            doc.text(`Reálná diskontní sazba: ${advancedMetrics.realDiscountRate.toFixed(2)}%`, 20, yPos + 95);
+            doc.text(`ROI upravené o inflaci: ${advancedMetrics.inflationAdjustedROI.toFixed(1)}%`, 20, yPos + 105);
+            
+            // Uložení PDF
+            doc.save(`kalkulace_${new Date().toISOString().slice(0,10)}.pdf`);
+        }
+
+        function showAdvancedAnalysis() {
+            const modal = document.getElementById('advancedModal');
+            const content = document.getElementById('advancedContent');
+            
+            const advancedMetrics = calculateNPVWithInflation();
+            const params = getFormValues();
+            
+            content.innerHTML = `
+                <div class="advanced-analysis">
+                    <h3>Pokročilá finanční analýza</h3>
+                    
+                    <div class="metric-group">
+                        <h4>Analýza s inflací a časovou hodnotou peněz</h4>
+                        <div class="metric-row">
+                            <span>NPV (čistá současná hodnota):</span>
+                            <strong>${formatCurrency(advancedMetrics.npv)}</strong>
+                        </div>
+                        <div class="metric-row">
+                            <span>Reálná diskontní sazba:</span>
+                            <strong>${advancedMetrics.realDiscountRate.toFixed(2)}%</strong>
+                        </div>
+                        <div class="metric-row">
+                            <span>ROI upravené o inflaci:</span>
+                            <strong>${advancedMetrics.inflationAdjustedROI.toFixed(1)}%</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-group">
+                        <h4>Citlivostní analýza</h4>
+                        <div class="scenario-analysis">
+                            <div class="scenario">
+                                <h5>Pesimistický scénář (-20% příjmy, +15% náklady)</h5>
+                                <div class="metric-row">
+                                    <span>ROI:</span>
+                                    <strong>${(((costs.summary.totalRevenues * 0.8) - (costs.summary.totalCosts * 1.15)) / (costs.summary.totalCosts * 1.15) * 100).toFixed(1)}%</strong>
+                                </div>
+                            </div>
+                            <div class="scenario">
+                                <h5>Optimistický scénář (+15% příjmy, -10% náklady)</h5>
+                                <div class="metric-row">
+                                    <span>ROI:</span>
+                                    <strong>${(((costs.summary.totalRevenues * 1.15) - (costs.summary.totalCosts * 0.9)) / (costs.summary.totalCosts * 0.9) * 100).toFixed(1)}%</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-group">
+                        <h4>Finanční doporučení</h4>
+                        <div id="financial-recommendations"></div>
+                    </div>
+                </div>
+            `;
+            
+            modal.style.display = 'block';
+            validateAndShowRecommendations();
+        }
+
+        function showBenchmarks() {
+            alert('Benchmarky budou implementovány v dalším kroku.');
+        }
+
+        function closeAdvancedModal() {
+            document.getElementById('advancedModal').style.display = 'none';
+        }
+
+        function closeBenchmarksModal() {
+            document.getElementById('benchmarksModal').style.display = 'none';
+        }
+
+        function resetCalculator() {
+            if (confirm('Opravdu chcete resetovat všechny hodnoty?')) {
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>

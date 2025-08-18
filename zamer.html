@@ -597,6 +597,28 @@
             box-shadow: 0 2px 6px rgba(73, 80, 87, 0.3);
         }
 
+        .menu-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .menu-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
 <body>
@@ -610,14 +632,9 @@
 
         <div class="card">
             <div class="header">
-                <h1 class="title">
-                    Kalkulačka realitního trhu
-                </h1>
-                <div class="controls">
-                    <div class="exchange-rate">
-                        <span>Kurz CZK/USD:</span>
-                        <input type="number" id="exchangeRate" value="23.5" step="0.1" style="width: 80px; padding: 4px; border: 1px solid #d1d5db; border-radius: 4px;">
-                        <button id="marketToggle" class="currency-toggle active">CZ</button>
+                <a href="menu.html" class="menu-btn">← Hlavní menu</a>
+                <h1>Kalkulačka záměru</h1>
+                <p>Komplexní nástroj pro analýzu realitkářských projektů</p>
                     </div>
                     <button id="currencyToggle" class="currency-toggle">CZK</button>
                     <button id="saveButton" class="currency-toggle" style="background: #16a34a; color: white;">Uložit</button>

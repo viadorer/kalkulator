@@ -1,0 +1,208 @@
+{
+  "id": 1737225654000,
+  "title": "Email marketing - hromadné emaily a automatizace",
+  "category": "marketing",
+  "description": "Kompletní postup pro nastavení a správu email marketingu včetně EcoMail, segmentace, automatizace a měření výkonnosti",
+  "items": [
+    {
+      "title": "Výběr a nastavení email platformy (EcoMail)",
+      "duration": "2 hodiny",
+      "priority": "high",
+      "money": "590 Kč měsíčně (EcoMail tarif)",
+      "documents": "Registrace, nastavení účtu, GDPR dokumenty",
+      "tools": "EcoMail platforma, doménové nastavení",
+      "forms": "Registrační formulář EcoMail",
+      "description": "Registrace v EcoMail, výběr vhodného tarifu podle počtu kontaktů, nastavení domény pro odesílání, konfigurace DKIM a SPF záznamů pro lepší doručitelnost.",
+      "completed": false
+    },
+    {
+      "title": "Nastavení GDPR compliance a souhlasů",
+      "duration": "1.5 hodiny",
+      "priority": "critical",
+      "money": "0 Kč",
+      "documents": "GDPR šablony, souhlas se zpracováním, opt-in formuláře",
+      "tools": "Právní šablony, GDPR generátor",
+      "forms": "GDPR souhlas template",
+      "description": "Vytvoření GDPR compliant opt-in formulářů, nastavení double opt-in procesu, příprava zásad ochrany osobních údajů, implementace možnosti odhlášení.",
+      "completed": false
+    },
+    {
+      "title": "Import a segmentace kontaktní databáze",
+      "duration": "3 hodiny",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Excel/CSV soubory s kontakty",
+      "tools": "Excel, CSV editor, EcoMail import",
+      "forms": "Segmentační kritéria",
+      "description": "Import existujících kontaktů do EcoMail, vytvoření segmentů podle kritérií (kupci/prodejci, lokality, cenové kategorie, fáze prodejního cyklu), čištění duplicit.",
+      "completed": false
+    },
+    {
+      "title": "Vytvoření email šablon a designu",
+      "duration": "4 hodiny",
+      "priority": "normal",
+      "money": "1500 Kč (grafik)",
+      "documents": "Brand guidelines, logo, fotografie",
+      "tools": "EcoMail editor, Canva, Adobe",
+      "forms": "Šablony emailů",
+      "description": "Návrh a vytvoření profesionálních email šablon v souladu s firemním designem, příprava šablon pro různé typy kampaní (newsletter, nabídky, follow-up).",
+      "completed": false
+    },
+    {
+      "title": "Nastavení automatizačních sekvencí",
+      "duration": "3 hodiny",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Flowchart automatizací, scénáře",
+      "tools": "EcoMail automatizace, flowchart nástroje",
+      "forms": "Automatizační scénáře",
+      "description": "Vytvoření welcome sekvence pro nové kontakty, follow-up sekvence po prohlídce nemovitosti, re-engagement kampaně pro neaktivní kontakty, birthday emaily.",
+      "completed": false
+    },
+    {
+      "title": "Příprava obsahového kalendáře",
+      "duration": "2 hodiny",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Obsahový kalendář, témata emailů",
+      "tools": "Google Calendar, Trello, Excel",
+      "forms": "Obsahový plán template",
+      "description": "Plánování obsahu na 3 měsíce dopředu, definování témat (tržní trendy, novinky v portfoliu, tipy pro kupce/prodejce), stanovení frekvence odesílání.",
+      "completed": false
+    },
+    {
+      "title": "Vytvoření lead magnetů a opt-in formulářů",
+      "duration": "4 hodiny",
+      "priority": "high",
+      "money": "800 Kč (tvorba PDF)",
+      "documents": "E-booky, průvodci, checklisty",
+      "tools": "Canva, PDF editor, EcoMail formuláře",
+      "forms": "Opt-in formuláře",
+      "description": "Tvorba hodnotných lead magnetů (průvodce koupí nemovitosti, checklist pro prodej, tržní analýzy), nastavení opt-in formulářů na webu a sociálních sítích.",
+      "completed": false
+    },
+    {
+      "title": "Integrace s webem a CRM systémem",
+      "duration": "2 hodiny",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "API klíče, integračí dokumentace",
+      "tools": "Zapier, API, webhook",
+      "forms": "Integračí checklist",
+      "description": "Propojení EcoMail s webovými stránkami, CRM systémem a dalšími nástroji prostřednictvím API nebo Zapier pro automatickou synchronizaci dat.",
+      "completed": false
+    },
+    {
+      "title": "A/B testování subject lines a obsahu",
+      "duration": "1 hodina týdně",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Testovací plán, výsledky testů",
+      "tools": "EcoMail A/B testing, analytics",
+      "forms": "A/B test template",
+      "description": "Systematické testování různých subject lines, času odesílání, obsahu a call-to-action tlačítek pro optimalizaci open rate a click-through rate.",
+      "completed": false
+    },
+    {
+      "title": "Nastavení trackingu a analytiky",
+      "duration": "1.5 hodiny",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Google Analytics setup, UTM parametry",
+      "tools": "Google Analytics, EcoMail statistiky",
+      "forms": "Tracking checklist",
+      "description": "Nastavení Google Analytics pro sledování traffic z emailů, konfigurace UTM parametrů, propojení s Google Tag Manager pro detailní tracking konverzí.",
+      "completed": false
+    },
+    {
+      "title": "Vytvoření newsletter kampaně",
+      "duration": "2 hodiny",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Newsletter obsah, fotografie nemovitostí",
+      "tools": "EcoMail editor, fotobanka",
+      "forms": "Newsletter template",
+      "description": "Příprava měsíčního newsletteru s novinkami z trhu, novými nemovitostmi v portfoliu, úspěšnými prodeji a užitečnými tipy pro klienty.",
+      "completed": false
+    },
+    {
+      "title": "Segmentované kampaně podle typu klienta",
+      "duration": "3 hodiny",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Segmentační kritéria, personalizovaný obsah",
+      "tools": "EcoMail segmentace, personalizace",
+      "forms": "Segmentační strategie",
+      "description": "Vytvoření cílených kampaní pro různé segmenty - kupci bytů, kupci domů, prodejci, investoři. Personalizace obsahu podle zájmů a chování.",
+      "completed": false
+    },
+    {
+      "title": "Follow-up sekvence po prohlídce",
+      "duration": "2 hodiny",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Follow-up šablony, časový harmonogram",
+      "tools": "EcoMail automatizace",
+      "forms": "Follow-up sekvence",
+      "description": "Automatická sekvence emailů po prohlídce nemovitosti - poděkování, dodatečné informace, podobné nabídky, zjištění zpětné vazby, udržení zájmu.",
+      "completed": false
+    },
+    {
+      "title": "Re-engagement kampaň pro neaktivní kontakty",
+      "duration": "2 hodiny",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Re-engagement strategie, win-back nabídky",
+      "tools": "EcoMail segmentace, automatizace",
+      "forms": "Win-back kampaň",
+      "description": "Kampaň pro reaktivaci kontaktů, kteří dlouho neotevírali emaily - speciální nabídky, aktualizace preferencí, možnost změny frekvence nebo odhlášení.",
+      "completed": false
+    },
+    {
+      "title": "Monitoring deliverability a reputation",
+      "duration": "30 minut týdně",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Deliverability reporty, blacklist monitoring",
+      "tools": "EcoMail analytics, MXToolbox",
+      "forms": "Deliverability checklist",
+      "description": "Pravidelné sledování doručitelnosti emailů, monitoring blacklistů, kontrola spam score, optimalizace obsahu pro lepší deliverability.",
+      "completed": false
+    },
+    {
+      "title": "Měsíční analýza výkonnosti kampaní",
+      "duration": "2 hodiny měsíčně",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Měsíční reporty, KPI dashboard",
+      "tools": "EcoMail analytics, Google Analytics, Excel",
+      "forms": "Report template",
+      "description": "Analýza klíčových metrik (open rate, click rate, conversion rate, ROI), identifikace nejúspěšnějších kampaní, doporučení pro optimalizaci.",
+      "completed": false
+    },
+    {
+      "title": "Čištění databáze a správa odhlášení",
+      "duration": "1 hodina měsíčně",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Suppression list, bounce management",
+      "tools": "EcoMail správa kontaktů",
+      "forms": "Database cleanup checklist",
+      "description": "Pravidelné odstraňování neplatných emailů, správa hard/soft bounces, respektování odhlášení, aktualizace suppression listu pro lepší deliverability.",
+      "completed": false
+    },
+    {
+      "title": "Školení týmu a best practices",
+      "duration": "3 hodiny",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Školící materiály, best practices guide",
+      "tools": "Prezentace, EcoMail dokumentace",
+      "forms": "Školící program",
+      "description": "Proškolení týmu v používání EcoMail platformy, sdílení best practices pro email marketing, stanovení procesů pro správu kampaní a reportování.",
+      "completed": false
+    }
+  ],
+  "created": "2025-01-18T17:40:54.000Z",
+  "modified": "2025-01-18T17:40:54.000Z"
+}

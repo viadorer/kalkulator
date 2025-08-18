@@ -1,0 +1,208 @@
+{
+  "id": 1737225499000,
+  "title": "Práce s klienty - komunikace a budování vztahů",
+  "category": "klient",
+  "description": "Kompletní postup pro profesionální komunikaci, vyjednávání a budování dlouhodobých vztahů s klienty v realitním byznysu",
+  "items": [
+    {
+      "title": "Prvotní kontakt a navázání vztahu",
+      "duration": "30 minut",
+      "priority": "critical",
+      "money": "0 Kč",
+      "documents": "Kontaktní formulář, GDPR souhlas",
+      "tools": "CRM systém, telefon, email, kalendář",
+      "forms": "Formulář prvotního kontaktu",
+      "description": "Navázání prvního kontaktu do 5 minut od obdržení poptávky. Aktivní naslouchání potřebám klienta, zjištění základních požadavků, představení služeb a domluvení osobního setkání.",
+      "completed": false
+    },
+    {
+      "title": "Kvalifikace klienta a potřeb (BANT metoda)",
+      "duration": "45 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Kvalifikační dotazník, finanční předpoklady",
+      "tools": "BANT checklist, kalkulačka hypotéky",
+      "forms": "BANT kvalifikační formulář",
+      "description": "Ověření Budget (rozpočet), Authority (rozhodovací pravomoc), Need (skutečná potřeba), Timeline (časový rámec). Zjištění finančních možností, motivace a časových představ klienta.",
+      "completed": false
+    },
+    {
+      "title": "Příprava na osobní setkání",
+      "duration": "20 minut",
+      "priority": "normal",
+      "money": "100 Kč (doprava, materiály)",
+      "documents": "Prezentační materiály, reference, certifikáty",
+      "tools": "Tablet, vizitky, katalogy nemovitostí",
+      "forms": "Checklist přípravy na schůzku",
+      "description": "Příprava relevantních materiálů, nastudování klientových požadavků, příprava seznamu vhodných nemovitostí, kontrola dostupnosti a aktuálních cen.",
+      "completed": false
+    },
+    {
+      "title": "První osobní schůzka - budování důvěry",
+      "duration": "90 minut",
+      "priority": "critical",
+      "money": "200 Kč (občerstvení, doprava)",
+      "documents": "Smlouva o zprostředkování, ceník služeb",
+      "tools": "Laptop, prezentační materiály, smlouvy",
+      "forms": "Zápis ze schůzky",
+      "description": "Profesionální prezentace, aktivní naslouchání, budování důvěry prostřednictvím odbornosti a empatie. Představení procesu, vysvětlení služeb a podpis smlouvy o zprostředkování.",
+      "completed": false
+    },
+    {
+      "title": "Analýza požadavků a vytvoření profilu klienta",
+      "duration": "30 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Profil klienta, seznam požadavků",
+      "tools": "CRM systém, databáze nemovitostí",
+      "forms": "Profil klienta template",
+      "description": "Detailní analýza všech požadavků klienta, vytvoření profilu v CRM, nastavení automatických upozornění na vhodné nemovitosti, definování priorit a kompromisů.",
+      "completed": false
+    },
+    {
+      "title": "Vyhledávání a předvýběr nemovitostí",
+      "duration": "2 hodiny",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Seznam vytipovaných nemovitostí",
+      "tools": "Realitní portály, databáze, auto",
+      "forms": "Hodnotící formulář nemovitostí",
+      "description": "Systematické vyhledávání vhodných nemovitostí, osobní prohlídka a hodnocení stavu, ověření právní čistoty, příprava krátkého seznamu 3-5 nejlepších možností.",
+      "completed": false
+    },
+    {
+      "title": "Prezentace vybraných nemovitostí",
+      "duration": "45 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Prezentace nemovitostí, fotografie, plány",
+      "tools": "Tablet, fotografie, půdorysy",
+      "forms": "Hodnocení klienta",
+      "description": "Profesionální prezentace vybraných nemovitostí s důrazem na výhody odpovídající klientovým potřebám. Získání zpětné vazby a úprava kritérií podle reakcí.",
+      "completed": false
+    },
+    {
+      "title": "Organizace prohlídek nemovitostí",
+      "duration": "3 hodiny",
+      "priority": "high",
+      "money": "300 Kč (doprava)",
+      "documents": "Harmonogram prohlídek, kontakty majitelů",
+      "tools": "Auto, klíče, měřící pásmo, baterka",
+      "forms": "Formulář hodnocení prohlídky",
+      "description": "Koordinace a doprovod při prohlídkách, profesionální prezentace výhod a nevýhod každé nemovitosti, zodpovězení všech dotazů, zaznamenání reakcí klienta.",
+      "completed": false
+    },
+    {
+      "title": "Poradenství při výběru a rozhodování",
+      "duration": "60 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Srovnávací analýza, doporučení",
+      "tools": "Kalkulačka, srovnávací tabulka",
+      "forms": "Rozhodovací matice",
+      "description": "Objektivní poradenství při finálním rozhodování, srovnání všech variant, upozornění na rizika a výhody, pomoc s prioritizací kritérií podle životní situace klienta.",
+      "completed": false
+    },
+    {
+      "title": "Vyjednávání kupní ceny a podmínek",
+      "duration": "2 hodiny",
+      "priority": "critical",
+      "money": "0 Kč",
+      "documents": "Tržní analýza, argumentační podklady",
+      "tools": "Telefon, email, srovnávací data",
+      "forms": "Zápis z vyjednávání",
+      "description": "Profesionální vyjednávání kupní ceny na základě tržní analýzy, vyjednávání podmínek prodeje, termínů, způsobu platby a dalších detailů. Ochrana zájmů klienta.",
+      "completed": false
+    },
+    {
+      "title": "Asistence při financování a hypotéce",
+      "duration": "90 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Hypoteční dokumenty, potvrzení o příjmech",
+      "tools": "Kontakty na banky, hypoteční kalkulačka",
+      "forms": "Přehled hypotečních produktů",
+      "description": "Poradenství při výběru hypotéky, doporučení vhodných bank, asistence při přípravě dokumentů, koordinace s hypotečním poradcem, sledování procesu schvalování.",
+      "completed": false
+    },
+    {
+      "title": "Právní asistence a příprava smluv",
+      "duration": "2 hodiny",
+      "priority": "critical",
+      "money": "1500 Kč (právník)",
+      "documents": "Kupní smlouva, smlouva o úschově",
+      "tools": "Právník, notář, katastrální úřad",
+      "forms": "Checklist právních náležitostí",
+      "description": "Koordinace právní přípravy transakce, kontrola právní čistoty nemovitosti, příprava kupní smlouvy, zajištění úschovy kupní ceny, ověření všech náležitostí.",
+      "completed": false
+    },
+    {
+      "title": "Doprovod k podpisu a předání nemovitosti",
+      "duration": "3 hodiny",
+      "priority": "critical",
+      "money": "200 Kč (doprava)",
+      "documents": "Podepsaná kupní smlouva, protokol o předání",
+      "tools": "Auto, protokol předání, klíče",
+      "forms": "Protokol předání nemovitosti",
+      "description": "Osobní doprovod k notáři při podpisu kupní smlouvy, asistence při předání nemovitosti, kontrola stavu podle smlouvy, předání všech klíčů a dokumentů.",
+      "completed": false
+    },
+    {
+      "title": "Follow-up a hodnocení spokojenosti",
+      "duration": "30 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Dotazník spokojenosti, reference",
+      "tools": "Telefon, email, dotazník",
+      "forms": "Formulář hodnocení služeb",
+      "description": "Kontaktování klienta po 1 týdnu od dokončení transakce, zjištění spokojenosti se službami, vyžádání reference a hodnocení, řešení případných problémů.",
+      "completed": false
+    },
+    {
+      "title": "Budování dlouhodobého vztahu",
+      "duration": "Průběžně",
+      "priority": "normal",
+      "money": "500 Kč ročně (vánoční přání, dárky)",
+      "documents": "Databáze klientů, komunikační historie",
+      "tools": "CRM, email marketing, sociální sítě",
+      "forms": "Plán dlouhodobé péče",
+      "description": "Pravidelná komunikace s klienty (narozeniny, svátky), zasílání tržních informací, nabídka dalších služeb, doporučení spolupracujících firem, budování sítě spokojených klientů.",
+      "completed": false
+    },
+    {
+      "title": "Získávání doporučení a referrals",
+      "duration": "20 minut měsíčně",
+      "priority": "high",
+      "money": "200 Kč (dárky za doporučení)",
+      "documents": "Referenční program, motivační materiály",
+      "tools": "Referenční systém, sledování doporučení",
+      "forms": "Formulář referenčního programu",
+      "description": "Aktivní žádání o doporučení od spokojených klientů, vytvoření referenčního programu s odměnami, sledování úspěšnosti doporučení, poděkování za každé doporučení.",
+      "completed": false
+    },
+    {
+      "title": "Řešení reklamací a konfliktních situací",
+      "duration": "Dle potřeby",
+      "priority": "critical",
+      "money": "0 Kč",
+      "documents": "Protokol reklamace, řešení",
+      "tools": "Mediační techniky, právní porada",
+      "forms": "Formulář reklamace",
+      "description": "Rychlé a profesionální řešení všech stížností a problémů, aktivní komunikace, hledání win-win řešení, prevence eskalace konfliktů, zachování dobrého jména firmy.",
+      "completed": false
+    },
+    {
+      "title": "Kontinuální vzdělávání v oblasti komunikace",
+      "duration": "4 hodiny měsíčně",
+      "priority": "normal",
+      "money": "2000 Kč měsíčně (kurzy, knihy)",
+      "documents": "Certifikáty, studijní materiály",
+      "tools": "Online kurzy, knihy, semináře",
+      "forms": "Plán osobního rozvoje",
+      "description": "Pravidelné vzdělávání v oblasti komunikace, vyjednávání, psychologie prodeje, customer service, získávání nových certifikací a udržování profesionální úrovně.",
+      "completed": false
+    }
+  ],
+  "created": "2025-01-18T17:38:19.000Z",
+  "modified": "2025-01-18T17:38:19.000Z"
+}

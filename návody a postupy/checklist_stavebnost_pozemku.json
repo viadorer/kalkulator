@@ -1,0 +1,197 @@
+{
+  "id": 1737227106000,
+  "title": "Ověření stavebnosti pozemku v území 'bydlení čisté'",
+  "category": "administrativa",
+  "description": "Kompletní harmonogram kroků pro ověření možnosti realizace stavebního záměru (RD/BD) na pozemku v ploše bydlení čisté podle nového stavebního zákona",
+  "items": [
+    {
+      "title": "Rychlá interní prověrka dokumentů",
+      "duration": "30 minut",
+      "priority": "critical",
+      "money": "200 Kč (výpis LV)",
+      "documents": "LV, katastrální mapa, územní plán obce",
+      "tools": "Katastrální úřad online, web obce, GIS portál",
+      "forms": "Výpis z katastru nemovitostí",
+      "description": "Stažení LV a katastrální mapy z KN. Ověření v ÚP obce: výkres funkčních ploch + textové regulativy k ploše (výška, podlažnost, koeficient zastavění/zeleň, parkování). Poznačení parc. čísel, adresy, k.ú., plánovaného typu stavby.",
+      "completed": false
+    },
+    {
+      "title": "Příprava základní studie záměru",
+      "duration": "45 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Náčrt situace, půdorysná stopa, výškové řešení",
+      "tools": "CAD software, kreslící program, měřítko",
+      "forms": "Orientační studie zástavby",
+      "description": "Vytvoření jednoduché studie: účel stavby, počet bytů, půdorysná stopa, výška/podlaží, parkování, osazení v území. Kontrola souladu s regulativy 'bydlení čisté' - preferována nízkopodlažní zástavba s dominancí RD.",
+      "completed": false
+    },
+    {
+      "title": "Podání žádosti o předběžnou informaci",
+      "duration": "60 minut",
+      "priority": "critical",
+      "money": "0 Kč (elektronické podání)",
+      "documents": "Formulář dle vyhl. 149/2024 Sb., LV, mapa KN, náčrt studie",
+      "tools": "Portál stavební správy, Portál stavebníka",
+      "forms": "Předběžná informace § 174 stavebního zákona",
+      "description": "Podání žádosti o předběžnou informaci na příslušný stavební úřad elektronicky přes Portál stavebníka. Dotazy na přípustnost stavby, limity výšky/podlažnosti, koeficienty, parkování, dopravní napojení, nutnost vyjádření dotčených orgánů.",
+      "completed": false
+    },
+    {
+      "title": "Kapacitní ověření - elektřina",
+      "duration": "30 minut",
+      "priority": "high",
+      "money": "500-1000 Kč (kapacitní vyjádření)",
+      "documents": "Žádost o kapacitní vyjádření, situační výkres",
+      "tools": "Web distributora (ČEZ, EG.D, PRE), kontaktní formuláře",
+      "forms": "Kapacitní stanovisko elektro",
+      "description": "Oslovení příslušného distributora elektřiny pro kapacitní stanovisko a způsob připojení. Zjištění dostupného výkonu, vzdálenosti k trafostanici, podmínek připojení a orientačních nákladů.",
+      "completed": false
+    },
+    {
+      "title": "Kapacitní ověření - voda a kanalizace",
+      "duration": "30 minut",
+      "priority": "high",
+      "money": "300-800 Kč (vyjádření VaK)",
+      "documents": "Žádost o vyjádření, situace napojení",
+      "tools": "Místní provozovatel VaK, online formuláře",
+      "forms": "Vyjádření o možnosti napojení VaK",
+      "description": "Kontakt s místním provozovatelem vody a kanalizace. Ověření dostupnosti sítí, tlakových poměrů, kapacity ČOV, podmínek napojení a poplatků za připojení.",
+      "completed": false
+    },
+    {
+      "title": "Kapacitní ověření - plyn (je-li relevantní)",
+      "duration": "20 minut",
+      "priority": "normal",
+      "money": "200-500 Kč (vyjádření)",
+      "documents": "Žádost o připojení, situační plán",
+      "tools": "GasNet, lokální distributor plynu",
+      "forms": "Vyjádření o možnosti připojení plynu",
+      "description": "Oslovení distributora plynu pro vyjádření o možnosti a podmínkách připojení. Zjištění dostupnosti plynovodní sítě, tlakových poměrů a nákladů na připojení.",
+      "completed": false
+    },
+    {
+      "title": "Dopravní napojení - souhlas silničního správce",
+      "duration": "45 minut",
+      "priority": "high",
+      "money": "300-1000 Kč (vyjádření)",
+      "documents": "Žádost o souhlas, dopravní řešení, rozhledové poměry",
+      "tools": "SÚS, obecní úřad, krajský úřad (dle typu komunikace)",
+      "forms": "Souhlas s napojením na komunikaci",
+      "description": "Získání souhlasu s napojením na komunikaci od příslušného silničního správce. Ověření šířky vjezdu, rozhledových poměrů, nutnosti obratiště pro IZS, dopravního značení.",
+      "completed": false
+    },
+    {
+      "title": "Neformální konzultace s územním plánováním",
+      "duration": "60 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Náčrt studie, regulativy ÚP, dotazy",
+      "tools": "Osobní schůzka, email, telefon",
+      "forms": "Záznam z konzultace",
+      "description": "Schůzka s odborným útvarem územního plánování obce/města nad náčrtem studie. Ověření výkladu regulativů, 'červených linií', možných problémů a doporučení před zadáním projektu.",
+      "completed": false
+    },
+    {
+      "title": "Vyhodnocení předběžné informace - rozhodovací bod",
+      "duration": "30 minut",
+      "priority": "critical",
+      "money": "0 Kč",
+      "documents": "Předběžná informace od stavebního úřadu, kapacitní vyjádření",
+      "tools": "Analýza dokumentů, porovnání se záměrem",
+      "forms": "Rozhodovací matice go/no-go",
+      "description": "Analýza obdržené předběžné informace a kapacitních vyjádření. Rozhodnutí: A) Záměr přípustný → pokračovat, B) Nutná úprava záměru → modifikace, C) Záměr nepřípustný → změna ÚP nebo jiný pozemek.",
+      "completed": false
+    },
+    {
+      "title": "Geodetické zaměření pozemku",
+      "duration": "120 minut (včetně čekání)",
+      "priority": "high",
+      "money": "8000-15000 Kč",
+      "documents": "Objednávka geodeta, zaměření hranic, výškopis",
+      "tools": "Geodetická kancelář, měřické přístroje",
+      "forms": "Geodetické zaměření pro projekt",
+      "description": "Objednání a provedení geodetického zaměření pozemku včetně výškopisu, hranic, stávajících objektů, inženýrských sítí a komunikací. Podklad pro projektovou dokumentaci.",
+      "completed": false
+    },
+    {
+      "title": "Inženýrsko-geologický průzkum",
+      "duration": "180 minut (terén + zpracování)",
+      "priority": "high",
+      "money": "15000-25000 Kč",
+      "documents": "Objednávka IGP, vrty, laboratorní rozbory",
+      "tools": "Geologická firma, vrtná souprava",
+      "forms": "IGP zpráva s doporučeními",
+      "description": "Provedení inženýrsko-geologického průzkumu - vrty, zjištění únosnosti podloží, hladiny podzemní vody, radonu, doporučení pro zakládání. Nutné pro statický projekt.",
+      "completed": false
+    },
+    {
+      "title": "Zadání projektové dokumentace",
+      "duration": "60 minut",
+      "priority": "high",
+      "money": "80000-200000 Kč (dle rozsahu)",
+      "documents": "Zadání pro projektanta, všechna vyjádření, studie",
+      "tools": "Autorizovaný projektant, CAD software",
+      "forms": "Smlouva o zpracování PD",
+      "description": "Zadání projektové dokumentace pro 'povolení záměru' (DSP) včetně situace osazení, napojení na sítě, požárně-bezpečnostního řešení, statiky, akustiky dle potřeby, dopravního řešení.",
+      "completed": false
+    },
+    {
+      "title": "Získání závazných stanovisek dotčených orgánů",
+      "duration": "90 minut (administrativa)",
+      "priority": "high",
+      "money": "2000-8000 Kč (poplatky)",
+      "documents": "Žádosti o stanoviska, projektová dokumentace",
+      "tools": "Portály úřadů, Czech POINT",
+      "forms": "Závazná stanoviska DO",
+      "description": "Získání všech potřebných závazných stanovisek dotčených orgánů podle předběžné informace: hasiči, hygiena, ochrana přírody, dopravní inspektorát, památková péče dle lokality.",
+      "completed": false
+    },
+    {
+      "title": "Podání žádosti o povolení záměru",
+      "duration": "45 minut",
+      "priority": "critical",
+      "money": "1000-5000 Kč (správní poplatek)",
+      "documents": "Kompletní projektová dokumentace, všechna vyjádření a stanoviska",
+      "tools": "Portál stavební správy, Portál stavebníka",
+      "forms": "Žádost o povolení záměru",
+      "description": "Elektronické podání žádosti o povolení záměru přes Portál stavebníka s kompletní dokumentací. Nový zákon směřuje k jednomu integrovanému povolení záměru místo územního rozhodnutí + stavebního povolení.",
+      "completed": false
+    },
+    {
+      "title": "Řízení o povolení záměru - spolupráce s úřadem",
+      "duration": "Variable (30-90 dní řízení)",
+      "priority": "high",
+      "money": "0-10000 Kč (případné doplnění)",
+      "documents": "Doplňující dokumentace, odpovědi na výzvy",
+      "tools": "Komunikace s úřadem, projektant",
+      "forms": "Rozhodnutí o povolení záměru",
+      "description": "Aktivní spolupráce během řízení - odpovědi na výzvy k doplnění, účast na jednáních, koordinace s projektantem. Řízení by mělo být ukončeno do 90 dnů od podání.",
+      "completed": false
+    },
+    {
+      "title": "Příprava realizace - smlouvy o připojení",
+      "duration": "120 minut",
+      "priority": "normal",
+      "money": "Variable (dle připojení)",
+      "documents": "Smlouvy s dodavateli energií, stavební povolení",
+      "tools": "Jednání s dodavateli, právník",
+      "forms": "Smlouvy o připojení na sítě",
+      "description": "Po získání povolení záměru uzavření smluv o připojení na všechny sítě, výběr dodavatele stavby, příprava realizace včetně ohlášení stavby zhotovitelem.",
+      "completed": false
+    },
+    {
+      "title": "Kolaudační proces",
+      "duration": "60 minut (administrativa)",
+      "priority": "normal",
+      "money": "1000-3000 Kč (poplatek)",
+      "documents": "Dokumentace skutečného provedení, revizní zprávy",
+      "tools": "Kolaudační řízení, technické kontroly",
+      "forms": "Kolaudační souhlas",
+      "description": "Po dokončení stavby provedení kolaudačního procesu podle charakteru stavby. Předložení dokumentace skutečného provedení, revizních zpráv, kontrolních prohlídek dle rozhodnutí o povolení záměru.",
+      "completed": false
+    }
+  ],
+  "created": "2025-01-18T19:15:06.000Z",
+  "modified": "2025-01-18T19:15:06.000Z"
+}

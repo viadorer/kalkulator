@@ -1,0 +1,208 @@
+{
+  "id": 1737226280000,
+  "title": "Prohlídka nemovitosti - nábor a kompletní kontrola",
+  "category": "administrativa",
+  "description": "Systematický postup pro profesionální prohlídku nemovitosti včetně všech kontrol, otázek a dokumentace pro prodej i pronájem",
+  "items": [
+    {
+      "title": "Příprava na prohlídku - sběr základních informací",
+      "duration": "30 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Formulář základních údajů, katastrální mapa",
+      "tools": "Tablet, fotoaparát, měřící pásmo, baterka",
+      "forms": "Formulář přípravy prohlídky",
+      "description": "Kontakt s majitelem/správcem, ověření času prohlídky, získání základních informací o nemovitosti, příprava potřebných nástrojů a dokumentů.",
+      "completed": false
+    },
+    {
+      "title": "Kontrola právní čistoty a vlastnictví",
+      "duration": "45 minut",
+      "priority": "critical",
+      "money": "200 Kč (výpis z katastru)",
+      "documents": "Výpis z katastru, list vlastnictví, energetický štítek",
+      "tools": "Katastrální úřad online, právní databáze",
+      "forms": "Checklist právních náležitostí",
+      "description": "Ověření vlastnických práv, zástavních práv, věcných břemen, exekucí. Kontrola energetického štítku, kolaudačního rozhodnutí a dalších povolení.",
+      "completed": false
+    },
+    {
+      "title": "Vnější prohlídka budovy a okolí",
+      "duration": "30 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Fotodokumentace, poznámky o stavu",
+      "tools": "Fotoaparát, poznámkový blok, měřící pásmo",
+      "forms": "Formulář vnější kontroly",
+      "description": "Kontrola fasády, střechy, oken, vstupů, parkovacích míst, zahrady. Posouzení stavu okolí, hlučnosti, dostupnosti MHD, obchodů a služeb.",
+      "completed": false
+    },
+    {
+      "title": "Kontrola technického stavu - elektroinstalace",
+      "duration": "20 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Revizní zprávy elektro, fotodokumentace",
+      "tools": "Baterka, tester napětí, fotoaparát",
+      "forms": "Checklist elektroinstalace",
+      "description": "Kontrola rozvodné skříně, stavu zásuvek a vypínačů, funkčnosti osvětlení, stáří instalace. Ověření platnosti revizních zpráv elektroinstalace.",
+      "completed": false
+    },
+    {
+      "title": "Kontrola vodovodního a kanalizačního systému",
+      "duration": "25 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Revizní zprávy, fotodokumentace",
+      "tools": "Baterka, poznámky, fotoaparát",
+      "forms": "Checklist voda/kanalizace",
+      "description": "Kontrola funkčnosti všech kohoutků, sprch, WC, odtoků. Ověření tlaku vody, teploty, stavu potrubí. Kontrola hlavních uzávěrů a revizních šachet.",
+      "completed": false
+    },
+    {
+      "title": "Kontrola topení a klimatizace",
+      "duration": "20 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Servisní knihy, revizní zprávy",
+      "tools": "Teploměr, poznámky",
+      "forms": "Checklist vytápění",
+      "description": "Kontrola funkčnosti topných těles, kotle, klimatizace. Ověření stáří systému, servisních intervalů, spotřeby energií. Kontrola komínů a ventilace.",
+      "completed": false
+    },
+    {
+      "title": "Měření a kontrola dispozice",
+      "duration": "30 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Půdorys, zaměření místností",
+      "tools": "Laserový metr, pásmo, tablet",
+      "forms": "Formulář zaměření",
+      "description": "Přesné zaměření všech místností, kontrola souladu s půdorysem, ověření užitné plochy. Kontrola výšky stropů, orientace ke světovým stranám.",
+      "completed": false
+    },
+    {
+      "title": "Kontrola stavebně-technického stavu",
+      "duration": "40 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Fotodokumentace defektů, stavební deník",
+      "tools": "Fotoaparát, baterka, kladívko",
+      "forms": "Defektní protokol",
+      "description": "Kontrola stěn, stropů, podlah na praskliny, vlhkost, plísně. Ověření stavu oken, dveří, zárubní. Kontrola izolací, zateplení, střešní krytiny.",
+      "completed": false
+    },
+    {
+      "title": "Otázky pro majitele - důvody prodeje/pronájmu",
+      "duration": "15 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Zápis z rozhovoru s majitelem",
+      "tools": "Poznámkový blok, diktafon",
+      "forms": "Dotazník pro majitele",
+      "description": "Zjištění důvodů prodeje/pronájmu, časové flexibility, cenových představ, historie nemovitosti, sousedských vztahů, plánovaných rekonstrukcí v okolí.",
+      "completed": false
+    },
+    {
+      "title": "Finanční informace a náklady",
+      "duration": "20 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Vyúčtování služeb, daňové přiznání",
+      "tools": "Kalkulačka, poznámky",
+      "forms": "Přehled nákladů",
+      "description": "Zjištění výše služeb, fondů oprav, daní z nemovitosti, pojištění. Analýza energetické náročnosti, průměrných ročních nákladů na provoz.",
+      "completed": false
+    },
+    {
+      "title": "Kontrola společných prostor (byty)",
+      "duration": "15 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Fotodokumentace společných prostor",
+      "tools": "Fotoaparát, poznámky",
+      "forms": "Checklist společných prostor",
+      "description": "Prohlídka vstupní haly, schodiště, výtahu, sklepů, půdy, prádelny. Kontrola stavu, čistoty, bezpečnosti, funkčnosti domovního telefonu a zvonků.",
+      "completed": false
+    },
+    {
+      "title": "Parkování a dopravní dostupnost",
+      "duration": "10 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Mapa dopravní dostupnosti",
+      "tools": "Smartphone, GPS, poznámky",
+      "forms": "Hodnocení lokality",
+      "description": "Kontrola parkovacích možností, vzdálenosti k MHD, hlavním silnicím. Ověření dostupnosti škol, obchodů, zdravotních zařízení, rekreačních oblastí.",
+      "completed": false
+    },
+    {
+      "title": "Specifické otázky pro pronájem",
+      "duration": "10 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Nájemní podmínky, pravidla domu",
+      "tools": "Poznámky, smlouva template",
+      "forms": "Checklist pronájem",
+      "description": "Zjištění pravidel pro domácí zvířata, kouření, návštěvy. Podmínky ukončení nájmu, kauce, indexace nájmu, odpovědnost za opravy a údržbu.",
+      "completed": false
+    },
+    {
+      "title": "Specifické otázky pro prodej",
+      "duration": "10 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Podmínky prodeje, časový harmonogram",
+      "tools": "Poznámky, kalkulačka",
+      "forms": "Checklist prodej",
+      "description": "Zjištění flexibility v ceně, časových možností předání, co zůstává v nemovitosti (nábytek, spotřebiče), podmínek financování, provize realitky.",
+      "completed": false
+    },
+    {
+      "title": "Fotodokumentace a vytvoření prezentace",
+      "duration": "30 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Fotogalerie, půdorys, popis nemovitosti",
+      "tools": "Fotoaparát, tablet, editing software",
+      "forms": "Template prezentace",
+      "description": "Pořízení kvalitních fotografií všech místností a exteriéru, vytvoření půdorysu, sepsání detailního popisu s výhodami a nevýhodami nemovitosti.",
+      "completed": false
+    },
+    {
+      "title": "Tržní ocenění a cenová analýza",
+      "duration": "45 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Tržní analýza, srovnávací studie",
+      "tools": "Realitní databáze, Excel, kalkulačka",
+      "forms": "Oceňovací formulář",
+      "description": "Srovnání s podobnými nemovitostmi v okolí, analýza tržních cen, stanovení reálné tržní hodnoty, doporučení prodejní/nájemní ceny.",
+      "completed": false
+    },
+    {
+      "title": "Příprava smlouvy o zprostředkování",
+      "duration": "20 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Smlouva o zprostředkování, ceník služeb",
+      "tools": "Smlouva template, tiskárna",
+      "forms": "Zprostředkovatelská smlouva",
+      "description": "Vyplnění smlouvy o exkluzivním/neexkluzivním zprostředkování, stanovení provize, délky spolupráce, rozsahu služeb a podmínek ukončení.",
+      "completed": false
+    },
+    {
+      "title": "Závěrečné vyhodnocení a doporučení",
+      "duration": "15 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Hodnotící zpráva, doporučení",
+      "tools": "Poznámky, hodnotící formulář",
+      "forms": "Závěrečná zpráva",
+      "description": "Celkové zhodnocení nemovitosti, identifikace silných a slabých stránek, doporučení pro zlepšení prodejnosti, odhad doby prodeje/pronájmu.",
+      "completed": false
+    }
+  ],
+  "created": "2025-01-18T17:51:20.000Z",
+  "modified": "2025-01-18T17:51:20.000Z"
+}

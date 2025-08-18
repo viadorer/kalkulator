@@ -1,0 +1,175 @@
+{
+  "id": 1737226468000,
+  "title": "Definování cílových skupin a buyer personas",
+  "category": "marketing",
+  "description": "Kompletní postup pro vytvoření detailních profilů cílových zákazníků včetně analýzy jejich potřeb, chování a komunikačních preferencí",
+  "items": [
+    {
+      "title": "Příprava a sběr dat o stávajících klientech",
+      "duration": "30 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "CRM databáze, prodejní záznamy, kontaktní historie",
+      "tools": "CRM systém, Excel/Google Sheets, analytické nástroje",
+      "forms": "Export dat z CRM",
+      "description": "Analýza stávající klientské databáze - věk, pohlaví, příjmy, typ nemovitosti, důvody nákupu/pronájmu, geografické rozložení, zdroje kontaktu.",
+      "completed": false
+    },
+    {
+      "title": "Segmentace podle typu transakce",
+      "duration": "20 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Transakční historie, typy nemovitostí",
+      "tools": "Segmentační nástroje, databázové dotazy",
+      "forms": "Segmentační mapa",
+      "description": "Rozdělení klientů podle typu transakce: kupci prvního bydlení, upgraders, investoři, prodejci, nájemci krátkodobí/dlouhodobí, pronajímatelé.",
+      "completed": false
+    },
+    {
+      "title": "Buyer Persona #1: Mladé páry (25-35 let)",
+      "duration": "45 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Demografické údaje, průzkumy trhu",
+      "tools": "Persona template, průzkumné formuláře",
+      "forms": "Buyer persona profil",
+      "description": "Profil: První bydlení, kombinovaný příjem 60-100k Kč, hledají byty 2+kk/3+kk, důraz na lokalitu a dostupnost, aktivní na sociálních sítích, rozhodují společně.",
+      "completed": false
+    },
+    {
+      "title": "Buyer Persona #2: Rodiny s dětmi (30-45 let)",
+      "duration": "45 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Rodinné preference, školské obvody",
+      "tools": "Mapa školských obvodů, demografické analýzy",
+      "forms": "Rodinný persona profil",
+      "description": "Profil: Upgrade bydlení, příjem 80-150k Kč, hledají domy/větší byty 4+kk+, priorita bezpečnost a školy, rozhodují pomaleji, důraz na praktičnost.",
+      "completed": false
+    },
+    {
+      "title": "Buyer Persona #3: Investoři (35-55 let)",
+      "duration": "45 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Investiční strategie, výnosnost lokalit",
+      "tools": "ROI kalkulačky, tržní analýzy",
+      "forms": "Investorský persona profil",
+      "description": "Profil: Kapitálové zhodnocení, příjem 100k+ Kč, hledají výnosné nemovitosti, rychlé rozhodování, důraz na čísla a analýzy, často opakující klienti.",
+      "completed": false
+    },
+    {
+      "title": "Buyer Persona #4: Senioři (55+ let)",
+      "duration": "45 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Životní situace seniorů, zdravotní aspekty",
+      "tools": "Průzkumy seniorského bydlení",
+      "forms": "Seniorský persona profil",
+      "description": "Profil: Downsizing, důchod/úspory, hledají menší byty/bezbariérové, blízko zdravotnictví, osobní kontakt preferován, pomalejší rozhodování.",
+      "completed": false
+    },
+    {
+      "title": "Analýza komunikačních preferencí",
+      "duration": "30 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Komunikační historie, response rates",
+      "tools": "Email analytics, call tracking",
+      "forms": "Komunikační preference mapa",
+      "description": "Mapování preferovaných komunikačních kanálů pro každou skupinu: email, telefon, SMS, sociální sítě, osobní setkání, časy kontaktu.",
+      "completed": false
+    },
+    {
+      "title": "Identifikace bolestivých bodů (pain points)",
+      "duration": "30 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Zákaznické stížnosti, feedback",
+      "tools": "Feedback formuláře, call recordings",
+      "forms": "Pain points mapa",
+      "description": "Analýza hlavních problémů každé skupiny: finanční obavy, časové limity, nedůvěra v realitky, složitost procesu, nedostatek informací.",
+      "completed": false
+    },
+    {
+      "title": "Definování motivací a cílů",
+      "duration": "25 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Motivační faktory, rozhodovací kritéria",
+      "tools": "Motivační analýzy, psychografické profily",
+      "forms": "Motivační mapa",
+      "description": "Identifikace hlavních motivací: bezpečnost, investice, prestiž, pohodlí, rodinné potřeby, finanční nezávislost pro každou persona skupinu.",
+      "completed": false
+    },
+    {
+      "title": "Mapování zákaznické cesty (customer journey)",
+      "duration": "40 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Touchpoint analýza, konverzní cesty",
+      "tools": "Journey mapping tools, Google Analytics",
+      "forms": "Customer journey mapa",
+      "description": "Detailní mapování cesty od prvního kontaktu po uzavření transakce pro každou persona skupinu včetně všech touchpointů.",
+      "completed": false
+    },
+    {
+      "title": "Analýza konkurenčních preferencí",
+      "duration": "20 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Konkurenční analýza, market research",
+      "tools": "Competitive intelligence tools",
+      "forms": "Konkurenční preference mapa",
+      "description": "Zjištění, jaké realitní kanceláře preferuje každá skupina, proč, jaké služby oceňují, cenová citlivost, faktory rozhodování.",
+      "completed": false
+    },
+    {
+      "title": "Vytvoření obsahové strategie pro každou personu",
+      "duration": "35 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Content calendar, messaging framework",
+      "tools": "Content planning tools, editorial calendar",
+      "forms": "Obsahová strategie",
+      "description": "Definování typu obsahu, témat, formátů a kanálů pro každou persona skupinu: blog články, video, infografiky, case studies, testimonials.",
+      "completed": false
+    },
+    {
+      "title": "Nastavení personalizovaných lead magnetů",
+      "duration": "30 minut",
+      "priority": "high",
+      "money": "0 Kč",
+      "documents": "Lead magnet strategie, conversion assets",
+      "tools": "Landing page builders, email marketing",
+      "forms": "Lead magnet plán",
+      "description": "Vytvoření specifických lead magnetů pro každou skupinu: kalkulačky hypotéky, průvodce první koupí, investiční analýzy, seniorské bydlení guide.",
+      "completed": false
+    },
+    {
+      "title": "Validace personas s reálnými klienty",
+      "duration": "45 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Interview záznamy, validační dotazníky",
+      "tools": "Survey tools, interview templates",
+      "forms": "Validační dotazník",
+      "description": "Provedení 3-5 rozhovorů s reprezentanty každé skupiny pro ověření a upřesnění vytvořených personas, úprava na základě feedbacku.",
+      "completed": false
+    },
+    {
+      "title": "Dokumentace a sdílení s týmem",
+      "duration": "20 minut",
+      "priority": "normal",
+      "money": "0 Kč",
+      "documents": "Finální persona dokumenty, prezentace",
+      "tools": "Prezentační software, tiskárna",
+      "forms": "Týmová prezentace",
+      "description": "Vytvoření finálních persona dokumentů, prezentace týmu, vytištění a umístění na viditelná místa, školení týmu o použití personas.",
+      "completed": false
+    }
+  ],
+  "created": "2025-01-18T18:04:28.000Z",
+  "modified": "2025-01-18T18:04:28.000Z"
+}
