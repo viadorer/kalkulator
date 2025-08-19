@@ -185,7 +185,6 @@ Pro otázky, návrhy nebo hlášení chyb:
 ## 🏆 Autoři
 
 - **David** - Vývoj a design kalkulaček
-- **Cascade AI** - Implementace pokročilých funkcí
 
 ---
 
