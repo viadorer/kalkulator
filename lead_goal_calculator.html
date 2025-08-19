@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kalkulačka cílových leadů – náklady a personál</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --primary: #0ea5e9;
+      --border: #e2e8f0;
+      --ok: #10b981;
+      --warn: #f59e0b;
+      --bad: #ef4444;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 32px auto;
+      padding: 0 20px;
+    }
+    .header {
+      margin-bottom: 20px;
+    }
+    .title {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 0 6px 0;
+    }
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    @media (min-width: 900px) {
+      .grid-2 { grid-template-columns: 1fr 1fr; }
+      .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 0.5px 1px rgba(0,0,0,0.03), 0 6px 18px rgba(0,0,0,0.05);
+    }
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0 0 12px 0;
+      letter-spacing: -0.01em;
+    }
+    .field {
+      display: grid;
+      grid-template-columns: 1fr 140px;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .field label { font-size: 14px; color: var(--muted); }
+    .field input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #fff;
+      outline: none;
+      font-size: 14px;
+    }
+    .inline {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+    .hint { color: var(--muted); font-size: 12px; }
+    .kpis { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    @media (max-width: 700px) { .kpis { grid-template-columns: 1fr; } }
+    .kpi {
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, #ffffff, #fbfdff);
+    }
+    .kpi .label { color: var(--muted); font-size: 12px; }
+    .kpi .value { font-size: 22px; font-weight: 700; margin-top: 6px; }
+    .channel-grid { display:grid; grid-template-columns: 1fr; gap:12px; }
+    @media (min-width: 900px) { .channel-grid { grid-template-columns: 1fr 1fr; } }
+    .channel-card { border:1px solid var(--border); border-radius:12px; padding:12px; background:#fff; }
+    .channel-card h3 { margin:0 0 6px 0; font-size:15px; letter-spacing:-0.01em; }
+    .metric-row { display:flex; justify-content:space-between; font-size:14px; padding:4px 0; border-bottom:1px dashed #eef2f7; }
+    .metric-row:last-child { border-bottom:none; }
+    .metric-row .badge { align-self:center; }
+    .tip { display:inline-block; width:16px; height:16px; line-height:14px; border-radius:50%; border:1px solid var(--border); color:var(--muted); text-align:center; font-size:11px; cursor:help; margin-left:6px; }
+    .progress { height:6px; background:#f1f5f9; border-radius:999px; overflow:hidden; margin-top:6px; }
+    .progress-bar { height:100%; background: linear-gradient(90deg, #93c5fd, #0ea5e9); width:0%; transition: width .25s ease; }
+    .input-error { border-color: var(--bad) !important; }
+    .hint-bad { color: var(--bad); }
+    .err { display:block; color: var(--bad); font-size:12px; margin-top:4px; }
+    .toggle { background:none; border:none; color:#0f172a; font-weight:600; cursor:pointer; padding:6px 0; }
+    .collapse { display:none; margin-top:8px; border-top:1px dashed #e2e8f0; padding-top:8px; }
+    .collapse.open { display:block; }
+    .mini-badge { display:inline-block; font-size:11px; padding:2px 6px; border-radius:999px; border:1px solid var(--border); color:#0f172a; background:#fafafa; }
+    /* Efficiency (price/performance) bar */
+    .effbar { height:6px; background:#f1f5f9; border-radius:999px; overflow:hidden; margin-top:6px; }
+    .effbar-fill { height:100%; width:0%; transition: width .25s ease; }
+    .eff-ok { background: linear-gradient(90deg, #86efac, #22c55e); }
+    .eff-warn { background: linear-gradient(90deg, #fde68a, #f59e0b); }
+    .eff-bad { background: linear-gradient(90deg, #fecaca, #ef4444); }
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .table th, .table td {
+      text-align: right;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .table th { color: var(--muted); font-weight: 600; background: #f9fbfe; }
+    .table td:first-child, .table th:first-child { text-align: left; }
+    .actions { display:flex; gap: 8px; align-items:center; flex-wrap: wrap; }
+    .btn {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .btn-primary {
+      border-color: transparent;
+      background: var(--primary);
+      color: #fff;
+    }
+    .badge { font-size: 12px; padding: 4px 8px; border-radius: 999px; }
+    .badge-ok { background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0; }
+    .badge-warn { background:#fffbeb; color:#92400e; border:1px solid #fde68a; }
+    .badge-bad { background:#fef2f2; color:#991b1b; border:1px solid #fecaca; }
+    .recommendations li { margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1 class="title">Kalkulačka nákladů na dosažení cílového počtu leadů</h1>
+      <p class="subtitle">Zadejte cíl (leadů/měsíc) a zjistěte rozpočet na kanálech (Facebook/Instagram, LinkedIn, Google Ads, Emailing) včetně personálních nákladů.</p>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h2 class="section-title">Přehled kanálů</h2>
+      <div class="channel-grid">
+        <div class="channel-card" id="card_fb">
+          <h3>Facebook / Instagram</h3>
+          <div class="metric-row"><span>Leady</span><span id="fb_leads">0</span></div>
+          <div class="metric-row"><span>Mediální náklady</span><span id="fb_media">0 Kč</span></div>
+          <div class="metric-row"><span>Hodiny</span><span id="fb_hours">0 h</span></div>
+          <div class="metric-row"><span>Personální náklady</span><span id="fb_people">0 Kč</span></div>
+          <div class="metric-row"><span>Celkem</span><span id="fb_total">0 Kč</span></div>
+          <div class="metric-row"><span>Efektivní CPL <span class="tip" title="(Mediální + personální náklady) / lead">i</span></span><span id="fb_ecpl">0 Kč</span></div>
+          <div class="metric-row"><span>Media‑only CPL <span class="tip" title="Pouze mediální náklady / lead">i</span></span><span id="fb_mcpl">0 Kč</span></div>
+          <div class="metric-row"><span>Personální podíl (kanál) <span class="tip" title="Personální náklady / celkové náklady daného kanálu">i</span></span><span id="fb_ppct">0%</span></div>
+          <div class="metric-row"><span>Podíl leadů <span class="tip" title="Leady kanálu / celkové leady">i</span></span><span id="fb_lshare">0%</span></div>
+          <div class="metric-row"><span>Podíl nákladů <span class="tip" title="Náklady kanálu / celkové náklady">i</span></span><span id="fb_cshare">0%</span></div>
+          <div class="metric-row"><span>Efektivita vs. průměr <span class="tip" title="Porovnání efektivního CPL kanálu s blended CPL (celkový průměr)">i</span></span><span id="fb_eff" class="badge">—</span></div>
+          <div class="metric-row"><span>Poměr cena/výkon <span class="tip" title="Efektivní CPL kanálu / blended CPL (100% = průměr)">i</span></span><span id="fb_effratio">—</span></div>
+          <div class="effbar"><div id="fb_effbar" class="effbar-fill eff-ok"></div></div>
+          <button id="fb_tools_toggle" class="toggle">Nástroje a postupy</button>
+          <div id="fb_tools_panel" class="collapse">
+            <div style="font-weight:600; margin-bottom:4px;">Nástroje</div>
+            <div style="display:grid; grid-template-columns: 1fr; gap:6px;">
+              <label><input type="checkbox" id="fb_tool_bm"> Business Manager + Ads Manager <span class="mini-badge">required</span></label>
+              <div class="hint"><strong>Co:</strong> struktura účtů, správa pixelů a kampaní. <strong>Proč:</strong> řízení přístupu, škálování. <strong>Jak:</strong> založit BM, přidat účet reklam a stránky.</div>
+              <label><input type="checkbox" id="fb_tool_pixel"> Pixel + Conversions API <span class="mini-badge">required</span></label>
+              <div class="hint"><strong>Co:</strong> měření konverzí z webu. <strong>Proč:</strong> optimalizace na lead. <strong>Jak:</strong> GTM/ruční instalace + CAPI přes partnera/Server‑Side GTM.</div>
+              <label><input type="checkbox" id="fb_tool_ga4"> GA4 + UTM governance</label>
+              <div class="hint"><strong>Co:</strong> srovnatelnost kampaní a reporting CPL. <strong>Jak:</strong> sjednotit UTM a ověřit v GA4.</div>
+              <label><input type="checkbox" id="fb_tool_creatives"> Creative library (drive/notion)</label>
+              <div class="hint"><strong>Co:</strong> sdílená knihovna vizuálů a textů. <strong>Proč:</strong> rychlé A/B testy, snížení HPL.</div>
+              <label><input type="checkbox" id="fb_tool_crm"> CRM offline konverze (volitelné)</label>
+              <div class="hint"><strong>Co:</strong> import výsledků pro lepší optimalizaci. <strong>Proč:</strong> lepší kvalita leadů.</div>
+            </div>
+            <div style="font-weight:600; margin:8px 0 4px;">Postup</div>
+            <div style="display:grid; grid-template-columns: 1fr; gap:6px;">
+              <label><input type="checkbox" id="fb_step_struct"> Quick: struktura kampaní (TOFU/MOFU/BOFU)</label>
+              <div class="hint"><strong>Jak:</strong> oddělit prospecting/remarketing; 1 cíl/1 adset. <strong>KPI:</strong> nižší CPL. <strong>Čas:</strong> 1–2 h.</div>
+              <label><input type="checkbox" id="fb_step_creatives"> Quick: 3+ kreativy/variace</label>
+              <div class="hint"><strong>Jak:</strong> formáty (obrázek/video), 1 jasná nabídka/CTA. <strong>KPI:</strong> vyšší CTR, nižší CPL. <strong>Čas:</strong> 1–2 h.</div>
+              <label><input type="checkbox" id="fb_step_lp"> Quick: LP audit (rychlost/CTA/form)</label>
+              <div class="hint"><strong>Jak:</strong> PageSpeed, 1 CTA, minimum polí. <strong>KPI:</strong> +konverze, nižší CPL. <strong>Čas:</strong> 1–2 h.</div>
+              <label><input type="checkbox" id="fb_step_advantage"> Advanced: Advantage+ testování</label>
+              <div class="hint"><strong>Jak:</strong> otestovat Advantage+ campaign budget/placementy. <strong>KPI:</strong> škálování za přijatelný CPL.</div>
+              <label><input type="checkbox" id="fb_step_leadads"> Advanced: Lead Ads + webhook</label>
+              <div class="hint"><strong>Jak:</strong> formulář + napojení do CRM. <strong>KPI:</strong> nižší HPL/rychlejší reakce.</div>
+            </div>
+          </div>
+        </div>
+        <div class="channel-card" id="card_li">
+          <h3>LinkedIn</h3>
+          <div class="metric-row"><span>Leady</span><span id="li_leads">0</span></div>
+          <div class="metric-row"><span>Mediální náklady</span><span id="li_media">0 Kč</span></div>
+          <div class="metric-row"><span>Hodiny</span><span id="li_hours">0 h</span></div>
+          <div class="metric-row"><span>Personální náklady</span><span id="li_people">0 Kč</span></div>
+          <div class="metric-row"><span>Celkem</span><span id="li_total">0 Kč</span></div>
+          <div class="metric-row"><span>Efektivní CPL <span class="tip" title="(Mediální + personální náklady) / lead">i</span></span><span id="li_ecpl">0 Kč</span></div>
+          <div class="metric-row"><span>Media‑only CPL <span class="tip" title="Pouze mediální náklady / lead">i</span></span><span id="li_mcpl">0 Kč</span></div>
+          <div class="metric-row"><span>Personální podíl (kanál) <span class="tip" title="Personální náklady / celkové náklady daného kanálu">i</span></span><span id="li_ppct">0%</span></div>
+          <div class="metric-row"><span>Podíl leadů <span class="tip" title="Leady kanálu / celkové leady">i</span></span><span id="li_lshare">0%</span></div>
+          <div class="metric-row"><span>Podíl nákladů <span class="tip" title="Náklady kanálu / celkové náklady">i</span></span><span id="li_cshare">0%</span></div>
+          <div class="metric-row"><span>Efektivita vs. průměr <span class="tip" title="Porovnání efektivního CPL kanálu s blended CPL (celkový průměr)">i</span></span><span id="li_eff" class="badge">—</span></div>
+          <div class="metric-row"><span>Poměr cena/výkon <span class="tip" title="Efektivní CPL kanálu / blended CPL (100% = průměr)">i</span></span><span id="li_effratio">—</span></div>
+          <div class="effbar"><div id="li_effbar" class="effbar-fill eff-ok"></div></div>
+          <button id="li_tools_toggle" class="toggle">Nástroje a postupy</button>
+          <div id="li_tools_panel" class="collapse">
+            <div style="font-weight:600; margin-bottom:4px;">Nástroje</div>
+            <div style="display:grid; grid-template-columns: 1fr; gap:6px;">
+              <label><input type="checkbox" id="li_tool_campaign"> Campaign Manager <span class="mini-badge">required</span></label>
+              <div class="hint"><strong>Co:</strong> správa kampaní a konverzí. <strong>Proč:</strong> přesná B2B cílení. <strong>Jak:</strong> nastavit konverze, UTM.</div>
+              <label><input type="checkbox" id="li_tool_insight"> Insight Tag + Conversions API <span class="mini-badge">required</span></label>
+              <div class="hint"><strong>Co:</strong> měření návštěv/konverzí. <strong>Proč:</strong> optimalizace na lead. <strong>Jak:</strong> GTM/SS.</div>
+              <label><input type="checkbox" id="li_tool_ga4"> GA4 + UTM governance</label>
+              <div class="hint"><strong>Co:</strong> standardizace UTM, reporting CPL. <strong>Jak:</strong> jednotné názvy kampaní.</div>
+              <label><input type="checkbox" id="li_tool_crm"> CRM offline konverze</label>
+              <div class="hint"><strong>Co:</strong> import výsledků (MQL→SQL). <strong>Proč:</strong> lepší kvalita optimalizace.</div>
+            </div>
+            <div style="font-weight:600; margin:8px 0 4px;">Postup</div>
+            <div style="display:grid; grid-template-columns: 1fr; gap:6px;">
+              <label><input type="checkbox" id="li_step_offer"> Quick: jasná B2B nabídka + CTA</label>
+              <div class="hint"><strong>Jak:</strong> 1 value prop, role‑based messaging. <strong>KPI:</strong> CTR/CPL.</div>
+              <label><input type="checkbox" id="li_step_audience"> Quick: přesné publikum</label>
+              <div class="hint"><strong>Jak:</strong> job titles, skills, company size. <strong>KPI:</strong> kvalita leadů.</div>
+              <label><input type="checkbox" id="li_step_lp"> Quick: LP audit (form/CTA)</label>
+              <div class="hint"><strong>Jak:</strong> minimum polí, meeting link. <strong>KPI:</strong> konverze.</div>
+              <label><input type="checkbox" id="li_step_ret"> Advanced: remarketing návštěvníků</label>
+              <div class="hint"><strong>Jak:</strong> návštěvy LP, engaged users. <strong>KPI:</strong> snížení CPL.</div>
+              <label><input type="checkbox" id="li_step_leadgen"> Advanced: Lead Gen Forms + CRM</label>
+              <div class="hint"><strong>Jak:</strong> formulář + webhook do CRM. <strong>KPI:</strong> nižší HPL.</div>
+            </div>
+          </div>
+        </div>
+        <div class="channel-card" id="card_gg">
+          <h3>Google Ads</h3>
+          <div class="metric-row"><span>Leady</span><span id="gg_leads">0</span></div>
+          <div class="metric-row"><span>Mediální náklady</span><span id="gg_media">0 Kč</span></div>
+          <div class="metric-row"><span>Hodiny</span><span id="gg_hours">0 h</span></div>
+          <div class="metric-row"><span>Personální náklady</span><span id="gg_people">0 Kč</span></div>
+          <div class="metric-row"><span>Celkem</span><span id="gg_total">0 Kč</span></div>
+          <div class="metric-row"><span>Efektivní CPL <span class="tip" title="(Mediální + personální náklady) / lead">i</span></span><span id="gg_ecpl">0 Kč</span></div>
+          <div class="metric-row"><span>Media‑only CPL <span class="tip" title="Pouze mediální náklady / lead">i</span></span><span id="gg_mcpl">0 Kč</span></div>
+          <div class="metric-row"><span>Personální podíl (kanál) <span class="tip" title="Personální náklady / celkové náklady daného kanálu">i</span></span><span id="gg_ppct">0%</span></div>
+          <div class="metric-row"><span>Podíl leadů <span class="tip" title="Leady kanálu / celkové leady">i</span></span><span id="gg_lshare">0%</span></div>
+          <div class="metric-row"><span>Podíl nákladů <span class="tip" title="Náklady kanálu / celkové náklady">i</span></span><span id="gg_cshare">0%</span></div>
+          <div class="metric-row"><span>Efektivita vs. průměr <span class="tip" title="Porovnání efektivního CPL kanálu s blended CPL (celkový průměr)">i</span></span><span id="gg_eff" class="badge">—</span></div>
+          <div class="metric-row"><span>Poměr cena/výkon <span class="tip" title="Efektivní CPL kanálu / blended CPL (100% = průměr)">i</span></span><span id="gg_effratio">—</span></div>
+          <div class="effbar"><div id="gg_effbar" class="effbar-fill eff-ok"></div></div>
+          <button id="gg_tools_toggle" class="toggle">Nástroje a postupy</button>
+          <div id="gg_tools_panel" class="collapse">
+            <div style="font-weight:600; margin-bottom:4px;">Nástroje</div>
+            <div style="display:grid; grid-template-columns: 1fr; gap:6px;">
+              <label><input type="checkbox" id="gg_tool_ads"> Google Ads + účet konverzí <span class="mini-badge">required</span></label>
+              <div class="hint"><strong>Co:</strong> správa kampaní a konverzí. <strong>Proč:</strong> měření CPL. <strong>Jak:</strong> definovat konverze (lead).</div>
+              <label><input type="checkbox" id="gg_tool_analytics"> GA4 + GTM <span class="mini-badge">required</span></label>
+              <div class="hint"><strong>Co:</strong> měření událostí a UTM. <strong>Proč:</strong> přesné vyhodnocení. <strong>Jak:</strong> GTM značky/události.</div>
+              <label><input type="checkbox" id="gg_tool_capi"> Enhanced conversions / offline import</label>
+              <div class="hint"><strong>Co:</strong> lepší párování, import výsledků z CRM. <strong>Proč:</strong> kvalita optimalizace.</div>
+              <label><input type="checkbox" id="gg_tool_lp"> LP experimenty (A/B)</label>
+              <div class="hint"><strong>Co:</strong> test variant nad titulkem/CTA. <strong>Proč:</strong> konverze → CPL.</div>
+            </div>
+            <div style="font-weight:600; margin:8px 0 4px;">Postup</div>
+            <div style="display:grid; grid-template-columns: 1fr; gap:6px;">
+              <label><input type="checkbox" id="gg_step_keywords"> Quick: kvalitní klíčová slova a SKAGy</label>
+              <div class="hint"><strong>Jak:</strong> rozdělit brand/generic; přesné shody. <strong>KPI:</strong> CTR/CPL.</div>
+              <label><input type="checkbox" id="gg_step_ext"> Quick: rozšíření reklam</label>
+              <div class="hint"><strong>Jak:</strong> sitelinks, callout, structured snippets. <strong>KPI:</strong> CTR.</div>
+              <label><input type="checkbox" id="gg_step_neg"> Quick: negativní klíčová slova</label>
+              <div class="hint"><strong>Jak:</strong> průběžná správa. <strong>KPI:</strong> nižší plýtvání.</div>
+              <label><input type="checkbox" id="gg_step_conv"> Advanced: správné konverze + hodnoty</label>
+              <div class="hint"><strong>Jak:</strong> měřit primárně lead, sekundárně mikrocíle. <strong>KPI:</strong> optimalizace.</div>
+              <label><input type="checkbox" id="gg_step_pmax"> Advanced: Performance Max s kvalitními assety</label>
+              <div class="hint"><strong>Jak:</strong> feed + assety, vyloučit brand dle potřeby. <strong>KPI:</strong> škálování.</div>
+            </div>
+          </div>
+        </div>
+        <div class="channel-card" id="card_em">
+          <h3>Emailing</h3>
+          <div class="metric-row"><span>Leady</span><span id="em_leads">0</span></div>
+          <div class="metric-row"><span>Mediální náklady</span><span id="em_media">0 Kč</span></div>
+          <div class="metric-row"><span>Hodiny</span><span id="em_hours">0 h</span></div>
+          <div class="metric-row"><span>Personální náklady</span><span id="em_people">0 Kč</span></div>
+          <div class="metric-row"><span>Celkem</span><span id="em_total">0 Kč</span></div>
+          <div class="metric-row"><span>Efektivní CPL <span class="tip" title="(Mediální + personální náklady) / lead">i</span></span><span id="em_ecpl">0 Kč</span></div>
+          <div class="metric-row"><span>Media‑only CPL <span class="tip" title="Pouze mediální náklady / lead">i</span></span><span id="em_mcpl">0 Kč</span></div>
+          <div class="metric-row"><span>Personální podíl (kanál) <span class="tip" title="Personální náklady / celkové náklady daného kanálu">i</span></span><span id="em_ppct">0%</span></div>
+          <div class="metric-row"><span>Podíl leadů <span class="tip" title="Leady kanálu / celkové leady">i</span></span><span id="em_lshare">0%</span></div>
+          <div class="metric-row"><span>Podíl nákladů <span class="tip" title="Náklady kanálu / celkové náklady">i</span></span><span id="em_cshare">0%</span></div>
+          <div class="metric-row"><span>Využití kapacity <span class="tip" title="Skutečné emailing leady / teoretická kapacita báze a funnelu">i</span></span><span id="em_cap">—</span></div>
+          <div class="progress"><div id="em_progress" class="progress-bar"></div></div>
+          <div class="metric-row"><span>Teoretická kapacita</span><span id="em_capks">—</span></div>
+          <div class="metric-row"><span>Efektivita vs. průměr <span class="tip" title="Porovnání efektivního CPL kanálu s blended CPL (celkový průměr)">i</span></span><span id="em_eff" class="badge">—</span></div>
+          <div class="metric-row"><span>Poměr cena/výkon <span class="tip" title="Efektivní CPL kanálu / blended CPL (100% = průměr)">i</span></span><span id="em_effratio">—</span></div>
+          <div class="effbar"><div id="em_effbar" class="effbar-fill eff-ok"></div></div>
+          <div class="metric-row"><span>Maturity (Emailing)</span><span><span id="em_maturity" class="mini-badge">0%</span></span></div>
+          <button id="em_tools_toggle" class="toggle">Nástroje a postupy</button>
+          <div id="em_tools_panel" class="collapse">
+            <div style="font-weight:600; margin-bottom:4px;">Nástroje</div>
+            <div style="display:grid; grid-template-columns: 1fr; gap:6px;">
+              <label><input type="checkbox" id="em_tool_esp"> ESP (Mailchimp/Sendinblue/HubSpot) <span class="mini-badge">required</span></label>
+              <div class="hint">
+                <strong>Co:</strong> e‑mailingový nástroj pro rozesílky a automatizace (šablony, segmentace, scénáře). 
+                <strong>Proč:</strong> škálování, doručitelnost, měření. 
+                <strong>Výběr:</strong> podle integrací (CRM/e‑shop), ceny a UX editoru.
+                <div style="margin-top:4px;"><strong>ESP příklady (CZ):</strong></div>
+                <div><strong>Ecomail</strong> – česká e‑mailingová platforma pro hromadné rozesílky a automatizace. Podporuje segmentaci, šablony, napojení na e‑commerce (např. Shoptet) a základní automatizační scénáře.</div>
+                <div style="margin-top:2px;"><strong>SmartEmailing</strong> – česká ESP se zaměřením na doručitelnost a automatizace. Nabízí formuláře, segmentaci, scénáře pro lead‑nurturing a integrace (např. Raynet, e‑commerce platformy).</div>
+                <div style="margin-top:6px;"><strong>Vyberte ESP:</strong>
+                  <label style="margin-left:6px;"><input type="radio" name="em_esp" id="em_esp_ec" value="Ecomail"> Ecomail</label>
+                  <label style="margin-left:6px;"><input type="radio" name="em_esp" id="em_esp_se" value="SmartEmailing"> SmartEmailing</label>
+                  <label style="margin-left:6px;"><input type="radio" name="em_esp" id="em_esp_other" value="Other"> Jiné</label>
+                </div>
+              </div>
+
+              <label><input type="checkbox" id="em_tool_auth"> SPF/DKIM/DMARC <span class="mini-badge">required</span></label>
+              <div class="hint">
+                <strong>Co:</strong> ověření odesílatele přes DNS záznamy. 
+                <strong>Proč:</strong> vyšší doručitelnost a reputace domény (méně SPAM). 
+                <strong>Jak:</strong> postup dle návodu vašeho ESP, ověřit v ESP/Google Postmaster.
+              </div>
+
+              <label><input type="checkbox" id="em_tool_ga4"> GA4 + UTM governance</label>
+              <div class="hint">
+                <strong>Co:</strong> měření dopadů e‑mailu (konverze, CPL) a standard pro UTM tagy. 
+                <strong>Proč:</strong> srovnatelnost kampaní a přesné vyhodnocení. 
+                <strong>Jak:</strong> sjednotit názvosloví UTM a kontrolovat v GA4.
+              </div>
+
+              <label><input type="checkbox" id="em_tool_crm"> CRM integrace (webhook/API)</label>
+              <div class="hint">
+                <strong>Co:</strong> automatické předání leadu do CRM + SLA workflow. 
+                <strong>Proč:</strong> nižší HPL, rychlejší reakce → vyšší konverze do obchodu. 
+                <strong>Jak:</strong> webhook/API konektor v ESP, auto‑assign a upozornění v CRM.
+              </div>
+
+              <label><input type="checkbox" id="em_tool_list"> List hygiene / Double opt‑in</label>
+              <div class="hint">
+                <strong>Co:</strong> čištění databáze (bounces, neaktivní) a potvrzení odběru. 
+                <strong>Proč:</strong> stabilní doručitelnost, vyšší OR/CTR, lepší reputace. 
+                <strong>Jak:</strong> pravidelné čistky + zapnout double opt‑in pro nové odběratele.
+              </div>
+            </div>
+            <div style="font-weight:600; margin:8px 0 4px;">Postup</div>
+            <div style="display:grid; grid-template-columns: 1fr; gap:6px;">
+              <label><input type="checkbox" id="em_step_segment"> Segmentace recent actives (Quick)</label>
+              <div class="hint">
+                <strong>Jak:</strong> vytvořte segment posledních 90 dní aktivních (otevřeli/klikli) a posílejte primárně jim. 
+                <strong>KPI:</strong> vyšší OR/CTR. <strong>Čas:</strong> 0.5–1 h. <strong>Dopad:</strong> střední–vysoký.
+              </div>
+
+              <label><input type="checkbox" id="em_step_nurture"> Nurturing 3–5 emailů (Quick)</label>
+              <div class="hint">
+                <strong>Jak:</strong> krátká série (lead magnet → case → nabídka/konzultace), 1 jasné CTA na e‑mail. 
+                <strong>KPI:</strong> +LP konverze. <strong>Čas:</strong> 2–4 h. <strong>Dopad:</strong> střední.
+              </div>
+
+              <label><input type="checkbox" id="em_step_lp"> LP audit: rychlost/CTA/form (Quick)</label>
+              <div class="hint">
+                <strong>Jak:</strong> ověřte rychlost (PageSpeed), jednu hlavní CTA, minimum povinných polí. 
+                <strong>KPI:</strong> +LP konverze, nižší CPL. <strong>Čas:</strong> 1–2 h. <strong>Dopad:</strong> střední.
+              </div>
+
+              <label><input type="checkbox" id="em_step_scoring"> Scoring aktivity + workflow (Advanced)</label>
+              <div class="hint">
+                <strong>Jak:</strong> body za otevření/klik/role; nad prahy spustit úkol/automat. 
+                <strong>KPI:</strong> nižší HPL, rychlejší reakce. <strong>Čas:</strong> 2–4 h. <strong>Dopad:</strong> střední.
+              </div>
+
+              <label><input type="checkbox" id="em_step_referral"> Referral/partner akvizice (Advanced)</label>
+              <div class="hint">
+                <strong>Jak:</strong> lead magnet, partner newsletter swap, referral program. 
+                <strong>KPI:</strong> růst báze → vyšší kapacita. <strong>Čas:</strong> 3–6 h (první asset). <strong>Dopad:</strong> vysoký.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hint" style="margin-top:8px;">Efektivní CPL zahrnuje mediální i personální náklady na jeden lead v daném kanálu.</div>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <h2 class="section-title">Vstupy</h2>
+        <div class="field">
+          <label for="targetLeads">Cílové leady / měsíc <span class="tip" title="Počet leadů, kterého chcete dosáhnout za měsíc">i</span></label>
+          <input type="number" id="targetLeads" min="1" step="1" value="100" />
+        </div>
+        <div class="field">
+          <label for="hourlyRate">Hodinová sazba (Kč/h) <span class="tip" title="Interní hodinová sazba pro práci na akvizici a follow‑up">i</span></label>
+          <input type="number" id="hourlyRate" min="0" step="50" value="600" />
+        </div>
+        <div class="field">
+          <label for="emailBaseSize">Velikost e‑mail báze (ks) <span class="tip" title="Aktivní kontakty, které lze oslovit (využito v limitu emailing kapacity)">i</span></label>
+          <input type="number" id="emailBaseSize" min="0" step="100" value="5000" />
+        </div>
+        <div class="hint">Podíly kanálů by měly dávat 100 %. Tlačítkem níže můžete normalizovat.</div>
+        <div class="actions" style="margin-top:10px;">
+          <button class="btn" id="normalizeBtn">Normalizovat podíly</button>
+          <button class="btn" id="defaultsBtn">Obnovit defaulty</button>
+          <button class="btn" id="exportCsvBtn">Export CSV</button>
+          <button class="btn" id="exportJsonBtn">Export JSON</button>
+          <button class="btn" id="copyTsvBtn">Kopírovat TSV</button>
+        </div>
+        <div id="sharesValidation" class="hint" style="margin-top:6px;"></div>
+        <div class="actions" style="margin-top:10px; gap:6px; display:flex; flex-wrap:wrap; align-items:center;">
+          <input id="presetName" type="text" placeholder="Název presetu" style="flex:1; min-width:160px; padding:8px 10px; border:1px solid var(--border); border-radius:8px;" />
+          <button class="btn" id="savePresetBtn">Uložit preset</button>
+          <select id="presetSelect" style="min-width:160px; padding:8px 10px; border:1px solid var(--border); border-radius:8px;"></select>
+          <button class="btn" id="loadPresetBtn">Načíst preset</button>
+          <button class="btn" id="deletePresetBtn">Smazat preset</button>
+          <button class="btn" id="shareUrlBtn">Zkopírovat URL</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">Kanálové vstupy</h2>
+        <div class="channel-grid">
+          <div class="channel-card">
+            <h3>Facebook / Instagram</h3>
+            <div class="field"><label>Podíl (%) <span class="tip" title="Procento z cílových leadů alokované do tohoto kanálu">i</span></label><input type="number" id="share_fb" min="0" max="100" step="1" value="35"></div>
+            <div class="hint">Podíl cílových leadů připsaných tomuto kanálu.</div>
+            <div class="field"><label>CPL (Kč) <span class="tip" title="Mediální náklady na získání jednoho leadu">i</span></label><input type="number" id="cpl_fb" min="0" step="10" value="350"></div>
+            <div class="hint">Cena za lead z médií (reklamní náklady / počet leadů).</div>
+            <div class="field"><label>Hodiny/lead <span class="tip" title="Čas správy kampaní, tvorby obsahu a follow‑up na 1 lead">i</span></label><input type="number" id="hpl_fb" min="0" step="0.1" value="0.25"></div>
+            <div class="hint">Čas na správu kampaní, tvorbu obsahu a follow‑up na jeden lead.</div>
+          </div>
+          <div class="channel-card">
+            <h3>LinkedIn</h3>
+            <div class="field"><label>Podíl (%) <span class="tip" title="Procento z cílových leadů alokované do tohoto kanálu">i</span></label><input type="number" id="share_li" min="0" max="100" step="1" value="15"></div>
+            <div class="hint">Podíl cílových leadů připsaných tomuto kanálu.</div>
+            <div class="field"><label>CPL (Kč) <span class="tip" title="Mediální náklady na získání jednoho leadu">i</span></label><input type="number" id="cpl_li" min="0" step="10" value="600"></div>
+            <div class="hint">Obvykle vyšší než FB/IG, ale často kvalitnější leady.</div>
+            <div class="field"><label>Hodiny/lead <span class="tip" title="Čas outreachu, správy kampaní a komunikace na 1 lead">i</span></label><input type="number" id="hpl_li" min="0" step="0.1" value="0.4"></div>
+            <div class="hint">Čas na outreach, správu kampaní a komunikaci.</div>
+          </div>
+          <div class="channel-card">
+            <h3>Google Ads</h3>
+            <div class="field"><label>Podíl (%) <span class="tip" title="Procento z cílových leadů alokované do tohoto kanálu">i</span></label><input type="number" id="share_gg" min="0" max="100" step="1" value="40"></div>
+            <div class="hint">Podíl cílových leadů připsaných tomuto kanálu.</div>
+            <div class="field"><label>CPL (Kč) <span class="tip" title="Mediální náklady na získání jednoho leadu">i</span></label><input type="number" id="cpl_gg" min="0" step="10" value="500"></div>
+            <div class="hint">CPL odpovídá ceně za konverzi ve vyhledávání/obsahu.</div>
+            <div class="field"><label>Hodiny/lead <span class="tip" title="Čas optimalizací a správy účtů na 1 lead">i</span></label><input type="number" id="hpl_gg" min="0" step="0.1" value="0.2"></div>
+            <div class="hint">Čas na optimalizaci kampaní a assetů (RSA, LP apod.).</div>
+          </div>
+          <div class="channel-card">
+            <h3>Emailing</h3>
+            <div class="field"><label>Podíl (%) <span class="tip" title="Procento z cílových leadů alokované do emailingu (limitováno kapacitou)">i</span></label><input type="number" id="share_em" min="0" max="100" step="1" value="10"></div>
+            <div class="hint">Podíl cílových leadů připsaných emailingu (omezen kapacitou báze).</div>
+            <div class="field"><label>CPL (Kč) <span class="tip" title="Náklady na nástroje/rozp. přepočtené na 1 lead">i</span></label><input type="number" id="cpl_em" min="0" step="5" value="120"></div>
+            <div class="hint">Zahrnuje náklady na nástroje, kreativitu a rozesílky per lead.</div>
+            <div class="field"><label>Hodiny/lead <span class="tip" title="Čas na segmentaci, copy, design a follow‑up na 1 lead">i</span></label><input type="number" id="hpl_em" min="0" step="0.1" value="0.15"></div>
+            <div class="hint">Čas na segmentaci, copy, design a follow‑up.</div>
+            <div class="field"><label>Open rate (%) <span class="tip" title="Podíl otevření z rozeslaných emailů">i</span></label><input type="number" id="email_open" min="0" max="100" step="1" value="35"></div>
+            <div class="hint">Podíl příjemců, kteří otevřou e‑mail (typicky 20–40 %).</div>
+            <div class="field"><label>CTR z otevření (%) <span class="tip" title="Kliknutí / otevření">i</span></label><input type="number" id="email_ctr" min="0" max="100" step="0.5" value="6"></div>
+            <div class="hint">Kliky z otevřených e‑mailů (typicky 2–8 %).</div>
+            <div class="field"><label>Konverze z kliknutí (%) <span class="tip" title="Leady / kliknutí (landing page)">i</span></label><input type="number" id="email_lpconv" min="0" max="100" step="0.5" value="12"></div>
+            <div class="hint">Podíl kliků, které skončí leadem (typicky 5–20 %).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h2 class="section-title">Souhrn</h2>
+      <div class="kpis">
+        <div class="kpi">
+          <div class="label">Mediální rozpočet (Kč/měsíc)</div>
+          <div class="value" id="kpiMedia">0</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Personální náklady (Kč/měsíc)</div>
+          <div class="value" id="kpiPeople">0</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Celkové náklady (Kč/měsíc)</div>
+          <div class="value" id="kpiTotal">0</div>
+        </div>
+      </div>
+      <div class="kpis" style="margin-top:12px;">
+        <div class="kpi">
+          <div class="label">Průměrný CPL (Kč/lead) <span class="tip" title="Celkové náklady / celkové leady (blended)">i</span></div>
+          <div class="value" id="kpiCpl">0</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Podíl personálních nákladů <span class="tip" title="Personální náklady / celkové náklady">i</span></div>
+          <div class="value" id="kpiPeopleShare">0%</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Odhad hodin/měsíc (celkem) <span class="tip" title="Součet hodin napříč kanály (leady × hodiny/lead)">i</span></div>
+          <div class="value" id="kpiHours">0 h</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h2 class="section-title">Detail po kanálech</h2>
+      <table class="table" id="channelsTable">
+        <thead>
+          <tr>
+            <th>Kanál</th>
+            <th>Leady</th>
+            <th>Mediální náklady</th>
+            <th>Hodiny</th>
+            <th>Personální náklady</th>
+            <th>Celkem</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot>
+          <tr>
+            <th>Celkem</th>
+            <th id="t_leads">0</th>
+            <th id="t_media">0</th>
+            <th id="t_hours">0 h</th>
+            <th id="t_people">0</th>
+            <th id="t_total">0</th>
+          </tr>
+        </tfoot>
+      </table>
+      <div class="hint" style="margin-top:8px;">Hodiny/lead zahrnují správu kampaní, optimalizaci, tvorbu obsahu a obchodní follow‑up.</div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h2 class="section-title">Doporučení a upozornění</h2>
+      <ul class="recommendations" id="recoList"></ul>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h2 class="section-title">Jak se počítá limit emailing leadů</h2>
+      <p class="hint" style="margin-bottom:10px;">Max. počet leadů z emailingu je omezen velikostí báze a průchodem trychtýřem:</p>
+      <ul class="recommendations" style="margin-top:6px;">
+        <li>Výpočet: <strong>Velikost báze × Open rate × CTR z otevření × Konverze na lead</strong></li>
+        <li>Příklad: 5 000 × 35% × 6% × 12% ≈ 126 leadů/měsíc</li>
+        <li>Benchmarky (obecné): Open 20–40 %, CTR 2–8 %, Konverze z kliknutí 5–20 %</li>
+        <li>Jak zvýšit strop: rozšiřovat bázi, lepší segmentace a personalizace, testování předmětů, hodnotnější nabídky</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const fmt = new Intl.NumberFormat('cs-CZ');
+
+    const inputs = {
+      targetLeads: document.getElementById('targetLeads'),
+      hourlyRate: document.getElementById('hourlyRate'),
+      emailBaseSize: document.getElementById('emailBaseSize'),
+      share_fb: document.getElementById('share_fb'), cpl_fb: document.getElementById('cpl_fb'), hpl_fb: document.getElementById('hpl_fb'),
+      share_li: document.getElementById('share_li'), cpl_li: document.getElementById('cpl_li'), hpl_li: document.getElementById('hpl_li'),
+      share_gg: document.getElementById('share_gg'), cpl_gg: document.getElementById('cpl_gg'), hpl_gg: document.getElementById('hpl_gg'),
+      share_em: document.getElementById('share_em'), cpl_em: document.getElementById('cpl_em'), hpl_em: document.getElementById('hpl_em'),
+      email_open: document.getElementById('email_open'), email_ctr: document.getElementById('email_ctr'), email_lpconv: document.getElementById('email_lpconv')
+    };
+
+    const tableBody = document.querySelector('#channelsTable tbody');
+    const kpiMedia = document.getElementById('kpiMedia');
+    const kpiPeople = document.getElementById('kpiPeople');
+    const kpiTotal = document.getElementById('kpiTotal');
+    const kpiCpl = document.getElementById('kpiCpl');
+    const kpiPeopleShare = document.getElementById('kpiPeopleShare');
+    const kpiHours = document.getElementById('kpiHours');
+
+    const tLeads = document.getElementById('t_leads');
+    const tMedia = document.getElementById('t_media');
+    const tHours = document.getElementById('t_hours');
+    const tPeople = document.getElementById('t_people');
+    const tTotal = document.getElementById('t_total');
+
+    const normalizeBtn = document.getElementById('normalizeBtn');
+    const defaultsBtn = document.getElementById('defaultsBtn');
+    const exportCsvBtn = document.getElementById('exportCsvBtn');
+    const exportJsonBtn = document.getElementById('exportJsonBtn');
+    const copyTsvBtn = document.getElementById('copyTsvBtn');
+    const sharesValidation = document.getElementById('sharesValidation');
+    const presetName = document.getElementById('presetName');
+    const savePresetBtn = document.getElementById('savePresetBtn');
+    const loadPresetBtn = document.getElementById('loadPresetBtn');
+    const deletePresetBtn = document.getElementById('deletePresetBtn');
+    const presetSelect = document.getElementById('presetSelect');
+    const shareUrlBtn = document.getElementById('shareUrlBtn');
+    const recoList = document.getElementById('recoList');
+    // Emailing playbook UI
+    const emToggle = document.getElementById('em_tools_toggle');
+    const emPanel = document.getElementById('em_tools_panel');
+    const emMaturityEl = document.getElementById('em_maturity');
+    const emToolIds = ['em_tool_esp','em_tool_auth','em_tool_ga4','em_tool_crm','em_tool_list'];
+    const emStepIds = ['em_step_segment','em_step_nurture','em_step_lp','em_step_scoring','em_step_referral'];
+    // FB/IG, LinkedIn, Google Ads playbook UI
+    const fbToggle = document.getElementById('fb_tools_toggle');
+    const liToggle = document.getElementById('li_tools_toggle');
+    const ggToggle = document.getElementById('gg_tools_toggle');
+    const fbPanel = document.getElementById('fb_tools_panel');
+    const liPanel = document.getElementById('li_tools_panel');
+    const ggPanel = document.getElementById('gg_tools_panel');
+    const fbToolIds = ['fb_tool_bm','fb_tool_pixel','fb_tool_ga4','fb_tool_creatives','fb_tool_crm'];
+    const fbStepIds = ['fb_step_struct','fb_step_creatives','fb_step_lp','fb_step_advantage','fb_step_leadads'];
+    const liToolIds = ['li_tool_campaign','li_tool_insight','li_tool_ga4','li_tool_crm'];
+    const liStepIds = ['li_step_offer','li_step_audience','li_step_lp','li_step_ret','li_step_leadgen'];
+    const ggToolIds = ['gg_tool_ads','gg_tool_analytics','gg_tool_capi','gg_tool_lp'];
+    const ggStepIds = ['gg_step_keywords','gg_step_ext','gg_step_neg','gg_step_conv','gg_step_pmax'];
+    // Emailing ESP radios
+    const emEspRadios = [
+      document.getElementById('em_esp_ec'),
+      document.getElementById('em_esp_se'),
+      document.getElementById('em_esp_other')
+    ].filter(Boolean);
+
+    function clamp(n, lo, hi){ return Math.max(lo, Math.min(hi, n)); }
+
+    function getModel(){
+      const TL = Math.max(0, Number(inputs.targetLeads.value)||0);
+      const HR = Math.max(0, Number(inputs.hourlyRate.value)||0);
+      const base = Math.max(0, Number(inputs.emailBaseSize.value)||0);
+      const channels = [
+        {key:'fb', name:'Facebook/Instagram', share:0, cpl:0, hpl:0},
+        {key:'li', name:'LinkedIn', share:0, cpl:0, hpl:0},
+        {key:'gg', name:'Google Ads', share:0, cpl:0, hpl:0},
+        {key:'em', name:'Emailing', share:0, cpl:0, hpl:0, base}
+      ];
+      // Assign live values from inputs
+      channels[0].share = clamp(Number(inputs.share_fb.value)||0,0,100);
+      channels[0].cpl = Math.max(0, Number(inputs.cpl_fb.value)||0);
+      channels[0].hpl = Math.max(0, Number(inputs.hpl_fb.value)||0);
+
+      channels[1].share = clamp(Number(inputs.share_li.value)||0,0,100);
+      channels[1].cpl = Math.max(0, Number(inputs.cpl_li.value)||0);
+      channels[1].hpl = Math.max(0, Number(inputs.hpl_li.value)||0);
+
+      channels[2].share = clamp(Number(inputs.share_gg.value)||0,0,100);
+      channels[2].cpl = Math.max(0, Number(inputs.cpl_gg.value)||0);
+      channels[2].hpl = Math.max(0, Number(inputs.hpl_gg.value)||0);
+
+      channels[3].share = clamp(Number(inputs.share_em.value)||0,0,100);
+      channels[3].cpl = Math.max(0, Number(inputs.cpl_em.value)||0);
+      channels[3].hpl = Math.max(0, Number(inputs.hpl_em.value)||0);
+
+      return { TL, HR, base, channels };
+  }
+
+  // Emailing playbook state (LocalStorage)
+  const PLAY_EMAIL_KEY = 'lead_goal_email_playbook';
+  function getEmailPlayState(){
+    try { return JSON.parse(localStorage.getItem(PLAY_EMAIL_KEY)||'{}'); } catch(e){ return {}; }
+  }
+  function setEmailPlayState(s){ localStorage.setItem(PLAY_EMAIL_KEY, JSON.stringify(s||{})); }
+  // Emailing ESP selection
+  const PLAY_EMAIL_ESP_KEY = 'lead_goal_email_esp';
+  function getEmailEsp(){
+    try { return localStorage.getItem(PLAY_EMAIL_ESP_KEY) || ''; } catch(e){ return ''; }
+  }
+  function setEmailEsp(val){ try { localStorage.setItem(PLAY_EMAIL_ESP_KEY, val||''); } catch(e){} }
+  function computeEmailMaturity(state){
+    // Required tools: esp, auth (2 items) — 60% váhy
+    const reqKeys = ['em_tool_esp','em_tool_auth'];
+    const reqDone = reqKeys.filter(k=>state[k]).length;
+    const reqScore = (reqDone/reqKeys.length) * 60;
+    // Steps: quick (segment,nurture,lp) weight 1, advanced (scoring,referral) weight 2 — 40% váhy
+    const weights = { em_step_segment:1, em_step_nurture:1, em_step_lp:1, em_step_scoring:2, em_step_referral:2 };
+    const totalW = Object.values(weights).reduce((a,b)=>a+b,0);
+    const doneW = Object.entries(weights).reduce((a,[k,w])=> a + ((state[k]?1:0)*w), 0);
+    const stepScore = (doneW/totalW) * 40;
+    return Math.round(reqScore + stepScore);
+  }
+  function syncEmailPlaybookUI(){
+    const st = getEmailPlayState();
+    [...emToolIds, ...emStepIds].forEach(id=>{
+      const el = document.getElementById(id);
+      if (el) el.checked = !!st[id];
+    });
+    const score = computeEmailMaturity(st);
+    if (emMaturityEl) emMaturityEl.textContent = score + '%';
+    // Sync ESP radios
+    const esp = getEmailEsp();
+    if (esp && Array.isArray(emEspRadios)) {
+      emEspRadios.forEach(r => { if (r) r.checked = (r && r.value === esp); });
+    }
+  }
+
+  // ===== Playbook state for other channels =====
+  const PLAY_FB_KEY = 'lead_goal_fb_playbook';
+  const PLAY_LI_KEY = 'lead_goal_li_playbook';
+  const PLAY_GG_KEY = 'lead_goal_gg_playbook';
+  function getPlayState(key){ try { return JSON.parse(localStorage.getItem(key)||'{}'); } catch(e){ return {}; } }
+  function setPlayState(key, s){ try { localStorage.setItem(key, JSON.stringify(s||{})); } catch(e){} }
+  function syncPlaybookChecks(ids, state){
+    (ids||[]).forEach(id=>{ const el = document.getElementById(id); if (el) el.checked = !!state[id]; });
+  }
+
+    function compute(){
+      const m = getModel();
+      let sumShare = m.channels.reduce((a,c)=>a+c.share,0);
+      // If sumShare is 0, split equally
+      if (sumShare <= 0) {
+        m.channels.forEach(c => c.share = 100/m.channels.length);
+        sumShare = 100;
+      }
+      const results = [];
+      let totalLeads=0, totalMedia=0, totalHours=0, totalPeople=0;
+
+      let emailDeficit = 0;
+      let emailPotential = 0;
+      for (const ch of m.channels){
+        let leads = Math.round(m.TL * (ch.share/sumShare));
+        // Emailing: omez podle báze a funnelu (open -> click -> lead)
+        if (ch.key === 'em') {
+          const open = clamp(Number(inputs.email_open.value)||0,0,100) / 100;
+          const ctr = clamp(Number(inputs.email_ctr.value)||0,0,100) / 100;
+          const lp = clamp(Number(inputs.email_lpconv.value)||0,0,100) / 100;
+          const potential = Math.floor((ch.base||0) * open * ctr * lp);
+          if (potential < leads) {
+            emailDeficit = leads - potential;
+          }
+          leads = Math.max(0, Math.min(leads, potential));
+          emailPotential = potential;
+        }
+        const media = leads * ch.cpl;
+        const hours = leads * ch.hpl;
+        const people = hours * m.HR;
+        const total = media + people;
+        const potential = ch.key==='em' ? emailPotential : 0;
+        results.push({key: ch.key, name: ch.name, leads, media, hours, people, total, potential});
+        totalLeads += leads;
+        totalMedia += media;
+        totalHours += hours;
+        totalPeople += people;
+      }
+      const grandTotal = totalMedia + totalPeople;
+      const blendedCPL = totalLeads > 0 ? Math.round(grandTotal / totalLeads) : 0;
+      const peopleShare = grandTotal>0 ? Math.round((totalPeople/grandTotal)*100) : 0;
+
+      return {results, totalLeads, totalMedia, totalHours, totalPeople, grandTotal, blendedCPL, peopleShare, emailDeficit};
+    }
+
+    function render(){
+      const r = compute();
+      // KPIs
+      kpiMedia.textContent = fmt.format(Math.round(r.totalMedia)) + " Kč";
+      kpiPeople.textContent = fmt.format(Math.round(r.totalPeople)) + " Kč";
+      kpiTotal.textContent = fmt.format(Math.round(r.grandTotal)) + " Kč";
+      kpiCpl.textContent = fmt.format(r.blendedCPL) + " Kč";
+      kpiPeopleShare.textContent = r.peopleShare + "%";
+      kpiHours.textContent = fmt.format(r.totalHours.toFixed(1)) + " h";
+
+      // Channel cards
+      const byKey = Object.fromEntries(r.results.map(x=>[x.key,x]));
+      function fillCard(key,prefix){
+        const row = byKey[key]||{leads:0,media:0,hours:0,people:0,total:0,potential:0};
+        const ecpl = row.leads>0 ? Math.round(row.total/row.leads) : 0;
+        const mcpl = row.leads>0 ? Math.round(row.media/row.leads) : 0;
+        const lshare = r.totalLeads>0 ? Math.round((row.leads/r.totalLeads)*100) : 0;
+        const cshare = r.grandTotal>0 ? Math.round((row.total/r.grandTotal)*100) : 0;
+        const ppct = row.total>0 ? Math.round((row.people/row.total)*100) : 0;
+        document.getElementById(prefix+"_leads").textContent = fmt.format(row.leads);
+        document.getElementById(prefix+"_media").textContent = fmt.format(Math.round(row.media)) + " Kč";
+        document.getElementById(prefix+"_hours").textContent = (row.hours.toFixed?row.hours.toFixed(1):"0.0") + " h";
+        document.getElementById(prefix+"_people").textContent = fmt.format(Math.round(row.people)) + " Kč";
+        document.getElementById(prefix+"_total").textContent = fmt.format(Math.round(row.total)) + " Kč";
+        document.getElementById(prefix+"_ecpl").textContent = fmt.format(ecpl) + " Kč";
+        if (document.getElementById(prefix+"_mcpl")) document.getElementById(prefix+"_mcpl").textContent = fmt.format(mcpl) + " Kč";
+        if (document.getElementById(prefix+"_ppct")) document.getElementById(prefix+"_ppct").textContent = ppct + "%";
+        document.getElementById(prefix+"_lshare").textContent = lshare + "%";
+        document.getElementById(prefix+"_cshare").textContent = cshare + "%";
+        // Efficiency badge vs blended CPL
+        const effEl = document.getElementById(prefix+"_eff");
+        if (effEl) {
+          if (r.blendedCPL>0 && ecpl>0) {
+            const diff = Math.round(((ecpl/r.blendedCPL)-1)*100);
+            const better = diff<0;
+            effEl.textContent = (better?"lepší o ":"horší o ") + Math.abs(diff) + "%";
+            effEl.className = 'badge ' + (diff<=-10 ? 'badge-ok' : (diff<=10 ? 'badge-warn' : 'badge-bad'));
+          } else {
+            effEl.textContent = '—';
+            effEl.className = 'badge';
+          }
+        }
+        // Efficiency ratio and bar (price/performance)
+        const effRatioEl = document.getElementById(prefix+"_effratio");
+        const effBarEl = document.getElementById(prefix+"_effbar");
+        if (effRatioEl && effBarEl) {
+          if (r.blendedCPL>0 && ecpl>0) {
+            const ratio = ecpl / r.blendedCPL;
+            effRatioEl.textContent = (ratio*100).toFixed(0) + "%";
+            const pct = Math.min(100, Math.max(0, ratio*100));
+            effBarEl.style.width = pct + "%";
+            effBarEl.className = "effbar-fill " + (ratio<=1 ? "eff-ok" : (ratio<=1.2 ? "eff-warn" : "eff-bad"));
+          } else {
+            effRatioEl.textContent = "—";
+            effBarEl.style.width = "0%";
+            effBarEl.className = "effbar-fill eff-ok";
+          }
+        }
+        // Email capacity utilization
+        if (prefix==='em') {
+          const capEl = document.getElementById('em_cap');
+          if (capEl) {
+            if (row.potential>0) {
+              const util = Math.round((row.leads/row.potential)*100);
+              capEl.textContent = util + "%";
+              const bar = document.getElementById('em_progress');
+              if (bar) bar.style.width = clamp(util,0,100) + "%";
+            } else {
+              capEl.textContent = '—';
+              const bar = document.getElementById('em_progress');
+              if (bar) bar.style.width = "0%";
+            }
+          }
+          const capKsEl = document.getElementById('em_capks');
+          if (capKsEl) {
+            capKsEl.textContent = row.potential>0 ? fmt.format(row.potential) + " ks" : '—';
+          }
+        }
+      }
+      fillCard('fb','fb');
+      fillCard('li','li');
+      fillCard('gg','gg');
+      fillCard('em','em');
+
+      // Table
+      tableBody.innerHTML = r.results.map(row => `
+        <tr>
+          <td>${row.name}</td>
+          <td>${fmt.format(row.leads)}</td>
+          <td>${fmt.format(Math.round(row.media))} Kč</td>
+          <td>${row.hours.toFixed(1)} h</td>
+          <td>${fmt.format(Math.round(row.people))} Kč</td>
+          <td>${fmt.format(Math.round(row.total))} Kč</td>
+        </tr>
+      `).join("");
+
+      tLeads.textContent = fmt.format(r.totalLeads);
+      tMedia.textContent = fmt.format(Math.round(r.totalMedia)) + " Kč";
+      tHours.textContent = r.totalHours.toFixed(1) + " h";
+      tPeople.textContent = fmt.format(Math.round(r.totalPeople)) + " Kč";
+      tTotal.textContent = fmt.format(Math.round(r.grandTotal)) + " Kč";
+
+      // Recommendations
+      const recos = [];
+      // Mix sanity
+      const shares = [Number(inputs.share_fb.value)||0, Number(inputs.share_li.value)||0, Number(inputs.share_gg.value)||0, Number(inputs.share_em.value)||0];
+      let sumShares = shares.reduce((a,b)=>a+b,0);
+      if (sumShares !== 100) {
+        recos.push("Podíly kanálů nedávají 100 %. Normalizujte je nebo upravte ručně.");
+      }
+      // CPL checks
+      const cpls = [Number(inputs.cpl_fb.value)||0, Number(inputs.cpl_li.value)||0, Number(inputs.cpl_gg.value)||0, Number(inputs.cpl_em.value)||0];
+      const names = ['Facebook/Instagram','LinkedIn','Google Ads','Emailing'];
+      cpls.forEach((c,i)=>{
+        if (c > r.blendedCPL * 1.4 && r.blendedCPL>0) recos.push(`${names[i]} má výrazně vyšší CPL než průměr. Zvažte optimalizaci nebo snížení podílu.`);
+      });
+      // People share
+      if (r.peopleShare > 40) recos.push("Vysoký podíl personálních nákladů (>40 %). Zvažte automatizaci, šablony, batch tvorbu obsahu a lepší kvalifikaci leadů.");
+      // LinkedIn warning
+      if ((Number(inputs.share_li.value)||0) > 25) recos.push("LinkedIn má často vyšší CPL. Vyhodnoťte kvalitu vs. cenu a držte podíl pod 25 %, pokud nejsou výsledky nadstandardní.");
+      // Budget realism
+      if (r.grandTotal > 0 && r.totalLeads>0 && r.blendedCPL>0) {
+        const impliedBudget = r.totalLeads * r.blendedCPL;
+        if (Math.abs(impliedBudget - r.grandTotal) / r.grandTotal > 0.15) {
+          recos.push("Zkontrolujte vstupy pro CPL a hodinovou sazbu. Rozpočet a průměrný CPL si neodpovídají.");
+        }
+      }
+
+      // ===== Emailing playbook-driven suggestions =====
+      const emailShare = Number(inputs.share_em.value)||0;
+      const emState = getEmailPlayState();
+      const emMaturity = computeEmailMaturity(emState);
+      // Find Emailing row for utilization
+      const emRow = (r.results||[]).find(x=>x && x.name === 'Emailing');
+      const emUtil = emRow && emRow.potential>0 ? (emRow.leads / emRow.potential) : 0;
+
+      // If capacity near limit
+      if (emUtil >= 0.8 || r.emailDeficit > 0) {
+        recos.push("Emailing je blízko limitu kapacity. Zvažte růst báze (lead magnet/partnerství), zlepšení OR/CTR/LP konverzí a reaktivaci neaktivních.");
+        if (!emState.em_tool_list) recos.push("Zapněte hygienu databáze a double opt‑in pro stabilní doručitelnost.");
+      }
+      // If Emailing CPL significantly above blended and maturity low
+      if (emailShare > 0 && r.blendedCPL>0 && cpls[3] > r.blendedCPL*1.3 && emMaturity < 60) {
+        // propose top quick wins not done yet (max 3)
+        const quickWins = [
+          {id:'em_step_segment', txt:'Zaveďte segmentaci recent actives (vyšší OR, CTR).'},
+          {id:'em_step_nurture', txt:'Spusťte krátký nurturing 3–5 emailů s jasným CTA.'},
+          {id:'em_step_lp', txt:'Udělejte rychlý audit landing page (rychlost, CTA, formulář).'}
+        ];
+        let added = 0;
+        quickWins.forEach(q=>{ if (!emState[q.id] && added < 3) { recos.push(q.txt); added++; } });
+      }
+      // If hours per lead high for Emailing -> suggest automation tools/steps
+      if (emRow && emRow.hpl && emRow.hpl > 0.4) {
+        if (!emState.em_tool_crm) recos.push("Propojte ESP s CRM (webhook/API) a automatizujte předávání leadů.");
+        recos.push("Použijte šablony odpovědí a workflow v ESP pro snížení manuální práce.");
+      }
+
+      // Emailing general efficiency
+      if (emailShare > 0 && cpls[3] > r.blendedCPL) recos.push("Emailing má vyšší CPL než průměr. Zvažte A/B testy předmětů a hodnotnější obsah.");
+
+      // ===== ESP-specific suggestions =====
+      const selectedEsp = (getEmailEsp && typeof getEmailEsp === 'function') ? getEmailEsp() : '';
+      if (selectedEsp) {
+        if (selectedEsp === 'Ecomail') {
+          recos.push("Ecomail: Zaveďte Welcome Series (3–5 emailů) a lead‑nurturing scénáře v Automatizacích. Využijte segmentaci posledních 90 dní aktivních.");
+          recos.push("Ecomail: Ověřte SPF/DKIM/DMARC a propojte formuláře s CRM přes webhooky. Zvažte integrace (Shoptet, e‑commerce, CRM). Další info: ecomail.cz");
+        } else if (selectedEsp === 'SmartEmailing') {
+          recos.push("SmartEmailing: Použijte Scénáře pro uvítací sérii a reaktivaci. Pracujte s tagy/segmenty pro vyšší relevanci a CTR.");
+          recos.push("SmartEmailing: Nastavte SPF/DKIM/DMARC, napojte webové formuláře a CRM (např. Raynet) přes webhook/API. Další info: smartemailing.cz");
+        } else {
+          recos.push("ESP (jiné): Ověřte doručitelnost (SPF/DKIM/DMARC) a aktivujte základní automatizace (welcome, nurturing, reaktivace).");
+          recos.push("ESP (jiné): Zajistěte integraci s CRM přes webhook/API a definujte UTM standard pro měření v GA4.");
+        }
+      }
+
+      // Target feasibility
+      if (r.totalLeads < (Number(inputs.targetLeads.value)||0)) {
+        recos.push("Součet leadů je nižší než cíl. Upravte podíly, snižte CPL optimalizací, nebo navyšte rozpočet.");
+      }
+      if (recos.length === 0) recos.push("Mix a náklady vypadají vyrovnaně. Pokračujte v průběžné optimalizaci a kontrole kvality leadů.");
+      recoList.innerHTML = recos.map(r => `<li>${r}</li>`).join("");
+
+      // Shares validation UI
+      const shareInputs = [inputs.share_fb, inputs.share_li, inputs.share_gg, inputs.share_em];
+      // sumShares already computed above; inputs didn't change during render
+      if (sharesValidation) {
+        const ok = Math.round(sumShares) === 100;
+        sharesValidation.textContent = `Součet podílů: ${Math.round(sumShares)}% (musí být 100%)`;
+        sharesValidation.className = 'hint' + (ok ? '' : ' hint-bad');
+      }
+      shareInputs.forEach(el => {
+        if (Math.round(sumShares) !== 100) el.classList.add('input-error'); else el.classList.remove('input-error');
+      });
+
+      // Per-field validation
+      validateInputs();
+
+      // Sync emailing maturity badge on each render
+      syncEmailPlaybookUI();
+      // Sync other channel playbooks
+      syncPlaybookChecks(fbToolIds.concat(fbStepIds), getPlayState(PLAY_FB_KEY));
+      syncPlaybookChecks(liToolIds.concat(liStepIds), getPlayState(PLAY_LI_KEY));
+      syncPlaybookChecks(ggToolIds.concat(ggStepIds), getPlayState(PLAY_GG_KEY));
+    }
+
+    function attach(){
+      Object.values(inputs).forEach(el => el.addEventListener('input', render));
+      normalizeBtn.addEventListener('click', () => {
+        const vals = [inputs.share_fb, inputs.share_li, inputs.share_gg, inputs.share_em];
+        let sum = vals.reduce((a,el)=>a+(Number(el.value)||0),0);
+        if (sum <= 0) {
+          vals.forEach(v=>v.value = 25);
+        } else {
+          vals.forEach(v=> v.value = ((Number(v.value)||0)/sum*100).toFixed(0));
+        }
+        render();
+      });
+      defaultsBtn.addEventListener('click', () => {
+        inputs.targetLeads.value = 100;
+        inputs.hourlyRate.value = 600;
+        inputs.emailBaseSize.value = 5000;
+        inputs.share_fb.value = 35; inputs.cpl_fb.value = 350; inputs.hpl_fb.value = 0.25;
+        inputs.share_li.value = 15; inputs.cpl_li.value = 600; inputs.hpl_li.value = 0.4;
+        inputs.share_gg.value = 40; inputs.cpl_gg.value = 500; inputs.hpl_gg.value = 0.2;
+        inputs.share_em.value = 10; inputs.cpl_em.value = 120; inputs.hpl_em.value = 0.15;
+        inputs.email_open.value = 35; inputs.email_ctr.value = 6; inputs.email_lpconv.value = 12;
+        render();
+      });
+
+      // Export handlers
+      exportCsvBtn.addEventListener('click', () => {
+        const r = compute();
+        const rows = [];
+        rows.push(['Kanál','Leady','Mediální náklady','Hodiny','Personální náklady','Celkem']);
+        r.results.forEach(row=>{
+          rows.push([row.name, row.leads, Math.round(row.media), row.hours.toFixed(1), Math.round(row.people), Math.round(row.total)]);
+        });
+        rows.push(['Celkem', r.totalLeads, Math.round(r.totalMedia), r.totalHours.toFixed(1), Math.round(r.totalPeople), Math.round(r.grandTotal)]);
+        const csv = rows.map(r=>r.map(v=>`"${String(v).replaceAll('"','""')}"`).join(';')).join('\n');
+        const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'kanaly.csv'; a.click();
+        URL.revokeObjectURL(url);
+      });
+      exportJsonBtn.addEventListener('click', () => {
+        const r = compute();
+        const inputValues = Object.fromEntries(Object.entries(inputs).map(([k,el])=>[k, Number(el.value)||0]));
+        const data = { timestamp: new Date().toISOString(), inputs: inputValues, summary: { totalLeads: r.totalLeads, totalMedia: r.totalMedia, totalHours: r.totalHours, totalPeople: r.totalPeople, grandTotal: r.grandTotal, blendedCPL: r.blendedCPL, peopleShare: r.peopleShare }, channels: r.results };
+        const json = JSON.stringify(data, null, 2);
+        const blob = new Blob([json], {type:'application/json'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'konfigurace.json'; a.click();
+        URL.revokeObjectURL(url);
+      });
+
+      // Copy TSV
+      copyTsvBtn.addEventListener('click', async () => {
+        const r = compute();
+        const rows = [];
+        rows.push(['Kanál','Leady','Mediální náklady','Hodiny','Personální náklady','Celkem']);
+        r.results.forEach(row=>{
+          rows.push([row.name, row.leads, Math.round(row.media), row.hours.toFixed(1), Math.round(row.people), Math.round(row.total)]);
+        });
+        rows.push(['Celkem', r.totalLeads, Math.round(r.totalMedia), r.totalHours.toFixed(1), Math.round(r.totalPeople), Math.round(r.grandTotal)]);
+        const tsv = rows.map(r=>r.join('\t')).join('\n');
+        try {
+          await navigator.clipboard.writeText(tsv);
+        } catch(e) {
+          const ta = document.createElement('textarea');
+          ta.value = tsv; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+        }
+      });
+
+      // Presets
+      function getInputsObject(){
+        return Object.fromEntries(Object.entries(inputs).map(([k,el])=>[k, Number(el.value)||0]));
+      }
+      function applyInputsObject(obj){
+        Object.entries(obj||{}).forEach(([k,v])=>{ if (inputs[k]) inputs[k].value = v; });
+        render();
+      }
+      function loadPresetList(){
+        const store = JSON.parse(localStorage.getItem('lead_goal_presets')||'{}');
+        const names = Object.keys(store).sort();
+        presetSelect.innerHTML = names.length ? names.map(n=>`<option value="${n}">${n}</option>`).join('') : '<option value="" disabled>Žádné presety</option>';
+      }
+      savePresetBtn.addEventListener('click', ()=>{
+        const name = (presetName.value||'').trim();
+        if (!name) { alert('Zadejte název presetu.'); return; }
+        const store = JSON.parse(localStorage.getItem('lead_goal_presets')||'{}');
+        store[name] = getInputsObject();
+        localStorage.setItem('lead_goal_presets', JSON.stringify(store));
+        loadPresetList();
+        presetSelect.value = name;
+      });
+      loadPresetBtn.addEventListener('click', ()=>{
+        const sel = presetSelect.value;
+        const store = JSON.parse(localStorage.getItem('lead_goal_presets')||'{}');
+        if (!sel || !store[sel]) { alert('Vyberte existující preset.'); return; }
+        applyInputsObject(store[sel]);
+      });
+      deletePresetBtn.addEventListener('click', ()=>{
+        const sel = presetSelect.value;
+        if (!sel) return;
+        const store = JSON.parse(localStorage.getItem('lead_goal_presets')||'{}');
+        delete store[sel];
+        localStorage.setItem('lead_goal_presets', JSON.stringify(store));
+        loadPresetList();
+      });
+
+      // Shareable URL
+      function buildShareUrl(){
+        const params = new URLSearchParams();
+        const obj = getInputsObject();
+        Object.entries(obj).forEach(([k,v])=>{ params.set(k, String(v)); });
+        return location.origin + location.pathname + '?' + params.toString();
+      }
+      shareUrlBtn.addEventListener('click', async ()=>{
+        const url = buildShareUrl();
+        try { await navigator.clipboard.writeText(url); }
+        catch(e) {
+          const ta = document.createElement('textarea');
+          ta.value = url; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+        }
+      });
+
+      // Init preset list
+      loadPresetList();
+
+      // Toggle emailing playbook panel
+      if (emToggle && emPanel) {
+        emToggle.addEventListener('click', ()=>{
+          emPanel.classList.toggle('open');
+        });
+      }
+      // Toggle FB/IG, LinkedIn, Google Ads playbook panels
+      if (fbToggle && fbPanel) fbToggle.addEventListener('click', ()=>{ fbPanel.classList.toggle('open'); });
+      if (liToggle && liPanel) liToggle.addEventListener('click', ()=>{ liPanel.classList.toggle('open'); });
+      if (ggToggle && ggPanel) ggToggle.addEventListener('click', ()=>{ ggPanel.classList.toggle('open'); });
+      // Persist playbook state handlers
+      [...emToolIds, ...emStepIds].forEach(id=>{
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('change', ()=>{
+          const st = getEmailPlayState();
+          st[id] = !!el.checked;
+          setEmailPlayState(st);
+          syncEmailPlaybookUI();
+          render();
+        });
+      });
+      // Persist ESP radio selection
+      if (emEspRadios && emEspRadios.length){
+        // Initialize from storage
+        const esp = getEmailEsp();
+        if (esp){ emEspRadios.forEach(r=>{ if (r.value===esp) r.checked = true; }); }
+        emEspRadios.forEach(r=>{
+          r.addEventListener('change', ()=>{
+            if (r.checked){ setEmailEsp(r.value); }
+            // Future: hook into recommendations based on ESP
+            render();
+          });
+        });
+      }
+      // Persist FB/IG playbook state
+      [...fbToolIds, ...fbStepIds].forEach(id=>{
+        const el = document.getElementById(id); if (!el) return;
+        el.addEventListener('change', ()=>{
+          const st = getPlayState(PLAY_FB_KEY);
+          st[id] = !!el.checked;
+          setPlayState(PLAY_FB_KEY, st);
+          render();
+        });
+      });
+      // Persist LinkedIn playbook state
+      [...liToolIds, ...liStepIds].forEach(id=>{
+        const el = document.getElementById(id); if (!el) return;
+        el.addEventListener('change', ()=>{
+          const st = getPlayState(PLAY_LI_KEY);
+          st[id] = !!el.checked;
+          setPlayState(PLAY_LI_KEY, st);
+          render();
+        });
+      });
+      // Persist Google Ads playbook state
+      [...ggToolIds, ...ggStepIds].forEach(id=>{
+        const el = document.getElementById(id); if (!el) return;
+        el.addEventListener('change', ()=>{
+          const st = getPlayState(PLAY_GG_KEY);
+          st[id] = !!el.checked;
+          setPlayState(PLAY_GG_KEY, st);
+          render();
+        });
+      });
+    }
+
+    // Inline input validation and error messages
+    function ensureErrNode(input){
+      // Insert an .err node right after the input if not present
+      const next = input.nextElementSibling;
+      if (next && next.classList && next.classList.contains('err')) return next;
+      const span = document.createElement('span');
+      span.className = 'err';
+      span.style.display = 'none';
+      input.parentElement.insertBefore(span, input.nextSibling);
+      return span;
+    }
+    function setError(input, msg){
+      const node = ensureErrNode(input);
+      if (msg) {
+        node.textContent = msg;
+        node.style.display = 'block';
+        input.classList.add('input-error');
+      } else {
+        node.textContent = '';
+        node.style.display = 'none';
+        input.classList.remove('input-error');
+      }
+    }
+    function validateInputs(){
+      // Clear errors by default
+      Object.values(inputs).forEach(el => setError(el, ''));
+      // Basic non-negative checks
+      const nonNeg = [inputs.targetLeads, inputs.hourlyRate, inputs.emailBaseSize, inputs.cpl_fb, inputs.cpl_li, inputs.cpl_gg, inputs.cpl_em];
+      nonNeg.forEach(el => { if ((Number(el.value)||0) < 0) setError(el, 'Hodnota nesmí být záporná'); });
+      // Shares 0..100
+      [inputs.share_fb, inputs.share_li, inputs.share_gg, inputs.share_em].forEach(el => {
+        const v = Number(el.value);
+        if (isNaN(v)) setError(el, 'Zadejte číslo');
+        else if (v < 0 || v > 100) setError(el, 'Povolený rozsah 0–100 %');
+      });
+      // Hours per lead 0..8
+      [inputs.hpl_fb, inputs.hpl_li, inputs.hpl_gg, inputs.hpl_em].forEach(el => {
+        const v = Number(el.value);
+        if (isNaN(v)) setError(el, 'Zadejte číslo');
+        else if (v < 0) setError(el, 'Hodnota nesmí být záporná');
+        else if (v > 8) setError(el, 'Max 8 h/lead');
+      });
+      // Email funnel rates 0..100
+      [inputs.email_open, inputs.email_ctr, inputs.email_lpconv].forEach(el => {
+        const v = Number(el.value);
+        if (isNaN(v)) setError(el, 'Zadejte číslo');
+        else if (v < 0 || v > 100) setError(el, 'Povolený rozsah 0–100 %');
+      });
+    }
+
+    // Parse URL params on load
+    (function applyUrlParams(){
+      const qs = new URLSearchParams(location.search);
+      if (![...qs.keys()].length) return;
+      const obj = {};
+      Object.keys(inputs).forEach(k=>{
+        if (qs.has(k)) obj[k] = Number(qs.get(k))||0;
+      });
+      Object.entries(obj).forEach(([k,v])=>{ inputs[k].value = v; });
+    })();
+
+    attach();
+    render();
+  </script>
+</body>
+</html>
