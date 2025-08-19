@@ -1,0 +1,219 @@
+{
+  "id": 1755631693000,
+  "title": "Hodnotový žebříček (Value Ladder) – kompletní checklist",
+  "category": "marketing",
+  "description": "Detailní krok-za-krokem postup, jak navrhnout, zmapovat a implementovat hodnotový žebříček (Value Ladder) od lead magnetu přes tripwire až po core offer, profit maximizers a retenci.",
+  "items": [
+    {
+      "title": "Zarezuj do hodnotového žebříku – rámec",
+      "duration": "30min",
+      "priority": "high",
+      "money": "",
+      "documents": "",
+      "tools": "Value ladder map, Miro/Figma",
+      "forms": "",
+      "description": "Vyjasni cíl žebříku: plynulé zvyšování hodnoty i ceny. Definuj hlavní stupně: Lead Magnet → Tripwire (Entry) → Core Offer → Profit Maximizer (Upsell) → Retence/Continuity.",
+      "completed": false
+    },
+    {
+      "title": "Definuj cílového zákazníka a výsledek",
+      "duration": "45min",
+      "priority": "critical",
+      "money": "",
+      "documents": "Persona brief",
+      "tools": "Personas template, Interviews, Analytics",
+      "forms": "",
+      "description": "Kdo je ideál? Jaká transformace je pro něj nejhodnotnější? Zapiš konkrétní výsledky pro každý stupeň žebříku.",
+      "completed": false
+    },
+    {
+      "title": "Namapuj zákaznickou cestu (Customer Journey)",
+      "duration": "1h",
+      "priority": "high",
+      "money": "",
+      "documents": "",
+      "tools": "Journey map (Miro), GA4, CRM data",
+      "forms": "",
+      "description": "Fáze: Awareness → Consideration → Conversion → Delivery → Expansion → Advocacy. Přiřaď obsah a nabídky ke každé fázi.",
+      "completed": false
+    },
+    {
+      "title": "Lead Magnet – vstup do žebříku",
+      "duration": "45min",
+      "priority": "critical",
+      "money": "",
+      "documents": "",
+      "tools": "Content editor, Mockup generator",
+      "forms": "",
+      "description": "Vyřeší jeden konkrétní problém rychle. Příklad: checklist, šablona, kalkulačka, mini-kurz. Jasný příslib hodnoty + CTA na další krok (tripwire).",
+      "completed": false
+    },
+    {
+      "title": "Tripwire (Entry offer) – nízká bariéra",
+      "duration": "1h",
+      "priority": "high",
+      "money": "",
+      "documents": "Cenová strategie",
+      "tools": "Pricing sheet, Checkout tool",
+      "forms": "",
+      "description": "Levná, vysoce hodnotná nabídka (např. 7–29 €), která konvertuje leady na zákazníky. Plynule navazuje na lead magnet. Jasný quick win + okamžité doručení.",
+      "completed": false
+    },
+    {
+      "title": "Core Offer – hlavní produkt/služba",
+      "duration": "1h",
+      "priority": "critical",
+      "money": "",
+      "documents": "USP dokument, Konkurenční analýza",
+      "tools": "Value proposition canvas",
+      "forms": "",
+      "description": "Definuj rozsah, výsledky, pricing, garance a delivery model. Zajisti návaznost z tripwire (logický upgrade).",
+      "completed": false
+    },
+    {
+      "title": "Profit Maximizers (Upsell/Order bump/Cross-sell)",
+      "duration": "45min",
+      "priority": "high",
+      "money": "",
+      "documents": "",
+      "tools": "Offer mapping board",
+      "forms": "",
+      "description": "Návrhy balíčků, rozšíření, premium support, rychlejší doručení, implementace. Umístění: checkout, post-purchase e-mail, member area.",
+      "completed": false
+    },
+    {
+      "title": "Retence/Continuity (subscription, členství)",
+      "duration": "45min",
+      "priority": "high",
+      "money": "",
+      "documents": "",
+      "tools": "Membership/Subscription platform",
+      "forms": "",
+      "description": "Navrhni opakovanou hodnotu: komunitu, obsah, nástroje, support. Jasný onboarding, engagement a value moments.",
+      "completed": false
+    },
+    {
+      "title": "Cenotvorba napříč žebříčkem",
+      "duration": "45min",
+      "priority": "high",
+      "money": "",
+      "documents": "Cenové scenáře",
+      "tools": "Pricing calculator, Spreadsheet",
+      "forms": "",
+      "description": "Stanov rozpětí cen pro každý stupeň. Ověř vnímání hodnoty vs. cena. Připrav promo a balíčky (anchor pricing, good-better-best).",
+      "completed": false
+    },
+    {
+      "title": "Mapování nabídek do Value Ladder map",
+      "duration": "30min",
+      "priority": "high",
+      "money": "",
+      "documents": "",
+      "tools": "Value ladder map (Miro/Figma template)",
+      "forms": "",
+      "description": "Vykresli jednotlivé stupně, CTA a přechody. Uveď vstupní i výstupní kritéria pro přestup na další stupeň.",
+      "completed": false
+    },
+    {
+      "title": "Copywriting pro přechody mezi stupni",
+      "duration": "45min",
+      "priority": "normal",
+      "money": "",
+      "documents": "",
+      "tools": "Swipe file, Headline analyzer",
+      "forms": "",
+      "description": "Navrhni microcopy a CTA, která motivují k upgradu (benefit-driven, specifická, snižující riziko).",
+      "completed": false
+    },
+    {
+      "title": "Obsahový plán pro každou fázi",
+      "duration": "1h",
+      "priority": "normal",
+      "money": "",
+      "documents": "Content calendar",
+      "tools": "Notion/Asana, Calendar",
+      "forms": "",
+      "description": "Přiřaď témata a formáty (blog, video, webinář, case study) k fázím funnelu a stupňům žebříku. Zaměř se na bariéry a námitky.",
+      "completed": false
+    },
+    {
+      "title": "Onboarding a delivery pro každý stupeň",
+      "duration": "45min",
+      "priority": "normal",
+      "money": "",
+      "documents": "Onboarding checklist",
+      "tools": "ESP/CRM, Welcome flow",
+      "forms": "",
+      "description": "Zajisti hladké doručení hodnoty, onboarding e-maily, milníky a rychlé první výsledky (aha momenty).",
+      "completed": false
+    },
+    {
+      "title": "Námitky a garance",
+      "duration": "30min",
+      "priority": "normal",
+      "money": "",
+      "documents": "FAQ, Garance texty",
+      "tools": "",
+      "forms": "",
+      "description": "Seznam top námitek pro každý stupeň + odpovědi. Definuj garance (bezpečná koupě) a sniž tření v konverzi.",
+      "completed": false
+    },
+    {
+      "title": "Metriky a cíle pro každý stupeň",
+      "duration": "45min",
+      "priority": "critical",
+      "money": "",
+      "documents": "KPI definice",
+      "tools": "GA4, CRM, Dashboard",
+      "forms": "",
+      "description": "Konverzní poměr mezi stupni, CAC, AOV, LTV, churn, uptake upsellů. Stanov cílové prahy a sledování.",
+      "completed": false
+    },
+    {
+      "title": "Automatizace a segmentace v CRM/ESP",
+      "duration": "1h",
+      "priority": "high",
+      "money": "",
+      "documents": "Segmentační pravidla",
+      "tools": "HubSpot/Klaviyo/Mailchimp automations",
+      "forms": "",
+      "description": "Taguj leady dle stupně, spouštěj odpovídající sekvence (upgrade, win-back, retention).",
+      "completed": false
+    },
+    {
+      "title": "Retargeting a remarketing podle stupně",
+      "duration": "45min",
+      "priority": "high",
+      "money": "",
+      "documents": "",
+      "tools": "Meta/Google Ads audiences",
+      "forms": "",
+      "description": "Vytvoř publika pro návštěvníky jednotlivých stupňů a připrav kreativy/offer pro posun o stupeň výše.",
+      "completed": false
+    },
+    {
+      "title": "Referral/Partner program (Advocacy)",
+      "duration": "45min",
+      "priority": "normal",
+      "money": "",
+      "documents": "Podmínky programu",
+      "tools": "Referral platform",
+      "forms": "",
+      "description": "Nastav doporučovací mechanismus po spokojenosti s core offer. Motivace, podmínky, tracking.",
+      "completed": false
+    },
+    {
+      "title": "Revizní cadence a iterace žebříku",
+      "duration": "30min",
+      "priority": "normal",
+      "money": "",
+      "documents": "",
+      "tools": "Quarterly review template",
+      "forms": "",
+      "description": "Měsíční/kvartální revize výkonu stupňů, identifikace úzkých hrdel a návrhy experimentů (A/B, cenotvorba, bundly).",
+      "completed": false
+    }
+  ],
+  "created": "2025-08-19T19:28:13.000Z",
+  "modified": "2025-08-19T19:28:13.000Z"
+}
