@@ -2006,8 +2006,10 @@
             
             const allInputs = [...inputs, ...marketInputs];
             
+            // Bezpečné navázání listenerů na existující elementy
             inputs.forEach(id => {
-                document.getElementById(id).addEventListener('input', calculateResults);
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('input', calculateResults);
             });
             
             // Event listeners pro analýzu trhu
@@ -2021,25 +2023,38 @@
                 }
             });
             
-            // Spustit počáteční výpočty
-            calculateResults();
-            calculateMarketAnalysis();
+            // Spustit počáteční výpočty (pokud existují potřebné elementy)
+            if (document.getElementById('agentCount')) {
+                calculateResults();
+            }
+            if (document.getElementById('population')) {
+                calculateMarketAnalysis();
+            }
 
-            document.getElementById('currencyToggle').addEventListener('click', toggleCurrency);
-            document.getElementById('marketToggle').addEventListener('click', toggleMarket);
+            const currencyToggleEl = document.getElementById('currencyToggle');
+            if (currencyToggleEl) currencyToggleEl.addEventListener('click', toggleCurrency);
+            const marketToggleEl = document.getElementById('marketToggle');
+            if (marketToggleEl) marketToggleEl.addEventListener('click', toggleMarket);
             
-            // Event listeners pro save/load/PDF export
-            document.getElementById('saveButton').addEventListener('click', saveData);
-            document.getElementById('loadButton').addEventListener('click', function() {
-                document.getElementById('fileInput').click();
-            });
-            document.getElementById('fileInput').addEventListener('change', loadData);
-            document.getElementById('exportPdfButton').addEventListener('click', exportToPDF);
-            document.getElementById('brokerageSplit').addEventListener('input', updateAgentSplit);
+            // Event listeners pro save/load/PDF export (s kontrolou existence)
+            const saveBtn = document.getElementById('saveButton');
+            if (saveBtn) saveBtn.addEventListener('click', saveData);
+            const loadBtn = document.getElementById('loadButton');
+            const fileInput = document.getElementById('fileInput');
+            if (loadBtn && fileInput) {
+                loadBtn.addEventListener('click', function() { fileInput.click(); });
+                fileInput.addEventListener('change', loadData);
+            }
+            const exportBtn = document.getElementById('exportPdfButton');
+            if (exportBtn) exportBtn.addEventListener('click', exportToPDF);
+            const brokerageSplitEl = document.getElementById('brokerageSplit');
+            if (brokerageSplitEl) brokerageSplitEl.addEventListener('input', updateAgentSplit);
             
-            // Načíst výchozí české hodnoty
-            loadMarketDefaults('CZ');
-            calculateResults();
+            // Načíst výchozí české hodnoty, pokud jsou dostupné inputy
+            if (document.getElementById('agentCount')) {
+                loadMarketDefaults('CZ');
+                calculateResults();
+            }
         });
 
         function calculateResults() {

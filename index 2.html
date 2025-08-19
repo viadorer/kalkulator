@@ -1110,9 +1110,9 @@
         </div>
 
         <div class="nav-tabs">
-            <button class="nav-tab" onclick="window.location.href='index.html#prodej'">Prodej</button>
-            <button class="nav-tab" onclick="window.location.href='index.html#pronajem'">Pronájem</button>
-            <button class="nav-tab" onclick="window.location.href='index.html#rozvaha'">Ekonomická rozvaha</button>
+            <button class="nav-tab" onclick="showTab('prodej')">Prodej</button>
+            <button class="nav-tab" onclick="showTab('pronajem')">Pronájem</button>
+            <button class="nav-tab" onclick="showTab('rozvaha')">Ekonomická rozvaha</button>
             <button class="nav-tab" onclick="window.location.href='index.html#naklady'">Měsíční náklady</button>
             <button class="nav-tab active" onclick="showTab('garantovany')">Garantovaný nájem</button>
             <button class="nav-tab" onclick="showTab('leadgen')">Online Lead Generation</button>
@@ -6060,7 +6060,7 @@
 
             // Automatické přepnutí na správnou záložku při načtení stránky s kotvou
             const hash = window.location.hash.substring(1);
-            if (hash && (hash === 'garantovany' || hash === 'leadgen')) {
+            if (hash && (hash === 'garantovany' || hash === 'leadgen' || hash === 'prodej' || hash === 'pronajem' || hash === 'rozvaha')) {
                 showTab(hash);
             }
         });
