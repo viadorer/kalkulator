@@ -1,0 +1,85 @@
+{
+  "id": null,
+  "name": "Rezervační smlouva",
+  "description": "Formulář pro vyplnění údajů k podpisu rezervační smlouvy (strany, nemovitost, cena, záloha, lhůty, podmínky, podpisy).",
+  "fields": [
+    { "id": "sec_i", "label": "I. Identifikace smluvních stran", "type": "section", "span": 4 },
+
+    { "id": "kupujici_jmeno", "label": "Kupující – jméno a příjmení / název", "type": "text", "required": true, "span": 2 },
+    { "id": "kupujici_rc_ico", "label": "RČ / IČO", "type": "text", "required": true },
+    { "id": "kupujici_dat_nar_dic", "label": "Datum narození / DIČ", "type": "text" },
+    { "id": "kupujici_adresa", "label": "Adresa trvalého pobytu / sídla", "type": "text", "required": true, "span": 2 },
+    { "id": "kupujici_kontakt", "label": "Kontakt (telefon, e‑mail)", "type": "text", "required": true, "span": 2 },
+
+    { "id": "prodavajici_jmeno", "label": "Prodávající – jméno a příjmení / název", "type": "text", "required": true, "span": 2 },
+    { "id": "prodavajici_rc_ico", "label": "RČ / IČO", "type": "text", "required": true },
+    { "id": "prodavajici_dat_nar_dic", "label": "Datum narození / DIČ", "type": "text" },
+    { "id": "prodavajici_adresa", "label": "Adresa trvalého pobytu / sídla", "type": "text", "required": true, "span": 2 },
+    { "id": "prodavajici_kontakt", "label": "Kontakt (telefon, e‑mail)", "type": "text", "required": true, "span": 2 },
+
+    { "id": "zprostredkovatel_nazev", "label": "Zprostředkovatel – název RK", "type": "text", "required": true, "span": 2, "hint": "Vaše realitní kancelář" },
+    { "id": "zprostredkovatel_ic", "label": "IČO", "type": "text" },
+    { "id": "zprostredkovatel_sidlo", "label": "Sídlo", "type": "text", "span": 2 },
+    { "id": "zprostredkovatel_kontakt", "label": "Kontakt (telefon, e‑mail)", "type": "text", "span": 2 },
+
+    { "id": "sec_ii", "label": "II. Identifikace nemovitosti", "type": "section", "span": 4 },
+    { "id": "nemovitost_typ", "label": "Typ nemovitosti", "type": "select", "required": true, "options": [
+      { "value": "byt", "label": "Byt" },
+      { "value": "dum", "label": "Dům" },
+      { "value": "pozemek", "label": "Pozemek" },
+      { "value": "komercni", "label": "Komerční" },
+      { "value": "jiné", "label": "Jiné" }
+    ] },
+    { "id": "nemovitost_adresa", "label": "Adresa (ulice, č.p., město)", "type": "text", "required": true, "span": 2 },
+    { "id": "nemovitost_katastr", "label": "Katastrální území", "type": "text", "required": true },
+    { "id": "nemovitost_parcely", "label": "Parcelní čísla / LV", "type": "text", "required": true },
+    { "id": "nemovitost_popis", "label": "Stručný popis nemovitosti", "type": "textarea", "span": 4 },
+
+    { "id": "sec_iii", "label": "III. Kupní cena a rezervační záloha", "type": "section", "span": 4 },
+    { "id": "kupni_cena", "label": "Kupní cena (Kč)", "type": "number", "required": true },
+    { "id": "rezervacni_zaloha", "label": "Rezervační záloha (Kč)", "type": "number", "required": true },
+    { "id": "zaloha_ulozeni", "label": "Způsob úschovy zálohy", "type": "select", "options": [
+      { "value": "notarska", "label": "Notářská úschova" },
+      { "value": "advokatni", "label": "Advokátní úschova" },
+      { "value": "bankovni", "label": "Bankovní úschova" },
+      { "value": "rk", "label": "Úschova u RK" }
+    ], "span": 2 },
+    { "id": "zaloha_ucet", "label": "Účet / identifikace úschovy", "type": "text", "span": 2 },
+
+    { "id": "sec_iv", "label": "IV. Lhůty a termíny", "type": "section", "span": 4 },
+    { "id": "platnost_rezervace_do", "label": "Platnost rezervace do (datum)", "type": "date", "required": true },
+    { "id": "termin_podpisu_kupni", "label": "Termín podpisu kupní smlouvy (datum)", "type": "date" },
+    { "id": "termin_slozeni_zalohy", "label": "Termín složení rezervační zálohy (datum a čas)", "type": "datetime" },
+
+    { "id": "sec_v", "label": "V. Financování", "type": "section", "span": 4 },
+    { "id": "financovani_typ", "label": "Způsob financování", "type": "select", "options": [
+      { "value": "vlastni", "label": "Vlastní prostředky" },
+      { "value": "hypoteka", "label": "Hypoteční úvěr" },
+      { "value": "kombinace", "label": "Kombinace" }
+    ], "required": true },
+    { "id": "financovani_detail", "label": "Detail financování (banka, částka z úvěru apod.)", "type": "textarea", "span": 4 },
+
+    { "id": "sec_vi", "label": "VI. Podmínky odstoupení a smluvní pokuty", "type": "section", "span": 4 },
+    { "id": "odstoupeni_kupujici", "label": "Odstoupení kupujícího – podmínky", "type": "textarea", "span": 2, "hint": "Např. neudělení úvěru bankou při řádné součinnosti" },
+    { "id": "odstoupeni_prodavajici", "label": "Odstoupení prodávajícího – podmínky", "type": "textarea", "span": 2 },
+    { "id": "smluvni_pokuta_vyse", "label": "Smluvní pokuta (Kč / %)", "type": "text", "hint": "Uveďte výši a základ pro výpočet" },
+
+    { "id": "sec_vii", "label": "VII. Prohlášení a souhlasy", "type": "section", "span": 4 },
+    { "id": "prohlaseni_stav", "label": "Prohlášení o stavu nemovitosti", "type": "textarea", "span": 4 },
+    { "id": "souhlas_zpracovani_osobnich_udaju", "label": "Souhlas se zpracováním osobních údajů (GDPR)", "type": "checkbox", "hint": "Strany souhlasí se zpracováním osobních údajů pro účely uzavření smluv" },
+
+    { "id": "sec_viii", "label": "VIII. Předání a převzetí", "type": "section", "span": 4 },
+    { "id": "predani_termin", "label": "Předání nemovitosti – předpokládaný termín", "type": "date" },
+    { "id": "predani_stav", "label": "Stav při předání (vybavení, měřidla apod.)", "type": "textarea", "span": 4 },
+
+    { "id": "sec_ix", "label": "IX. Ostatní ujednání", "type": "section", "span": 4 },
+    { "id": "ostatni_ujednani", "label": "Doplňující ustanovení", "type": "textarea", "span": 4 },
+
+    { "id": "sec_x", "label": "X. Podpisy a místo/čas", "type": "section", "span": 4 },
+    { "id": "misto_podpisu", "label": "Místo podpisu", "type": "text", "required": true },
+    { "id": "datum_podpisu", "label": "Datum podpisu", "type": "date", "required": true },
+    { "id": "podpis_kupujici", "label": "Podpis kupujícího (jméno tiskacím)", "type": "text", "required": true, "span": 2 },
+    { "id": "podpis_prodavajici", "label": "Podpis prodávajícího (jméno tiskacím)", "type": "text", "required": true, "span": 2 },
+    { "id": "zprostredkovatel_podpis", "label": "Podpis zprostředkovatele (jméno tiskacím)", "type": "text", "span": 2 }
+  ]
+}

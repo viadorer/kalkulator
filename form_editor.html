@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Editor formulářů</title>
+  <style>
+    :root { --b:#1d1d1f; --mut:#6e6e73; --br:#e5e5e7; --bg:#f5f5f7; --p:#0a84ff; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--b); background: #fff; margin: 0; }
+    header { padding: 16px 20px; border-bottom:1px solid var(--br); display:flex; gap:12px; align-items:center; }
+    h1 { font-size:18px; margin:0; }
+    main { display:grid; grid-template-columns: 360px 1fr; gap: 20px; padding: 20px; }
+    .card { border:1px solid var(--br); border-radius:12px; background:#fff; }
+    .card h3 { margin:0; padding:14px 16px; border-bottom:1px solid var(--br); font-size:15px; }
+    .card .content { padding:16px; }
+    .row { display:flex; gap:8px; align-items:center; }
+    .col { display:grid; gap:8px; }
+    input[type="text"], input[type="number"], textarea, select { width:100%; padding:10px 12px; border:1px solid var(--br); border-radius:8px; font-size:14px; }
+    textarea { min-height:80px; }
+    label { font-size:13px; color: var(--mut); display:block; margin-bottom:6px; }
+    .btn { background: var(--p); color:#fff; border:none; border-radius:8px; padding:10px 12px; cursor:pointer; font-size:14px; }
+    .btn.secondary { background:#fff; color:var(--b); border:1px solid var(--br); }
+    .btn.danger { background:#d72638; }
+    .list { display:flex; flex-direction:column; gap:10px; }
+    .item { border:1px solid var(--br); border-radius:10px; padding:12px; }
+    .muted { color: var(--mut); font-size:12px; }
+    .grid2 { display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
+    .right { text-align:right; }
+    .preview .field { margin-bottom:12px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Editor formulářů</h1>
+    <div class="row">
+      <button class="btn" onclick="window.location.href='form_manager.html'">Zpět na správce</button>
+      <button class="btn secondary" onclick="newSchema()">Nový</button>
+      <button class="btn secondary" onclick="loadSchemaBySelect()">Otevřít</button>
+      <select id="schemaSelect"></select>
+      <button class="btn" onclick="saveSchema()">Uložit</button>
+      <button class="btn danger" onclick="deleteCurrent()">Smazat</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="card">
+      <h3>Vlastnosti formuláře</h3>
+      <div class="content col">
+        <div>
+          <label>Název</label>
+          <input id="schemaName" type="text" placeholder="Název formuláře">
+        </div>
+        <div>
+          <label>Popis</label>
+          <textarea id="schemaDesc" placeholder="Stručný popis"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>Pole formuláře</h3>
+      <div class="content">
+        <div class="item" style="margin-bottom:12px;">
+          <div class="grid2">
+            <div>
+              <label>Popisek pole</label>
+              <input id="fieldLabel" type="text" placeholder="Např. Jméno">
+            </div>
+            <div>
+              <label>Identifikátor (ID)</label>
+              <input id="fieldId" type="text" placeholder="napr_jmeno">
+            </div>
+          </div>
+          <div class="grid2">
+            <div>
+              <label>Typ</label>
+              <select id="fieldType" onchange="toggleOptions()">
+                <option value="text">Text</option>
+                <option value="number">Číslo</option>
+                <option value="textarea">Víceřádkový text</option>
+                <option value="select">Výběr ze seznamu</option>
+                <option value="checkbox">Zaškrtávací</option>
+                <option value="date">Datum</option>
+                <option value="datetime">Datum a čas</option>
+                <option value="section">Sekce (nadpis)</option>
+              </select>
+            </div>
+            <div>
+              <label>Povinné</label>
+              <select id="fieldReq">
+                <option value="no">Ne</option>
+                <option value="yes">Ano</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid2">
+            <div>
+              <label>Šířka pole (span)</label>
+              <select id="fieldSpan">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </div>
+            <div>
+              <label>Nápověda (hint)</label>
+              <input id="fieldHint" type="text" placeholder="Krátká pomocná informace pod polem">
+            </div>
+          </div>
+          <div id="optionsWrap" style="display:none; margin-top:6px;">
+            <label>Možnosti (jedna na řádek; formát: hodnota|popisek, popisek je volitelný)</label>
+            <textarea id="fieldOptions" placeholder="Ahoj|Pozdrav\nNashledanou|Rozloučení\n..."></textarea>
+          </div>
+          <div class="right" style="margin-top:8px;">
+            <button class="btn" onclick="addField()">Přidat pole</button>
+          </div>
+        </div>
+
+        <div class="list" id="fieldsList"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>Náhled</h3>
+      <div class="content preview">
+        <div id="previewArea"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="forms_storage.js"></script>
+  <script>
+    let working = { id: null, name: '', description: '', fields: [] };
+
+    function refreshSchemasSelect(){
+      const sel = document.getElementById('schemaSelect');
+      sel.innerHTML = '';
+      FormsStore.listSchemas().forEach(s=>{
+        const opt = document.createElement('option');
+        opt.value = s.id; opt.textContent = s.name; sel.appendChild(opt);
+      });
+    }
+
+    function newSchema(){
+      working = { id: null, name: '', description: '', fields: [] };
+      renderWorking();
+    }
+
+    function loadSchemaBySelect(){
+      const id = document.getElementById('schemaSelect').value;
+      if (id) loadSchema(id);
+    }
+
+    function loadSchema(id){
+      const s = FormsStore.getSchema(id);
+      if (!s) return;
+      working = JSON.parse(JSON.stringify(s));
+      renderWorking();
+    }
+
+    function saveSchema(){
+      const name = document.getElementById('schemaName').value.trim();
+      if (!name){ alert('Zadejte název formuláře'); return; }
+      working.name = name;
+      working.description = document.getElementById('schemaDesc').value;
+      const id = FormsStore.saveSchema(working);
+      working.id = id;
+      alert('Formulář uložen');
+      refreshSchemasSelect();
+      renderWorking();
+    }
+
+    function deleteCurrent(){
+      if (!working.id) { alert('Nejprve otevřete existující formulář.'); return; }
+      if (!confirm('Smazat tento formulář?')) return;
+      FormsStore.deleteSchema(working.id);
+      newSchema();
+      refreshSchemasSelect();
+    }
+
+    function addField(){
+      const label = document.getElementById('fieldLabel').value.trim();
+      const id = document.getElementById('fieldId').value.trim() || label.toLowerCase().replace(/\s+/g,'_');
+      const type = document.getElementById('fieldType').value;
+      const req = document.getElementById('fieldReq').value === 'yes';
+      const spanVal = parseInt(document.getElementById('fieldSpan').value, 10) || 1;
+      if (!label){ alert('Zadejte popisek pole'); return; }
+      if (!id){ alert('Zadejte ID pole'); return; }
+
+      const field = { id, label, type, required: req };
+      if (spanVal > 1) field.span = spanVal;
+      const hint = document.getElementById('fieldHint').value.trim();
+      if (hint) field.hint = hint;
+      if (type === 'select'){
+        const raw = document.getElementById('fieldOptions').value.trim();
+        const lines = raw.split(/\n+/).map(l=>l.trim()).filter(Boolean);
+        field.options = lines.map(l=>{
+          const [val, lab] = l.split('|');
+          return { value: (val ?? '').trim(), label: (lab ?? val ?? '').trim() };
+        });
+      }
+
+      working.fields.push(field);
+      clearFieldEditor();
+      renderWorking();
+    }
+
+    function clearFieldEditor(){
+      document.getElementById('fieldLabel').value = '';
+      document.getElementById('fieldId').value = '';
+      document.getElementById('fieldType').value = 'text';
+      document.getElementById('fieldReq').value = 'no';
+      document.getElementById('fieldSpan').value = '1';
+      document.getElementById('fieldHint').value = '';
+      document.getElementById('fieldOptions').value = '';
+      toggleOptions();
+    }
+
+    function moveField(idx, dir){
+      const j = idx + dir;
+      if (j < 0 || j >= working.fields.length) return;
+      const tmp = working.fields[idx];
+      working.fields[idx] = working.fields[j];
+      working.fields[j] = tmp;
+      renderWorking();
+    }
+
+    function removeField(idx){
+      working.fields.splice(idx,1);
+      renderWorking();
+    }
+
+    function renderWorking(){
+      document.getElementById('schemaName').value = working.name || '';
+      document.getElementById('schemaDesc').value = working.description || '';
+
+      const list = document.getElementById('fieldsList');
+      list.innerHTML = '';
+      working.fields.forEach((f, i)=>{
+        const div = document.createElement('div');
+        div.className = 'item';
+        const meta = `<div class='muted'>ID: ${f.id} • Typ: ${f.type} ${f.required?'• Povinné':''} ${f.span?`• Span: ${f.span}`:''} ${f.hint?`• Hint: ${f.hint}`:''}</div>`;
+        const opts = (f.type==='select' && Array.isArray(f.options)) ?
+                      `<div class='muted'>Možnosti: ${f.options.map(o=>`${o.value}|${o.label}`).join(', ')}</div>` : '';
+        div.innerHTML = `<strong>${f.label}</strong>${meta}${opts}
+          <div class='row' style='margin-top:8px;'>
+            <button class='btn secondary' onclick='moveField(${i},-1)'>Nahoru</button>
+            <button class='btn secondary' onclick='moveField(${i},1)'>Dolů</button>
+            <button class='btn danger' onclick='removeField(${i})'>Odebrat</button>
+          </div>`;
+        list.appendChild(div);
+      });
+
+      // Preview
+      const prev = document.getElementById('previewArea');
+      prev.innerHTML = '';
+      working.fields.forEach(f=>{
+        if (f.type === 'section'){
+          const h = document.createElement('div');
+          h.textContent = f.label;
+          h.style.fontWeight = '600';
+          h.style.margin = '8px 0 4px';
+          prev.appendChild(h);
+          return;
+        }
+        const wrap = document.createElement('div');
+        wrap.className = 'field';
+        const label = document.createElement('label');
+        label.textContent = f.label;
+        wrap.appendChild(label);
+        let el;
+        switch(f.type){
+          case 'textarea': el = document.createElement('textarea'); break;
+          case 'number': el = document.createElement('input'); el.type='number'; break;
+          case 'select':
+            el = document.createElement('select');
+            (f.options||[]).forEach(opt=>{ const o=document.createElement('option'); o.value=opt.value; o.textContent=opt.label; el.appendChild(o); });
+            break;
+          case 'checkbox': el = document.createElement('input'); el.type='checkbox'; break;
+          case 'date': el = document.createElement('input'); el.type='date'; break;
+          case 'datetime': el = document.createElement('input'); el.type='datetime-local'; break;
+          default: el = document.createElement('input'); el.type='text';
+        }
+        if (f.required) el.required = true;
+        wrap.appendChild(el);
+        if (f.hint){ const h=document.createElement('div'); h.className='muted'; h.textContent=f.hint; wrap.appendChild(h); }
+        prev.appendChild(wrap);
+      });
+
+      refreshSchemasSelect();
+    }
+
+    function toggleOptions(){
+      const t = document.getElementById('fieldType').value;
+      document.getElementById('optionsWrap').style.display = (t==='select') ? '' : 'none';
+    }
+
+    // Boot
+    (function init(){
+      refreshSchemasSelect();
+      newSchema();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rezervační smlouva – pronájem bytu</title>
+  <style>
+    :root { --b:#1d1d1f; --mut:#6e6e73; --br:#e5e5e7; --p:#0a84ff; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--b); background:#fff; margin:0; }
+    header { padding: 16px 20px; border-bottom:1px solid var(--br); display:flex; gap:12px; align-items:center; justify-content:space-between; }
+    h1 { font-size:20px; margin:0; font-weight:600; }
+    main { max-width: 980px; margin: 0 auto; padding: 20px; }
+    .toolbar { display:flex; gap:8px; flex-wrap:wrap; }
+    .btn { background: var(--p); color:#fff; border:none; border-radius:980px; padding:10px 14px; cursor:pointer; font-size:14px; }
+    .btn.secondary { background:#fff; color:var(--b); border:1px solid var(--br); }
+    .doc { line-height:1.6; font-size:15px; }
+    .doc h2 { font-size:17px; margin: 18px 0 8px; }
+    .doc p { margin: 8px 0; }
+    label.inline { color: var(--mut); font-size:12px; margin-right:6px; }
+    input[type="text"], input[type="number"], input[type="date"], input[type="datetime-local"] { border:none; border-bottom:1px solid var(--br); padding:2px 4px; font-size:15px; background:#fff; outline:none; }
+    input[type="number"] { width: 160px; }
+    input[type="date"], input[type="datetime-local"] { width: 190px; }
+    .w-xxs { width: 80px; }
+    .w-xs { width: 140px; }
+    .w-s { width: 220px; }
+    .w-m { width: 320px; }
+    .w-l { width: 480px; }
+    .muted { color: var(--mut); font-size:12px; }
+    .sig-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 28px; }
+    .sig { border-top:1px solid var(--br); padding-top:8px; }
+    .section { padding-top: 8px; border-top:1px solid var(--br); margin-top:18px; }
+    @media print {
+      header, .toolbar { display:none !important; }
+      body { background:#fff; }
+      main { padding: 0; }
+      input { border: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Rezervační smlouva – pronájem bytu</h1>
+    <div class="toolbar">
+      <button class="btn secondary" onclick="window.print()">Tisk / PDF</button>
+    </div>
+  </header>
+  <main>
+    <div class="doc">
+      <p>
+        Uzavřená dne <input class="w-xs" id="datum_uzavreni" type="date"> v <input class="w-s" id="misto_uzavreni" type="text" placeholder="město">,
+        mezi níže uvedenými stranami prostřednictvím zprostředkovatele.
+      </p>
+
+      <div class="section">
+        <h2>I. Smluvní strany</h2>
+        <p>
+          <strong>Pronajímatel:</strong>
+          <input class="w-m" id="pronajimatel_jmeno" type="text" placeholder="jméno a příjmení / název">
+          , r.č./IČO: <input class="w-xs" id="pronajimatel_rcico" type="text">
+          , datum narození/DIČ: <input class="w-xs" id="pronajimatel_dn_dic" type="text">
+          , adresa: <input class="w-l" id="pronajimatel_adresa" type="text" placeholder="ulice, č.p., město">
+          , kontakt: <input class="w-m" id="pronajimatel_kontakt" type="text" placeholder="telefon, e‑mail">
+          (dále jen „Pronajímatel“)
+        </p>
+        <p>
+          <strong>Zájemce o nájem (Budoucí nájemce):</strong>
+          <input class="w-m" id="najemce_jmeno" type="text" placeholder="jméno a příjmení / název">
+          , r.č./IČO: <input class="w-xs" id="najemce_rcico" type="text">
+          , datum narození/DIČ: <input class="w-xs" id="najemce_dn_dic" type="text">
+          , adresa: <input class="w-l" id="najemce_adresa" type="text" placeholder="ulice, č.p., město">
+          , kontakt: <input class="w-m" id="najemce_kontakt" type="text" placeholder="telefon, e‑mail">
+          (dále jen „Nájemce“)
+        </p>
+        <p>
+          <strong>Zprostředkovatel:</strong>
+          <input class="w-m" id="rk_nazev" type="text" placeholder="název RK">
+          , IČO: <input class="w-xs" id="rk_ico" type="text">, sídlo: <input class="w-m" id="rk_sidlo" type="text">
+          , kontakt: <input class="w-m" id="rk_kontakt" type="text" placeholder="telefon, e‑mail">
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>II. Předmět rezervace</h2>
+        <p>
+          Předmětem rezervace je byt č. <input class="w-xxs" id="byt_cislo" type="text">,
+          nacházející se v domě na adrese <input class="w-l" id="nemovitost_adresa" type="text" placeholder="ulice, č.p., město">,
+          v katastrálním území <input class="w-s" id="katastr" type="text">,
+          případně na LV/parcelách: <input class="w-m" id="lv_parcely" type="text">.
+        </p>
+        <p>
+          Strany prohlašují, že byt bude předán k užívání ve stavu: <input class="w-l" id="stav_pri_predani" type="text" placeholder="např. vybavený dle dohody">.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>III. Účel rezervace</h2>
+        <p>
+          Pronajímatel tímto po dobu do <input class="w-xs" id="platnost_rez_do" type="date"> rezervuje výše uvedený byt ve prospěch Nájemce za účelem uzavření nájemní smlouvy.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>IV. Nájemné, jistota (kauce) a rezervační záloha</h2>
+        <p>
+          Dohodnuté měsíční nájemné činí <input class="w-xs" id="najomne" type="number" placeholder="Kč"> Kč,
+          zálohy na služby <input class="w-xs" id="sluzby" type="number" placeholder="Kč"> Kč.
+        </p>
+        <p>
+          Jistota (kauce) činí <input class="w-xs" id="kauce" type="number" placeholder="Kč"> Kč a bude uhrazena nejpozději při podpisu nájemní smlouvy.
+        </p>
+        <p>
+          Rezervační záloha ve výši <input class="w-xs" id="rez_zaloha" type="number" placeholder="Kč"> Kč
+          bude složena do <input class="w-xs" id="termin_rez_zalohy" type="date"> na účet <input class="w-m" id="uschova_ucet" type="text" placeholder="číslo účtu / identifikace úschovy">.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>V. Lhůty a postup</h2>
+        <p>
+          Strany se dohodly uzavřít nájemní smlouvu nejpozději do <input class="w-xs" id="termin_podpisu_najemni" type="date">.
+          Předání bytu k užívání proběhne dne <input class="w-xs" id="termin_predani" type="date">.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>VI. Podmínky vrácení / propadnutí rezervační zálohy</h2>
+        <p>
+          Rezervační záloha se v plné výši započte na jistotu (kauci) nebo první nájemné při uzavření nájemní smlouvy.
+        </p>
+        <p>
+          Pokud k uzavření nájemní smlouvy nedojde z důvodů na straně Nájemce (např. bezdůvodné odstoupení, neposkytnutí součinnosti, nepravdivé údaje),
+          rezervační záloha propadá ve prospěch Pronajímatele jako smluvní pokuta.
+        </p>
+        <p>
+          Pokud k uzavření nájemní smlouvy nedojde z důvodů na straně Pronajímatele, zavazuje se Pronajímatel bez zbytečného odkladu
+          vrátit Nájemci rezervační zálohu v plné výši na účet <input class="w-m" id="vraceni_ucet" type="text" placeholder="číslo účtu">.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>VII. Prohlášení a součinnost</h2>
+        <p>
+          Strany prohlašují, že jim jsou známy podstatné vlastnosti bytu a ujednání o nájemném a kaucích. Zavazují se poskytnout si veškerou potřebnou součinnost
+          k uzavření nájemní smlouvy a předání bytu.
+        </p>
+        <p>
+          Nájemce prohlašuje, že bude byt užívat k účelu: <input class="w-m" id="ucel_uzivani" type="text" placeholder="např. bydlení">.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>VIII. Ochrana osobních údajů</h2>
+        <p>
+          Strany souhlasí se zpracováním osobních údajů v rozsahu nutném k uzavření nájemní smlouvy a plnění této smlouvy, v souladu s platnými právními předpisy.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>IX. Závěrečná ustanovení</h2>
+        <p>
+          Tato smlouva nabývá účinnosti dnem podpisu oběma stranami. Smlouva je vyhotovena v <input class="w-xxs" id="pocet_vyhotoveni" type="number" value="2"> stejnopisech,
+          z nichž každá strana obdrží <input class="w-xxs" id="vyhotoveni_na_stranu" type="number" value="1"> vyhotovení.
+        </p>
+        <p>
+          Smluvní strany si tuto smlouvu přečetly, jejímu obsahu porozuměly a na důkaz souhlasu ji vlastnoručně podepisují.
+        </p>
+      </div>
+
+      <div class="section">
+        <h2>X. Podpisy</h2>
+        <div class="sig-grid">
+          <div>
+            <p>Místo: <input class="w-s" id="misto_podpisu" type="text">, dne: <input class="w-xs" id="datum_podpisu" type="date"></p>
+            <div class="sig">
+              <div class="muted">Pronajímatel</div>
+              <div><input class="w-m" id="podpis_pronajimatel" type="text" placeholder="jméno čitelně"></div>
+            </div>
+          </div>
+          <div>
+            <p>Místo: <input class="w-s" id="misto_podpisu2" type="text">, dne: <input class="w-xs" id="datum_podpisu2" type="date"></p>
+            <div class="sig">
+              <div class="muted">Nájemce</div>
+              <div><input class="w-m" id="podpis_najemce" type="text" placeholder="jméno čitelně"></div>
+            </div>
+          </div>
+        </div>
+        <div class="sig" style="margin-top: 24px;">
+          <div class="muted">Zprostředkovatel</div>
+          <div><input class="w-m" id="podpis_rk" type="text" placeholder="jméno čitelně"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

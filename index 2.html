@@ -1149,6 +1149,9 @@
 
                 <div class="costs-section">
                     <h3>Náklady na transakci</h3>
+                    <div style="text-align:right; margin: 8px 0 4px 0;">
+                        <button onclick="addSaleCostItem()" style="background:#16a34a;color:#fff;border:none;border-radius:4px;padding:6px 10px;cursor:pointer;">+ Přidat položku</button>
+                    </div>
                     <table class="costs-table">
                         <thead>
                             <tr>
@@ -1325,6 +1328,9 @@
 
                 <div class="costs-section">
                     <h3>Náklady na zprostředkování pronájmu</h3>
+                    <div style="text-align:right; margin: 8px 0 4px 0;">
+                        <button onclick="addRentCostItem()" style="background:#16a34a;color:#fff;border:none;border-radius:4px;padding:6px 10px;cursor:pointer;">+ Přidat položku</button>
+                    </div>
                     <table class="costs-table">
                         <thead>
                             <tr>
@@ -2996,19 +3002,26 @@
             let totalClientPaid = 0;
             let totalNecessaryCosts = 0;
 
-            const costItems = ['acquisition', 'contract', 'advertising', 'proposal', 'fuel', 'car', 'office', 'photographer', 'energy', 'excerpts', 'software', 'matterport', 'phone'];
-
-            costItems.forEach(item => {
-                const currentCost = parseFloat(document.querySelector(`[data-type="current"][data-item="${item}"]`).value) || 0;
-                const clientPays = document.querySelector(`[data-type="client"][data-item="${item}"]`).checked;
-                const necessaryCost = parseFloat(document.querySelector(`[data-type="necessary"][data-item="${item}"]`).value) || 0;
-
-                totalCurrentCosts += currentCost;
-                if (clientPays) {
-                    totalClientPaid += currentCost;
-                }
-                totalNecessaryCosts += necessaryCost;
-            });
+            // Dynamické sečtení všech řádků v tabulce PRODEJ
+            const saleTable = document.querySelector('#prodej .costs-table tbody');
+            if (saleTable) {
+                saleTable.querySelectorAll('tr').forEach(row => {
+                    const currentInput = row.querySelector('[data-type="current"]');
+                    const necessaryInput = row.querySelector('[data-type="necessary"]');
+                    const clientCheckbox = row.querySelector('[data-type="client"]');
+                    if (currentInput) {
+                        const currentVal = parseFloat(currentInput.value) || 0;
+                        totalCurrentCosts += currentVal;
+                        if (clientCheckbox && clientCheckbox.checked) {
+                            totalClientPaid += currentVal;
+                        }
+                    }
+                    if (necessaryInput) {
+                        const necessaryVal = parseFloat(necessaryInput.value) || 0;
+                        totalNecessaryCosts += necessaryVal;
+                    }
+                });
+            }
 
             const actualCosts = totalCurrentCosts - totalClientPaid;
             const netCommission = grossCommission - actualCosts;
@@ -3077,17 +3090,21 @@
             let totalCosts = 0;
             let clientPaid = 0;
 
-            const rentCostItems = ['photographer', 'advertising', 'fuel', 'contract', 'matterport', 'software'];
-
-            rentCostItems.forEach(item => {
-                const cost = parseFloat(document.querySelector(`[data-type="rent-cost"][data-item="${item}"]`).value) || 0;
-                const clientPays = document.querySelector(`[data-type="rent-client"][data-item="${item}"]`).checked;
-
-                totalCosts += cost;
-                if (clientPays) {
-                    clientPaid += cost;
-                }
-            });
+            // Dynamické sečtení všech řádků v tabulce PRONÁJEM
+            const rentTable = document.querySelector('#pronajem .costs-table tbody');
+            if (rentTable) {
+                rentTable.querySelectorAll('tr').forEach(row => {
+                    const costInput = row.querySelector('[data-type="rent-cost"]');
+                    const clientCheckbox = row.querySelector('[data-type="rent-client"]');
+                    if (costInput) {
+                        const val = parseFloat(costInput.value) || 0;
+                        totalCosts += val;
+                        if (clientCheckbox && clientCheckbox.checked) {
+                            clientPaid += val;
+                        }
+                    }
+                });
+            }
 
             const actualCosts = totalCosts - clientPaid;
             const netCommission = grossCommission - actualCosts;
@@ -3122,6 +3139,68 @@
 
             rkNetElement.className = rkNetShare > 0 ? 'positive' : (rkNetShare < 0 ? 'negative' : 'neutral');
             brokerNetElement.className = brokerNetShare > 0 ? 'positive' : (brokerNetShare < 0 ? 'negative' : 'neutral');
+        }
+
+        // Přidávání/odebírání položek v PRODEJ
+        function addSaleCostItem() {
+            const tbody = document.querySelector('#prodej .costs-table tbody');
+            if (!tbody) return;
+            const totalsRow = tbody.querySelector('.totals-row');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><input type="text" value="Nová položka" style="width: 100%; padding:4px; border:1px solid #ddd; border-radius:3px;"> <button onclick="removeSaleCostItem(this)" style="margin-left:6px;background:#dc2626;color:#fff;border:none;border-radius:3px;padding:2px 6px;cursor:pointer;">×</button></td>
+                <td><input type="number" class="cost-input" data-type="current" value="0"> Kč</td>
+                <td class="checkbox-cell"><input type="checkbox" data-type="client"></td>
+                <td><input type="number" class="cost-input" data-type="necessary" value="0"> Kč</td>
+            `;
+            if (totalsRow) {
+                tbody.insertBefore(tr, totalsRow);
+            } else {
+                tbody.appendChild(tr);
+            }
+            // vazby na přepočty
+            tr.querySelectorAll('input').forEach(inp => {
+                inp.addEventListener('input', calculateSaleCommission);
+                inp.addEventListener('change', calculateSaleCommission);
+            });
+            calculateSaleCommission();
+        }
+        function removeSaleCostItem(btn) {
+            const tr = btn.closest('tr');
+            if (tr) {
+                tr.remove();
+                calculateSaleCommission();
+            }
+        }
+
+        // Přidávání/odebírání položek v PRONÁJEM
+        function addRentCostItem() {
+            const tbody = document.querySelector('#pronajem .costs-table tbody');
+            if (!tbody) return;
+            const totalsRow = tbody.querySelector('.totals-row');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><input type="text" value="Nová položka" style="width: 100%; padding:4px; border:1px solid #ddd; border-radius:3px;"> <button onclick="removeRentCostItem(this)" style="margin-left:6px;background:#dc2626;color:#fff;border:none;border-radius:3px;padding:2px 6px;cursor:pointer;">×</button></td>
+                <td><input type="number" class="cost-input" data-type="rent-cost" value="0"> Kč</td>
+                <td class="checkbox-cell"><input type="checkbox" data-type="rent-client"></td>
+            `;
+            if (totalsRow) {
+                tbody.insertBefore(tr, totalsRow);
+            } else {
+                tbody.appendChild(tr);
+            }
+            tr.querySelectorAll('input').forEach(inp => {
+                inp.addEventListener('input', calculateRentCommission);
+                inp.addEventListener('change', calculateRentCommission);
+            });
+            calculateRentCommission();
+        }
+        function removeRentCostItem(btn) {
+            const tr = btn.closest('tr');
+            if (tr) {
+                tr.remove();
+                calculateRentCommission();
+            }
         }
 
         // Funkce pro výpočet skutečných měsíčních nákladů

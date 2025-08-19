@@ -1108,7 +1108,7 @@
                                 <span class="item-help">Počet se automaticky vypočítá ze skladby bytů</span>
                                 <span></span>
                             </div>
-                            <div class="custom-item">
+                            <div class="custom-item" id="buildingAreaGroup">
                                 <span class="item-name">Zastavěná plocha</span>
                                 <input type="number" class="form-input" id="buildingArea" value="1500">
                                 <span class="item-unit">m²</span>
@@ -1130,6 +1130,38 @@
                                 <span class="item-unit">Kč/m²</span>
                                 <span class="item-total" id="constructionPriceTotal">-</span>
                                 <span class="item-help">Základní: 20-25k, Střední: 30-40k, Prémiový: 45-60k Kč/m²</span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item" id="avgPlotSizeGroup" style="display:none;">
+                                <span class="item-name">Průměrná velikost parcely</span>
+                                <input type="number" class="form-input" id="avgPlotSize" value="600">
+                                <span class="item-unit">m²</span>
+                                <span class="item-total" id="avgPlotSizeTotal">-</span>
+                                <span class="item-help">Průměrná výměra stavební parcely určené k prodeji</span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item" id="salePricePerM2Group" style="display:none;">
+                                <span class="item-name">Prodejní cena pozemku</span>
+                                <input type="number" class="form-input" id="salePricePerM2" value="2500">
+                                <span class="item-unit">Kč/m²</span>
+                                <span class="item-total" id="salePricePerM2Total">-</span>
+                                <span class="item-help">Prodejní cena za m² stavební parcely</span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item" id="avgHouseUsableAreaGroup" style="display:none;">
+                                <span class="item-name">Užitná plocha domu (průměr)</span>
+                                <input type="number" class="form-input" id="avgHouseUsableArea" value="120">
+                                <span class="item-unit">m²</span>
+                                <span class="item-total" id="avgHouseUsableAreaTotal">-</span>
+                                <span class="item-help">Průměrná užitná plocha jednoho RD pro výpočet příjmů</span>
+                                <span></span>
+                            </div>
+                            <div class="custom-item" id="housePricePerM2Group" style="display:none;">
+                                <span class="item-name">Prodejní cena domu</span>
+                                <input type="number" class="form-input" id="housePricePerM2" value="45000">
+                                <span class="item-unit">Kč/m²</span>
+                                <span class="item-total" id="housePricePerM2Total">-</span>
+                                <span class="item-help">Prodejní cena za m² užitné plochy domu</span>
                                 <span></span>
                             </div>
                         </div>
@@ -1654,6 +1686,14 @@
             const constructionSection = document.getElementById('constructionSection');
             const profitabilitySection = document.getElementById('profitabilitySection');
             const costPerM2Row = document.getElementById('costPerM2Row');
+            const buildingAreaGroup = document.getElementById('buildingAreaGroup');
+            const floorsGroup = document.getElementById('floorsGroup');
+            const constructionPriceGroup = document.getElementById('constructionPriceGroup');
+            const avgPlotSizeGroup = document.getElementById('avgPlotSizeGroup');
+            const salePricePerM2Group = document.getElementById('salePricePerM2Group');
+            // House-specific sale inputs (usable area and price per m²)
+            const avgHouseUsableAreaGroup = document.getElementById('avgHouseUsableAreaGroup');
+            const housePricePerM2Group = document.getElementById('housePricePerM2Group');
             
             if (type === 'residential') {
                 apartmentSection.style.display = 'block';
@@ -1662,19 +1702,44 @@
                 costPerM2Row.style.display = 'block';
                 document.getElementById('unitsLabel').textContent = 'Počet bytů (automaticky)';
                 document.getElementById('units').disabled = true;
+                // Zobrazit stavební parametry, skrýt pozemkové prodejní parametry
+                if (buildingAreaGroup) buildingAreaGroup.style.display = '';
+                if (floorsGroup) floorsGroup.style.display = '';
+                if (constructionPriceGroup) constructionPriceGroup.style.display = '';
+                if (avgPlotSizeGroup) avgPlotSizeGroup.style.display = 'none';
+                if (salePricePerM2Group) salePricePerM2Group.style.display = 'none';
+                if (avgHouseUsableAreaGroup) avgHouseUsableAreaGroup.style.display = 'none';
+                if (housePricePerM2Group) housePricePerM2Group.style.display = 'none';
             } else {
                 apartmentSection.style.display = 'none';
                 constructionSection.style.display = 'none';
                 profitabilitySection.style.display = 'none';
                 costPerM2Row.style.display = 'none';
                 document.getElementById('units').disabled = false;
-                
+
                 if (type === 'building_plots') {
                     document.getElementById('unitsLabel').textContent = 'Počet stavebních parcel';
                     document.getElementById('units').value = '15';
+                    // Skrýt stavební parametry, zobrazit prodejní parametry pozemků
+                    if (buildingAreaGroup) buildingAreaGroup.style.display = 'none';
+                    if (floorsGroup) floorsGroup.style.display = 'none';
+                    if (constructionPriceGroup) constructionPriceGroup.style.display = 'none';
+                    if (avgPlotSizeGroup) avgPlotSizeGroup.style.display = '';
+                    if (salePricePerM2Group) salePricePerM2Group.style.display = '';
+                    if (avgHouseUsableAreaGroup) avgHouseUsableAreaGroup.style.display = 'none';
+                    if (housePricePerM2Group) housePricePerM2Group.style.display = 'none';
                 } else if (type === 'house_plots') {
                     document.getElementById('unitsLabel').textContent = 'Počet parcel pro RD';
                     document.getElementById('units').value = '8';
+                    // Pro RD neřešíme bytové stavební parametry ani prodej m² parcely (počítá se balíček RD + pozemek)
+                    if (buildingAreaGroup) buildingAreaGroup.style.display = 'none';
+                    if (floorsGroup) floorsGroup.style.display = 'none';
+                    if (constructionPriceGroup) constructionPriceGroup.style.display = 'none';
+                    if (avgPlotSizeGroup) avgPlotSizeGroup.style.display = 'none';
+                    if (salePricePerM2Group) salePricePerM2Group.style.display = 'none';
+                    // Show house sale params
+                    if (avgHouseUsableAreaGroup) avgHouseUsableAreaGroup.style.display = '';
+                    if (housePricePerM2Group) housePricePerM2Group.style.display = '';
                 }
             }
             calculateTotals();
@@ -1696,6 +1761,12 @@
                 buildingArea: validateInput(document.getElementById('buildingArea').value, 1),
                 floors: validateInput(document.getElementById('floors').value, 1, 20),
                 constructionPrice: validateInput(document.getElementById('constructionPrice').value, 0),
+                // Parametry pro prodej stavebních parcel
+                avgPlotSize: validateInput((document.getElementById('avgPlotSize')||{value:0}).value, 1),
+                salePricePerM2: validateInput((document.getElementById('salePricePerM2')||{value:0}).value, 0),
+                // Prodej RD – užitná plocha a cena/m²
+                avgHouseUsableArea: validateInput((document.getElementById('avgHouseUsableArea')||{value:0}).value, 1),
+                housePricePerM2: validateInput((document.getElementById('housePricePerM2')||{value:0}).value, 0),
                 
                 // Byty
                 apt_1kk_count: parseFloat(document.getElementById('apt_1kk_count').value) || 0,
@@ -1763,7 +1834,7 @@
                 contingency: parseFloat(document.getElementById('contingency').value) || 0,
                 brokerageSale: parseFloat(document.getElementById('brokerageSale').value) || 0,
                 interestRate: parseFloat(document.getElementById('interestRate').value) || 0,
-                projectDuration: parseFloat(document.getElementById('projectDuration').value) || 0
+                projectDuration: validateInput(document.getElementById('projectDuration').value, 1, 180)
             };
         }
 
@@ -1869,9 +1940,9 @@
                     totalRevenues += mix.storage.count * mix.storage.price;
                 } else {
                     if (currentProjectType === 'building_plots') {
-                        totalRevenues = totalUnits * 800000;
+                        totalRevenues = params.units * params.avgPlotSize * params.salePricePerM2;
                     } else if (currentProjectType === 'house_plots') {
-                        totalRevenues = totalUnits * (120 * 45000 + 500000);
+                        totalRevenues = params.units * params.avgHouseUsableArea * params.housePricePerM2;
                     }
                 }
                 
@@ -1990,6 +2061,12 @@
                 safeUpdateElement('landPriceTotal', formatCurrency(params.landPrice) + '/m²');
                 safeUpdateElement('buildingAreaTotal', formatNumber(params.buildingArea) + ' m²');
                 safeUpdateElement('constructionPriceTotal', formatCurrency(params.constructionPrice) + '/m²');
+                // Prodej stavebních parcel (pouze pokud jsou prvky v UI)
+                safeUpdateElement('avgPlotSizeTotal', formatNumber(params.avgPlotSize) + ' m²');
+                safeUpdateElement('salePricePerM2Total', formatCurrency(params.salePricePerM2) + '/m²');
+                // Prodej RD – užitná plocha a cena/m² (pokud prvky existují)
+                safeUpdateElement('avgHouseUsableAreaTotal', formatNumber(params.avgHouseUsableArea) + ' m²');
+                safeUpdateElement('housePricePerM2Total', formatCurrency(params.housePricePerM2) + '/m²');
                 
                 // Pořízení pozemku
                 const landCost = params.landArea * params.landPrice;
@@ -1999,9 +2076,10 @@
                 safeUpdateElement('surveyingTotal', formatCurrency(params.surveying));
             
                 // Projektová příprava
-                safeUpdateElement('geologicalSurveyTotal', formatCurrency(params.landArea * params.geologicalSurveyRate));
-                safeUpdateElement('projectDocumentationTotal', formatCurrency(params.landArea * params.projectDocumentationRate));
-                safeUpdateElement('permitsTotal', formatCurrency(landCost * (params.permitsRate / 100)));
+                safeUpdateElement('geologicalSurveyTotal', formatCurrency(params.buildingArea * params.geologicalSurveyRate));
+                safeUpdateElement('projectDocumentationTotal', formatCurrency(params.buildingArea * params.projectDocumentationRate));
+                // Povolení vychází ze stejného základu jako ve výpočtu (subtotalBeforeOverhead)
+                safeUpdateElement('permitsTotal', formatCurrency((costs.summary ? costs.summary.subtotalBeforeOverhead : 0) * (params.permitsRate / 100)));
                 safeUpdateElement('technicalReportsTotal', formatCurrency(params.technicalReports));
             
                 // Infrastruktura
@@ -2090,12 +2168,150 @@
                 addTableRow(tbody, ['Vlastní položky', '-', '-', '-', formatCurrency(costs.landAcquisition.custom)], 'bg-blue');
             }
             
-            // Celkový řádek
+            // Projektová příprava
+            addTableCategory(tbody, 'Projektová příprava', 'bg-green', [
+                ['Geologické průzkumy', formatNumber(params.buildingArea), 'm²', formatCurrency(params.geologicalSurveyRate), formatCurrency(costs.projectPreparation.geologicalSurvey)],
+                ['Projektová dokumentace', formatNumber(params.buildingArea), 'm²', formatCurrency(params.projectDocumentationRate), formatCurrency(costs.projectPreparation.projectDocs)],
+                ['Povolení a správní řízení (' + params.permitsRate + '%)', '-', '%', '-', formatCurrency(costs.projectPreparation.permits)],
+                ...(costs.projectPreparation.technicalReports > 0 ? [['Technické posudky', '1', 'paušál', formatCurrency(params.technicalReports), formatCurrency(costs.projectPreparation.technicalReports)]] : [])
+            ]);
+
+            if (costs.projectPreparation.custom > 0) {
+                addTableRow(tbody, ['Vlastní položky', '-', '-', '-', formatCurrency(costs.projectPreparation.custom)], 'bg-green');
+            }
+
+            // Infrastruktura a přípojky
+            addTableCategory(tbody, 'Infrastruktura a sítě', 'bg-yellow', [
+                ['Komunikace', formatNumber(params.roadLength), 'm', formatCurrency(params.roadPricePerMeter), formatCurrency(costs.infrastructure.roads)],
+                ['Chodníky', formatNumber(params.sidewalkArea), 'm²', formatCurrency(params.sidewalkPricePerM2), formatCurrency(costs.infrastructure.sidewalks)],
+                ['Parkovací místa', formatNumber(params.parkingSpaces), 'ks', formatCurrency(params.parkingPricePerSpace), formatCurrency(costs.infrastructure.parking)],
+                ['Vodovodní řad', formatNumber(params.waterPipeLength), 'm', formatCurrency(params.waterPipePrice), formatCurrency(costs.infrastructure.water)],
+                ['Kanalizace', formatNumber(params.sewerPipeLength), 'm', formatCurrency(params.sewerPipePrice), formatCurrency(costs.infrastructure.sewer)],
+                ['Elektro NN', formatNumber(params.electricLowLength), 'm', formatCurrency(params.electricLowPrice), formatCurrency(costs.infrastructure.electric)],
+                ['Plyn STL', formatNumber(params.gasLength), 'm', formatCurrency(params.gasPrice), formatCurrency(costs.infrastructure.gas)],
+                ['Telekomunikace', formatNumber(params.telecomLength), 'm', formatCurrency(params.telecomPrice), formatCurrency(costs.infrastructure.telecom)],
+                ['Přípojky (součet)', '-', '-', '-', formatCurrency(costs.infrastructure.connections)]
+            ]);
+
+            if (costs.infrastructure.custom > 0) {
+                addTableRow(tbody, ['Vlastní položky', '-', '-', '-', formatCurrency(costs.infrastructure.custom)], 'bg-yellow');
+            }
+
+            // Výstavba
+            addTableCategory(tbody, 'Výstavba', 'bg-red', [
+                ['Podlažní plocha (vč. spol. prostor)', formatNumber(costs.construction.totalApartmentArea), 'm²', '× ' + params.commonAreasCoeff, formatNumber(Math.round(costs.construction.totalApartmentArea * params.commonAreasCoeff)) + ' m²'],
+                ['Cena stavby', '-', '-', formatCurrency(params.constructionPrice) + '/m²', formatCurrency(costs.construction.total - (params.additionalConstruction + params.technologyEquipment + params.landscaping + (customItems.construction||[]).reduce((s,i)=>s+i.quantity*i.price,0)))],
+                ...(params.additionalConstruction > 0 ? [['Dodatečné stavební práce', '1', 'paušál', formatCurrency(params.additionalConstruction), formatCurrency(params.additionalConstruction)]] : []),
+                ...(params.technologyEquipment > 0 ? [['Technologie a zařízení', '1', 'paušál', formatCurrency(params.technologyEquipment), formatCurrency(params.technologyEquipment)]] : []),
+                ...(params.landscaping > 0 ? [['Venkovní úpravy', '1', 'paušál', formatCurrency(params.landscaping), formatCurrency(params.landscaping)]] : [])
+            ]);
+
+            if (costs.construction && (customItems.construction||[]).length > 0) {
+                const customTotal = (customItems.construction||[]).reduce((s,i)=>s+(i.quantity*i.price),0);
+                if (customTotal > 0) addTableRow(tbody, ['Vlastní položky', '-', '-', '-', formatCurrency(customTotal)], 'bg-red');
+            }
+
+            // Režie a další
+            addTableCategory(tbody, 'Režie a prodej', 'bg-gray', [
+                ['Správa projektu (' + params.projectManagement + '%)', '-', '%', '-', formatCurrency(costs.overhead.projectManagement)],
+                ['Marketing a prodej (' + params.marketing + '%)', '-', '%', '-', formatCurrency(costs.overhead.marketing)],
+                ['Nepředvídané náklady (' + params.contingency + '%)', '-', '%', '-', formatCurrency(costs.overhead.contingency)],
+                ['RK provize prodej (' + params.brokerageSale + '%)', '-', '%', '-', formatCurrency(costs.overhead.brokerageSale)],
+                ['Finanční náklady (' + params.interestRate + '% p.a., ' + params.projectDuration + ' měs.)', '-', '-', '-', formatCurrency(costs.overhead.financialCosts)]
+            ]);
+
+            if (costs.overhead.custom > 0) {
+                addTableRow(tbody, ['Vlastní položky', '-', '-', '-', formatCurrency(costs.overhead.custom)], 'bg-gray');
+            }
+
+            // Příjmy – detailní rozpis
+            (function(){
+                const revenueRows = [];
+                if (currentProjectType === 'residential') {
+                    const mix = getApartmentMix();
+                    const typeLabels = {
+                        '1kk': 'Byty 1+kk',
+                        '2kk': 'Byty 2+kk',
+                        '3kk': 'Byty 3+kk',
+                        '4kk': 'Byty 4+kk',
+                        'larger': 'Byty 5+kk+'
+                    };
+                    // Byty podle dispozic (prodává se m²)
+                    Object.entries(mix).forEach(([key, data]) => {
+                        if (['parking', 'storage'].includes(key)) return;
+                        const area = (data.count || 0) * (data.avgSize || 0);
+                        const unitPrice = data.pricePerM2 || 0;
+                        const total = area * unitPrice;
+                        if (area > 0 && unitPrice > 0) {
+                            revenueRows.push([
+                                typeLabels[key] || ('Byty ' + key),
+                                formatNumber(area),
+                                'm²',
+                                formatCurrency(unitPrice) + '/m²',
+                                formatCurrency(total)
+                            ]);
+                        }
+                    });
+                    // Parkování (ks)
+                    if (mix.parking && mix.parking.count > 0) {
+                        const total = mix.parking.count * (mix.parking.price || 0);
+                        revenueRows.push([
+                            'Parkovací místa',
+                            formatNumber(mix.parking.count),
+                            'ks',
+                            formatCurrency(mix.parking.price || 0),
+                            formatCurrency(total)
+                        ]);
+                    }
+                    // Sklepy (ks)
+                    if (mix.storage && mix.storage.count > 0) {
+                        const total = mix.storage.count * (mix.storage.price || 0);
+                        revenueRows.push([
+                            'Sklepy',
+                            formatNumber(mix.storage.count),
+                            'ks',
+                            formatCurrency(mix.storage.price || 0),
+                            formatCurrency(total)
+                        ]);
+                    }
+                } else if (currentProjectType === 'building_plots') {
+                    const params = getFormValues();
+                    const totalArea = (params.units || 0) * (params.avgPlotSize || 0);
+                    const unitPrice = params.salePricePerM2 || 0;
+                    const total = totalArea * unitPrice;
+                    revenueRows.push([
+                        'Prodej stavebních parcel',
+                        formatNumber(totalArea),
+                        'm²',
+                        formatCurrency(unitPrice) + '/m²',
+                        formatCurrency(total)
+                    ]);
+                } else if (currentProjectType === 'house_plots') {
+                    const params = getFormValues();
+                    const totalArea = (params.units || 0) * (params.avgHouseUsableArea || 0);
+                    const unitPrice = params.housePricePerM2 || 0;
+                    const total = totalArea * unitPrice;
+                    revenueRows.push([
+                        'Prodej RD – užitná plocha',
+                        formatNumber(totalArea),
+                        'm²',
+                        formatCurrency(unitPrice) + '/m²',
+                        formatCurrency(total)
+                    ]);
+                }
+                // Celkové příjmy – rekapitulace
+                revenueRows.push(['Celkem příjmy (reálně)', '-', '-', '-', formatCurrency(costs.summary.totalRevenues)]);
+                addTableCategory(tbody, 'Příjmy', 'bg-green', revenueRows);
+            })();
+
+            // Souhrn projektu
             const totalRow = document.createElement('tr');
             totalRow.className = 'total-row';
             totalRow.innerHTML = `
-                <td colspan="5"><strong>CELKOVÉ NÁKLADY</strong></td>
-                <td class="text-right"><strong>${formatCurrency(costs.summary.totalCosts)}</strong></td>
+                <td colspan="3"><strong>Souhrn projektu</strong></td>
+                <td class="text-right"><strong>Příjmy</strong><br><strong>Náklady</strong><br><strong>Hrubý zisk</strong></td>
+                <td class="text-right">-<br>-<br>-</td>
+                <td class="text-right"><strong>${formatCurrency(costs.summary.totalRevenues)}</strong><br><strong>${formatCurrency(costs.summary.totalCosts)}</strong><br><strong>${formatCurrency(costs.summary.grossProfit)}</strong></td>
             `;
             tbody.appendChild(totalRow);
         }

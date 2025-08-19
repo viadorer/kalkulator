@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Správce formulářů</title>
+  <style>
+    :root { --b:#1d1d1f; --mut:#6e6e73; --br:#e5e5e7; --bg:#f5f5f7; --p:#0a84ff; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--b); background: var(--bg); margin: 0; }
+    /* Hero header */
+    header.hero-section { background: linear-gradient(135deg, #007aff 0%, #005bb5 100%); color:#fff; padding: 28px 20px; display:flex; align-items:center; justify-content:space-between; }
+    header.hero-section h1 { font-size: 24px; margin: 0; font-weight: 500; }
+    .menu-btn { background: rgba(255,255,255,0.2); color: #fff; border: 1px solid rgba(255,255,255,0.3); padding:10px 16px; border-radius:25px; text-decoration:none; font-size:14px; backdrop-filter: blur(10px); }
+    .menu-btn:hover { background: rgba(255,255,255,0.3); }
+    /* Layout */
+    .main-container { background: rgba(255,255,255,0.8); backdrop-filter: saturate(180%) blur(20px); border-radius: 18px; box-shadow: 0 4px 30px rgba(0,0,0,0.1); margin: 20px; border: 1px solid rgba(255,255,255,0.18); }
+    main { display:grid; grid-template-columns: 1fr 1.4fr; gap: 20px; padding: 20px; }
+    .card { background: rgba(255,255,255,0.7); backdrop-filter: saturate(180%) blur(20px); border: 1px solid rgba(255,255,255,0.18); border-radius:16px; }
+    .card h3 { margin:0; padding:16px 18px; border-bottom:1px solid var(--br); font-size:16px; }
+    .card .content { padding:16px; }
+    .row { display:flex; gap:8px; align-items:center; flex-wrap: wrap; }
+    select, input[type="text"], input[type="number"], textarea { width:100%; padding:10px 12px; border:1px solid var(--br); border-radius:8px; font-size:14px; background:#fff; }
+    textarea { min-height:80px; resize: vertical; }
+    label { font-size:13px; color: var(--mut); display:block; margin-bottom:6px; }
+    .btn { background: var(--p); color:#fff; border:none; border-radius:980px; padding:10px 14px; cursor:pointer; font-size:14px; }
+    .btn.secondary { background:#fff; color:var(--b); border:1px solid var(--br); }
+    .btn.danger { background:#d72638; }
+    .toolbar { display:flex; gap:8px; flex-wrap:wrap; }
+    .muted { color: var(--mut); font-size:12px; }
+    .fields { display:grid; gap:14px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); align-items: end; }
+    .field { display:grid; gap:8px; min-width: 0; }
+    .field label { overflow-wrap: anywhere; font-weight: 600; color: #1d1d1f; }
+    /* Prevent overflow in grid children */
+    input[type="text"], input[type="number"], input[type="date"], input[type="datetime-local"], select, textarea { min-width: 0; box-sizing: border-box; }
+    .entry { border:1px solid rgba(0,0,0,0.08); padding:12px; border-radius:12px; background:#fff; }
+    /* Tiles grid */
+    #formsList { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:16px; }
+    .saved-checklist { background: rgba(255, 255, 255, 0.7); backdrop-filter: saturate(180%) blur(20px); border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 16px; padding: 20px; transition: all .3s cubic-bezier(.25,.46,.45,.94); cursor: pointer; }
+    .saved-checklist:hover { background: rgba(255,255,255,0.9); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); }
+    .checklist-title { font-size: 17px; font-weight: 600; color: #1d1d1f; margin-bottom: 6px; }
+    .checklist-description { font-size: 15px; color: #86868b; margin-bottom: 8px; }
+    .checklist-meta { display:flex; justify-content:space-between; align-items:center; margin-top: 10px; font-size: 13px; color:#86868b; }
+    .actions { justify-content: flex-end; margin-top: 10px; }
+
+    /* Modal */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.35); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 0; }
+    .modal { background: #ffffff; border:1px solid var(--br); border-radius:0; width: min(1000px, 100%); height: 100vh; max-height: 100vh; display:flex; flex-direction: column; }
+    .modal header { display:flex; align-items:center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--br); background: #fff; }
+    .modal header h3 { margin:0; font-size:16px; }
+    .modal .modal-body { padding: 16px 18px; overflow: auto; flex: 1; background: #fff; font-size: 15px; line-height: 1.45; }
+    .sticky-actions { position: sticky; bottom: 0; background: #fff; border-top: 1px solid var(--br); padding: 10px 0; margin-top: 12px; }
+    .section-title { font-size: 17px; font-weight: 700; margin: 12px 0 8px; color: #1d1d1f; grid-column: 1 / -1; padding-top: 6px; border-top: 1px solid var(--br); }
+    .close-btn { background:#fff; color:var(--b); border:1px solid var(--br); border-radius:980px; padding:8px 12px; cursor:pointer; }
+    .toast { position: fixed; top: 16px; right: 16px; background: #1d1d1f; color:#fff; padding:10px 12px; border-radius: 10px; font-size: 14px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); opacity: 0; transform: translateY(-8px); transition: opacity .2s ease, transform .2s ease; z-index: 2000; }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .hint { font-size: 12px; color: var(--mut); margin-top: -2px; }
+  </style>
+</head>
+<body>
+  <header class="hero-section">
+    <h1>Správce formulářů</h1>
+    <div class="toolbar">
+      <a class="menu-btn" href="index.html">← Hlavní menu</a>
+      <button class="btn" onclick="window.location.href='form_editor.html'">Otevřít editor</button>
+      <button class="btn secondary" onclick="exportAll()">Exportovat vše (JSON)</button>
+      <label class="btn secondary" for="importFile" style="display:inline-block;">Importovat</label>
+      <input id="importFile" type="file" accept="application/json" style="display:none" onchange="handleImport(event)">
+    </div>
+  </header>
+
+  <div class="main-container">
+  <main>
+    <section class="card">
+      <h3>Dostupné formuláře</h3>
+      <div class="content">
+        <div class="row" style="margin-bottom:8px;">
+          <select id="formSelect"></select>
+          <button class="btn" onclick="loadSelectedForm()">Načíst</button>
+        </div>
+        <div id="formsList"></div>
+      </div>
+    </section>
+
+    <!-- Modal for opening forms -->
+    <div id="formModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal">
+        <header>
+          <h3 id="modalTitle">Formulář</h3>
+          <button class="close-btn" onclick="closeModal()">Zavřít</button>
+        </header>
+        <div class="modal-body">
+          <p class="muted" id="modalDesc"></p>
+          <form id="modalDynamicForm" class="fields"></form>
+          <div class="sticky-actions">
+            <div class="row">
+              <button class="btn" type="button" onclick="saveCurrentEntry()">Uložit jako preset</button>
+              <button class="btn secondary" type="button" onclick="resetForm()">Vymazat</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  </div>
+
+  <script src="forms_storage.js"></script>
+  <script>
+    let currentSchemaId = null;
+    let currentSchema = null;
+
+    function renderFormsList(){
+      const list = document.getElementById('formsList');
+      const select = document.getElementById('formSelect');
+      list.innerHTML = '';
+      select.innerHTML = '';
+      const schemas = FormsStore.listSchemas();
+      schemas.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s.id; opt.textContent = s.name;
+        select.appendChild(opt);
+
+        const tile = document.createElement('div');
+        tile.className = 'saved-checklist';
+        tile.onclick = () => openForm(s.id);
+        const fieldsCount = Array.isArray(s.fields) ? s.fields.length : 0;
+        const dateStr = new Date(s.updatedAt || s.createdAt || Date.now()).toLocaleDateString('cs-CZ');
+        tile.innerHTML = `
+          <div class="checklist-title">${s.name}</div>
+          <div class="checklist-description">${s.description || ''}</div>
+          <div class="checklist-meta">
+            <span>${fieldsCount} polí</span>
+            <span>${dateStr}</span>
+          </div>
+          <div class="row actions">
+            <button class='btn secondary' onclick="event.stopPropagation(); openForm('${s.id}')">Otevřít</button>
+            <button class='btn danger' onclick="event.stopPropagation(); deleteSchema('${s.id}')">Smazat</button>
+          </div>`;
+        list.appendChild(tile);
+      });
+    }
+
+    function loadSelectedForm(){
+      const id = document.getElementById('formSelect').value;
+      if (id) openForm(id);
+    }
+
+    function openForm(id){
+      const schema = FormsStore.getSchema(id);
+      if (!schema){ alert('Formulář nenalezen'); return; }
+      currentSchemaId = id;
+      currentSchema = schema;
+      document.getElementById('modalTitle').textContent = schema.name || 'Formulář';
+      document.getElementById('modalDesc').textContent = schema.description || '';
+      renderDynamicForm(schema, 'modalDynamicForm');
+      openModal();
+    }
+
+    function renderDynamicForm(schema, targetId){
+      const form = document.getElementById(targetId || 'modalDynamicForm');
+      form.innerHTML = '';
+      (schema.fields || []).forEach(f => {
+        if (f.type === 'section'){
+          const h = document.createElement('div');
+          h.className = 'section-title';
+          if (Number.isInteger(f.span) && f.span > 0) { h.style.gridColumn = `span ${f.span}`; }
+          h.textContent = f.label || f.name || '';
+          form.appendChild(h);
+          return;
+        }
+        const wrap = document.createElement('div');
+        wrap.className = 'field';
+        // Optional: allow fields to span multiple grid columns if schema provides f.span
+        if (Number.isInteger(f.span) && f.span > 0) {
+          wrap.style.gridColumn = `span ${f.span}`;
+        }
+        const id = 'f_' + f.id;
+        const label = document.createElement('label');
+        label.setAttribute('for', id);
+        label.textContent = f.label || f.name || 'Pole';
+        wrap.appendChild(label);
+
+        let input;
+        switch(f.type){
+          case 'textarea':
+            input = document.createElement('textarea');
+            break;
+          case 'number':
+            input = document.createElement('input');
+            input.type = 'number';
+            break;
+          case 'select':
+            input = document.createElement('select');
+            (f.options || []).forEach(opt => {
+              const o = document.createElement('option');
+              o.value = opt.value ?? opt; o.textContent = opt.label ?? opt;
+              input.appendChild(o);
+            });
+            break;
+          case 'checkbox':
+            input = document.createElement('input');
+            input.type = 'checkbox';
+            break;
+          case 'date':
+            input = document.createElement('input');
+            input.type = 'date';
+            break;
+          case 'datetime':
+            input = document.createElement('input');
+            input.type = 'datetime-local';
+            break;
+          default:
+            input = document.createElement('input');
+            input.type = 'text';
+        }
+        input.id = id;
+        if (f.required) input.required = true;
+        form.appendChild(wrap);
+        wrap.appendChild(input);
+        if (f.hint) {
+          const h = document.createElement('div');
+          h.className = 'hint';
+          h.textContent = f.hint;
+          wrap.appendChild(h);
+        }
+      });
+    }
+
+    function collectFormData(){
+      const data = {};
+      (currentSchema.fields || []).forEach(f => {
+        if (f.type === 'section') return; // non-input
+        const id = 'f_' + f.id;
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (f.type === 'checkbox') data[f.id] = !!el.checked;
+        else data[f.id] = el.value;
+      });
+      return data;
+    }
+
+    function saveCurrentEntry(){
+      if (!currentSchema) return;
+      const data = collectFormData();
+      const title = getPresetTitle(data, currentSchema);
+      data._presetTitle = title;
+      FormsStore.saveEntry(currentSchemaId, data);
+      showToast(`Preset uložen: ${title}`);
+      closeModal();
+    }
+
+    // Entries list/UI intentionally removed: saving goes silently to storage as presets.
+
+    function resetForm(){
+      if (!currentSchema) return;
+      renderDynamicForm(currentSchema, 'modalDynamicForm');
+    }
+
+    function openModal(){
+      const ovl = document.getElementById('formModal');
+      ovl.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(){
+      const ovl = document.getElementById('formModal');
+      ovl.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    // Close on overlay click
+    document.addEventListener('click', (e)=>{
+      const ovl = document.getElementById('formModal');
+      if (ovl.style.display !== 'flex') return;
+      if (e.target === ovl) closeModal();
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e)=>{
+      if (e.key === 'Escape') closeModal();
+    });
+
+    function deleteSchema(id){
+      if (!confirm('Smazat formulář včetně odpovědí?')) return;
+      FormsStore.deleteSchema(id);
+      if (currentSchema && currentSchema.id === id){
+        closeModal();
+        currentSchema = null;
+      }
+      renderFormsList();
+    }
+
+    function exportAll(){
+      FormsStore.download('forms_export.json', FormsStore.exportAll());
+    }
+
+    function handleImport(ev){
+      const file = ev.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          FormsStore.importAll(reader.result, true);
+          alert('Import hotov');
+          renderFormsList();
+          if (currentSchema) openForm(currentSchema.id);
+        } catch(e){
+          alert('Chyba importu: ' + e.message);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // escapeHtml no longer needed
+
+    // Boot
+    (function init(){
+      renderFormsList();
+    })();
+  </script>
+</body>
+</html>
