@@ -167,6 +167,16 @@
           form.appendChild(h);
           return;
         }
+        if (f.type === 'html'){
+          const block = document.createElement('div');
+          block.className = 'field';
+          // Allow spanning multiple columns / full width
+          if (Number.isInteger(f.span) && f.span > 0) { block.style.gridColumn = `span ${f.span}`; }
+          // Inject provided HTML (assumed trusted from local schema)
+          block.innerHTML = f.html || '';
+          form.appendChild(block);
+          return;
+        }
         const wrap = document.createElement('div');
         wrap.className = 'field';
         // Optional: allow fields to span multiple grid columns if schema provides f.span
@@ -229,11 +239,21 @@
       const data = {};
       (currentSchema.fields || []).forEach(f => {
         if (f.type === 'section') return; // non-input
+        if (f.type === 'html') return; // inline inputs handled below
         const id = 'f_' + f.id;
         const el = document.getElementById(id);
         if (!el) return;
         if (f.type === 'checkbox') data[f.id] = !!el.checked;
         else data[f.id] = el.value;
+      });
+      // Collect inline inputs embedded in HTML blocks using data-field attributes
+      const formEl = document.getElementById('modalDynamicForm');
+      formEl.querySelectorAll('[data-field]').forEach(el => {
+        const key = el.getAttribute('data-field');
+        if (!key) return;
+        if (data[key] !== undefined) return; // don't overwrite explicit fields
+        if (el.type === 'checkbox') data[key] = !!el.checked;
+        else data[key] = el.value;
       });
       return data;
     }
