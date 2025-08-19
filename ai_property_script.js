@@ -39,32 +39,36 @@ fileInput.addEventListener('change', (e) => {
 
 function handleFiles(files) {
     files.forEach(file => {
-        if (uploadedFiles.length < 12) {
+        if (uploadedFiles.length < 12 && file && file.type && file.type.startsWith('image/')) {
             uploadedFiles.push(file);
-            displayImage(file);
         }
     });
+    rebuildPreviews();
     updateUploadArea();
 }
 
-function displayImage(file) {
+function displayImage(file, index) {
     const reader = new FileReader();
     reader.onload = (e) => {
         const imageDiv = document.createElement('div');
         imageDiv.className = 'image-preview';
         imageDiv.innerHTML = `
             <img src="${e.target.result}" alt="Preview">
-            <button class="image-remove" onclick="removeImage(${uploadedFiles.length - 1})">×</button>
+            <button class="image-remove" onclick="removeImage(${index})">×</button>
         `;
         uploadedImagesContainer.appendChild(imageDiv);
     };
     reader.readAsDataURL(file);
 }
 
+function rebuildPreviews() {
+    uploadedImagesContainer.innerHTML = '';
+    uploadedFiles.forEach((file, i) => displayImage(file, i));
+}
+
 function removeImage(index) {
     uploadedFiles.splice(index, 1);
-    uploadedImagesContainer.innerHTML = '';
-    uploadedFiles.forEach(file => displayImage(file));
+    rebuildPreviews();
     updateUploadArea();
 }
 
@@ -105,20 +109,22 @@ async function analyzeProperty() {
 
     try {
         // Prepare data
+        const clamp01 = (v) => Math.max(0, Math.min(100, Number(v) || 0));
+        const toNum = (id) => clamp01(document.getElementById(id).value);
         const propertyData = {
             propertyType: document.getElementById('propertyType').value,
             location: document.getElementById('location').value,
-            area: document.getElementById('area').value,
+            area: Number(document.getElementById('area').value) || 0,
             structure: document.getElementById('structure').value,
             roof: document.getElementById('roof').value,
             windows: document.getElementById('windows').value,
-            electrical: document.getElementById('electrical').value,
-            plumbing: document.getElementById('plumbing').value,
-            heating: document.getElementById('heating').value,
-            walls: document.getElementById('walls').value,
-            floors: document.getElementById('floors').value,
-            bathroom: document.getElementById('bathroom').value,
-            kitchen: document.getElementById('kitchen').value,
+            electrical: toNum('electrical'),
+            plumbing: toNum('plumbing'),
+            heating: toNum('heating'),
+            walls: toNum('walls'),
+            floors: toNum('floors'),
+            bathroom: toNum('bathroom'),
+            kitchen: toNum('kitchen'),
             exterior: document.getElementById('exterior').value,
             additional: document.getElementById('additional').value
         };
@@ -135,7 +141,8 @@ async function analyzeProperty() {
         const images = await Promise.all(imagePromises);
 
         // Call AI API
-        const result = await callAI(selectedAPI, apiKey, propertyData, images);
+        let result = await callAI(selectedAPI, apiKey, propertyData, images);
+        result = validateResult(result);
         displayResults(result);
 
     } catch (error) {
@@ -205,12 +212,12 @@ Odpověz ve formátu JSON s českými texty:
 }
 
 async function callClaudeAPI(apiKey, prompt, images) {
-    const imageContents = images.map(img => ({
+    const imageContents = images.map((img, i) => ({
         type: "image",
         source: {
             type: "base64",
-            media_type: "image/jpeg",
-            data: img.split(',')[1]
+            media_type: (uploadedFiles[i] && uploadedFiles[i].type) ? uploadedFiles[i].type : "image/jpeg",
+            data: (img.includes(',')) ? img.split(',')[1] : img
         }
     }));
 
@@ -224,6 +231,8 @@ async function callClaudeAPI(apiKey, prompt, images) {
         body: JSON.stringify({
             model: 'claude-3-5-sonnet-20241022',
             max_tokens: 2000,
+            temperature: 0.2,
+            system: 'Vracej výhradně čistý JSON přesně dle specifikace v promtu, bez dalšího textu, bez vysvětlení, bez formátovacích bloků.',
             messages: [{
                 role: 'user',
                 content: [
@@ -281,7 +290,9 @@ async function callOpenAI(apiKey, prompt, images) {
                     ...imageContents
                 ]
             }],
-            max_tokens: 2000
+            max_tokens: 2000,
+            temperature: 0.2,
+            response_format: { type: 'json_object' }
         })
     });
 
@@ -306,6 +317,21 @@ async function callOpenAI(apiKey, prompt, images) {
             srovnani_trh: data.choices[0].message.content
         };
     }
+}
+
+function validateResult(res) {
+    const safe = typeof res === 'object' && res !== null ? { ...res } : {};
+    // Normalize types
+    safe.cena_odhad = typeof safe.cena_odhad === 'string' ? safe.cena_odhad : 'N/A';
+    safe.cena_rozmezi = typeof safe.cena_rozmezi === 'string' ? safe.cena_rozmezi : 'N/A';
+    const num = Number(safe.technicky_stav);
+    safe.technicky_stav = Number.isFinite(num) ? Math.max(0, Math.min(10, num)) : 0;
+    safe.pozitiva = Array.isArray(safe.pozitiva) ? safe.pozitiva : [];
+    safe.negativa = Array.isArray(safe.negativa) ? safe.negativa : [];
+    safe.doporuceni = Array.isArray(safe.doporuceni) ? safe.doporuceni : [];
+    safe.naklady_dokonceni = typeof safe.naklady_dokonceni === 'string' ? safe.naklady_dokonceni : 'N/A';
+    safe.srovnani_trh = typeof safe.srovnani_trh === 'string' ? safe.srovnani_trh : 'N/A';
+    return safe;
 }
 
 function displayResults(result) {
