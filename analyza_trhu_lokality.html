@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analýza reálného trhu lokality</title>
+  <style>
+    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; background: #fafafa; color: #111827; }
+    .container { max-width: 1200px; margin: 24px auto; padding: 0 16px; }
+    h1 { font-size: 28px; margin: 0 0 16px; color: #0f172a; }
+    h2 { font-size: 20px; margin: 0 0 12px; color: #334155; }
+    .grid { display: grid; gap: 16px; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px; }
+    .section { border-radius: 12px; padding: 12px; border: 1px solid #e5e7eb; background: #fcfcfc; }
+    .form-group { display: grid; gap: 6px; margin-bottom: 10px; }
+    .form-label { font-size: 13px; color: #374151; }
+    .form-input { border: 1px solid #e5e7eb; border-radius: 8px; padding: 8px 10px; font-size: 14px; width: 100%; }
+    .form-help { font-size: 12px; color: #6b7280; }
+    .result-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #eee; }
+    .result-row:last-child { border-bottom: 0; }
+    .result-value { font-weight: 600; }
+    .pill { display: inline-flex; align-items: center; gap: 6px; background: #f1f5f9; color: #0f172a; padding: 4px 8px; border-radius: 999px; font-size: 12px; }
+    .factor-list { margin: 0; padding-left: 18px; }
+    .factor-list li { margin: 6px 0; }
+    .muted { color: #6b7280; font-size: 12px; }
+    .highlight { color: #065f46; }
+    /* Barevné štítky */
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; line-height: 1.6; margin-right: 8px; }
+    .badge-green { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+    .badge-orange { background: #fff7ed; color: #9a3412; border: 1px solid #fed7aa; }
+    .badge-red { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+    /* Mezivýpočty – lepší čitelnost */
+    .calc-details { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+    .calc-details .section { padding: 12px; }
+    .calc-details .section h2 { font-size: 16px; margin: 0 0 8px; }
+    .calc-details .result-row { align-items: flex-start; gap: 8px; }
+    .calc-details .result-row span { white-space: normal; }
+    .calc-details .result-value { white-space: nowrap; }
+    .formula-line { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; color: #374151; background: #f8fafc; padding: 6px 8px; border-radius: 6px; border: 1px dashed #e5e7eb; margin-top: 6px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Analýza reálného trhu lokality</h1>
+
+    <div class="grid grid-3">
+      <!-- Základní data lokality -->
+      <div class="section">
+        <h2>Základní data lokality</h2>
+        <div class="form-group">
+          <label class="form-label">Název lokality/regionu</label>
+          <input id="localityName" class="form-input" value="Praha 4" />
+          <div class="form-help">Město, okres nebo region</div>
+        </div>
+
+        
+
+        <div class="form-group">
+          <label class="form-label">Počet obyvatel</label>
+          <input id="population" type="number" class="form-input" value="135000" />
+          <div class="form-help">Celkový počet obyvatel v regionu</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Aktivní nabídky - prodej</label>
+          <input id="activeListingsSale" type="number" class="form-input" value="850" />
+          <div class="form-help">Aktuální počet nemovitostí na prodej</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Aktivní nabídky - pronájem</label>
+          <input id="activeListingsRent" type="number" class="form-input" value="1200" />
+          <div class="form-help">Aktuální počet nemovitostí k pronájmu</div>
+        </div>
+      </div>
+
+      <!-- Tržní hodnoty -->
+      <div class="section">
+        <h2>Tržní hodnoty</h2>
+        <div class="form-group">
+          <label class="form-label">Průměrná cena prodeje (CZK)</label>
+          <input id="marketAvgSalePrice" type="number" class="form-input" value="8500000" />
+          <div class="form-help">Průměrná prodejní cena v lokalitě</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Průměrný nájem (CZK/měsíc)</label>
+          <input id="avgRentPrice" type="number" class="form-input" value="25000" />
+          <div class="form-help">Průměrný měsíční nájem v lokalitě</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Roční obrat prodejů (mil. CZK)</label>
+          <input id="annualSaleVolume" type="number" class="form-input" value="1080" readonly />
+          <div class="form-help">Celkový objem prodejů za rok (počítáno: nabídky × koef. × 12 × prům. cena)</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Roční obrat pronájmů (mil. CZK)</label>
+          <input id="annualRentVolume" type="number" class="form-input" value="300" readonly />
+          <div class="form-help">Celkový objem pronájmů za rok (počítáno: nabídky × koef. × 12 × prům. nájem)</div>
+        </div>
+      </div>
+
+      <!-- Koeficienty a plán -->
+      <div class="section">
+        <h2>Koeficienty a plán</h2>
+        <div class="form-group">
+          <label class="form-label">Koeficient realizace prodejů</label>
+          <input id="realizationCoeffSale" type="number" step="0.05" min="0" max="1" class="form-input" value="0.35" />
+          <div class="form-help">Podíl aktivních nabídek, které se skutečně prodají za rok</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Koeficient realizace pronájmů</label>
+          <input id="realizationCoeffRent" type="number" step="0.05" min="0" max="1" class="form-input" value="0.45" />
+          <div class="form-help">Podíl aktivních nabídek, které se pronajmou za rok</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Celková provize (%)</label>
+          <input id="totalCommissionRate" type="number" step="0.1" min="0" max="100" class="form-input" value="4.0" />
+          <div class="form-help">Součet provizí (prodej + pronájem), v % z obratu</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Plánovaný tržní podíl (%)</label>
+          <input id="plannedMarketShare" type="number" step="0.1" min="0" max="100" class="form-input" value="6.0" />
+          <div class="form-help">Váš cíl podílu na trhu</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mezivýpočty (volitelně skryté, full-width) -->
+    <div class="card" style="margin-top: 16px;">
+      <details>
+        <summary style="cursor: pointer; font-weight:600;">Mezivýpočty (klikněte pro zobrazení)</summary>
+        <div class="calc-details" style="margin-top: 12px;">
+          <div class="section">
+            <h2>Realizace</h2>
+            <div class="result-row"><span>Realized sales (ks/rok)</span><div class="result-value" id="realizedSalesVal">—</div></div>
+            <div class="result-row"><span>Realized rents (ks/rok)</span><div class="result-value" id="realizedRentsVal">—</div></div>
+            <div class="result-row"><span>Transakce pro váš podíl (ks/rok)</span><div class="result-value" id="transactionsForYourShare">—</div></div>
+            <div class="formula-line" id="formulaRealizedSales"></div>
+            <div class="formula-line" id="formulaRealizedRents"></div>
+            <div class="formula-line" id="formulaTxForShare"></div>
+          </div>
+          <div class="section">
+            <h2>Obraty</h2>
+            <div class="result-row"><span>Sale turnover</span><div class="result-value" id="saleTurnoverCZK">—</div></div>
+            <div class="result-row"><span>Sale turnover (mil. CZK)</span><div class="result-value" id="saleTurnoverMil">—</div></div>
+            <div class="result-row"><span>Rent turnover</span><div class="result-value" id="rentTurnoverCZK">—</div></div>
+            <div class="result-row"><span>Rent turnover (mil. CZK)</span><div class="result-value" id="rentTurnoverMil">—</div></div>
+            <div class="formula-line" id="formulaSaleTurnover"></div>
+            <div class="formula-line" id="formulaRentTurnover"></div>
+          </div>
+          <div class="section">
+            <h2>Potenciál a kapacita</h2>
+            <div class="result-row"><span>Total market potential</span><div class="result-value" id="totalMarketPotentialDetail">—</div></div>
+            <div class="result-row"><span>Potential commission</span><div class="result-value" id="potentialCommissionDetail">—</div></div>
+            <div class="result-row"><span>Theoretical capacity (ks/rok)</span><div class="result-value" id="theoreticalCapacity">—</div></div>
+            <div class="result-row"><span>Saturation</span><div class="result-value" id="saturationDetail">—</div></div>
+            <div class="formula-line" id="formulaTotalPotential"></div>
+            <div class="formula-line" id="formulaCommission"></div>
+            <div class="formula-line" id="formulaCapacity"></div>
+            <div class="formula-line" id="formulaSaturation"></div>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- Konkurence a výsledky -->
+    <div class="card" style="margin-top:16px;">
+      <div class="grid grid-2">
+        <div class="section">
+          <h2>Analýza konkurence</h2>
+          <div class="form-group">
+            <label class="form-label">Počet RK v regionu</label>
+            <input id="competitorCount" type="number" class="form-input" value="45" />
+            <div class="form-help">Celkový počet realitních kanceláří</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Průměrný počet makléřů/RK</label>
+            <input id="avgAgentsPerCompetitor" type="number" class="form-input" value="8" />
+            <div class="form-help">Průměrná velikost konkurenčních RK</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Odhad transakcí/RK/rok</label>
+            <input id="avgTransactionsPerCompetitor" type="number" class="form-input" value="120" />
+            <div class="form-help">Průměrný počet uzavřených obchodů</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tržní podíl top 3 RK (%)</label>
+            <input id="topThreeMarketShare" type="number" step="0.1" min="0" max="100" class="form-input" value="55" />
+            <div class="form-help">Podíl největších hráčů na trhu</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>Souhrn výsledků</h2>
+          <div class="result-row"><span>Celkový tržní potenciál</span><div class="result-value" id="totalMarketPotential">—</div></div>
+          <div class="result-row"><span>Potenciální provize</span><div class="result-value" id="potentialCommission">—</div></div>
+          <div class="result-row"><span>Počet transakcí/rok</span><div class="result-value" id="totalTransactions">—</div></div>
+          <div class="result-row"><span>Saturace trhu</span><div class="result-value" id="marketSaturation">—</div></div>
+          <div class="result-row"><span>Váš plánovaný podíl</span><div class="result-value" id="plannedShare">—</div></div>
+          <div class="result-row"><span>Realistický tržní podíl</span><div class="result-value" id="realisticShare">—</div></div>
+          <div class="result-row"><span>Doporučený počet agentů</span><div class="result-value" id="recommendedAgents">—</div></div>
+          <div class="result-row"><span>Očekávaný roční příjem</span><div class="result-value" id="expectedRevenue">—</div></div>
+          <div class="muted" style="margin-top:8px;">Pozn.: Realistický podíl je upraven podle saturace a dominance top 3 RK.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Závěrečné hodnocení: Doporučení, Upozornění, Výstrahy -->
+    <div class="card" style="margin-top:16px;">
+      <div class="grid grid-3">
+        <div class="section">
+          <h2>Doporučení</h2>
+          <ul class="factor-list" id="recommendations"></ul>
+        </div>
+        <div class="section">
+          <h2>Upozornění</h2>
+          <ul class="factor-list" id="notices"></ul>
+        </div>
+        <div class="section">
+          <h2>Výstrahy</h2>
+          <ul class="factor-list" id="alerts"></ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Pomocné funkce
+    function getInputValue(id) {
+      const el = document.getElementById(id);
+      return el ? el.value : '';
+    }
+    function updateEl(id, value) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    }
+    function formatCurrencyCZK(value) {
+      return new Intl.NumberFormat('cs-CZ', { style: 'currency', currency: 'CZK', maximumFractionDigits: 0 }).format(value || 0);
+    }
+    function formatPercent(p) {
+      const v = isFinite(p) ? p : 0;
+      return v.toFixed(1) + '%';
+    }
+
+    function formatNumberCZ(n) {
+      return new Intl.NumberFormat('cs-CZ', { maximumFractionDigits: 0 }).format(n || 0);
+    }
+
+    // Hlavní výpočet
+    function recalc() {
+      // 1) Načti vstupy
+      const population = parseFloat(getInputValue('population')) || 0;
+      const activeSale = parseFloat(getInputValue('activeListingsSale')) || 0;
+      const activeRent = parseFloat(getInputValue('activeListingsRent')) || 0;
+      const avgSale = parseFloat(getInputValue('marketAvgSalePrice')) || 0;
+      const avgRent = parseFloat(getInputValue('avgRentPrice')) || 0;
+      const coeffSale = parseFloat(getInputValue('realizationCoeffSale')) || 0;
+      const coeffRent = parseFloat(getInputValue('realizationCoeffRent')) || 0;
+      const totalCommissionRate = parseFloat(getInputValue('totalCommissionRate')) || 0;
+      const plannedMarketShare = parseFloat(getInputValue('plannedMarketShare')) || 0;
+      const competitorCount = parseFloat(getInputValue('competitorCount')) || 0;
+      const avgAgentsPerCompetitor = parseFloat(getInputValue('avgAgentsPerCompetitor')) || 0;
+      const avgTransactionsPerCompetitor = parseFloat(getInputValue('avgTransactionsPerCompetitor')) || 0;
+      const top3Share = parseFloat(getInputValue('topThreeMarketShare')) || 0;
+
+      // 2) Realizované počty (měsíční nabídky → ročně)
+      const realizedSales = activeSale * 12 * coeffSale; // ročně
+      const realizedRents = activeRent * 12 * coeffRent; // ročně
+      const totalTransactions = Math.round(realizedSales + realizedRents);
+
+      // 3) Roční obraty (počítané automaticky) a propsání do readonly polí (v mil. CZK)
+      const saleTurnover = realizedSales * avgSale; // CZK
+      const rentTurnover = realizedRents * (avgRent * 12); // CZK
+      const saleMil = saleTurnover / 1_000_000;
+      const rentMil = rentTurnover / 1_000_000;
+      const saleMilInput = document.getElementById('annualSaleVolume');
+      const rentMilInput = document.getElementById('annualRentVolume');
+      if (saleMilInput) saleMilInput.value = isFinite(saleMil) ? saleMil.toFixed(1) : '0.0';
+      if (rentMilInput) rentMilInput.value = isFinite(rentMil) ? rentMil.toFixed(1) : '0.0';
+
+      // 4) Potenciál trhu a provize
+      const totalMarketPotential = saleTurnover + rentTurnover; // CZK
+      const potentialCommission = totalMarketPotential * (totalCommissionRate / 100);
+
+      // 5) Saturace trhu (kapacita trhu dle konkurence)
+      const theoreticalCapacity = Math.max(0, competitorCount * avgTransactionsPerCompetitor);
+      const saturation = theoreticalCapacity > 0 ? Math.min(100, (totalTransactions / theoreticalCapacity) * 100) : 0;
+
+      // 6) Realistický tržní podíl (penalizace podle dominance top 3 a saturace nad 80%)
+      const dominancePenalty = (100 - top3Share) / 100; // 0–1
+      const saturationPenalty = 1 - Math.max(0, (saturation - 80) / 100); // po 80% penalizace
+      const realisticSharePct = Math.max(0, plannedMarketShare * dominancePenalty * saturationPenalty);
+
+      // 7) Doporučený počet agentů a oček. příjem
+      const txPerAgentTarget = 35; // cíl transakcí/agent/rok
+      const recommendedAgents = Math.max(1, Math.round((totalTransactions * (realisticSharePct / 100)) / txPerAgentTarget));
+      const expectedRevenue = potentialCommission * (realisticSharePct / 100);
+
+      // 8) Výstupy do UI
+      updateEl('totalMarketPotential', formatCurrencyCZK(totalMarketPotential));
+      updateEl('potentialCommission', formatCurrencyCZK(potentialCommission));
+      updateEl('totalTransactions', totalTransactions.toString());
+      updateEl('marketSaturation', formatPercent(saturation));
+      updateEl('plannedShare', formatPercent(plannedMarketShare));
+      updateEl('realisticShare', formatPercent(realisticSharePct));
+      updateEl('recommendedAgents', recommendedAgents.toString());
+      updateEl('expectedRevenue', formatCurrencyCZK(expectedRevenue));
+
+      // 8b) Mezivýpočty do UI
+      updateEl('realizedSalesVal', formatNumberCZ(Math.round(realizedSales)));
+      updateEl('realizedRentsVal', formatNumberCZ(Math.round(realizedRents)));
+      const txForShare = Math.round(totalTransactions * (realisticSharePct / 100));
+      updateEl('transactionsForYourShare', formatNumberCZ(txForShare));
+      updateEl('saleTurnoverCZK', formatCurrencyCZK(saleTurnover));
+      updateEl('rentTurnoverCZK', formatCurrencyCZK(rentTurnover));
+      updateEl('saleTurnoverMil', `${(saleTurnover/1_000_000).toFixed(1)} mil.`);
+      updateEl('rentTurnoverMil', `${(rentTurnover/1_000_000).toFixed(1)} mil.`);
+      updateEl('totalMarketPotentialDetail', formatCurrencyCZK(totalMarketPotential));
+      updateEl('potentialCommissionDetail', formatCurrencyCZK(potentialCommission));
+      updateEl('theoreticalCapacity', formatNumberCZ(Math.round(theoreticalCapacity)));
+      updateEl('saturationDetail', formatPercent(saturation));
+
+      // 9) Závěrečné hodnocení: Doporučení, Upozornění, Výstrahy
+      const rec = document.getElementById('recommendations');
+      const notices = document.getElementById('notices');
+      const alerts = document.getElementById('alerts');
+      if (rec) {
+        rec.innerHTML = '';
+        // Klíčová doporučení
+        if (saturation < 80) rec.innerHTML += '<li><span class="badge badge-green">Doporučení</span> Nízká saturace – příležitost k růstu</li>';
+        if (avgSale > 9_000_000) rec.innerHTML += '<li><span class="badge badge-green">Doporučení</span> Vysoký průměrný obchod – zaměřte se na prémiové segmenty</li>';
+        rec.innerHTML += `<li><span class="badge badge-green">Doporučení</span> Optimální tým: ${Math.max(1, recommendedAgents - 3)}–${recommendedAgents + 3} makléřů</li>`;
+        rec.innerHTML += `<li><span class="badge badge-green">Doporučení</span> Očekávaný příjem: ${formatCurrencyCZK(expectedRevenue)}</li>`;
+      }
+      if (notices) {
+        notices.innerHTML = '';
+        if (realisticSharePct < plannedMarketShare) notices.innerHTML += '<li><span class="badge badge-orange">Upozornění</span> Zvažte konzervativnější plán (–10–20%)</li>';
+        if (saturation >= 80 && saturation < 90) notices.innerHTML += '<li><span class="badge badge-orange">Upozornění</span> Saturace trhu je zvýšená (80–90%)</li>';
+        if (top3Share >= 40 && top3Share < 60) notices.innerHTML += '<li><span class="badge badge-orange">Upozornění</span> Silná dominance top 3 RK</li>';
+      }
+      if (alerts) {
+        alerts.innerHTML = '';
+        if (totalTransactions > theoreticalCapacity && theoreticalCapacity > 0) alerts.innerHTML += '<li><span class="badge badge-red">Výstraha</span> Vysoká konkurence / nedostatečná kapacita</li>';
+        if (saturation >= 90) alerts.innerHTML += '<li><span class="badge badge-red">Výstraha</span> Trh je silně saturovaný (≥ 90%)</li>';
+        if (top3Share >= 60) alerts.innerHTML += '<li><span class="badge badge-red">Výrazná</span> dominance top 3 RK (≥ 60%)</li>';
+      }
+
+      // 10) Vzorce pro mezivýpočty (rovnice s dosazenými hodnotami)
+      const fSales = document.getElementById('formulaRealizedSales');
+      const fRents = document.getElementById('formulaRealizedRents');
+      const fTxShare = document.getElementById('formulaTxForShare');
+      const fSaleTurnover = document.getElementById('formulaSaleTurnover');
+      const fRentTurnover = document.getElementById('formulaRentTurnover');
+      const fTotalPotential = document.getElementById('formulaTotalPotential');
+      const fCommission = document.getElementById('formulaCommission');
+      const fCapacity = document.getElementById('formulaCapacity');
+      const fSaturation = document.getElementById('formulaSaturation');
+
+      if (fSales) fSales.textContent = `${formatNumberCZ(activeSale)} × 12 × ${isFinite(coeffSale) ? coeffSale.toFixed(2) : '0.00'} = ${formatNumberCZ(Math.round(realizedSales))} ks/rok`;
+      if (fRents) fRents.textContent = `${formatNumberCZ(activeRent)} × 12 × ${isFinite(coeffRent) ? coeffRent.toFixed(2) : '0.00'} = ${formatNumberCZ(Math.round(realizedRents))} ks/rok`;
+      if (fTxShare) fTxShare.textContent = `${formatNumberCZ(totalTransactions)} × ${isFinite(realisticSharePct) ? realisticSharePct.toFixed(1) : '0.0'}% = ${formatNumberCZ(Math.round(totalTransactions * (realisticSharePct / 100)))} ks/rok`;
+
+      if (fSaleTurnover) fSaleTurnover.textContent = `${formatNumberCZ(Math.round(realizedSales))} × ${formatCurrencyCZK(avgSale)} = ${formatCurrencyCZK(saleTurnover)}`;
+      if (fRentTurnover) fRentTurnover.textContent = `${formatNumberCZ(Math.round(realizedRents))} × ${formatCurrencyCZK(avgRent)} × 12 = ${formatCurrencyCZK(rentTurnover)}`;
+
+      if (fTotalPotential) fTotalPotential.textContent = `${formatCurrencyCZK(saleTurnover)} + ${formatCurrencyCZK(rentTurnover)} = ${formatCurrencyCZK(totalMarketPotential)}`;
+      if (fCommission) fCommission.textContent = `${formatCurrencyCZK(totalMarketPotential)} × ${isFinite(totalCommissionRate) ? totalCommissionRate.toFixed(1) : '0.0'}% = ${formatCurrencyCZK(potentialCommission)}`;
+      if (fCapacity) fCapacity.textContent = `${formatNumberCZ(competitorCount)} × ${formatNumberCZ(avgTransactionsPerCompetitor)} = ${formatNumberCZ(Math.round(theoreticalCapacity))} ks/rok`;
+      if (fSaturation) fSaturation.textContent = `${formatNumberCZ(totalTransactions)} ÷ ${formatNumberCZ(Math.round(theoreticalCapacity))} × 100 = ${formatPercent(saturation)}`;
+    }
+
+    function setupListeners() {
+      const inputs = [
+        'localityName','population','activeListingsSale','activeListingsRent',
+        'marketAvgSalePrice','avgRentPrice','annualSaleVolume','annualRentVolume',
+        'competitorCount','avgAgentsPerCompetitor','avgTransactionsPerCompetitor','topThreeMarketShare',
+        'realizationCoeffSale','realizationCoeffRent','totalCommissionRate','plannedMarketShare'
+      ];
+      inputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('input', recalc);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      setupListeners();
+      recalc();
+    });
+  </script>
+</body>
+</html>

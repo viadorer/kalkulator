@@ -1642,6 +1642,25 @@
             }).format(num);
         }
         
+        // Bezpečná utilita pro aktualizaci textového obsahu prvků
+        function updateElement(id, value) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = value;
+        }
+        
+        // Bezpečné získání hodnoty z inputu
+        function getInputValue(id) {
+            const el = document.getElementById(id);
+            return el ? el.value : '';
+        }
+
+        // Bezpečné získání textContent
+        function getText(id) {
+            const el = document.getElementById(id);
+            return el ? el.textContent : '';
+        }
+        
         // Funkce pro uložení dat
         function saveData() {
             const data = {
@@ -1772,225 +1791,237 @@
         
         // Funkce pro export do PDF
         function exportToPDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            
-            // Získání dat pro PDF
-            const localityName = document.getElementById('localityName').value || 'Neznámá lokalita';
-            const date = new Date().toLocaleDateString('cs-CZ');
-            const time = new Date().toLocaleTimeString('cs-CZ');
-            
-            // Nastavení fontů a stylů
-            let yPos = 20;
-            const lineHeight = 7;
-            const sectionSpacing = 15;
-            
-            // Hlavička
-            doc.setFontSize(18);
-            doc.setFont('helvetica', 'bold');
-            doc.text('Analýza realitního trhu', 20, yPos);
-            yPos += 10;
-            
-            doc.setFontSize(12);
-            doc.setFont('helvetica', 'normal');
-            doc.text(`Lokalita: ${localityName}`, 20, yPos);
-            yPos += lineHeight;
-            doc.text(`Datum: ${date} ${time}`, 20, yPos);
-            yPos += sectionSpacing;
-            
-            // Základní parametry
-            doc.setFontSize(14);
-            doc.setFont('helvetica', 'bold');
-            doc.text('Základní parametry', 20, yPos);
-            yPos += 10;
-            
-            doc.setFontSize(10);
-            doc.setFont('helvetica', 'normal');
-            doc.text(`Počet agentů: ${document.getElementById('agentCount').value}`, 20, yPos);
-            yPos += lineHeight;
-            doc.text(`Průměrná cena prodeje: ${formatNumber(parseFloat(document.getElementById('avgSalePrice').value))} CZK`, 20, yPos);
-            yPos += lineHeight;
-            doc.text(`Provizní sazba: ${document.getElementById('totalCommissionRate').value}%`, 20, yPos);
-            yPos += lineHeight;
-            doc.text(`Transakce na agenta/rok: ${document.getElementById('transactionsPerAgent').value}`, 20, yPos);
-            yPos += lineHeight;
-            doc.text(`Podíl kanceláře: ${document.getElementById('brokerageSplit').value}%`, 20, yPos);
-            yPos += sectionSpacing;
-            
-            // Finanční výsledky
-            doc.setFontSize(14);
-            doc.setFont('helvetica', 'bold');
-            doc.text('Finanční výsledky', 20, yPos);
-            yPos += 10;
-            
-            doc.setFontSize(10);
-            doc.setFont('helvetica', 'normal');
-            const grossRevenue = document.getElementById('brokerageRevenue').textContent;
-            const totalExpenses = document.getElementById('totalExpenses').textContent;
-            const netProfit = document.getElementById('netProfit').textContent;
-            const profitMargin = document.getElementById('profitMargin').textContent;
-            const roi = document.getElementById('roi').textContent;
-            
-            doc.text(`Hrubé příjmy: ${grossRevenue}`, 20, yPos);
-            yPos += lineHeight;
-            doc.text(`Celkové náklady: ${totalExpenses}`, 20, yPos);
-            yPos += lineHeight;
-            doc.text(`Čistý zisk: ${netProfit}`, 20, yPos);
-            yPos += lineHeight;
-            doc.text(`Zisková marže: ${profitMargin}`, 20, yPos);
-            yPos += lineHeight;
-            doc.text(`ROI: ${roi}`, 20, yPos);
-            yPos += sectionSpacing;
-            
-            // Analýza lokálního trhu
-            doc.setFontSize(14);
-            doc.setFont('helvetica', 'bold');
-            doc.text('Analýza lokálního trhu', 20, yPos);
-            yPos += 10;
-            
-            doc.setFontSize(10);
-            doc.setFont('helvetica', 'normal');
-            doc.text(`Počet obyvatel: ${formatNumber(parseFloat(document.getElementById('population').value))}`, 20, yPos);
-            yPos += lineHeight;
-            doc.text(`Aktivní nabídky prodej: ${document.getElementById('activeListingsSale').value}`, 20, yPos);
-            yPos += lineHeight;
-            doc.text(`Aktivní nabídky pronájem: ${document.getElementById('activeListingsRent').value}`, 20, yPos);
-            yPos += lineHeight;
-            doc.text(`Roční obrat prodejů: ${document.getElementById('annualSaleVolume').value} mil. CZK`, 20, yPos);
-            yPos += lineHeight;
-            doc.text(`Roční obrat pronájmů: ${document.getElementById('annualRentVolume').value} mil. CZK`, 20, yPos);
-            yPos += lineHeight;
-            doc.text(`Počet RK v regionu: ${document.getElementById('competitorCount').value}`, 20, yPos);
-            yPos += lineHeight;
-            doc.text(`Průměrný počet agentů/RK: ${document.getElementById('avgAgentsPerCompetitor').value}`, 20, yPos);
-            yPos += sectionSpacing;
-            
-            // Výsledky analýzy potenciálu
-            doc.setFontSize(14);
-            doc.setFont('helvetica', 'bold');
-            doc.text('Výsledky analýzy potenciálu', 20, yPos);
-            yPos += 10;
-            
-            doc.setFontSize(10);
-            doc.setFont('helvetica', 'normal');
-            const totalMarketPotential = document.getElementById('totalMarketPotential').textContent;
-            const potentialCommission = document.getElementById('potentialCommission').textContent;
-            const totalTransactionsMarket = document.getElementById('totalTransactionsMarket').textContent;
-            const marketSaturation = document.getElementById('marketSaturation').textContent;
-            
-            doc.text(`Celkový tržní potenciál: ${totalMarketPotential}`, 20, yPos);
-            yPos += lineHeight;
-            doc.text(`Potenciální provize: ${potentialCommission}`, 20, yPos);
-            yPos += lineHeight;
-            doc.text(`Celkový počet transakcí: ${totalTransactionsMarket}`, 20, yPos);
-            yPos += lineHeight;
-            doc.text(`Saturace trhu: ${marketSaturation}`, 20, yPos);
-            yPos += sectionSpacing;
-            
-            // Porovnání s plánem
-            doc.setFontSize(14);
-            doc.setFont('helvetica', 'bold');
-            doc.text('Porovnání s plánem', 20, yPos);
-            yPos += 10;
-            
-            doc.setFontSize(10);
-            doc.setFont('helvetica', 'normal');
-            const plannedMarketShare = document.getElementById('plannedMarketShare').textContent;
-            const realisticMarketShare = document.getElementById('realisticMarketShare').textContent;
-            const recommendedAgents = document.getElementById('recommendedAgents').textContent;
-            const expectedRevenue = document.getElementById('expectedRevenue').textContent;
-            
-            doc.text(`Plánovaný tržní podíl: ${plannedMarketShare}`, 20, yPos);
-            yPos += lineHeight;
-            doc.text(`Realistický tržní podíl: ${realisticMarketShare}`, 20, yPos);
-            yPos += lineHeight;
-            doc.text(`Doporučený počet agentů: ${recommendedAgents}`, 20, yPos);
-            yPos += lineHeight;
-            doc.text(`Očekávaný roční příjem: ${expectedRevenue}`, 20, yPos);
-            yPos += sectionSpacing;
-            
-            // Nová stránka pro doporučení a poznámky
-            if (yPos > 250) {
-                doc.addPage();
-                yPos = 20;
-            }
-            
-            // Příležitosti
-            doc.setFontSize(14);
-            doc.setFont('helvetica', 'bold');
-            doc.text('Příležitosti', 20, yPos);
-            yPos += 10;
-            
-            doc.setFontSize(10);
-            doc.setFont('helvetica', 'normal');
-            const opportunities = document.getElementById('opportunities').children;
-            for (let i = 0; i < opportunities.length; i++) {
-                doc.text(`• ${opportunities[i].textContent}`, 25, yPos);
+            try {
+                if (!window.jspdf || !window.jspdf.jsPDF) {
+                    alert('PDF knihovna (jsPDF) není načtena. Zkuste obnovit stránku.');
+                    return;
+                }
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+
+                // Získání dat pro PDF (bezpečně)
+                const localityName = getInputValue('localityName') || 'Neznámá lokalita';
+                const date = new Date().toLocaleDateString('cs-CZ');
+                const time = new Date().toLocaleTimeString('cs-CZ');
+
+                // Nastavení fontů a stylů
+                let yPos = 20;
+                const lineHeight = 7;
+                const sectionSpacing = 15;
+
+                // Hlavička
+                doc.setFontSize(18);
+                doc.setFont('helvetica', 'bold');
+                doc.text('Analýza realitního trhu', 20, yPos);
+                yPos += 10;
+
+                doc.setFontSize(12);
+                doc.setFont('helvetica', 'normal');
+                doc.text(`Lokalita: ${localityName}`, 20, yPos);
                 yPos += lineHeight;
-            }
-            yPos += 5;
-            
-            // Rizika
-            doc.setFontSize(14);
-            doc.setFont('helvetica', 'bold');
-            doc.text('Rizika', 20, yPos);
-            yPos += 10;
-            
-            doc.setFontSize(10);
-            doc.setFont('helvetica', 'normal');
-            const risks = document.getElementById('risks').children;
-            for (let i = 0; i < risks.length; i++) {
-                doc.text(`• ${risks[i].textContent}`, 25, yPos);
+                doc.text(`Datum: ${date} ${time}`, 20, yPos);
+                yPos += sectionSpacing;
+
+                // Základní parametry
+                doc.setFontSize(14);
+                doc.setFont('helvetica', 'bold');
+                doc.text('Základní parametry', 20, yPos);
+                yPos += 10;
+
+                doc.setFontSize(10);
+                doc.setFont('helvetica', 'normal');
+                doc.text(`Počet agentů: ${getInputValue('agentCount')}`, 20, yPos);
                 yPos += lineHeight;
-            }
-            yPos += 5;
-            
-            // Doporučení
-            doc.setFontSize(14);
-            doc.setFont('helvetica', 'bold');
-            doc.text('Doporučení', 20, yPos);
-            yPos += 10;
-            
-            doc.setFontSize(10);
-            doc.setFont('helvetica', 'normal');
-            const recommendations = document.getElementById('recommendations').children;
-            for (let i = 0; i < recommendations.length; i++) {
-                doc.text(`• ${recommendations[i].textContent}`, 25, yPos);
+                doc.text(`Průměrná cena prodeje: ${formatNumber(parseFloat(getInputValue('avgSalePrice') || '0'))} CZK`, 20, yPos);
                 yPos += lineHeight;
+                doc.text(`Provizní sazba: ${getInputValue('totalCommissionRate')}%`, 20, yPos);
+                yPos += lineHeight;
+                doc.text(`Transakce na agenta/rok: ${getInputValue('transactionsPerAgent')}`, 20, yPos);
+                yPos += lineHeight;
+                doc.text(`Podíl kanceláře: ${getInputValue('brokerageSplit')}%`, 20, yPos);
+                yPos += sectionSpacing;
+
+                // Finanční výsledky
+                doc.setFontSize(14);
+                doc.setFont('helvetica', 'bold');
+                doc.text('Finanční výsledky', 20, yPos);
+                yPos += 10;
+
+                doc.setFontSize(10);
+                doc.setFont('helvetica', 'normal');
+                const grossRevenue = getText('brokerageRevenue');
+                const totalExpenses = getText('totalExpenses');
+                const netProfit = getText('netProfit');
+                const profitMargin = getText('profitMargin');
+                const roi = getText('roi');
+
+                doc.text(`Hrubé příjmy: ${grossRevenue}`, 20, yPos);
+                yPos += lineHeight;
+                doc.text(`Celkové náklady: ${totalExpenses}`, 20, yPos);
+                yPos += lineHeight;
+                doc.text(`Čistý zisk: ${netProfit}`, 20, yPos);
+                yPos += lineHeight;
+                doc.text(`Zisková marže: ${profitMargin}`, 20, yPos);
+                yPos += lineHeight;
+                doc.text(`ROI: ${roi}`, 20, yPos);
+                yPos += sectionSpacing;
+
+                // Analýza lokálního trhu
+                doc.setFontSize(14);
+                doc.setFont('helvetica', 'bold');
+                doc.text('Analýza lokálního trhu', 20, yPos);
+                yPos += 10;
+
+                doc.setFontSize(10);
+                doc.setFont('helvetica', 'normal');
+                doc.text(`Počet obyvatel: ${formatNumber(parseFloat(getInputValue('population') || '0'))}`, 20, yPos);
+                yPos += lineHeight;
+                doc.text(`Aktivní nabídky prodej: ${getInputValue('activeListingsSale')}`, 20, yPos);
+                yPos += lineHeight;
+                doc.text(`Aktivní nabídky pronájem: ${getInputValue('activeListingsRent')}`, 20, yPos);
+                yPos += lineHeight;
+                doc.text(`Roční obrat prodejů: ${getInputValue('annualSaleVolume')} mil. CZK`, 20, yPos);
+                yPos += lineHeight;
+                doc.text(`Roční obrat pronájmů: ${getInputValue('annualRentVolume')} mil. CZK`, 20, yPos);
+                yPos += lineHeight;
+                doc.text(`Počet RK v regionu: ${getInputValue('competitorCount')}`, 20, yPos);
+                yPos += lineHeight;
+                doc.text(`Průměrný počet agentů/RK: ${getInputValue('avgAgentsPerCompetitor')}`, 20, yPos);
+                yPos += sectionSpacing;
+
+                // Výsledky analýzy potenciálu
+                doc.setFontSize(14);
+                doc.setFont('helvetica', 'bold');
+                doc.text('Výsledky analýzy potenciálu', 20, yPos);
+                yPos += 10;
+
+                doc.setFontSize(10);
+                doc.setFont('helvetica', 'normal');
+                const totalMarketPotential = getText('totalMarketPotential');
+                const potentialCommission = getText('potentialCommission');
+                const totalTransactionsMarket = getText('totalTransactionsMarket');
+                const marketSaturation = getText('marketSaturation');
+
+                doc.text(`Celkový tržní potenciál: ${totalMarketPotential}`, 20, yPos);
+                yPos += lineHeight;
+                doc.text(`Potenciální provize: ${potentialCommission}`, 20, yPos);
+                yPos += lineHeight;
+                doc.text(`Celkový počet transakcí: ${totalTransactionsMarket}`, 20, yPos);
+                yPos += lineHeight;
+                doc.text(`Saturace trhu: ${marketSaturation}`, 20, yPos);
+                yPos += sectionSpacing;
+
+                // Porovnání s plánem
+                doc.setFontSize(14);
+                doc.setFont('helvetica', 'bold');
+                doc.text('Porovnání s plánem', 20, yPos);
+                yPos += 10;
+
+                doc.setFontSize(10);
+                doc.setFont('helvetica', 'normal');
+                const plannedMarketShare = getText('plannedMarketShare');
+                const realisticMarketShare = getText('realisticMarketShare');
+                const recommendedAgents = getText('recommendedAgents');
+                const expectedRevenue = getText('expectedRevenue');
+
+                doc.text(`Plánovaný tržní podíl: ${plannedMarketShare}`, 20, yPos);
+                yPos += lineHeight;
+                doc.text(`Realistický tržní podíl: ${realisticMarketShare}`, 20, yPos);
+                yPos += lineHeight;
+                doc.text(`Doporučený počet agentů: ${recommendedAgents}`, 20, yPos);
+                yPos += lineHeight;
+                doc.text(`Očekávaný roční příjem: ${expectedRevenue}`, 20, yPos);
+                yPos += sectionSpacing;
+
+                // Nová stránka pro doporučení a poznámky
+                if (yPos > 250) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+
+                // Příležitosti
+                doc.setFontSize(14);
+                doc.setFont('helvetica', 'bold');
+                doc.text('Příležitosti', 20, yPos);
+                yPos += 10;
+
+                doc.setFontSize(10);
+                doc.setFont('helvetica', 'normal');
+                const oppEl = document.getElementById('opportunities');
+                const opportunities = oppEl ? oppEl.children : [];
+                for (let i = 0; i < opportunities.length; i++) {
+                    doc.text(`• ${opportunities[i].textContent}`, 25, yPos);
+                    yPos += lineHeight;
+                }
+                yPos += 5;
+
+                // Rizika
+                doc.setFontSize(14);
+                doc.setFont('helvetica', 'bold');
+                doc.text('Rizika', 20, yPos);
+                yPos += 10;
+
+                doc.setFontSize(10);
+                doc.setFont('helvetica', 'normal');
+                const risksEl = document.getElementById('risks');
+                const risks = risksEl ? risksEl.children : [];
+                for (let i = 0; i < risks.length; i++) {
+                    doc.text(`• ${risks[i].textContent}`, 25, yPos);
+                    yPos += lineHeight;
+                }
+                yPos += 5;
+
+                // Doporučení
+                doc.setFontSize(14);
+                doc.setFont('helvetica', 'bold');
+                doc.text('Doporučení', 20, yPos);
+                yPos += 10;
+
+                doc.setFontSize(10);
+                doc.setFont('helvetica', 'normal');
+                const recEl = document.getElementById('recommendations');
+                const recommendations = recEl ? recEl.children : [];
+                for (let i = 0; i < recommendations.length; i++) {
+                    doc.text(`• ${recommendations[i].textContent}`, 25, yPos);
+                    yPos += lineHeight;
+                }
+                yPos += sectionSpacing;
+
+                // Poznámky
+                if (yPos > 240) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+
+                doc.setFontSize(12);
+                doc.setFont('helvetica', 'bold');
+                doc.text('Důležité poznámky:', 20, yPos);
+                yPos += 10;
+
+                doc.setFontSize(9);
+                doc.setFont('helvetica', 'normal');
+                doc.text('• Všechny výpočty jsou založeny na zadaných parametrech a mohou se lišit od reality', 20, yPos);
+                yPos += lineHeight;
+                doc.text('• Analýza trhu je orientační a závisí na kvalitě vstupních dat', 20, yPos);
+                yPos += lineHeight;
+                doc.text('• Doporučení jsou obecná a měla by být přizpůsobena konkrétní strategii', 20, yPos);
+                yPos += lineHeight;
+                doc.text('• Pro přesné výsledky doporučujeme konzultaci s odborníky na realitní trh', 20, yPos);
+
+                // Patička
+                doc.setFontSize(8);
+                doc.setFont('helvetica', 'italic');
+                doc.text('Vygenerováno kalkulačkou realitního trhu', 20, 280);
+
+                // Uložení PDF
+                const filename = `Analyza_${localityName}_${date.replace(/\./g, '-')}_${time.replace(/:/g, '-')}.pdf`;
+                doc.save(filename);
+
+                alert(`PDF report byl úspěšně vygenerován: ${filename}`);
+            } catch (error) {
+                console.error('PDF export error:', error);
+                alert('Při generování PDF došlo k chybě. Zkontrolujte, prosím, konzoli pro více informací.');
             }
-            yPos += sectionSpacing;
-            
-            // Poznámky
-            if (yPos > 240) {
-                doc.addPage();
-                yPos = 20;
-            }
-            
-            doc.setFontSize(12);
-            doc.setFont('helvetica', 'bold');
-            doc.text('Důležité poznámky:', 20, yPos);
-            yPos += 10;
-            
-            doc.setFontSize(9);
-            doc.setFont('helvetica', 'normal');
-            doc.text('• Všechny výpočty jsou založeny na zadaných parametrech a mohou se lišit od reality', 20, yPos);
-            yPos += lineHeight;
-            doc.text('• Analýza trhu je orientační a závisí na kvalitě vstupních dat', 20, yPos);
-            yPos += lineHeight;
-            doc.text('• Doporučení jsou obecná a měla by být přizpůsobena konkrétní strategii', 20, yPos);
-            yPos += lineHeight;
-            doc.text('• Pro přesné výsledky doporučujeme konzultaci s odborníky na realitní trh', 20, yPos);
-            
-            // Patička
-            doc.setFontSize(8);
-            doc.setFont('helvetica', 'italic');
-            doc.text('Vygenerováno kalkulačkou realitního trhu', 20, 280);
-            
-            // Uložení PDF
-            const filename = `Analyza_${localityName}_${date.replace(/\./g, '-')}_${time.replace(/:/g, '-')}.pdf`;
-            doc.save(filename);
-            
-            alert(`PDF report byl úspěšně vygenerován: ${filename}`);
         }
 
         // Event listeners pro všechny inputy
@@ -2222,6 +2253,11 @@
                 }).format(amount);
             }
         }
+        
+        // Určí primární měnu pro zobrazení dle aktuálního trhu
+        function getPrimaryCurrency() {
+            return (currentMarket === 'CZ') ? 'CZK' : 'USD';
+        }
 
         function formatPercent(value) {
             return value.toFixed(1) + '%';
@@ -2239,6 +2275,7 @@
             
             // Přepočítání všech hodnot
             calculateResults();
+            calculateMarketAnalysis();
         }
 
         function toggleMarket() {
@@ -2263,6 +2300,7 @@
             }
             
             calculateResults();
+            calculateMarketAnalysis();
         }
 
         function loadMarketDefaults(market) {
@@ -2363,36 +2401,36 @@
             // Scénář A: +5 makléřů (25% více příjmů, 10% více nákladů)
             const scenarioA_profit = revenue * 1.25 - expenses * 1.1;
             const scenarioA_roi = ((scenarioA_profit / (expenses * 1.1)) * 100);
-            document.getElementById('scenarioA').textContent = formatCurrency(scenarioA_profit, 'USD');
+            document.getElementById('scenarioA').textContent = formatCurrency(scenarioA_profit, getPrimaryCurrency());
             document.getElementById('scenarioA_ROI').textContent = formatPercent(scenarioA_roi);
             
             // Scénář B: +20% produktivita
             const scenarioB_profit = revenue * 1.2 - expenses;
             const scenarioB_roi = ((scenarioB_profit / expenses) * 100);
-            document.getElementById('scenarioB').textContent = formatCurrency(scenarioB_profit, 'USD');
+            document.getElementById('scenarioB').textContent = formatCurrency(scenarioB_profit, getPrimaryCurrency());
             document.getElementById('scenarioB_ROI').textContent = formatPercent(scenarioB_roi);
             
             // Scénář C: -10% náklady
             const scenarioC_profit = revenue - expenses * 0.9;
             const scenarioC_roi = ((scenarioC_profit / (expenses * 0.9)) * 100);
-            document.getElementById('scenarioC').textContent = formatCurrency(scenarioC_profit, 'USD');
+            document.getElementById('scenarioC').textContent = formatCurrency(scenarioC_profit, getPrimaryCurrency());
             document.getElementById('scenarioC_ROI').textContent = formatPercent(scenarioC_roi);
         }
 
         // Detailní analýza nákladů
         function calculateDetailedCostAnalysis() {
-            // Načtení živých dat z formulářů
-            const agentCount = parseFloat(document.getElementById('agentCount').value) || 0;
-            const monthlyRent = parseFloat(document.getElementById('monthlyRent').value) || 0;
-            const adminSalaries = parseFloat(document.getElementById('adminSalaries').value) || 0;
-            const technologyCosts = parseFloat(document.getElementById('technologyCosts').value) || 0;
-            const insuranceAnnual = parseFloat(document.getElementById('insuranceAnnual').value) || 0;
-            const otherExpenses = parseFloat(document.getElementById('otherExpenses').value) || 0;
-            const marketingPercent = parseFloat(document.getElementById('marketingPercent').value) || 0;
-            const brokerageSplit = parseFloat(document.getElementById('brokerageSplit').value) || 0;
-            const transactionsPerAgent = parseFloat(document.getElementById('transactionsPerAgent').value) || 0;
-            const avgSalePrice = parseFloat(document.getElementById('avgSalePrice').value) || 0;
-            const totalCommissionRate = parseFloat(document.getElementById('totalCommissionRate').value) || 0;
+            // Načtení živých dat z formulářů (bezpečně ze "Základní parametry")
+            const agentCount = parseFloat(getInputValue('agentCount')) || 0;
+            const monthlyRent = parseFloat(getInputValue('monthlyRent')) || 0;
+            const adminSalaries = parseFloat(getInputValue('adminSalaries')) || 0;
+            const technologyCosts = parseFloat(getInputValue('technologyCosts')) || 0;
+            const insuranceAnnual = parseFloat(getInputValue('insuranceAnnual')) || 0;
+            const otherExpenses = parseFloat(getInputValue('otherExpenses')) || 0;
+            const marketingPercent = parseFloat(getInputValue('marketingPercent')) || 0;
+            const brokerageSplit = parseFloat(getInputValue('brokerageSplit')) || 0;
+            const transactionsPerAgent = parseFloat(getInputValue('transactionsPerAgent')) || 0;
+            const avgSalePrice = parseFloat(getInputValue('avgSalePrice')) || 0;
+            const totalCommissionRate = parseFloat(getInputValue('totalCommissionRate')) || 0;
             
             // Výpočet ročních hodnot pro správné propočty
             const totalTransactions = agentCount * transactionsPerAgent;
@@ -2409,12 +2447,11 @@
             const totalFixedCosts = fixedRentCost + fixedAdminCost + fixedTechCost + fixedInsuranceCost + fixedOtherCost;
             
             // Variabilní náklady (měsíčně)
+            // DŮLEŽITÉ: Nepočítáme provize makléřům jako náklad, protože příjem kanceláře je již po splitu
             const variableMarketingCost = (monthlyBrokerageRevenue * marketingPercent) / 100;
             const monthlyTransactions = totalTransactions / 12;
             const commissionPerTransaction = (avgSalePrice * totalCommissionRate) / 100;
-            const agentCommissionPerTransaction = commissionPerTransaction * ((100 - brokerageSplit) / 100);
-            const variableCommissionCost = monthlyTransactions * agentCommissionPerTransaction;
-            const totalVariableCosts = variableMarketingCost + variableCommissionCost;
+            const totalVariableCosts = variableMarketingCost;
             
             // Náklady na transakci a makléře
             const costPerTransaction = monthlyTransactions > 0 ? (totalFixedCosts + totalVariableCosts) / monthlyTransactions : 0;
@@ -2422,7 +2459,7 @@
             
             // Bod zvratu
             const brokerageRevenuePerTransaction = commissionPerTransaction * (brokerageSplit / 100);
-            const variableCostPerTransaction = totalVariableCosts / monthlyTransactions;
+            const variableCostPerTransaction = monthlyTransactions > 0 ? (totalVariableCosts / monthlyTransactions) : 0;
             const contributionMarginPerTransaction = brokerageRevenuePerTransaction - variableCostPerTransaction;
             const breakEvenTransactions = contributionMarginPerTransaction > 0 ? totalFixedCosts / contributionMarginPerTransaction : 0;
             const transactionsPerAgentBreakeven = agentCount > 0 ? breakEvenTransactions / agentCount : 0;
@@ -2434,23 +2471,25 @@
             const variablePercentage = totalCosts > 0 ? (totalVariableCosts / totalCosts) * 100 : 0;
             
             // Aktualizace UI
-            updateElement('fixedRentCost', formatCurrency(fixedRentCost, 'CZK'));
-            updateElement('fixedAdminCost', formatCurrency(fixedAdminCost, 'CZK'));
-            updateElement('fixedTechCost', formatCurrency(fixedTechCost, 'CZK'));
-            updateElement('fixedInsuranceCost', formatCurrency(fixedInsuranceCost, 'CZK'));
-            updateElement('fixedOtherCost', formatCurrency(fixedOtherCost, 'CZK'));
-            updateElement('totalFixedCosts', formatCurrency(totalFixedCosts, 'CZK'));
+            const currency = getPrimaryCurrency();
+            updateElement('fixedRentCost', formatCurrency(fixedRentCost, currency));
+            updateElement('fixedAdminCost', formatCurrency(fixedAdminCost, currency));
+            updateElement('fixedTechCost', formatCurrency(fixedTechCost, currency));
+            updateElement('fixedInsuranceCost', formatCurrency(fixedInsuranceCost, currency));
+            updateElement('fixedOtherCost', formatCurrency(fixedOtherCost, currency));
+            updateElement('totalFixedCosts', formatCurrency(totalFixedCosts, currency));
             
             updateElement('variableMarketingPercent', marketingPercent + '%');
-            updateElement('variableMarketingCost', formatCurrency(variableMarketingCost, 'CZK'));
-            updateElement('variableCommissionCost', formatCurrency(variableCommissionCost, 'CZK'));
-            updateElement('costPerTransaction', formatCurrency(costPerTransaction, 'CZK'));
-            updateElement('costPerAgent', formatCurrency(costPerAgent, 'CZK'));
-            updateElement('totalVariableCosts', formatCurrency(totalVariableCosts, 'CZK'));
+            updateElement('variableMarketingCost', formatCurrency(variableMarketingCost, currency));
+            // Provize makléřům se nezapočítávají jako náklad kanceláře – zobrazíme N/A, ať není hodnota statická
+            updateElement('variableCommissionCost', 'N/A');
+            updateElement('costPerTransaction', formatCurrency(costPerTransaction, currency));
+            updateElement('costPerAgent', formatCurrency(costPerAgent, currency));
+            updateElement('totalVariableCosts', formatCurrency(totalVariableCosts, currency));
             
             updateElement('breakEvenTransactions', Math.ceil(breakEvenTransactions));
             updateElement('transactionsPerAgentBreakeven', transactionsPerAgentBreakeven.toFixed(1));
-            updateElement('breakEvenRevenue', formatCurrency(breakEvenRevenue, 'CZK'));
+            updateElement('breakEvenRevenue', formatCurrency(breakEvenRevenue, currency));
             
             // Aktualizace struktury nákladů
             const fixedSegment = document.querySelector('.cost-segment.fixed');
@@ -2464,25 +2503,25 @@
             
             const costBreakdown = document.querySelectorAll('.cost-item span:last-child');
             if (costBreakdown.length >= 2) {
-                costBreakdown[0].textContent = `Fixní náklady: ${formatCurrency(totalFixedCosts, 'CZK')} (${fixedPercentage.toFixed(1)}%)`;
-                costBreakdown[1].textContent = `Variabilní náklady: ${formatCurrency(totalVariableCosts, 'CZK')} (${variablePercentage.toFixed(1)}%)`;
+                costBreakdown[0].textContent = `Fixní náklady: ${formatCurrency(totalFixedCosts, currency)} (${fixedPercentage.toFixed(1)}%)`;
+                costBreakdown[1].textContent = `Variabilní náklady: ${formatCurrency(totalVariableCosts, currency)} (${variablePercentage.toFixed(1)}%)`;
             }
         }
         
         // Měsíční Cash Flow analýza
         function calculateMonthlyCashFlow() {
-            // Načtení živých dat z formulářů
-            const agentCount = parseFloat(document.getElementById('agentCount').value) || 0;
-            const transactionsPerAgent = parseFloat(document.getElementById('transactionsPerAgent').value) || 0;
-            const avgSalePrice = parseFloat(document.getElementById('avgSalePrice').value) || 0;
-            const totalCommissionRate = parseFloat(document.getElementById('totalCommissionRate').value) || 0;
-            const brokerageSplit = parseFloat(document.getElementById('brokerageSplit').value) || 0;
-            const monthlyRent = parseFloat(document.getElementById('monthlyRent').value) || 0;
-            const adminSalaries = parseFloat(document.getElementById('adminSalaries').value) || 0;
-            const technologyCosts = parseFloat(document.getElementById('technologyCosts').value) || 0;
-            const insuranceAnnual = parseFloat(document.getElementById('insuranceAnnual').value) || 0;
-            const otherExpenses = parseFloat(document.getElementById('otherExpenses').value) || 0;
-            const marketingPercent = parseFloat(document.getElementById('marketingPercent').value) || 0;
+            // Načtení živých dat z formulářů (bezpečně ze "Základní parametry")
+            const agentCount = parseFloat(getInputValue('agentCount')) || 0;
+            const transactionsPerAgent = parseFloat(getInputValue('transactionsPerAgent')) || 0;
+            const avgSalePrice = parseFloat(getInputValue('avgSalePrice')) || 0;
+            const totalCommissionRate = parseFloat(getInputValue('totalCommissionRate')) || 0;
+            const brokerageSplit = parseFloat(getInputValue('brokerageSplit')) || 0;
+            const monthlyRent = parseFloat(getInputValue('monthlyRent')) || 0;
+            const adminSalaries = parseFloat(getInputValue('adminSalaries')) || 0;
+            const technologyCosts = parseFloat(getInputValue('technologyCosts')) || 0;
+            const insuranceAnnual = parseFloat(getInputValue('insuranceAnnual')) || 0;
+            const otherExpenses = parseFloat(getInputValue('otherExpenses')) || 0;
+            const marketingPercent = parseFloat(getInputValue('marketingPercent')) || 0;
             
             // Výpočet měsíčních příjmů
             const monthlyTransactions = (agentCount * transactionsPerAgent) / 12;
@@ -2493,14 +2532,14 @@
             // Přepočet nákladů z aktuálních hodnot
             const fixedRentCost = monthlyRent;
             const fixedAdminCost = adminSalaries / 12;
-            const fixedTechCost = technologyCosts;
+            const fixedTechCost = technologyCosts * agentCount; // technologie na makléře * počet makléřů
             const fixedInsuranceCost = insuranceAnnual / 12;
             const fixedOtherCost = otherExpenses / 12;
             const totalFixedCosts = fixedRentCost + fixedAdminCost + fixedTechCost + fixedInsuranceCost + fixedOtherCost;
             
             const variableMarketingCost = (monthlyRevenue * marketingPercent) / 100;
-            const variableCommissionCost = monthlyTransactions * brokerageCommissionPerTransaction;
-            const totalVariableCosts = variableMarketingCost + variableCommissionCost;
+            // DŮLEŽITÉ: Nezahrnujeme provize makléřům do nákladů (příjem je již po splitu)
+            const totalVariableCosts = variableMarketingCost;
             
             // Cash Flow
             const monthlyCashFlow = monthlyRevenue - totalFixedCosts - totalVariableCosts;
@@ -2516,17 +2555,18 @@
             const worstMonth = monthlyCashFlow * (1 - seasonalVariation);
             
             // Aktualizace UI
-            updateElement('monthlyRevenue', formatCurrency(monthlyRevenue, 'CZK'));
-            updateElement('monthlyFixedCosts', formatCurrency(totalFixedCosts, 'CZK'));
-            updateElement('monthlyVariableCosts', formatCurrency(totalVariableCosts, 'CZK'));
-            updateElement('monthlyCashFlow', formatCurrency(monthlyCashFlow, 'CZK'));
+            const currency = getPrimaryCurrency();
+            updateElement('monthlyRevenue', formatCurrency(monthlyRevenue, currency));
+            updateElement('monthlyFixedCosts', formatCurrency(totalFixedCosts, currency));
+            updateElement('monthlyVariableCosts', formatCurrency(totalVariableCosts, currency));
+            updateElement('monthlyCashFlow', formatCurrency(monthlyCashFlow, currency));
             updateElement('breakEvenMonth', monthsToBreakEven);
             
-            updateElement('initialInvestment', formatCurrency(initialInvestment, 'CZK'));
-            updateElement('requiredCapital', formatCurrency(requiredCapital, 'CZK'));
-            updateElement('recommendedReserve', formatCurrency(recommendedReserve, 'CZK'));
+            updateElement('initialInvestment', formatCurrency(initialInvestment, currency));
+            updateElement('requiredCapital', formatCurrency(requiredCapital, currency));
+            updateElement('recommendedReserve', formatCurrency(recommendedReserve, currency));
             updateElement('seasonalEffect', '±' + (seasonalVariation * 100) + '%');
-            updateElement('worstMonth', formatCurrency(worstMonth, 'CZK'));
+            updateElement('worstMonth', formatCurrency(worstMonth, currency));
             
             // Změna barvy cash flow podle hodnoty
             const cashFlowElement = document.getElementById('monthlyCashFlow');
@@ -2549,6 +2589,7 @@
             
             let cumulativeCashFlow = 0;
             let projectionHTML = '';
+            const currency = getPrimaryCurrency();
             
             for (let i = 0; i < 12; i++) {
                 const monthlyRevenue = baseRevenue * seasonalFactors[i];
@@ -2564,10 +2605,10 @@
                 projectionHTML += `
                     <div class="chart-row ${rowClass}">
                         <span>${months[i]}</span>
-                        <span class="chart-value neutral">${formatCurrency(monthlyRevenue, 'CZK')}</span>
-                        <span class="chart-value neutral">${formatCurrency(totalMonthlyCosts, 'CZK')}</span>
-                        <span class="chart-value ${cashFlowClass}">${formatCurrency(monthlyCashFlow, 'CZK')}</span>
-                        <span class="chart-value ${cumulativeClass}">${formatCurrency(cumulativeCashFlow, 'CZK')}</span>
+                        <span class="chart-value neutral">${formatCurrency(monthlyRevenue, currency)}</span>
+                        <span class="chart-value neutral">${formatCurrency(totalMonthlyCosts, currency)}</span>
+                        <span class="chart-value ${cashFlowClass}">${formatCurrency(monthlyCashFlow, currency)}</span>
+                        <span class="chart-value ${cumulativeClass}">${formatCurrency(cumulativeCashFlow, currency)}</span>
                     </div>
                 `;
             }
