@@ -10,6 +10,7 @@
       --card: rgba(255,255,255,0.72); --card-border: rgba(0,0,0,0.06);
       --shadow: 0 8px 30px rgba(0,0,0,0.08);
       --ring: 0 0 0 3px rgba(10,132,255,0.25);
+      --form-bg: #f7fbff; /* very light blue, nearly white */
     }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--b); background: linear-gradient(180deg,#fafafc 0%, #f5f5f7 60%, #f0f0f3 100%); margin: 0; }
     /* Hero header */
@@ -56,7 +57,7 @@
     .modal { background: #ffffff; border:1px solid var(--br); border-radius:18px; width: min(1040px, 96vw); height: min(88vh, 980px); display:flex; flex-direction: column; overflow: hidden; box-shadow: 0 30px 70px rgba(0,0,0,0.25); }
     .modal header { display:flex; align-items:center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid var(--br); background: #fff; position: sticky; top: 0; z-index: 1; }
     .modal header h3 { margin:0; font-size:17px; font-weight: 600; }
-    .modal .modal-body { padding: 18px 18px; overflow: auto; flex: 1; background: #fafafa; font-size: 15px; line-height: 1.5; }
+    .modal .modal-body { padding: 18px 18px; overflow: auto; flex: 1; background: var(--form-bg); font-size: 15px; line-height: 1.5; }
     .sticky-actions { position: sticky; bottom: 0; background: #fff; border-top: 1px solid var(--br); padding: 12px 0; margin-top: 12px; }
     .section-title { font-size: 17px; font-weight: 700; margin: 12px 0 8px; color: #1d1d1f; grid-column: 1 / -1; padding-top: 6px; border-top: 1px solid var(--br); }
     .close-btn { background:#fff; color:var(--b); border:1px solid var(--br); border-radius:999px; padding:8px 12px; cursor:pointer; transition: box-shadow .15s ease, transform .15s ease; }
@@ -70,6 +71,34 @@
       .card .content { padding:16px; }
       #formsList { grid-template-columns: 1fr; }
     }
+
+    /* Force full stacking and ignore spans on very small screens */
+    @media (max-width: 640px){
+      .fields { grid-template-columns: 1fr !important; }
+      .fields > .field { grid-column: 1 / -1 !important; }
+      .section-title { grid-column: 1 / -1 !important; }
+    }
+
+    /* Print styles */
+    @media print {
+      body { background: #fff; }
+      header.hero-section, .main-container > main > section.card:first-child { display: none !important; }
+      .modal-overlay { position: static; display: block !important; background: #fff !important; backdrop-filter: none !important; padding: 0; }
+      .modal { width: 100% !important; height: auto !important; border: none; border-radius: 0; box-shadow: none; }
+      .modal .modal-body { background: #fff; overflow: visible; }
+      .sticky-actions, .close-btn { display:none !important; }
+      /* ensure natural flow for printed content */
+      form.fields { display: block !important; }
+      .field { break-inside: avoid; page-break-inside: avoid; }
+      .doc p { margin: 0 0 8px; line-height: 1.45; orphans: 3; widows: 3; }
+      .doc h1, .doc h2, .doc h3 { margin: 12px 0 8px; break-after: avoid; page-break-after: avoid; }
+      input, textarea, select { border: none !important; box-shadow: none !important; background: transparent !important; }
+    }
+
+    /* PDF pagination helpers */
+    .page-break { break-before: page; page-break-before: always; }
+    .avoid-break { break-inside: avoid; page-break-inside: avoid; }
+    .modal .modal-body h1, .modal .modal-body h2, .modal .modal-body h3, .modal .modal-body h4, .section-title { break-after: avoid; page-break-after: avoid; }
   </style>
 </head>
 <body>
@@ -111,6 +140,8 @@
             <div class="row">
               <button class="btn" type="button" onclick="saveCurrentEntry()">Uložit jako preset</button>
               <button class="btn secondary" type="button" onclick="resetForm()">Vymazat</button>
+              <button class="btn secondary" type="button" onclick="printForm()">Tisk</button>
+              <button class="btn secondary" type="button" onclick="exportPDF()">Stáhnout PDF</button>
             </div>
           </div>
         </div>
@@ -120,9 +151,24 @@
   </div>
 
   <script src="forms_storage.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.5/dist/signature_pad.umd.min.js"></script>
+  <!-- pdfmake for precise text-based PDF generation -->
+  <script src="https://cdn.jsdelivr.net/npm/pdfmake@0.2.9/build/pdfmake.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pdfmake@0.2.9/build/vfs_fonts.js"></script>
   <script>
     let currentSchemaId = null;
     let currentSchema = null;
+    const signaturePads = {}; // id -> SignaturePad instance
+
+    function syncSignaturesToHidden(){
+      // Ensure hidden inputs contain latest signature images
+      Object.keys(signaturePads).forEach(id => {
+        const pad = signaturePads[id];
+        const hidden = document.getElementById('f_' + id);
+        if (!hidden || !pad) return;
+        if (!pad.isEmpty()) hidden.value = pad.toDataURL('image/png');
+      });
+    }
 
     function renderFormsList(){
       const list = document.getElementById('formsList');
@@ -181,6 +227,56 @@
           if (Number.isInteger(f.span) && f.span > 0) { h.style.gridColumn = `span ${f.span}`; }
           h.textContent = f.label || f.name || '';
           form.appendChild(h);
+          return;
+        }
+        if (f.type === 'signature'){
+          const id = 'f_' + f.id;
+          const wrap = document.createElement('div');
+          wrap.className = 'field';
+          if (f.span) wrap.style.gridColumn = `span ${f.span}`;
+          const label = document.createElement('label');
+          label.textContent = f.label || 'Podpis';
+          wrap.appendChild(label);
+          const canvas = document.createElement('canvas');
+          canvas.style.width = '100%';
+          canvas.style.height = '160px';
+          canvas.style.border = '1px solid var(--br)';
+          canvas.style.borderRadius = '8px';
+          canvas.style.background = '#fff';
+          canvas.className = 'signature-pad';
+          canvas.setAttribute('data-signature-id', f.id);
+          wrap.appendChild(canvas);
+          const ctrls = document.createElement('div');
+          ctrls.className = 'row';
+          ctrls.style.marginTop = '6px';
+          const clearBtn = document.createElement('button');
+          clearBtn.type = 'button';
+          clearBtn.className = 'btn secondary';
+          clearBtn.textContent = 'Vymazat podpis';
+          ctrls.appendChild(clearBtn);
+          wrap.appendChild(ctrls);
+          const hidden = document.createElement('input');
+          hidden.type = 'hidden';
+          hidden.id = id;
+          wrap.appendChild(hidden);
+          form.appendChild(wrap);
+
+          // init signature pad after canvas is in DOM
+          const dpr = Math.max(window.devicePixelRatio || 1, 1);
+          const resizeCanvas = () => {
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * dpr;
+            canvas.height = 160 * dpr;
+            const ctx = canvas.getContext('2d');
+            ctx.scale(dpr, dpr);
+          };
+          resizeCanvas();
+          const pad = new (window.SignaturePad || SignaturePad)(canvas, { penColor: '#0a84ff', backgroundColor: 'rgba(255,255,255,1)' });
+          signaturePads[f.id] = pad;
+          clearBtn.addEventListener('click', ()=>{ pad.clear(); hidden.value = ''; });
+          canvas.addEventListener('mouseup', ()=>{ if (!pad.isEmpty()) hidden.value = pad.toDataURL('image/png'); });
+          canvas.addEventListener('touchend', ()=>{ if (!pad.isEmpty()) hidden.value = pad.toDataURL('image/png'); });
+          window.addEventListener('resize', ()=>{ const data = pad.toData(); resizeCanvas(); pad.fromData(data); });
           return;
         }
         if (f.type === 'html'){
@@ -242,6 +338,33 @@
         if (f.required) input.required = true;
         form.appendChild(wrap);
         wrap.appendChild(input);
+        // Generic auto-fill for select using schema-provided onChangeFill mapping
+        if (f.type === 'select' && f.onChangeFill && typeof f.onChangeFill === 'object'){
+          const applyFill = (val) => {
+            const mapping = f.onChangeFill[val];
+            if (!mapping) return;
+            Object.keys(mapping).forEach(targetId => {
+              const v = mapping[targetId] ?? '';
+              // explicit field
+              const tgt = document.getElementById('f_' + targetId);
+              if (tgt) { tgt.value = v; }
+              // inline inputs inside HTML blocks
+              const formEl = document.getElementById('modalDynamicForm');
+              formEl.querySelectorAll(`[data-field="${targetId}"]`).forEach(el => {
+                if (el.tagName === 'SELECT'){
+                  // try to set matching option by value or text
+                  const opt = Array.from(el.options).find(o => o.value === v || o.text === v);
+                  el.value = opt ? opt.value : v;
+                } else if (el.type === 'checkbox') {
+                  el.checked = !!v;
+                } else {
+                  el.value = v;
+                }
+              });
+            });
+          };
+          input.addEventListener('change', () => applyFill(input.value));
+        }
         if (f.hint) {
           const h = document.createElement('div');
           h.className = 'hint';
@@ -267,7 +390,14 @@
       formEl.querySelectorAll('[data-field]').forEach(el => {
         const key = el.getAttribute('data-field');
         if (!key) return;
-        if (data[key] !== undefined) return; // don't overwrite explicit fields
+        // If there is already a value from an explicit field, only replace it if it's empty and inline has something
+        if (data[key] !== undefined) {
+          const inlineVal = (el.type === 'checkbox') ? (!!el.checked) : (el.value || '');
+          const hasInline = (el.type === 'checkbox') ? el.checked : (inlineVal !== '');
+          const hasExplicit = (typeof data[key] === 'boolean') ? data[key] : (data[key] !== '');
+          if (!hasExplicit && hasInline) data[key] = inlineVal;
+          return;
+        }
         if (el.type === 'checkbox') data[key] = !!el.checked;
         else data[key] = el.value;
       });
@@ -329,6 +459,224 @@
       FormsStore.download('forms_export.json', FormsStore.exportAll());
     }
 
+    function makePlainClone(){
+  const modalBody = document.querySelector('#formModal .modal .modal-body');
+  if (!modalBody) return null;
+  const clone = modalBody.cloneNode(true);
+  // 1) Signatures: replace canvas with image using hidden value (dataURL)
+  clone.querySelectorAll('canvas.signature-pad').forEach(cv => {
+    const sigId = cv.getAttribute('data-signature-id');
+    let dataUrl = '';
+    // find matching hidden input inside clone
+    if (sigId) {
+      const hidden = clone.querySelector(`#f_${sigId}`);
+      if (hidden && hidden.value) dataUrl = hidden.value;
+      // also mark hidden to be removed later
+      if (hidden) hidden.setAttribute('data-remove', 'true');
+    }
+    if (dataUrl) {
+      const img = document.createElement('img');
+      img.src = dataUrl;
+      img.alt = 'Podpis';
+      img.style.display = 'block';
+      img.style.width = '100%';
+      img.style.maxHeight = '160px';
+      img.style.objectFit = 'contain';
+      img.style.border = '1px solid var(--br)';
+      img.style.borderRadius = '8px';
+      cv.replaceWith(img);
+    } else {
+      // if empty, just remove the canvas area
+      cv.replaceWith(document.createComment('signature-empty'));
+    }
+  });
+
+  // 2) Prevent orphan headings: wrap heading and next block together
+  const headings = clone.querySelectorAll('h1, h2, h3, h4, .section-title');
+  headings.forEach(h => {
+    const next = h.nextElementSibling;
+    if (!next) return;
+    // If already wrapped, skip
+    if (h.parentElement && h.parentElement.classList.contains('avoid-break')) return;
+    const wrapper = document.createElement('div');
+    wrapper.className = 'avoid-break';
+    h.parentElement.insertBefore(wrapper, h);
+    wrapper.appendChild(h);
+    // move the next block inside wrapper as well
+    wrapper.appendChild(next);
+  });
+
+  // 3) Replace remaining controls with plain text (skip hidden and any marked for removal)
+  const controls = clone.querySelectorAll('input, textarea, select');
+  controls.forEach(el => {
+    if (el.type === 'hidden' || el.getAttribute('data-remove') === 'true') { el.remove(); return; }
+    const span = document.createElement(el.tagName === 'TEXTAREA' ? 'div' : 'span');
+    // Plain text only (no borders), keep whitespace for multi-line
+    span.style.whiteSpace = 'pre-wrap';
+    span.style.background = 'transparent';
+    span.style.display = (el.tagName === 'TEXTAREA') ? 'inline-block' : '';
+
+    let text = '';
+    const type = (el.getAttribute('type') || '').toLowerCase();
+    if (el.tagName === 'SELECT') {
+      const opt = el.selectedOptions && el.selectedOptions[0];
+      text = opt ? (opt.text || opt.value || '') : '';
+    } else if (el.tagName === 'TEXTAREA') {
+      text = el.value || '';
+    } else if (type === 'checkbox') {
+      text = el.checked ? '✓' : '';
+    } else if (type === 'radio') {
+      if (el.checked) {
+        text = el.value || '✓';
+      } else {
+        el.replaceWith(document.createComment('radio-omitted'));
+        return;
+      }
+    } else if (type === 'date') {
+      // Format ISO date (YYYY-MM-DD) to cs-CZ
+      try {
+        const d = el.value ? new Date(el.value) : null;
+        text = d ? d.toLocaleDateString('cs-CZ') : '';
+      } catch(_) { text = el.value || ''; }
+    } else if (type === 'datetime-local') {
+      try {
+        text = el.value ? new Date(el.value).toLocaleString('cs-CZ') : '';
+      } catch(_) { text = el.value || ''; }
+    } else {
+      text = el.value || '';
+    }
+    span.textContent = text;
+    el.replaceWith(span);
+  });
+      clone.querySelectorAll('.sticky-actions').forEach(n => n.remove());
+  return clone;
+}
+
+    function printForm(){
+      // Ensure modal is open for print rendering
+      const ovl = document.getElementById('formModal');
+      if (ovl.style.display !== 'flex') openModal();
+      syncSignaturesToHidden();
+      const clone = makePlainClone();
+      if (!clone){ alert('Nelze najít obsah formuláře.'); return; }
+      const styles = Array.from(document.querySelectorAll('style, link[rel="stylesheet"]')).map(el => el.outerHTML).join('\n');
+      const w = window.open('', '_blank');
+      if (!w) { window.print(); return; }
+      w.document.open();
+      w.document.write(`<!doctype html><html lang="cs"><head><meta charset="utf-8"><title>${((currentSchema && currentSchema.name) || 'Formulář')} – tisk</title>${styles}<style>
+      body{background:#fff!important;}
+      .sticky-actions,.close-btn{display:none!important;}
+      /* print footer */
+      .print-footer{position:fixed; bottom:0; left:0; right:0; padding:6px 12px; font-size:11px; color:#666; text-align:right;}
+      @media print{ .print-footer{display:block;} }
+      /* best-effort page counters (not in all browsers) */
+      @page{ margin: 12mm; }
+      </style></head><body>
+      ${clone.outerHTML}
+      <div class="print-footer">Strana <span class="pageNumber"></span> / <span class="totalPages"></span></div>
+      <script>(function(){
+        try{ if (typeof(window) !== 'undefined') { document.querySelectorAll('.pageNumber').forEach(e=>e.textContent=''); document.querySelectorAll('.totalPages').forEach(e=>e.textContent=''); } }catch(e){}
+      })();<\/script>
+      </body></html>`);
+      w.document.close();
+      w.focus();
+      setTimeout(() => { w.print(); w.close(); }, 150);
+    }
+
+    function nodeControlDisplayValue(el){
+      const tag = el.tagName;
+      const type = (el.getAttribute && (el.getAttribute('type')||'').toLowerCase()) || '';
+      if (tag === 'SELECT'){
+        const opt = el.selectedOptions && el.selectedOptions[0];
+        return opt ? (opt.text || opt.value || '') : '';
+      }
+      if (tag === 'TEXTAREA') return el.value || '';
+      if (type === 'checkbox') return el.checked ? '✓' : '';
+      if (type === 'radio') return el.checked ? (el.value || '✓') : '';
+      if (type === 'date'){
+        try { return el.value ? new Date(el.value).toLocaleDateString('cs-CZ') : ''; } catch(_) { return el.value || ''; }
+      }
+      if (type === 'datetime-local'){
+        try { return el.value ? new Date(el.value).toLocaleString('cs-CZ') : ''; } catch(_) { return el.value || ''; }
+      }
+      return el.value || '';
+    }
+
+    function nodeToPlainText(node){
+      let out = '';
+      node.childNodes.forEach(ch => {
+        if (ch.nodeType === Node.TEXT_NODE){ out += ch.textContent; return; }
+        if (ch.nodeType === Node.ELEMENT_NODE){
+          const tag = ch.tagName;
+          if (tag === 'BR'){ out += '\n'; return; }
+          if (['INPUT','SELECT','TEXTAREA'].includes(tag)) { out += nodeControlDisplayValue(ch); return; }
+          // recurse
+          out += nodeToPlainText(ch);
+        }
+      });
+      return out;
+    }
+
+    function extractDocToPdfMake(){
+      const body = [];
+      const modalBody = document.querySelector('#formModal .modal .modal-body');
+      if (!modalBody) return body;
+      // Prefer explicit .doc blocks (embedded fulltext)
+      const docs = modalBody.querySelectorAll('.doc');
+      const blocks = docs.length ? docs : [modalBody];
+      blocks.forEach(root => {
+        root.querySelectorAll('h1,h2,h3,h4,p,ul,ol').forEach(el => {
+          const tag = el.tagName.toLowerCase();
+          if (tag === 'ul' || tag === 'ol'){
+            const items = Array.from(el.querySelectorAll(':scope > li')).map(li => nodeToPlainText(li).trim());
+            if (items.length){
+              body.push({ ul: items, margin: [0, 0, 0, 6] });
+            }
+            return;
+          }
+          const text = nodeToPlainText(el).replace(/\s+$/,'');
+          if (!text) return;
+          if (tag === 'h1' || tag === 'h2' || tag === 'h3' || tag === 'h4'){
+            body.push({ text, style: tag, margin: [0, (tag==='h1'?8:6), 0, 6] });
+          } else { // paragraph
+            body.push({ text, style: 'p', margin: [0, 0, 0, 4] });
+          }
+        });
+      });
+      // Signatures: append as images if present
+      const sigCanvases = modalBody.querySelectorAll('canvas.signature-pad');
+      sigCanvases.forEach(cv => {
+        const id = cv.getAttribute('data-signature-id');
+        const hidden = modalBody.querySelector(`#f_${id}`);
+        const dataUrl = hidden && hidden.value ? hidden.value : '';
+        if (dataUrl){ body.push({ image: dataUrl, width: 260, margin: [0, 10, 0, 10] }); }
+      });
+      return body;
+    }
+
+    function exportPDF(){
+      syncSignaturesToHidden();
+      const content = extractDocToPdfMake();
+      if (!content || !content.length){ alert('Nelze najít obsah pro PDF.'); return; }
+      const docDef = {
+        pageSize: 'A4', pageMargins: [28, 28, 28, 34],
+        defaultStyle: { fontSize: 11, lineHeight: 1.2 },
+        styles: {
+          h1: { fontSize: 18, bold: true },
+          h2: { fontSize: 15, bold: true },
+          h3: { fontSize: 13, bold: true },
+          h4: { fontSize: 12, bold: true },
+          p:  { fontSize: 11 }
+        },
+        footer: function(currentPage, pageCount){
+          return { text: `Strana ${currentPage} / ${pageCount}` , alignment: 'right', margin: [0, 6, 16, 0], fontSize: 9, color: '#666' };
+        },
+        content
+      };
+      const fname = ((currentSchema && currentSchema.name) || 'formular') + '.pdf';
+      pdfMake.createPdf(docDef).download(fname);
+    }
+
     function handleImport(ev){
       const file = ev.target.files[0];
       if (!file) return;
@@ -348,8 +696,170 @@
 
     // escapeHtml no longer needed
 
+    // Seed default schema for Rent Mediation Contract if missing
+    function seedSchemaIfMissing(){
+      const NAME = 'Zprostředkovatelská smlouva o zprostředkování nájmu';
+      const exists = FormsStore.listSchemas().some(s=> (s.name||'') === NAME);
+      if (exists) return;
+      const schema = {
+        name: NAME,
+        description: 'Formulář se sjednáním dne/měsíce/roku, volbou zprostředkovatele a kompletním textem smlouvy s vnořenými poli.',
+        fields: [
+          { type: 'section', label: 'Identifikace a datum', span: 1 },
+          { id: 'preset_zprostredkovatel', type: 'select', label: 'Zprostředkovatel (preset)', span: 1,
+            options: [
+              { value: '', label: '— vyberte —' },
+              { value: 'ptf', label: 'PTF reality, s.r.o.' },
+              { value: 'ptf_dc', label: 'Bc. David Choc – PTF reality' },
+              { value: 'quadrum', label: 'QUADRUM s.r.o.' }
+            ],
+            onChangeFill: {
+              "ptf": {
+                "zprost_jmeno_firma": "PTF reality, s.r.o.",
+                "zprost_ico": "06684394",
+                "zprost_dic": "CZ06684394",
+                "zprost_sidlo": "Dřevěná 99/3, 301 00 Plzeň",
+                "zprost_zastoupen": "Bc. David Choc, jednatel",
+                "zprost_or": "zapsána v OR vedeného Krajským soudem v Plzni, oddíl C, vložka 35601",
+                "zprost_bank": "Raiffeisenbank, a.s.",
+                "zprost_ucet": "98769079/5500",
+                "zprost_tel": "603 834 921",
+                "zprost_email": "info@ptf.cz",
+                "zprost_ds": ""
+              },
+              "quadrum": {
+                "zprost_jmeno_firma": "QUADRUM s.r.o.",
+                "zprost_ico": "28525620",
+                "zprost_sidlo": "Zárybnická 888/4, 700 30 Ostrava-Hrabůvka",
+                "zprost_zastoupen": "",
+                "zprost_tel": "",
+                "zprost_email": "",
+                "zprost_ds": ""
+              }
+              ,
+              "ptf_dc": {
+                "zprost_jmeno_firma": "Bc. David Choc – PTF reality",
+                "zprost_ico": "68811489",
+                "zprost_dic": "",
+                "zprost_sidlo": "Dřevěná 99/3, 301 00 Plzeň",
+                "zprost_zastoupen": "Bc. David Choc",
+                "zprost_or": "zapsaný v registru živnostenského podnikání vedeném Magistrátem města Plzně, živnostenským úřadem",
+                "zprost_bank": "Raiffeisenbank a.s.",
+                "zprost_ucet": "98769028/5500",
+                "zprost_tel": "+420 603 834 921",
+                "zprost_email": "info@ptf.cz",
+                "zprost_ds": ""
+              }
+            }
+          },
+          { id: 'zprost_jmeno_firma', type: 'text', label: 'Realitní zprostředkovatel – firma', span: 1 },
+          { id: 'zprost_ico', type: 'text', label: 'IČO', span: 1 },
+          { id: 'zprost_dic', type: 'text', label: 'DIČ', span: 1 },
+          { id: 'zprost_sidlo', type: 'text', label: 'Sídlo', span: 2 },
+          { id: 'zprost_zastoupen', type: 'text', label: 'Zastoupen(á)', span: 1 },
+          { id: 'zprost_or', type: 'text', label: 'Zápis v OR', span: 2 },
+          { id: 'zprost_bank', type: 'text', label: 'Bankovní spojení', span: 1 },
+          { id: 'zprost_ucet', type: 'text', label: 'Číslo účtu', span: 1 },
+          { id: 'zprost_tel', type: 'text', label: 'Telefon', span: 1 },
+          { id: 'zprost_email', type: 'text', label: 'E‑mail', span: 1 },
+          { id: 'zprost_ds', type: 'text', label: 'ID datové schránky', span: 1 },
+
+          { id: 'dnes_den', type: 'text', label: 'Dnešní den', span: 1 },
+          { id: 'dnes_mesic', type: 'text', label: 'Dnešní měsíc', span: 1 },
+          { id: 'dnes_rok', type: 'text', label: 'Dnešní rok', span: 1 },
+
+          { type: 'section', label: 'Zájemce o nabytí', span: 1 },
+          { id: 'zajemce_jmeno_firma', type: 'text', label: 'Jméno / firma', span: 2 },
+          { id: 'zajemce_bydliste_sidlo', type: 'text', label: 'Bydliště / sídlo', span: 2 },
+          { id: 'zajemce_datnar_ico', type: 'text', label: 'Dat. nar. / IČO', span: 1 },
+          { id: 'zajemce_tel', type: 'text', label: 'Telefon', span: 1 },
+          { id: 'zajemce_email', type: 'text', label: 'E‑mail', span: 1 },
+
+          { type: 'section', label: 'Text smlouvy', span: 1 },
+          { type: 'html', span: 4, html: `
+          <div class="doc">
+            <p><strong>Dnešního dne, měsíce a roku smluvní strany:</strong></p>
+            <p>
+              Firma <input data-field="zprost_jmeno_firma" style="width:260px;">, IČO: <input data-field="zprost_ico" style="width:140px;">, DIČ: <input data-field="zprost_dic" style="width:160px;">,<br>
+              se sídlem: <input data-field="zprost_sidlo" style="width:380px;">,<br>
+              zastoupena <input data-field="zprost_zastoupen" style="width:280px;">,<br>
+              zapsána v OR: <input data-field="zprost_or" style="width:520px;">,<br>
+              bankovní spojení: <input data-field="zprost_bank" style="width:240px;">, číslo účtu: <input data-field="zprost_ucet" style="width:200px;">,<br>
+              tel.: <input data-field="zprost_tel" style="width:180px;">, e-mail: <input data-field="zprost_email" style="width:220px;">, ID datové schránky: <input data-field="zprost_ds" style="width:200px;"> <br>
+              (dále jen „Realitní zprostředkovatel“), na straně jedné
+            </p>
+            <p>a</p>
+            <p>
+              jméno / firma: <input data-field="zajemce_jmeno_firma" style="width:320px;"> <br>
+              bydliště / sídlo: <input data-field="zajemce_bydliste_sidlo" style="width:380px;"> <br>
+              dat.nar. / IČO: <input data-field="zajemce_datnar_ico" style="width:220px;">,  
+              tel.: <input data-field="zajemce_tel" style="width:220px;">, e-mail: <input data-field="zajemce_email" style="width:260px;"> <br>
+              (dále jen „Zájemce o nabytí“), na straně druhé
+            </p>
+            <p>uzavírají v souladu se zák.č. 39/2020 Sb., o realitním zprostředkování, tuto</p>
+            <h2>ZPROSTŘEDKOVATELSKOU SMLOUVU<br>O ZPROSTŘEDKOVÁNÍ NÁJMU</h2>
+
+            <h3>Článek I.<br>Předmět smlouvy</h3>
+            <p>1. Realitní zprostředkovatel se zavazuje vyvíjet pro Zájemce o nabytí činnost tak, aby měl možnost uzavřít smlouvu o nájmu/podnájmu (dále jen „Realitní smlouva“) se třetí osobou (dále jen „Pronajímatel“), a to na nemovitosti dle níže uvedených parametrů:</p>
+            <p><textarea data-field="predmet_najmu" style="width:100%;min-height:70px;"></textarea></p>
+            <p><input data-field="predmet_nazev" style="width:320px;"> (dále jen „Předmět nájmu“)</p>
+            <p>Cenová představa: <input data-field="najemne" style="width:220px;"> (dále jen „Nájemné“)</p>
+            <p>2. V případě, že na základě činnosti Realitního zprostředkovatele dojde k uzavření Realitní smlouvy, zaplatí Zájemce o nabytí Realitnímu zprostředkovateli provizi ve výši odpovídající měsíčnímu nájemnému za Předmět nájmu (pozn.: varianta II - „provizi v paušální výši ... Kč“). Provize je splatná dnem uzavření Realitní smlouvy, a to na základě výzvy ze strany Realitního zprostředkovatele. Provize zahrnuje veškeré náklady Realitního zprostředkovatele vynaložené při plnění této smlouvy, stejně tak jako náklady na právní servis související s realizací dané realitní transakce.</p>
+            <p><em>+ varianta Záloha:</em><br>
+            3. Strany ujednaly, že Zájemce o nabytí poskytne Realitnímu zprostředkovateli zálohu na provizi ve výši <input data-field="zaloha_vyse" style="width:180px;"> splatnou do <input data-field="zaloha_splatnost" style="width:160px;"> na ú.č. <input data-field="zaloha_ucet" style="width:220px;">; v případě, kdy Zájemce o nabytí ve sjednaném termínu zálohu neuhradí, tato smlouva se okamžikem uplynutí této lhůty ruší. V případě uzavření Realitní smlouvy bude tato záloha započtena na ujednanou provizi; v případě nenalezení požadovaného Předmětu nájmu bude Realitním zprostředkovatelem vyúčtována jako paušální náhrada v souvislosti s plněním dle této smlouvy.</p>
+            <p><em>+ varianta Měsíční platba:</em><br>
+            3. Strany ujednaly, že Zájemce o nabytí bude Realitnímu zprostředkovateli hradit měsíčně odměnu a paušální náhradu nákladů v souvislosti s plněním dle této smlouvy, a to ve výši <input data-field="mesicni_vyse" style="width:180px;">, splatné vždy k 5. dni v měsíci za daný měsíc, ú.č. <input data-field="mesicni_ucet" style="width:220px;"> ; v případě, kdy Zájemce o nabytí v termínu odměnu neuhradí, tato smlouva se okamžikem uplynutí této lhůty ruší. Toto finanční plnění nemá vliv na provizi ujednanou v čl. I. odst. 2. této smlouvy.</p>
+
+            <h3>Článek II.<br>Práva a povinnosti smluvních stran</h3>
+            <p><strong>Realitní zprostředkovatel se zavazuje</strong></p>
+            <p>a. vyvinout maximální úsilí k obstarání Předmětu nájmu dle rámcových parametrů Zájemce o nabytí uvedených v čl. I. této smlouvy, a to jak vlastními aktivitami, tak i spoluprací s dalšími realitními zprostředkovateli,</p>
+            <p>b. zorganizovat potřebná jednání smluvních stran nezbytná k uzavření Realitní smlouvy a zajistit vypracování nájemní/podnájemní smlouvy, příp. u dané smluvní dokumentace zajistit právní posouzení a oponenturu navrhovaných postupů a smluvních ujednání.</p>
+            <p><strong>Zájemce se zavazuje</strong></p>
+            <p>a. informovat Realitního zprostředkovatele o změnách parametrů vyhledávaného Předmětu nájmu, uvedených v čl. I. této smlouvy, které mají podstatný vliv na plnění dle této smlouvy,</p>
+            <p>b. bez zbytečného odkladu informovat Realitního zprostředkovatele o skutečnosti, zda jím vyhledaný Předmět nájmu splňuje či nesplňuje požadavky Zájemce o nabytí a zda má či nemá zájem pokračovat v jednáních směřujících k uzavření Realitní smlouvy,</p>
+            <p>c. při vyhledání vyhovujícího Předmětu nájmu na vyzvání Realitního zprostředkovatele vyvíjet potřebnou součinnost související s uzavřením Realitní smlouvy,</p>
+            <p>d. že veškeré kontakty se třetími osobami, které zajistí Realitní zprostředkovatel, budou realizovány výlučně přes Realitního zprostředkovatele a že bez jeho vědomí neuzavře Realitní smlouvu na Předmět nájmu s osobou, jež byla vyhledána Realitním zprostředkovatelem, a to ani v době po skončení platnosti této Smlouvy.</p>
+
+            <h3>Článek IV.<br>Další ujednání</h3>
+            <p>1. Zájemce o nabytí výslovně žádá Realitního zprostředkovatele (s plným vědomím práv a povinností vyplývajících z realizovaného poučení), aby započal s poskytováním služeb dle této smlouvy již ve lhůtě pro odstoupení Zájemce o nabytí od této smlouvy (byla-li tato smlouva uzavřena mimo obvyklé obchodní prostory Realitního zprostředkovatele).</p>
+            <p>2. Zájemcem o nabytí potvrzuje, že se před podpisem seznámil s Poučením spotřebitele a se Zásadami ochrany osobních údajů Realitního zprostředkovatele, jak je uveřejněno na www... Poskytnutí osobních údajů Zájemce o nabytí je požadováno z důvodu oprávněného zájmu Realitního zprostředkovatele a že jsou tyto nezbytné pro plnění smlouvy.</p>
+            <p>3. Vzniku práva Realitního zprostředkovatele na provizi nebrání skutečnost, že teprve po zániku této smlouvy dojde k uzavření Realitní smlouvy, pokud Realitní zprostředkovatel zajistil Zájemci o nabytí prohlídku Předmětu nájmu nebo pokud předal Zájemci o nabytí informace o Předmětu nájmu v době platnosti této Smlouvy.</p>
+            <p>4. Strany ujednaly, že pokud bude Předmět nájmu ve vlastním portfoliu Realitního zprostředkovatele, tedy pokud bude Realitní zprostředkovatel při daném realitním zprostředkování smluvně a za úplatu zastupovat i Pronajímatele, bude Realitní zprostředkovatel realizovat plnění dle této smlouvy pro Zájemce o nabytí bezúplatně.</p>
+
+            <h3>Článek V.<br>Závěrečná ustanovení</h3>
+            <p>1. Tato smlouva je uzavřena na dobu:<br>
+            - určitou do <input data-field="doba_urcita_do" style="width:200px;"> <br>
+            - neurčitou s výpovědní lhůtou 10 dní<br>
+            (pozn.: nehodící se škrtněte)
+            </p>
+            <p>2. Účastníci této smlouvy po jejím přečtení prohlašují, že souhlasí s jejím obsahem, že tato smlouva byla sepsána na základě pravdivých údajů, jejich pravé a svobodné vůle, nebyla ujednána v tísni, ani za jinak jednostranně nevýhodných podmínek. Na důkaz souhlasu připojují své vlastnoruční podpisy.</p>
+
+            <p style="margin-top:18px;">V <input data-field="misto_uzavreni" style="width:200px;"> dne <input data-field="dnes_den" style="width:60px;">.<input data-field="dnes_mesic" style="width:60px;">.<input data-field="dnes_rok" style="width:80px;"></p>
+
+            <p style="margin-top:36px; display:flex; gap:40px;">
+              <span style="flex:1; text-align:center; display:inline-block;">
+                ………..……….……….……….<br>
+                Realitní zprostředkovatel
+              </span>
+              <span style="flex:1; text-align:center; display:inline-block;">
+                ………..……….……….……….<br>
+                Zájemce o nabytí
+              </span>
+            </p>
+          </div>
+          `},
+
+          { type: 'section', label: 'Podpisy', span: 1 },
+          { id: 'podpis_zprost', type: 'signature', label: 'Podpis zprostředkovatele', span: 2 },
+          { id: 'podpis_zajemce', type: 'signature', label: 'Podpis zájemce', span: 2 }
+        ]
+      };
+      FormsStore.saveSchema(schema);
+    }
+
     // Boot
     (function init(){
+      seedSchemaIfMissing();
       renderFormsList();
     })();
   </script>

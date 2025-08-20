@@ -1,0 +1,89 @@
+{
+  "id": "f_protokol_predani_prevzeti",
+  "name": "Protokol o předání a převzetí nemovitosti (prodej/pronájem)",
+  "description": "Standardizovaný protokol pro předání/převzetí nemovitosti při prodeji nebo pronájmu. Obsahuje identifikaci stran, nemovitosti, klíče, stavy měřidel, vybavení, checklist stavu a podpisy.",
+  "fields": [
+    { "type": "section", "label": "I. Základní údaje", "span": 4 },
+    { "id": "typ_transakce", "label": "Typ transakce", "type": "select", "required": true, "options": [
+      {"value":"prodej","label":"Prodej"}, {"value":"pronajem","label":"Pronájem"}
+    ]},
+    { "id": "misto", "label": "Místo sepsání", "type": "text" },
+    { "id": "datum", "label": "Datum sepsání", "type": "date" },
+
+    { "type": "section", "label": "II. Identifikace nemovitosti", "span": 4 },
+    { "id": "adresa", "label": "Adresa (ulice, č.p., město)", "type": "text", "required": true, "span": 2 },
+    { "id": "katastr", "label": "Katastrální území", "type": "text" },
+    { "id": "cislo_jednotky", "label": "Číslo bytu/jednotky (je‑li) ", "type": "text" },
+    { "id": "cislo_lv", "label": "Číslo LV (je‑li)", "type": "text" },
+
+    { "type": "section", "label": "III. Smluvní strany", "span": 4 },
+    { "id": "strana_a_typ", "label": "Strana A (prodávající/pronajímatel)", "type": "select", "options": [
+      {"value":"fyzicka","label":"Fyzická osoba"}, {"value":"pravnicka","label":"Právnická osoba"}
+    ]},
+    { "id": "strana_a_jmeno", "label": "Strana A – jméno/název", "type": "text", "required": true, "span": 2 },
+    { "id": "strana_a_rcico", "label": "Strana A – r.č./IČO", "type": "text" },
+    { "id": "strana_a_adresa", "label": "Strana A – adresa", "type": "text", "span": 2 },
+    { "id": "strana_a_kontakt", "label": "Strana A – kontakt", "type": "text" },
+
+    { "id": "strana_b_typ", "label": "Strana B (kupující/nájemce)", "type": "select", "options": [
+      {"value":"fyzicka","label":"Fyzická osoba"}, {"value":"pravnicka","label":"Právnická osoba"}
+    ]},
+    { "id": "strana_b_jmeno", "label": "Strana B – jméno/název", "type": "text", "required": true, "span": 2 },
+    { "id": "strana_b_rcico", "label": "Strana B – r.č./IČO", "type": "text" },
+    { "id": "strana_b_adresa", "label": "Strana B – adresa", "type": "text", "span": 2 },
+    { "id": "strana_b_kontakt", "label": "Strana B – kontakt", "type": "text" },
+
+    { "type": "section", "label": "IV. Předané klíče a přístupy", "span": 4 },
+    { "id": "klice_vchod", "label": "Vchodové/hlavní", "type": "number" },
+    { "id": "klice_byt", "label": "Bytové dveře", "type": "number" },
+    { "id": "klice_schranka", "label": "Poštovní schránka", "type": "number" },
+    { "id": "klice_sklep", "label": "Sklep/komora", "type": "number" },
+    { "id": "klice_garaz", "label": "Garáž/parkovací stání", "type": "number" },
+    { "id": "karty_cipy", "label": "Elektronické čipy/karty", "type": "number" },
+    { "id": "klice_dalsi", "label": "Další klíče/přístupy (upřesněte)", "type": "text", "span": 2 },
+
+    { "type": "section", "label": "V. Stavy měřidel k datu předání", "span": 4 },
+    { "id": "el_stav", "label": "Elektroměr – stav (kWh)", "type": "number" },
+    { "id": "el_cislo", "label": "Elektroměr – číslo měřidla", "type": "text" },
+    { "id": "plyn_stav", "label": "Plynoměr – stav (m³)", "type": "number" },
+    { "id": "plyn_cislo", "label": "Plynoměr – číslo měřidla", "type": "text" },
+    { "id": "voda_studena_stav", "label": "Vodoměr studená – stav (m³)", "type": "number" },
+    { "id": "voda_studena_cislo", "label": "Vodoměr studená – číslo", "type": "text" },
+    { "id": "voda_tepla_stav", "label": "Vodoměr teplá – stav (m³)", "type": "number" },
+    { "id": "voda_tepla_cislo", "label": "Vodoměr teplá – číslo", "type": "text" },
+
+    { "type": "section", "label": "VI. Vybavení a příslušenství", "span": 4 },
+    { "id": "vybaveni_text", "label": "Seznam vybavení/příslušenství předávaného s nemovitostí", "type": "textarea", "span": 4 },
+
+    { "type": "section", "label": "VII. Stav nemovitosti při předání", "span": 4 },
+    { "id": "stav_malba", "label": "Stav maleb/stěn", "type": "select", "options": [
+      {"value":"vyborny","label":"Výborný"}, {"value":"dobry","label":"Dobrý"}, {"value":"bezne_opotrebeni","label":"Běžné opotřebení"}, {"value":"nutna_uprava","label":"Nutná úprava"}
+    ]},
+    { "id": "stav_podlahy", "label": "Stav podlah", "type": "select", "options": [
+      {"value":"vyborny","label":"Výborný"}, {"value":"dobry","label":"Dobrý"}, {"value":"bezne_opotrebeni","label":"Běžné opotřebení"}, {"value":"nutna_uprava","label":"Nutná úprava"}
+    ]},
+    { "id": "stav_okna", "label": "Stav oken", "type": "select", "options": [
+      {"value":"vyborny","label":"Výborný"}, {"value":"dobry","label":"Dobrý"}, {"value":"bezne_opotrebeni","label":"Běžné opotřebení"}, {"value":"nutna_uprava","label":"Nutná úprava"}
+    ]},
+    { "id": "stav_spotrevice", "label": "Stav spotřebičů", "type": "select", "options": [
+      {"value":"funkcni","label":"Funkční"}, {"value":"castecne_funkcni","label":"Částečně funkční"}, {"value":"nefunkcni","label":"Nefunkční"}
+    ]},
+    { "id": "stav_topeni", "label": "Topení – funkčnost", "type": "select", "options": [
+      {"value":"funkcni","label":"Funkční"}, {"value":"castecne_funkcni","label":"Částečně funkční"}, {"value":"nefunkcni","label":"Nefunkční"}
+    ]},
+    { "id": "stav_jine", "label": "Další zjištění (defekty, závady)", "type": "textarea", "span": 4 },
+
+    { "type": "section", "label": "VIII. Předávací poznámky", "span": 4 },
+    { "id": "poznamky", "label": "Poznámky a ujednání při předání", "type": "textarea", "span": 4 },
+
+    { "type": "section", "label": "IX. Místo, datum a podpisy", "span": 4 },
+    { "id": "misto_podpisu", "label": "Místo", "type": "text" },
+    { "id": "datum_podpisu", "label": "Datum", "type": "date" },
+    { "id": "podpis_strana_a_text", "label": "Strana A – jméno k podpisu (čitelně)", "type": "text", "span": 2 },
+    { "id": "podpis_strana_b_text", "label": "Strana B – jméno k podpisu (čitelně)", "type": "text", "span": 2 },
+    { "id": "signature_strana_a", "label": "Podpis strany A (prodávající/pronajímatel)", "type": "signature", "span": 2 },
+    { "id": "signature_strana_b", "label": "Podpis strany B (kupující/nájemce)", "type": "signature", "span": 2 },
+    { "id": "podpis_zprostredkovatel_text", "label": "Zprostředkovatel – jméno k podpisu (čitelně)", "type": "text", "span": 2 },
+    { "id": "signature_zprostredkovatel", "label": "Podpis zprostředkovatele", "type": "signature", "span": 2 }
+  ]
+}

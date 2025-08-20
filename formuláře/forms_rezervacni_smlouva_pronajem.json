@@ -1,0 +1,62 @@
+{
+  "id": null,
+  "name": "Rezervační smlouva – pronájem bytu",
+  "description": "Formulář k uzavření rezervační smlouvy na pronájem bytu (strany, byt, nájemné, kauce, záloha, lhůty, podmínky, podpisy).",
+  "fields": [
+    { "id": "sec_i", "label": "I. Smluvní strany", "type": "section", "span": 4 },
+    { "id": "pronajimatel_jmeno", "label": "Pronajímatel – jméno a příjmení / název", "type": "text", "required": true, "span": 2 },
+    { "id": "pronajimatel_rcico", "label": "RČ / IČO", "type": "text", "required": true },
+    { "id": "pronajimatel_dn_dic", "label": "Datum narození / DIČ", "type": "text" },
+    { "id": "pronajimatel_adresa", "label": "Adresa (ulice, č.p., město)", "type": "text", "required": true, "span": 2 },
+    { "id": "pronajimatel_kontakt", "label": "Kontakt (telefon, e‑mail)", "type": "text", "required": true, "span": 2 },
+
+    { "id": "najemce_jmeno", "label": "Nájemce – jméno a příjmení / název", "type": "text", "required": true, "span": 2 },
+    { "id": "najemce_rcico", "label": "RČ / IČO", "type": "text", "required": true },
+    { "id": "najemce_dn_dic", "label": "Datum narození / DIČ", "type": "text" },
+    { "id": "najemce_adresa", "label": "Adresa (ulice, č.p., město)", "type": "text", "required": true, "span": 2 },
+    { "id": "najemce_kontakt", "label": "Kontakt (telefon, e‑mail)", "type": "text", "required": true, "span": 2 },
+
+    { "id": "rk_nazev", "label": "Zprostředkovatel – název RK", "type": "text", "span": 2 },
+    { "id": "rk_ico", "label": "IČO RK", "type": "text" },
+    { "id": "rk_sidlo", "label": "Sídlo RK", "type": "text", "span": 2 },
+    { "id": "rk_kontakt", "label": "Kontakt RK (telefon, e‑mail)", "type": "text", "span": 2 },
+
+    { "id": "sec_ii", "label": "II. Identifikace bytu", "type": "section", "span": 4 },
+    { "id": "byt_cislo", "label": "Byt č.", "type": "text" },
+    { "id": "nemovitost_adresa", "label": "Adresa (ulice, č.p., město)", "type": "text", "required": true, "span": 2 },
+    { "id": "katastr", "label": "Katastrální území", "type": "text" },
+    { "id": "lv_parcely", "label": "LV / parcely", "type": "text" },
+    { "id": "stav_pri_predani", "label": "Stav při předání (vybavení, měřidla)", "type": "textarea", "span": 4 },
+
+    { "id": "sec_iii", "label": "III. Nájemné, služby, jistota (kauce) a rezervační záloha", "type": "section", "span": 4 },
+    { "id": "najomne", "label": "Měsíční nájemné (Kč)", "type": "number", "required": true },
+    { "id": "sluzby", "label": "Zálohy na služby (Kč)", "type": "number", "required": true },
+    { "id": "kauce", "label": "Jistota (kauce) (Kč)", "type": "number", "required": true },
+    { "id": "rez_zaloha", "label": "Rezervační záloha (Kč)", "type": "number", "required": true },
+    { "id": "uschova_ucet", "label": "Účet / identifikace úschovy rez. zálohy", "type": "text", "span": 2 },
+
+    { "id": "sec_iv", "label": "IV. Lhůty a termíny", "type": "section", "span": 4 },
+    { "id": "platnost_rez_do", "label": "Platnost rezervace do (datum)", "type": "date", "required": true },
+    { "id": "termin_podpisu_najemni", "label": "Termín podpisu nájemní smlouvy (datum)", "type": "date", "required": true },
+    { "id": "termin_predani", "label": "Termín předání bytu (datum)", "type": "date", "required": true },
+
+    { "id": "sec_v", "label": "V. Podmínky vrácení / propadnutí rezervační zálohy", "type": "section", "span": 4 },
+    { "id": "podminky_propadnuti", "label": "Kdy záloha propadá (důvody na straně nájemce)", "type": "textarea", "span": 2, "hint": "např. bezdůvodné odstoupení, neposkytnutí součinnosti" },
+    { "id": "podminky_vraceni", "label": "Kdy se záloha vrací (důvody na straně pronajímatele)", "type": "textarea", "span": 2 },
+    { "id": "vraceni_ucet", "label": "Účet pro vrácení zálohy", "type": "text" },
+
+    { "id": "sec_vi", "label": "VI. Prohlášení a součinnost", "type": "section", "span": 4 },
+    { "id": "ucel_uzivani", "label": "Účel užívání bytu", "type": "text", "hint": "např. bydlení" },
+    { "id": "souhlas_gdpr", "label": "Souhlas se zpracováním osobních údajů (GDPR)", "type": "checkbox", "hint": "souhlasím se zpracováním údajů pro účely smlouvy" },
+
+    { "id": "sec_vii", "label": "VII. Závěrečná ujednání a podpisy", "type": "section", "span": 4 },
+    { "id": "misto_podpisu", "label": "Místo podpisu", "type": "text", "required": true },
+    { "id": "datum_podpisu", "label": "Datum podpisu", "type": "date", "required": true },
+    { "id": "podpis_pronajimatel_text", "label": "Pronajímatel – jméno k podpisu (čitelně)", "type": "text", "required": true, "span": 2 },
+    { "id": "podpis_najemce_text", "label": "Nájemce – jméno k podpisu (čitelně)", "type": "text", "required": true, "span": 2 },
+    { "id": "podpis_rk_text", "label": "Zprostředkovatel – jméno k podpisu (čitelně)", "type": "text", "span": 2 },
+    { "id": "signature_pronajimatel", "label": "Podpis pronajímatele", "type": "signature", "span": 2 },
+    { "id": "signature_najemce", "label": "Podpis nájemce", "type": "signature", "span": 2 },
+    { "id": "signature_rk", "label": "Podpis zprostředkovatele", "type": "signature", "span": 2 }
+  ]
+}

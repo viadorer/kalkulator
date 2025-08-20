@@ -1,0 +1,85 @@
+{
+  "name": "Zprostředkovatelská smlouva o zprostředkování nájmu",
+  "description": "Formulář se sjednáním dne/měsíce/roku, volbou zprostředkovatele a kompletním textem smlouvy s vnořenými poli.",
+  "fields": [
+    { "type": "section", "label": "Identifikace a datum", "span": 1 },
+    {
+      "id": "preset_zprostredkovatel",
+      "type": "select",
+      "label": "Zprostředkovatel (preset)",
+      "span": 1,
+      "options": [
+        { "value": "", "label": "— vyberte —" },
+        { "value": "ptf", "label": "PTF reality, s.r.o." },
+        { "value": "ptf_dc", "label": "Bc. David Choc – PTF reality" },
+        { "value": "quadrum", "label": "QUADRUM s.r.o." }
+      ],
+      "onChangeFill": {
+        "ptf": {
+          "zprost_jmeno_firma": "PTF reality, s.r.o.",
+          "zprost_ico": "06684394",
+          "zprost_dic": "CZ06684394",
+          "zprost_sidlo": "Dřevěná 99/3, 301 00 Plzeň",
+          "zprost_zastoupen": "Bc. David Choc, jednatel",
+          "zprost_or": "zapsána v OR vedeného Krajským soudem v Plzni, oddíl C, vložka 35601",
+          "zprost_bank": "Raiffeisenbank, a.s.",
+          "zprost_ucet": "98769079/5500",
+          "zprost_tel": "603 834 921",
+          "zprost_email": "info@ptf.cz",
+          "zprost_ds": ""
+        },
+        "quadrum": {
+          "zprost_jmeno_firma": "QUADRUM s.r.o.",
+          "zprost_ico": "28525620",
+          "zprost_sidlo": "Zárybnická 888/4, 700 30 Ostrava-Hrabůvka",
+          "zprost_zastoupen": "",
+          "zprost_tel": "",
+          "zprost_email": "",
+          "zprost_ds": ""
+        },
+        "ptf_dc": {
+          "zprost_jmeno_firma": "Bc. David Choc – PTF reality",
+          "zprost_ico": "68811489",
+          "zprost_dic": "",
+          "zprost_sidlo": "Dřevěná 99/3, 301 00 Plzeň",
+          "zprost_zastoupen": "Bc. David Choc",
+          "zprost_or": "zapsaný v registru živnostenského podnikání vedeném Magistrátem města Plzně, živnostenským úřadem",
+          "zprost_bank": "Raiffeisenbank a.s.",
+          "zprost_ucet": "98769028/5500",
+          "zprost_tel": "+420 603 834 921",
+          "zprost_email": "info@ptf.cz",
+          "zprost_ds": ""
+        }
+      }
+    },
+    { "id": "zprost_jmeno_firma", "type": "text", "label": "Realitní zprostředkovatel – firma", "span": 1 },
+    { "id": "zprost_ico", "type": "text", "label": "IČO", "span": 1 },
+    { "id": "zprost_dic", "type": "text", "label": "DIČ", "span": 1 },
+    { "id": "zprost_sidlo", "type": "text", "label": "Sídlo", "span": 2 },
+    { "id": "zprost_zastoupen", "type": "text", "label": "Zastoupen(á)", "span": 1 },
+    { "id": "zprost_or", "type": "text", "label": "Zápis v OR", "span": 2 },
+    { "id": "zprost_bank", "type": "text", "label": "Bankovní spojení", "span": 1 },
+    { "id": "zprost_ucet", "type": "text", "label": "Číslo účtu", "span": 1 },
+    { "id": "zprost_tel", "type": "text", "label": "Telefon", "span": 1 },
+    { "id": "zprost_email", "type": "text", "label": "E‑mail", "span": 1 },
+    { "id": "zprost_ds", "type": "text", "label": "ID datové schránky", "span": 1 },
+
+    { "id": "dnes_den", "type": "text", "label": "Dnešní den", "span": 1 },
+    { "id": "dnes_mesic", "type": "text", "label": "Dnešní měsíc", "span": 1 },
+    { "id": "dnes_rok", "type": "text", "label": "Dnešní rok", "span": 1 },
+
+    { "type": "section", "label": "Zájemce o nabytí", "span": 1 },
+    { "id": "zajemce_jmeno_firma", "type": "text", "label": "Jméno / firma", "span": 2 },
+    { "id": "zajemce_bydliste_sidlo", "type": "text", "label": "Bydliště / sídlo", "span": 2 },
+    { "id": "zajemce_datnar_ico", "type": "text", "label": "Dat. nar. / IČO", "span": 1 },
+    { "id": "zajemce_tel", "type": "text", "label": "Telefon", "span": 1 },
+    { "id": "zajemce_email", "type": "text", "label": "E‑mail", "span": 1 },
+
+    { "type": "section", "label": "Text smlouvy", "span": 1 },
+    { "type": "html", "span": 4, "html": "\n          <div class=\"doc\">\n            <p><strong>Dnešního dne, měsíce a roku smluvní strany:</strong></p>\n            <p>\n              Firma <input data-field=\"zprost_jmeno_firma\" style=\"width:260px;\">, IČO: <input data-field=\"zprost_ico\" style=\"width:140px;\">, DIČ: <input data-field=\"zprost_dic\" style=\"width:160px;\">,<br>\n              se sídlem: <input data-field=\"zprost_sidlo\" style=\"width:380px;\">,<br>\n              zastoupena <input data-field=\"zprost_zastoupen\" style=\"width:280px;\">,<br>\n              zapsána v OR: <input data-field=\"zprost_or\" style=\"width:520px;\">,<br>\n              bankovní spojení: <input data-field=\"zprost_bank\" style=\"width:240px;\">, číslo účtu: <input data-field=\"zprost_ucet\" style=\"width:200px;\">,<br>\n              tel.: <input data-field=\"zprost_tel\" style=\"width:180px;\">, e-mail: <input data-field=\"zprost_email\" style=\"width:220px;\">, ID datové schránky: <input data-field=\"zprost_ds\" style=\"width:200px;\"> <br>\n              (dále jen „Realitní zprostředkovatel“), na straně jedné\n            </p>\n            <p>a</p>\n            <p>\n              jméno / firma: <input data-field=\"zajemce_jmeno_firma\" style=\"width:320px;\"> <br>\n              bydliště / sídlo: <input data-field=\"zajemce_bydliste_sidlo\" style=\"width:380px;\"> <br>\n              dat.nar. / IČO: <input data-field=\"zajemce_datnar_ico\" style=\"width:220px;\">,  \n              tel.: <input data-field=\"zajemce_tel\" style=\"width:220px;\">, e-mail: <input data-field=\"zajemce_email\" style=\"width:260px;\"> <br>\n              (dále jen \"Zájemce o nabytí\"), na straně druhé\n            </p>\n            <p>uzavírají v souladu se zák.č. 39/2020 Sb., o realitním zprostředkování, tuto</p>\n            <h2>ZPROSTŘEDKOVATELSKOU SMLOUVU<br>O ZPROSTŘEDKOVÁNÍ NÁJMU</h2>\n\n            <h3>Článek I.<br>Předmět smlouvy</h3>\n            <p>1. Realitní zprostředkovatel se zavazuje vyvíjet pro Zájemce o nabytí činnost tak, aby měl možnost uzavřít smlouvu o nájmu/podnájmu (dále jen „Realitní smlouva“) se třetí osobou (dále jen „Pronajímatel“), a to na nemovitosti dle níže uvedených parametrů:</p>\n            <p><textarea data-field=\"predmet_najmu\" style=\"width:100%;min-height:70px;\"></textarea></p>\n            <p><input data-field=\"predmet_nazev\" style=\"width:320px;\"> (dále jen „Předmět nájmu“)</p>\n            <p>Cenová představa: <input data-field=\"najemne\" style=\"width:220px;\"> (dále jen „Nájemné“)</p>\n            <p>2. V případě, že na základě činnosti Realitního zprostředkovatele dojde k uzavření Realitní smlouvy, zaplatí Zájemce o nabytí Realitnímu zprostředkovateli provizi ve výši odpovídající měsíčnímu nájemnému za Předmět nájmu (pozn.: varianta II - „provizi v paušální výši ... Kč“). Provize je splatná dnem uzavření Realitní smlouvy, a to na základě výzvy ze strany Realitního zprostředkovatele. Provize zahrnuje veškeré náklady Realitního zprostředkovatele vynaložené při plnění této smlouvy, stejně tak jako náklady na právní servis související s realizací dané realitní transakce.</p>\n            <p><em>+ varianta Záloha:</em><br>\n            3. Strany ujednaly, že Zájemce o nabytí poskytne Realitnímu zprostředkovateli zálohu na provizi ve výši <input data-field=\"zaloha_vyse\" style=\"width:180px;\"> splatnou do <input data-field=\"zaloha_splatnost\" style=\"width:160px;\"> na ú.č. <input data-field=\"zaloha_ucet\" style=\"width:220px;\">; v případě, kdy Zájemce o nabytí ve sjednaném termínu zálohu neuhradí, tato smlouva se okamžikem uplynutí této lhůty ruší. V případě uzavření Realitní smlouvy bude tato záloha započtena na ujednanou provizi; v případě nenalezení požadovaného Předmětu nájmu bude Realitním zprostředkovatelem vyúčtována jako paušální náhrada v souvislosti s plněním dle této smlouvy.</p>\n            <p><em>+ varianta Měsíční platba:</em><br>\n            3. Strany ujednaly, že Zájemce o nabytí bude Realitnímu zprostředkovateli hradit měsíčně odměnu a paušální náhradu nákladů v souvislosti s plněním dle této smlouvy, a to ve výši <input data-field=\"mesicni_vyse\" style=\"width:180px;\">, splatné vždy k 5. dni v měsíci za daný měsíc, ú.č. <input data-field=\"mesicni_ucet\" style=\"width:220px;\"> ; v případě, kdy Zájemce o nabytí v termínu odměnu neuhradí, tato smlouva se okamžikem uplynutí této lhůty ruší. Toto finanční plnění nemá vliv na provizi ujednanou v čl. I. odst. 2. této smlouvy.</p>\n\n            <h3>Článek II.<br>Práva a povinnosti smluvních stran</h3>\n            <p><strong>Realitní zprostředkovatel se zavazuje</strong></p>\n            <p>a. vyvinout maximální úsilí k obstarání Předmětu nájmu dle rámcových parametrů Zájemce o nabytí uvedených v čl. I. této smlouvy, a to jak vlastními aktivitami, tak i spoluprací s dalšími realitními zprostředkovateli,</p>\n            <p>b. zorganizovat potřebná jednání smluvních stran nezbytná k uzavření Realitní smlouvy a zajistit vypracování nájemní/podnájemní smlouvy, příp. u dané smluvní dokumentace zajistit právní posouzení a oponenturu navrhovaných postupů a smluvních ujednání.</p>\n            <p><strong>Zájemce se zavazuje</strong></p>\n            <p>a. informovat Realitního zprostředkovatele o změnách parametrů vyhledávaného Předmětu nájmu, uvedených v čl. I. této smlouvy, které mají podstatný vliv na plnění dle této smlouvy,</p>\n            <p>b. bez zbytečného odkladu informovat Realitního zprostředkovatele o skutečnosti, zda jím vyhledaný Předmět nájmu splňuje či nesplňuje požadavky Zájemce o nabytí a zda má či nemá zájem pokračovat v jednáních směřujících k uzavření Realitní smlouvy,</p>\n            <p>c. při vyhledání vyhovujícího Předmětu nájmu na vyzvání Realitního zprostředkovatele vyvíjet potřebnou součinnost související s uzavřením Realitní smlouvy,</p>\n            <p>d. že veškeré kontakty se třetími osobami, které zajistí Realitní zprostředkovatel, budou realizovány výlučně přes Realitního zprostředkovatele a že bez jeho vědomí neuzavře Realitní smlouvu na Předmět nájmu s osobou, jež byla vyhledána Realitním zprostředkovatelem, a to ani v době po skončení platnosti této Smlouvy.</p>\n\n            <h3>Článek IV.<br>Další ujednání</h3>\n            <p>1. Zájemce o nabytí výslovně žádá Realitního zprostředkovatele (s plným vědomím práv a povinností vyplývajících z realizovaného poučení), aby započal s poskytováním služeb dle této smlouvy již ve lhůtě pro odstoupení Zájemce o nabytí od této smlouvy (byla-li tato smlouva uzavřena mimo obvyklé obchodní prostory Realitního zprostředkovatele).</p>\n            <p>2. Zájemcem o nabytí potvrzuje, že se před podpisem seznámil s Poučením spotřebitele a se Zásadami ochrany osobních údajů Realitního zprostředkovatele, jak je uveřejněno na www... Poskytnutí osobních údajů Zájemce o nabytí je požadováno z důvodu oprávněného zájmu Realitního zprostředkovatele a že jsou tyto nezbytné pro plnění smlouvy.</p>\n            <p>3. Vzniku práva Realitního zprostředkovatele na provizi nebrání skutečnost, že teprve po zániku této smlouvy dojde k uzavření Realitní smlouvy, pokud Realitní zprostředkovatel zajistil Zájemci o nabytí prohlídku Předmětu nájmu nebo pokud předal Zájemci o nabytí informace o Předmětu nájmu v době platnosti této Smlouvy.</p>\n            <p>4. Strany ujednaly, že pokud bude Předmět nájmu ve vlastním portfoliu Realitního zprostředkovatele, tedy pokud bude Realitní zprostředkovatel při daném realitním zprostředkování smluvně a za úplatu zastupovat i Pronajímatele, bude Realitní zprostředkovatel realizovat plnění dle této smlouvy pro Zájemce o nabytí bezúplatně.</p>\n\n            <h3>Článek V.<br>Зávěrečná ustanovení</h3>\n            <p>1. Tato smlouva je uzavřena na dobu:<br>\n            - určitou do <input data-field=\"doba_urcita_do\" style=\"width:200px;\"> <br>\n            - neurčitou s výpovědní lhůtou 10 dní<br>\n            (pozn.: nehodící se škrtněte)\n            </p>\n            <p>2. Účastníci této smlouvy po jejím přečtení prohlašují, že souhlasí s jejím obsahem, že tato smlouva byla sepsána na základě pravdivých údajů, jejich pravé a svobodné vůle, nebyla ujednána v tísni, ani za jinak jednostranně nevýhodných podmínek. Na důkaz souhlasu připojují své vlastnoruční podpisy.</p>\n\n            <p style=\"margin-top:18px;\">V <input data-field=\"misto_uzavreni\" style=\"width:200px;\"> dne <input data-field=\"dnes_den\" style=\"width:60px;\">.<input data-field=\"dnes_mesic\" style=\"width:60px;\">.<input data-field=\"dnes_rok\" style=\"width:80px;\"></p>\n\n            <p style=\"margin-top:36px; display:flex; gap:40px;\">\n              <span style=\"flex:1; text-align:center; display:inline-block;\">\n                ………..……….……….……….<br>\n                Realitní zprostředkovatel\n              </span>\n              <span style=\"flex:1; text-align:center; display:inline-block;\">\n                ………..……….……….……….<br>\n                Zájemce o nabytí\n              </span>\n            </p>\n          </div>\n          " },
+    
+    { "type": "section", "label": "Podpisy", "span": 1 },
+    { "id": "podpis_zprost", "type": "signature", "label": "Podpis zprostředkovatele", "span": 2 },
+    { "id": "podpis_zajemce", "type": "signature", "label": "Podpis zájemce", "span": 2 }
+  ]
+}

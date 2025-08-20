@@ -83,6 +83,8 @@
                 <option value="date">Datum</option>
                 <option value="datetime">Datum a čas</option>
                 <option value="section">Sekce (nadpis)</option>
+                <option value="signature">Podpis</option>
+                <option value="html">HTML blok</option>
               </select>
             </div>
             <div>
@@ -112,8 +114,18 @@
             <label>Možnosti (jedna na řádek; formát: hodnota|popisek, popisek je volitelný)</label>
             <textarea id="fieldOptions" placeholder="Ahoj|Pozdrav\nNashledanou|Rozloučení\n..."></textarea>
           </div>
+          <div id="onChangeFillWrap" style="display:none; margin-top:6px;">
+            <label>Auto‑fill mapa (JSON) – pro select: { "value": { "cilove_pole_id": "hodnota", ... } }</label>
+            <textarea id="fieldOnChangeFill" placeholder='Např. {\n  "preset1": { "firma_nazev": "...", "firma_ico": "..." },\n  "": { "firma_nazev": "" }\n}'></textarea>
+          </div>
+          <div id="htmlWrap" style="display:none; margin-top:6px;">
+            <label>HTML obsah</label>
+            <textarea id="fieldHtml" placeholder="Například: &lt;div class=\"doc\"&gt;...&lt;/div&gt;"></textarea>
+          </div>
           <div class="right" style="margin-top:8px;">
-            <button class="btn" onclick="addField()">Přidat pole</button>
+            <button class="btn" id="addBtn" onclick="addField()">Přidat pole</button>
+            <button class="btn" id="updateBtn" style="display:none" onclick="updateField()">Uložit změny</button>
+            <button class="btn secondary" id="cancelEditBtn" style="display:none" onclick="cancelEdit()">Zrušit editaci</button>
           </div>
         </div>
 
@@ -132,6 +144,7 @@
   <script src="forms_storage.js"></script>
   <script>
     let working = { id: null, name: '', description: '', fields: [] };
+    let editIndex = -1;
 
     function refreshSchemasSelect(){
       const sel = document.getElementById('schemaSelect');
@@ -199,11 +212,86 @@
           const [val, lab] = l.split('|');
           return { value: (val ?? '').trim(), label: (lab ?? val ?? '').trim() };
         });
+        const ocfRaw = document.getElementById('fieldOnChangeFill').value.trim();
+        if (ocfRaw){
+          try { field.onChangeFill = JSON.parse(ocfRaw); }
+          catch(e){ alert('Neplatný JSON v Auto‑fill mapě: ' + e.message); return; }
+        }
+      }
+      if (type === 'html'){
+        field.html = document.getElementById('fieldHtml').value;
       }
 
       working.fields.push(field);
       clearFieldEditor();
       renderWorking();
+    }
+
+    function populateEditorFromField(f){
+      document.getElementById('fieldLabel').value = f.label || '';
+      document.getElementById('fieldId').value = f.id || '';
+      document.getElementById('fieldType').value = f.type || 'text';
+      document.getElementById('fieldReq').value = f.required ? 'yes' : 'no';
+      document.getElementById('fieldSpan').value = String(f.span || 1);
+      document.getElementById('fieldHint').value = f.hint || '';
+      toggleOptions();
+      if (f.type === 'select'){
+        const lines = (Array.isArray(f.options)? f.options: []).map(o=>`${o.value}|${o.label}`).join('\n');
+        document.getElementById('fieldOptions').value = lines;
+        document.getElementById('fieldOnChangeFill').value = f.onChangeFill ? JSON.stringify(f.onChangeFill, null, 2) : '';
+      }
+      if (f.type === 'html'){
+        document.getElementById('fieldHtml').value = f.html || '';
+      }
+    }
+
+    function editField(idx){
+      if (idx < 0 || idx >= working.fields.length) return;
+      editIndex = idx;
+      populateEditorFromField(working.fields[idx]);
+      // toggle buttons
+      document.getElementById('addBtn').style.display = 'none';
+      document.getElementById('updateBtn').style.display = '';
+      document.getElementById('cancelEditBtn').style.display = '';
+    }
+
+    function updateField(){
+      if (editIndex < 0) return;
+      const label = document.getElementById('fieldLabel').value.trim();
+      const id = document.getElementById('fieldId').value.trim();
+      const type = document.getElementById('fieldType').value;
+      const req = document.getElementById('fieldReq').value === 'yes';
+      const spanVal = parseInt(document.getElementById('fieldSpan').value, 10) || 1;
+      if (!label){ alert('Zadejte popisek pole'); return; }
+      if (!id){ alert('Zadejte ID pole'); return; }
+      const f = working.fields[editIndex] || {};
+      f.label = label; f.id = id; f.type = type; f.required = req; f.span = (spanVal > 1 ? spanVal : undefined);
+      const hint = document.getElementById('fieldHint').value.trim();
+      if (hint) f.hint = hint; else delete f.hint;
+      if (type === 'select'){
+        const raw = document.getElementById('fieldOptions').value.trim();
+        const lines = raw.split(/\n+/).map(l=>l.trim()).filter(Boolean);
+        f.options = lines.map(l=>{ const [val, lab] = l.split('|'); return { value: (val ?? '').trim(), label: (lab ?? val ?? '').trim() }; });
+        const ocfRaw = document.getElementById('fieldOnChangeFill').value.trim();
+        if (ocfRaw){
+          try { f.onChangeFill = JSON.parse(ocfRaw); }
+          catch(e){ alert('Neplatný JSON v Auto‑fill mapě: ' + e.message); return; }
+        } else { delete f.onChangeFill; }
+      } else { delete f.options; delete f.onChangeFill; }
+      if (type === 'html'){
+        f.html = document.getElementById('fieldHtml').value;
+      } else { delete f.html; }
+      working.fields[editIndex] = f;
+      cancelEdit();
+      renderWorking();
+    }
+
+    function cancelEdit(){
+      editIndex = -1;
+      clearFieldEditor();
+      document.getElementById('addBtn').style.display = '';
+      document.getElementById('updateBtn').style.display = 'none';
+      document.getElementById('cancelEditBtn').style.display = 'none';
     }
 
     function clearFieldEditor(){
@@ -214,6 +302,10 @@
       document.getElementById('fieldSpan').value = '1';
       document.getElementById('fieldHint').value = '';
       document.getElementById('fieldOptions').value = '';
+      const htmlEl = document.getElementById('fieldHtml');
+      if (htmlEl) htmlEl.value = '';
+      const ocfEl = document.getElementById('fieldOnChangeFill');
+      if (ocfEl) ocfEl.value = '';
       toggleOptions();
     }
 
@@ -243,8 +335,10 @@
         const meta = `<div class='muted'>ID: ${f.id} • Typ: ${f.type} ${f.required?'• Povinné':''} ${f.span?`• Span: ${f.span}`:''} ${f.hint?`• Hint: ${f.hint}`:''}</div>`;
         const opts = (f.type==='select' && Array.isArray(f.options)) ?
                       `<div class='muted'>Možnosti: ${f.options.map(o=>`${o.value}|${o.label}`).join(', ')}</div>` : '';
-        div.innerHTML = `<strong>${f.label}</strong>${meta}${opts}
+        const ocf = (f.type==='select' && f.onChangeFill) ? `<div class='muted'>onChangeFill: ano</div>` : '';
+        div.innerHTML = `<strong>${f.label}</strong>${meta}${opts}${ocf}
           <div class='row' style='margin-top:8px;'>
+            <button class='btn secondary' onclick='editField(${i})'>Upravit</button>
             <button class='btn secondary' onclick='moveField(${i},-1)'>Nahoru</button>
             <button class='btn secondary' onclick='moveField(${i},1)'>Dolů</button>
             <button class='btn danger' onclick='removeField(${i})'>Odebrat</button>
@@ -264,6 +358,13 @@
           prev.appendChild(h);
           return;
         }
+        if (f.type === 'html'){
+          const block = document.createElement('div');
+          block.className = 'field';
+          block.innerHTML = f.html || '';
+          prev.appendChild(block);
+          return;
+        }
         const wrap = document.createElement('div');
         wrap.className = 'field';
         const label = document.createElement('label');
@@ -280,6 +381,18 @@
           case 'checkbox': el = document.createElement('input'); el.type='checkbox'; break;
           case 'date': el = document.createElement('input'); el.type='date'; break;
           case 'datetime': el = document.createElement('input'); el.type='datetime-local'; break;
+          case 'signature':
+            el = document.createElement('div');
+            el.textContent = 'Oblast pro podpis (náhled)';
+            el.style.height = '120px';
+            el.style.border = '1px solid #e5e5e7';
+            el.style.borderRadius = '8px';
+            el.style.background = '#fff';
+            el.style.display = 'flex';
+            el.style.alignItems = 'center';
+            el.style.justifyContent = 'center';
+            el.style.color = '#6e6e73';
+            break;
           default: el = document.createElement('input'); el.type='text';
         }
         if (f.required) el.required = true;
@@ -294,6 +407,10 @@
     function toggleOptions(){
       const t = document.getElementById('fieldType').value;
       document.getElementById('optionsWrap').style.display = (t==='select') ? '' : 'none';
+      const htmlWrap = document.getElementById('htmlWrap');
+      if (htmlWrap) htmlWrap.style.display = (t==='html') ? '' : 'none';
+      const ocfWrap = document.getElementById('onChangeFillWrap');
+      if (ocfWrap) ocfWrap.style.display = (t==='select') ? '' : 'none';
     }
 
     // Boot

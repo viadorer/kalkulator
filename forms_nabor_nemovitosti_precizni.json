@@ -1,0 +1,98 @@
+{
+  "id": "f_nabor_nemovitosti_precizni",
+  "name": "Nábor nemovitosti – precizní",
+  "description": "Komplexní náborový formulář nemovitosti pro RK. Obsahuje strukturované sekce, fulltext bloky, checklisty, a podpisy.",
+  "fields": [
+    { "type": "section", "label": "I. Úvod a identifikace", "span": 4 },
+    { "id": "uvod_html", "type": "html", "span": 4, "html": "<div class=\"doc\"><p>Formulář náboru nové nemovitosti. Vyplňte prosím všechny relevantní údaje. Povinná pole jsou zvýrazněna.</p></div>" },
+
+    { "type": "section", "label": "II. Základní informace", "span": 4 },
+    { "id": "typ_nemovitosti", "label": "Typ nemovitosti", "type": "select", "required": true, "span": 2, "options": [
+      {"value":"dum","label":"Rodinný dům"},{"value":"byt","label":"Byt"},{"value":"pozemek","label":"Pozemek"},{"value":"komercni","label":"Komerční objekt"},{"value":"rekreacni","label":"Rekreační objekt"},{"value":"garaz","label":"Garáž"},{"value":"atelier","label":"Ateliér"},{"value":"puda","label":"Půda"},{"value":"sklep","label":"Sklep"},{"value":"jine","label":"Jiné"}
+    ]},
+    { "id": "typ_nabidky", "label": "Typ nabídky", "type": "select", "required": true, "options": [
+      {"value":"prodej","label":"Prodej"},{"value":"pronajem","label":"Pronájem"},{"value":"drazba","label":"Dražba"},{"value":"jine","label":"Jiné"}
+    ]},
+    { "id": "stav_nemovitosti", "label": "Stav nemovitosti", "type": "select", "options": [
+      {"value":"novostavba","label":"Novostavba"},{"value":"po_rekonstrukci","label":"Po rekonstrukci"},{"value":"pred_rekonstrukci","label":"Před rekonstrukcí"},{"value":"puvodni","label":"Původní stav"},{"value":"dobry","label":"Dobrý stav"},{"value":"havarijni","label":"Havarijní stav"}
+    ]},
+    { "id": "datum_naboru", "label": "Datum náboru", "type": "date", "required": true },
+    { "id": "zodpovedny_makler", "label": "Zodpovědný makléř", "type": "text", "required": true, "span": 2 },
+
+    { "type": "section", "label": "III. Adresa a identifikace", "span": 4 },
+    { "id": "adresa_ulice", "label": "Ulice a č.p./orient.", "type": "text", "required": true, "span": 2 },
+    { "id": "adresa_mesto", "label": "Městská část / Obec", "type": "text", "required": true },
+    { "id": "adresa_psc", "label": "PSČ", "type": "text", "required": true },
+    { "id": "adresa_kraj", "label": "Kraj", "type": "text" },
+    { "id": "katastralni_uzemi", "label": "Katastrální území", "type": "text" },
+    { "id": "cislo_lv", "label": "Číslo LV", "type": "text" },
+    { "id": "geo_html", "type": "html", "span": 4, "html": "<div class=\"doc\"><p>GPS souřadnice (nepovinné): <input data-field=\"gps_lat\" type=\"text\" placeholder=\"lat\">, <input data-field=\"gps_lng\" type=\"text\" placeholder=\"lng\"></p></div>" },
+
+    { "type": "section", "label": "IV. Parametry a dispozice", "span": 4 },
+    { "id": "dispozice", "label": "Dispozice (např. 3+1, 2+kk)", "type": "text" },
+    { "id": "uzitna_plocha", "label": "Užitná plocha (m²)", "type": "number" },
+    { "id": "plocha_pozemku", "label": "Plocha pozemku (m²)", "type": "number" },
+    { "id": "pocet_mistnosti", "label": "Počet místností", "type": "number" },
+    { "id": "pocet_podlazi", "label": "Počet podlaží", "type": "number" },
+    { "id": "orientace", "label": "Orientace (světové strany)", "type": "text", "span": 2 },
+    { "id": "vybaveni", "label": "Vybavení (co zůstává/nezůstává)", "type": "textarea", "span": 2 },
+
+    { "type": "section", "label": "V. Technický stav", "span": 4 },
+    { "id": "konstrukce", "label": "Konstrukce budovy", "type": "select", "options": [
+      {"value":"cihla","label":"Cihla"},{"value":"panel","label":"Panel"},{"value":"drevo","label":"Dřevo"},{"value":"smisena","label":"Smíšená"},{"value":"jine","label":"Jiné"}
+    ]},
+    { "id": "strecha", "label": "Střecha (typ, stáří, stav)", "type": "textarea", "span": 2 },
+    { "id": "okna", "label": "Okna (typ, stav)", "type": "textarea" },
+    { "id": "topeni", "label": "Topení (typ, stáří, revize)", "type": "textarea", "span": 2 },
+    { "id": "elektrina", "label": "Elektřina (napětí, stav)", "type": "textarea" },
+    { "id": "voda", "label": "Voda", "type": "select", "options": [{"value":"vodovod","label":"Obecní vodovod"},{"value":"studna","label":"Studna"},{"value":"vrt","label":"Vrt"}] },
+    { "id": "kanalizace", "label": "Kanalizace", "type": "select", "options": [{"value":"obecni","label":"Obecní"},{"value":"septik","label":"Septik"},{"value":"zumpa","label":"Žumpa"},{"value":"cisticka","label":"ČOV"}] },
+    { "id": "penb", "label": "Energetická náročnost (PENB)", "type": "text" },
+
+    { "type": "section", "label": "VI. Vlastnictví a právní stav", "span": 4 },
+    { "id": "vlastnik_jmeno", "label": "Vlastník – Jméno a příjmení / Název", "type": "text", "required": true, "span": 2 },
+    { "id": "vlastnik_datum_narozeni_ico", "label": "Datum narození / IČO", "type": "text" },
+    { "id": "vlastnik_adresa", "label": "Adresa trvalého pobytu / Sídlo", "type": "text", "span": 2 },
+    { "id": "vlastnik_kontakt", "label": "Kontakt (telefon, e-mail)", "type": "text", "required": true, "span": 2 },
+    { "id": "spoluvlastnici", "label": "Spoluvlastníci (jména, podíly)", "type": "textarea", "span": 2 },
+    { "id": "pravni_vady", "label": "Zástavy, věcná břemena, exekuce, předkupní práva", "type": "textarea", "span": 2 },
+    { "id": "najemni_smlouvy", "label": "Nájemní smlouvy (pokud pronajato)", "type": "textarea", "span": 2 },
+    { "id": "plna_moc", "label": "Plná moc k jednání (ano/ne + detaily)", "type": "text" },
+
+    { "type": "section", "label": "VII. Finanční aspekty", "span": 4 },
+    { "id": "cena_nebo_najemne", "label": "Požadovaná kupní cena / nájemné", "type": "text", "required": true },
+    { "id": "duvod_prodeje", "label": "Důvod prodeje/pronájmu", "type": "textarea", "span": 2 },
+    { "id": "hypoteka_uver", "label": "Hypotéka/úvěr (výše, banka)", "type": "textarea" },
+    { "id": "mesicni_naklady", "label": "Měsíční náklady", "type": "textarea", "span": 2 },
+    { "id": "provize", "label": "Výše provize RK", "type": "text" },
+    { "id": "typ_smlouvy_rk", "label": "Typ smlouvy s RK", "type": "select", "options": [{"value":"vyhradni","label":"Výhradní"},{"value":"nevyhradni","label":"Nevýhradní"}] },
+    { "id": "doba_trvani_smlouvy", "label": "Doba trvání smlouvy", "type": "text" },
+
+    { "type": "section", "label": "VIII. Marketing a prohlídky", "span": 4 },
+    { "id": "popis_pro_inzerci", "label": "Popis pro inzerci (silné stránky, lokalita, výhody)", "type": "textarea", "span": 2 },
+    { "id": "pozadavky_prezentace", "label": "Požadavky vlastníka na prezentaci", "type": "textarea", "span": 2 },
+    { "id": "termin_prohlidek", "label": "Termín možných prohlídek", "type": "text" },
+    { "id": "klice", "label": "Klíče (kde jsou, kdo má přístup)", "type": "text" },
+    { "id": "multimedia_html", "type": "html", "span": 4, "html": "<div class=\"doc\"><p>Média: Foto, video, dron, 3D prohlídka: <input data-field=\"media_pozadavky\" type=\"text\" placeholder=\"poznámky\"></p></div>" },
+
+    { "type": "section", "label": "IX. Kontrolní seznam (checklist)", "span": 4 },
+    { "id": "chk_lv", "label": "Kontrola LV na katastru", "type": "checkbox" },
+    { "id": "chk_penb", "label": "Zajištění PENB", "type": "checkbox" },
+    { "id": "chk_foto", "label": "Foto / video / virtuální prohlídka", "type": "checkbox" },
+    { "id": "chk_osobni_prohlidka", "label": "Osobní prohlídka nemovitosti", "type": "checkbox" },
+    { "id": "chk_overeni_identity", "label": "Ověření identity vlastníka/zmocněnce", "type": "checkbox" },
+    { "id": "chk_dokumenty", "label": "Smlouvy a dokumenty (kolaudace, povolení, revize, apod.)", "type": "checkbox", "span": 2 },
+    { "id": "chk_cenotvorba", "label": "Stanovení reálné tržní ceny (srovnávací analýza)", "type": "checkbox" },
+
+    { "type": "section", "label": "X. Přílohy a poznámky", "span": 4 },
+    { "id": "poznamky", "label": "Poznámky makléře", "type": "textarea", "span": 4 },
+
+    { "type": "section", "label": "XI. Místo, datum a podpisy", "span": 4 },
+    { "id": "misto_podpisu", "label": "Místo", "type": "text" },
+    { "id": "datum_podpisu", "label": "Datum", "type": "date" },
+    { "id": "podpis_vlastnik_text", "label": "Vlastník – jméno k podpisu (čitelně)", "type": "text", "span": 2 },
+    { "id": "podpis_makler_text", "label": "Makléř – jméno k podpisu (čitelně)", "type": "text", "span": 2 },
+    { "id": "signature_vlastnik", "label": "Podpis vlastníka", "type": "signature", "span": 2 },
+    { "id": "signature_makler", "label": "Podpis makléře", "type": "signature", "span": 2 }
+  ]
+}
